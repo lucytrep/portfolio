@@ -1,0 +1,101 @@
+/* Homepage only: hero + project grid. Uses design tokens from common.css. */
+
+.section-hero {
+  padding-top: 11rem;
+  padding-bottom: var(--space-4);
+}
+
+.hero-content {
+  grid-column: 1 / -1;
+  max-width: var(--hero-max-width);
+}
+
+.hero-label {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.hero-headline {
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--font-size-hero);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.section-projects {
+  padding-bottom: var(--space-5rem);
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+  row-gap: 1rem;
+}
+
+.project-grid > * {
+  grid-column: span 12;
+}
+
+@media (min-width: 48rem) {
+  .project-grid > * {
+    grid-column: span 6;
+  }
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-bg-subtle);
+  margin-bottom: var(--space-2);
+}
+
+.project-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.project-title {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.project-year {
+  flex-shrink: 0;
+  font-size: var(--font-size-nav);
+  font-weight: 400;
+  color: var(--color-light);
+}
+
+.project-description {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: var(--line-height-snug);
+}
+
+.project-category {
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}

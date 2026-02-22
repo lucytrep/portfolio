@@ -1,0 +1,17 @@
+/* Project grid: mobile 1 column, tablet + desktop 2 columns (6 each) */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+}
+
+.project-grid > * {
+  grid-column: span 12;
+}
+
+@media (min-width: 48rem) {
+  .project-grid > * {
+    grid-column: span 6;
+  }
+}
