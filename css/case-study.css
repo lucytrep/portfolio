@@ -54,9 +54,10 @@
 
 .case-toc a {
   display: inline-block;
-  font-size: var(--font-size-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+  font-size: var(--font-size-sm);
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
   color: var(--color-muted);
   text-decoration: none;
 }
