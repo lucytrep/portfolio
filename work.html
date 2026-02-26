@@ -9,6 +9,20 @@
   <link rel="stylesheet" href="css/work.css" />
 </head>
 <body>
+  <div id="work-lock-screen" class="work-lock-screen" aria-live="polite">
+    <div class="work-lock-screen-inner">
+      <h1 class="work-lock-title">Work</h1>
+      <p class="work-lock-label">This page is private. Enter the password to view the full work list.</p>
+      <form id="work-lock-form" class="work-lock-form" action="#" method="post">
+        <label for="work-lock-password" class="visually-hidden">Password</label>
+        <input type="password" id="work-lock-password" class="work-lock-input" placeholder="Enter password" autocomplete="current-password" autofocus />
+        <button type="submit" class="work-lock-submit">Unlock</button>
+      </form>
+      <p id="work-lock-message" class="work-lock-message" aria-live="assertive"></p>
+    </div>
+  </div>
+
+  <div id="work-content" class="work-lock-hidden">
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6">
@@ -59,7 +73,9 @@
       </div>
     </div>
   </footer>
+  </div>
 
+  <script src="js/work-lock.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
