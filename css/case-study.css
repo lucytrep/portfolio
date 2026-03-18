@@ -243,6 +243,14 @@
   white-space: nowrap;
 }
 
+.case-bullet-heading {
+  display: block;
+  margin: 0 0 var(--space-0_25) 0;
+  font-size: var(--font-size-lg);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
 .case-image-block {
   position: relative;
   width: 100%;
