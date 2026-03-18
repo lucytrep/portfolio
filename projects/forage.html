@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forage — Lucille Trepanier</title>
+  <link rel="icon" href="../assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/case-study.css" />
+</head>
+<body>
+  <header class="container page-header" id="page-header">
+    <div class="grid-12 header-grid">
+      <div class="span-6">
+      <span class="site-name">Lucille Trepanier</span><br />
+      <span class="site-tagline">Product Designer + AI</span>
+      </div>
+      <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="span-6" id="main-nav">
+        <a href="../index.html">Work</a>
+        <a href="../about.html">About</a>
+        <a href="#" target="_blank">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container case-study">
+    <div class="case-layout">
+      <aside class="case-sidebar">
+        <a href="../index.html" class="case-back">Back</a>
+
+        <nav class="case-toc" aria-label="Case study sections">
+          <a href="#overview">Overview</a>
+          <a href="#problem">The Problem</a>
+          <a href="#research-insights">Research Insights</a>
+          <a href="#strategy">Defining the Opportunity</a>
+          <a href="#design-exploration">Design Direction</a>
+          <a href="#testing">Testing &amp; Iteration</a>
+          <a href="#final-solution">Final Product Experience</a>
+          <a href="#results">Impact</a>
+          <a href="#reflection">Reflection</a>
+        </nav>
+      </aside>
+
+      <article class="case-main">
+        <header id="overview" class="case-hero">
+          <p class="case-hero-kicker">Forage • Spot. Gather. Create. • 2026</p>
+          <h1 class="case-hero-title">Forage: Capturing Inspiration at the Speed of Perception</h1>
+
+          <div class="case-hero-image" role="img" aria-label="Forage wearable ring + AI capture overview"></div>
+
+          <dl class="case-meta-grid">
+            <div class="case-meta-item">
+              <dt>Role</dt>
+              <dd>Creative Direction and AI<br />Strategy</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Timeline</dt>
+              <dd>FigBuild 2026 Design Challenge</dd>
+            </div>
+            <div class="case-meta-item" style="margin-left: var(--space-2);">
+              <dt>Shipped</dt>
+              <dd>2026</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Context</dt>
+              <dd>Team: Sooim Kang, Melody Ekbatani<br />Kinza Ghanchi, Lucy Trepanier</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Tools</dt>
+              <dd>
+                Figma, Figma Make, Rhino 3D, Midjourney<br />
+                Adobe Illustrator, After Effects, Premiere Pro<br />
+                ChatGPT, Gemini, Google Docs
+              </dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="case-body">
+          <section id="overview" class="case-section">
+            <p class="case-section-label">Overview</p>
+            <h2 class="case-section-title">Forage: Capturing Inspiration at the Speed of Perception</h2>
+            <div class="case-section-body">
+              <p>
+                Forage is a speculative wearable and AI system designed to give designers a new sensory capability: detect, capture, and analyze moments of creative inspiration directly from the physical world.
+                The system pairs a ring-based hardware sensor with a gesture interaction model and a web-based creative archive—capturing typography, color, motion, and imagery in real time without interrupting the moment of perception.
+              </p>
+              <p>
+                Captured signals are processed by an AI pipeline that extracts structured design assets and organizes them automatically into a searchable personal library.
+                Instead of relying on memory, scattered camera rolls, or fragmented bookmarking tools, designers build a living archive of references sourced from everyday environments.
+                Built for the FigBuild 2026 Design Challenge, the project explores how sensing and manipulating creative inputs can reshape what designers can capture, enhance, and build from over time.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Spot → Gather → Create system overview</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Ring capture + gesture + AI archive flow</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="problem" class="case-section">
+            <p class="case-section-label">The Problem</p>
+            <h2 class="case-section-title">Inspiration Is a Sensory Experience Without a Tool</h2>
+            <div class="case-section-body">
+              <p>
+                Creative professionals perceive the world through heightened sensitivity to visual signals—color gradients, typography on storefronts,
+                the rhythm of ocean waves, and textures in the physical environment.
+                These moments register as inspiration, but the tools available to capture them are fragmented, slow, and context-destroying.
+              </p>
+              <p>
+                Current capture methods all require deliberate interruption: camera rolls accumulate with no organization, screenshots pile up in folders,
+                bookmarking captures only static links, and nothing reliably preserves motion, texture, or atmosphere alongside a reference.
+                The result is a persistent gap between finding inspiration and actually using it.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">In-the-wild inspiration vs interrupted capture</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Static references that lose light, motion, and context</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="research-insights" class="case-section">
+            <p class="case-section-label">Research Insights</p>
+            <h2 class="case-section-title">Inspiration as a Measurable Sense</h2>
+            <div class="case-section-body">
+              <p>
+                The design process began with a reframe: inspiration isn’t primarily a memory problem or an organization problem.
+                It is a sensory phenomenon—environmental signals designers instinctively perceive and respond to.
+              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Beyond five senses</strong>
+                  Inspiration functions like a reflex to visual and environmental patterns, not a conscious step in the process.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>The untracked sense</strong>
+                  Fitness trackers measure bodies; sensors measure environments—none are built to capture creative sensory experience.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Tools interrupt the moment</strong>
+                  Reaching for a phone, framing a photo, or opening an app filters out the very context that created the spark.
+                </div>
+              </div>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Inspiration as a capturable sensory reflex</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Where context gets lost in current capture tools</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="strategy" class="case-section">
+            <p class="case-section-label">Defining the Opportunity</p>
+            <h2 class="case-section-title">Can Inspiration Become a Capturable Sense?</h2>
+            <div class="case-section-body">
+              <p>
+                If inspiration functions like a sense, what would it mean to give designers a tool to detect it, capture it,
+                and build from it over time?
+                The opportunity wasn’t to improve existing capture tools—it was to introduce an entirely new category:
+                a spatial capture system that treats the physical world as a living design library.
+              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Speed of perception</strong>
+                  No deliberate interruption—capture happens instantly when a spark is noticed.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Screenless capture</strong>
+                  Natural hand gestures control capture without unlocking a screen or app.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>AI-assisted organization</strong>
+                  Captures are automatically grouped, tagged, and surfaced as structured references.
+                </div>
+              </div>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Opportunity: a new spatial capture category</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Design principles for capture, gesture, and AI</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="design-exploration" class="case-section">
+            <p class="case-section-label">Design Direction</p>
+            <h2 class="case-section-title">A Three-Layer System: Wearable, AI, and Digital Archive</h2>
+            <div class="case-section-body">
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Hardware: the Forage Ring</strong>
+                  Snap-on module with a micro camera for environmental capture, motion sensors for gesture detection,
+                  and silent haptic feedback to confirm successful captures.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Screenless capture</strong>
+                  Outline in the air to define a capture area; single tap to capture an image reference;
+                  two-finger tap captures color (HEX); two-finger drag captures typography (OCR + font match);
+                  hold and drag captures motion (MP4/GIF preview + timing curve JSON).
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Digital archive: the web app</strong>
+                  A structured library built from four surfaces: Field (recency), Findings (AI clusters), Types (asset browsing), and Boards (project references).
+                </div>
+              </div>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Ring hardware concept + sensor integration</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Gesture capture system + archive surfaces</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="testing" class="case-section">
+            <p class="case-section-label">Testing &amp; Iteration</p>
+            <h2 class="case-section-title">Prototyping a System That Exists Beyond the Screen</h2>
+            <div class="case-section-body">
+              <p>
+                The primary challenge was translating a subjective, invisible experience into something measurable, capturable, and usable.
+                Testing and iteration focused on three areas: the physical hardware form, the gesture interaction model, and the digital interface.
+              </p>
+              <p>
+                Ring prototypes were developed in Rhino 3D to refine ergonomics, sensor placement, and jewelry-like aesthetics.
+                The gesture vocabulary was tested for minimal complexity—achievable one-handed in public—while avoiding accidental triggers.
+                One major design challenge was defining inspiration as data: rather than capturing inspiration itself, Forage focuses on the environmental signals most commonly associated with creative response—color relationships, typographic forms, motion patterns, visual composition, and texture.
+                An interactive Figma prototype was deployed at <strong>forage.figma.site</strong> to validate the full flow from capture through AI organization
+                into board management, confirming how designers mentally organize references across Field, Findings, Types, and Boards.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Rhino 3D ring iterations (ergonomics + camera placement)</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Gesture model testing + Figma prototype flow</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="final-solution" class="case-section">
+            <p class="case-section-label">Final Product Experience</p>
+            <h2 class="case-section-title">The World as a Living Design Library</h2>
+            <div class="case-section-body">
+              <p>
+                The final experience mirrors the natural creative process through three phases: spotting, gathering, and creating.
+              </p>
+              <p>
+                <strong>Spot:</strong> the designer wears the Forage ring throughout the day. Double-tapping activates capture mode with subtle haptic confirmation,
+                and the system passively senses the environment—no screen unlock, no app to open, and no deliberate interruption of attention.
+              </p>
+              <p>
+                <strong>Gather:</strong> when inspiration occurs, the designer draws a loose outline in the air to define the capture region,
+                then performs the appropriate gesture to record the asset type. A soft haptic pulse confirms capture in under one second.
+              </p>
+              <p>
+                <strong>Example scenarios:</strong> a designer walking through the city spots a rhythm in a sidewalk advertisement and captures a structured visual reference;
+                a typographer traces a distinctive letterform on a storefront awning with a two-finger drag to capture typography (OCR + font match);
+                a motion designer holds and drags to record kinetic sculpture rhythm as an MP4/GIF preview plus a timing curve JSON for motion workflows.
+              </p>
+              <p>
+                <strong>Create:</strong> by the time the designer returns to the studio, Field is already organized.
+                AI Findings surface pattern clusters across the day's captures, and assets are available as downloadable files (HEX codes, MP4 clips,
+                timing curves, and font matches) that can be dragged into design files or added to project Boards.
+              </p>
+              <p>
+                <strong>Safeguards:</strong> the system automatically detects and avoids capturing identifiable faces, disables capture in sensitive locations,
+                and keeps all captured signals fully visible and editable in the archive.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Spot → Gather → Create interaction flow</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Safeguards + transparent archive management</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="results" class="case-section">
+            <p class="case-section-label">Impact</p>
+            <h2 class="case-section-title">Transforming Perception Into a Traceable Creative Process</h2>
+            <div class="case-section-body">
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Designer</strong>
+                  Inspiration captured at the moment of perception, reduced cognitive load from managing scattered references,
+                  and a structured, searchable personal archive built automatically.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Creative Workflow</strong>
+                  Design assets extracted and ready for immediate use, AI-organized clusters that reveal patterns across a creative archive,
+                  and direct integration from capture to design files or project Boards.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Creative Wellbeing</strong>
+                  Preserved context that would otherwise be lost, reduced friction between observation and creation,
+                  and a living record of a designer's creative sensibility over time.
+                </div>
+              </div>
+              <p style="margin-top: 1.5rem;">
+                Forage captures color, typography, motion, and imagery from the physical world with a single gesture—reducing the manual organization steps
+                that typically happen after the fact.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">From scattered references to a living inspiration archive</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Impact across workflow + creative wellbeing</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="reflection" class="case-section">
+            <p class="case-section-label">Reflection</p>
+            <h2 class="case-section-title">Designing a New Sense</h2>
+            <div class="case-section-body">
+              <p>
+                This project reframed a problem designers experience daily but rarely articulate clearly:
+                inspiration isn’t a documentation problem—it is a sensory phenomenon that existing tools weren’t designed to address.
+                Committing to that reframe early changed everything about the system architecture, the interaction model, and the product vocabulary.
+              </p>
+              <p>
+                Building a speculative product that operates beyond the constraints of a screen required rethinking what an interface is.
+                The gesture vocabulary, the haptic feedback system, and the wearable form factor became interface decisions that had to function as one coherent experience.
+              </p>
+              <p>
+                The most consequential learning: creative tools are most powerful when they support observation rather than interrupt it.
+                Every feature was evaluated against that principle—and when AI categorization surfaced patterns a designer hadn’t consciously recognized,
+                it created genuine value.
+              </p>
+              <p>
+                <strong>What is next for Forage:</strong> vector shape capture, surface texture and material pattern modes, voice interaction for hands-free annotation,
+                AI-generated design variations based on recurring archive patterns, collaborative inspiration sharing and environmental mapping across cities,
+                and deeper AI modeling of personal creative preferences over time.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Reframing inspiration as a capturable sense</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Observation-first design decisions</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="container page-footer">
+    <div class="grid-12">
+      <div class="span-6">
+        <span class="footer-credit">Designed + coded by</span><br />
+        <span class="footer-name">Lucille Trepanier</span>
+      </div>
+      <div class="span-6 footer-right">
+        <div class="footer-socials">
+          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 2.1 0 3.1-1.2 3.1-1.2"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
+
