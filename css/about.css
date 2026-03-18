@@ -1,0 +1,59 @@
+/* About page only */
+
+.about {
+  padding-inline: var(--container-padding);
+}
+
+.about-hero {
+  padding-top: 11rem;
+  padding-bottom: var(--space-4);
+}
+
+.about-hero-content {
+  grid-column: 1 / -1;
+  max-width: var(--hero-max-width);
+}
+
+.about-label {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--font-size-xs);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.about-title {
+  margin: 0;
+  font-size: var(--font-size-hero);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.01em;
+}
+
+.about-subtitle {
+  margin: var(--space-2) 0 0 0;
+  color: var(--color-muted);
+  line-height: 1.75;
+}
+
+.about-body {
+  padding-bottom: var(--space-5rem);
+}
+
+.about-section {
+  grid-column: 1 / -1;
+  max-width: 52rem;
+}
+
+.about-section-title {
+  margin: 0 0 var(--space-1) 0;
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+}
+
+.about-section-text {
+  margin: 0;
+  color: var(--color-muted);
+  line-height: 1.75;
+}

@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marketplace — Lucille Trepanier</title>
-  <link rel="icon" href="../assets/cursor.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="../css/common.css" />
-  <link rel="stylesheet" href="../css/case-study.css" />
+  <title>About — Lucille Trepanier</title>
+  <link rel="icon" href="assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/about.css" />
 </head>
 <body>
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6">
-      <span class="site-name">Lucille Trepanier</span><br />
-      <span class="site-tagline">Product Designer + AI</span>
+        <span class="site-name">Lucille Trepanier</span><br />
+        <span class="site-tagline">Product Designer + AI</span>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -21,46 +21,37 @@
         <span class="hamburger-bar"></span>
       </button>
       <nav class="span-6" id="main-nav">
-        <a href="../index.html">Work</a>
-        <a href="../about.html">About</a>
-        <a href="#" target="_blank">Resume</a>
+        <a href="work.html">Work</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </div>
   </header>
 
-  <main class="container case-study">
-    <div class="case-layout">
-      <aside class="case-sidebar">
-        <a href="../index.html" class="case-back">Back</a>
-      </aside>
-
-      <article class="case-main">
-        <header class="case-hero">
-          <p class="case-hero-kicker">Marketplace • Case Study</p>
-          <h1 class="case-hero-title">Marketplace experience.</h1>
-        </header>
-
-        <div class="case-body">
-          <section class="case-section">
-            <p class="case-section-label">Overview</p>
-            <h2 class="case-section-title">Overview</h2>
-            <div class="case-section-body">
-              <p>Details for this project are private and accessible only after unlocking via the work page.</p>
-            </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Private project overview (locked)</span>
-              </div>
-              <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Additional artifacts available upon request</span>
-              </div>
-            </div>
-          </section>
+  <main class="container about">
+    <section class="about-hero">
+      <div class="grid-12">
+        <div class="about-hero-content">
+          <p class="about-label">About</p>
+          <h1 class="about-title">Designing thoughtful products with systems thinking.</h1>
+          <p class="about-subtitle">
+            I’m Lucille Trepanier, a product designer focused on clarity, accessibility, and building confident user experiences.
+          </p>
         </div>
-      </article>
-    </div>
+      </div>
+    </section>
+
+    <section class="about-body">
+      <div class="grid-12">
+        <div class="about-section">
+          <h2 class="about-section-title">What I care about</h2>
+          <p class="about-section-text">
+            I’m interested in how product strategy, interaction design, and emerging technology come together to make complex systems feel simple.
+            I design with a bias toward usability, strong hierarchy, and inclusive defaults.
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="container page-footer">
@@ -82,8 +73,6 @@
     </div>
   </footer>
 
-  <script src="../js/private-guard.js"></script>
-  <script src="../js/main.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
-

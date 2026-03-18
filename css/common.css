@@ -65,6 +65,29 @@ body {
   cursor: url('../assets/cursor.svg') 10 10, auto;
 }
 
+/* Global typography balancing */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.hero-headline,
+.case-section-title,
+.project-title {
+  text-wrap: balance;
+}
+
+p,
+.case-section-body,
+.case-section-grid-3-item,
+.project-description {
+  text-wrap: pretty;
+  widows: 2;
+  orphans: 2;
+  line-height: var(--line-height-base);
+}
+
 .container {
   width: var(--container-width);
   max-width: none;
