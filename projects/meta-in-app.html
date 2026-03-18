@@ -12,8 +12,8 @@
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6">
-      <span class="site-name">Lucille Trepanier</span><br />
-      <span class="site-tagline">Product Designer + AI</span>
+        <span class="site-name">Lucille Trepanier</span><br />
+        <span class="site-tagline">Product Designer + AI</span>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -35,23 +35,22 @@
 
         <nav class="case-toc" aria-label="Case study sections">
           <a href="#overview">Overview</a>
-          <a href="#problem">Solution</a>
-          <a href="#research-insights">Research &amp; Insights</a>
-          <a href="#strategy">Strategy</a>
-          <a href="#design-exploration">Design Exploration</a>
-          <a href="#testing">Testing</a>
-          <a href="#final-solution">Final Solution</a>
-          <a href="#results">Results</a>
+          <a href="#problem">The Problem</a>
+          <a href="#research-insights">Research Insights</a>
+          <a href="#strategy">Defining the Opportunity</a>
+          <a href="#design-exploration">Design Direction</a>
+          <a href="#final-solution">Final Product Experience</a>
+          <a href="#results">Impact</a>
           <a href="#reflection">Reflection</a>
         </nav>
       </aside>
 
       <article class="case-main">
         <header id="overview" class="case-hero">
-          <p class="case-hero-kicker">Meta • In-app Experiences • 2025</p>
-          <h1 class="case-hero-title">Designing a flexible in‑app feature framework.</h1>
+          <p class="case-hero-kicker">Facebook Marketplace • Chat • 2025</p>
+          <h1 class="case-hero-title">Redesigning Marketplace Chat for Faster, Clearer Transactions</h1>
 
-          <div class="case-hero-image" role="img" aria-label="Meta in-app feature exploration hero image"></div>
+          <div class="case-hero-image" role="img" aria-label="Meta Facebook Marketplace in-app feature framework hero image"></div>
 
           <dl class="case-meta-grid">
             <div class="case-meta-item">
@@ -60,160 +59,236 @@
             </div>
             <div class="case-meta-item">
               <dt>Timeline</dt>
+              <dd>6.5 weeks</dd>
+            </div>
+            <div class="case-meta-item case-meta-item--shipped">
+              <dt>Shipped</dt>
               <dd>2025</dd>
             </div>
             <div class="case-meta-item">
-              <dt>Team</dt>
-              <dd>1 PM • 2 Designers • 5 Engineers</dd>
+              <dt>Context</dt>
+              <dd>Parsons School of Design – The New School</dd>
             </div>
             <div class="case-meta-item">
-              <dt>Skills</dt>
-              <dd>Product Design • Systems Thinking • Experimentation</dd>
+              <dt>Tools</dt>
+              <dd>Figma, Zoom, Google Docs, Illustrator, ChatGPT</dd>
             </div>
           </dl>
         </header>
 
         <div class="case-body">
-          <section id="problem" class="case-section">
-            <p class="case-section-label">Problem</p>
-            <h2 class="case-section-title">Problem</h2>
+          <section id="overview" class="case-section">
+            <p class="case-section-label">Overview</p>
+            <h2 class="case-section-title">Rethinking How Marketplace Conversations Work</h2>
             <div class="case-section-body">
-              <p>Multiple in‑app surfaces were competing for attention, making it hard for people to understand which features were important and why.</p>
+              <p>
+                Facebook Marketplace connects billions of users, but its chat experience hasn’t evolved to support the scale of interactions happening within it.
+                Buyers and sellers are left navigating cluttered inboxes, unclear message order, and fragmented workflows.
+              </p>
+              <p>
+                This project rethinks Marketplace chat as a structured transaction space—introducing AI summaries, queue visibility, and integrated actions
+                to help users move from conversation to completion more efficiently.
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Entry points competing across the in-app experience</span>
+                <div class="case-media-placeholder">Marketplace entry points across surfaces</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Examples of overlapping surfaces and messaging</span>
+                <div class="case-media-placeholder">Consolidated feature framework overview</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="problem" class="case-section">
+            <p class="case-section-label">The Problem</p>
+            <h2 class="case-section-title">Conversations Without Structure Create Friction</h2>
+            <div class="case-section-body">
+              <p>
+                Marketplace messaging is chaotic. Sellers receive dozens of messages with no clear order, while buyers compete for attention without knowing where they stand.
+              </p>
+              <p>
+                Important signals—like intent, urgency, and availability—are buried inside threads. As a result, users move conversations off-platform,
+                creating fragmented and inefficient transactions.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Audit of overlapping Marketplace surfaces</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Examples of competing banners and modules</div>
               </div>
             </div>
           </section>
 
           <section id="research-insights" class="case-section">
-            <p class="case-section-label">Research &amp; Insights</p>
-            <h2 class="case-section-title">Research &amp; Insights</h2>
+            <p class="case-section-label">Research Insights</p>
+            <h2 class="case-section-title">What Breaks Down in Real Transactions</h2>
             <div class="case-section-body">
-              <p>We reviewed existing entry points, studied comparable products, and spoke with users to learn which surfaces felt noisy versus genuinely helpful.</p>
+              <p>
+                I conducted user interviews and system analysis to understand how people buy and sell through Marketplace, and where communication breaks down.
+              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Messages lack structure</strong>
+                  Users can’t easily track who messaged first, who is still active, or which threads are closest to completing a transaction.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Too much back-and-forth</strong>
+                  Simple transactions require excessive messaging to clarify basics like availability, price, or pickup timing.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Trust is unclear</strong>
+                  Buyers and sellers struggle to identify serious participants, leading to stalled conversations and abandoned threads.
+                </div>
+              </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Entry points inventory</span>
+                <div class="case-media-placeholder">Inventory of Marketplace education and promo surfaces</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Key user quotes</span>
+                <div class="case-media-placeholder">Key research insights and user quotes on noise</div>
               </div>
             </div>
           </section>
 
           <section id="strategy" class="case-section">
-            <p class="case-section-label">Strategy</p>
-            <h2 class="case-section-title">Strategy</h2>
+            <p class="case-section-label">Defining the Opportunity</p>
+            <h2 class="case-section-title">Turning Messaging Into a Decision-Making Tool</h2>
             <div class="case-section-body">
-              <p>The team aligned on a scalable framework that separated evergreen education from time‑boxed announcements, so features could grow without overwhelming people.</p>
+              <p>
+                How might we transform Marketplace chat into a system that not only hosts conversations, but actively supports decision-making and transaction flow?
+              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Make transaction state visible</strong>
+                  Elevate information like “who messaged first,” “who’s waiting,” and “what’s next” so users can quickly prioritize.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Reduce manual coordination</strong>
+                  Bring key actions—like scheduling, confirming price, and sharing pickup details—directly into the conversation space.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Use AI where it truly helps</strong>
+                  Leverage AI to summarize intent and highlight important signals, without replacing human judgment or creating false certainty.
+                </div>
+              </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Framework principles and surface rules</span>
+                <div class="case-media-placeholder">Opportunity mapping across Marketplace journey</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Information hierarchy for evergreen vs time-boxed content</span>
+                <div class="case-media-placeholder">Principles for attention, frequency, and value</div>
               </div>
             </div>
           </section>
 
           <section id="design-exploration" class="case-section">
-            <p class="case-section-label">Design Exploration</p>
-            <h2 class="case-section-title">Design Exploration</h2>
+            <p class="case-section-label">Design Direction</p>
+            <h2 class="case-section-title">Structuring Chat Around Action, Not Just Messages</h2>
             <div class="case-section-body">
-              <p>We explored different combinations of banners, trays, and inline modules to find a balance between visibility and visual calm.</p>
+              <p>
+                I reframed Marketplace chat as more than messaging—it becomes a transaction layer that guides buyers and sellers from inquiry to completion.
+              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Conversation as a queue</strong>
+                  Threads are organized around transaction status and recency, helping sellers see who is next in line and who has dropped off.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>AI-supported, not AI-led</strong>
+                  AI surfaces summaries, key asks, and unresolved details so users can act faster without digging through long histories.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Actions inside the thread</strong>
+                  Scheduling, confirming price, and sharing logistics live inside the conversation, so users don’t have to jump across surfaces to move forward.
+                </div>
+              </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Exploration A</span>
+                <div class="case-media-placeholder">Wireframes of Marketplace trays and inline modules</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Exploration B</span>
-              </div>
-            </div>
-          </section>
-
-          <section id="testing" class="case-section">
-            <p class="case-section-label">Testing</p>
-            <h2 class="case-section-title">Testing</h2>
-            <div class="case-section-body">
-              <p>Lightweight prototypes were tested with existing Meta users to understand which patterns felt trustworthy and which were too interruptive.</p>
-            </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Prototype walkthrough used in testing</span>
-              </div>
-              <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Key findings and iteration notes</span>
+                <div class="case-media-placeholder">Explorations of banner, hub, and nudge combinations</div>
               </div>
             </div>
           </section>
 
           <section id="final-solution" class="case-section">
-            <p class="case-section-label">Final Solution</p>
-            <h2 class="case-section-title">Final Solution</h2>
+            <p class="case-section-label">Final Product Experience</p>
+            <h2 class="case-section-title">A System That Moves Users From Message to Match</h2>
             <div class="case-section-body">
-              <p>The final framework defined a small set of reusable surfaces with clear rules for how often they could appear and what types of messages they supported.</p>
+              <p>
+                The final experience treats Marketplace chat as a structured transaction space, supported by AI summaries, queue visibility, and integrated actions.
+              </p>
+              <p>
+                Buyers and sellers can quickly understand who they’re talking to, what’s been agreed on, and what needs to happen next—whether that’s confirming price,
+                scheduling pickup, or completing payment.
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Final surface set and usage guidance</span>
+                <div class="case-media-placeholder">Final UI examples of Marketplace education hub and trays</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">System overview of reusable patterns</span>
+                <div class="case-media-placeholder">System diagram connecting surfaces, rules, and owners</div>
               </div>
             </div>
           </section>
 
           <section id="results" class="case-section">
-            <p class="case-section-label">Results</p>
-            <h2 class="case-section-title">Results</h2>
+            <p class="case-section-label">Impact</p>
+            <h2 class="case-section-title">Faster Decisions, Fewer Drop-Offs</h2>
             <div class="case-section-body">
-              <p>The new system reduced overlapping surfaces and made it easier for teams to introduce new features without redesigning the entire entry‑point strategy.</p>
+              <p>
+                The redesigned system reduces message overload by prioritizing active, high-intent conversations and making transaction state easier to understand at a glance.
+              </p>
+              <p>
+                By structuring chat around clear actions and AI-supported summaries, buyers and sellers can make decisions faster, with fewer abandoned threads and off-platform detours.
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Before-and-after surface consolidation</span>
+                <div class="case-media-placeholder">Before-and-after comparison of surface usage</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Outcome snapshot and rollout notes</span>
+                <div class="case-media-placeholder">Impact highlights from internal experiments</div>
               </div>
             </div>
           </section>
 
           <section id="reflection" class="case-section">
             <p class="case-section-label">Reflection</p>
-            <h2 class="case-section-title">Reflection</h2>
+            <h2 class="case-section-title">What Designing at Marketplace Scale Taught Me</h2>
             <div class="case-section-body">
-              <p>This work highlighted the importance of pacing and hierarchy when multiple teams share the same in‑app real estate.</p>
+              <p>
+                Designing messaging at scale is about coordination, not just communication.
+              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Design the System</strong>
+                  Creating value in Marketplace chat meant defining how conversations move, not only how messages look.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Humans + AI Roles</strong>
+                  AI is most useful when it summarizes and highlights, while people stay in control of decisions and tone.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Flexibility + Focus</strong>
+                  Giving teams room to experiment works best when it happens inside clear constraints that protect the user experience.
+                </div>
+              </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Key takeaways from cross-team alignment</span>
+                <div class="case-media-placeholder">Reflection summary on system design</div>
               </div>
               <div class="case-image-block">
-                <img class="case-image" src="../assets/axsphere/example.png" alt="" />
-                <span class="case-image-label">Opportunities for future iteration</span>
+                <div class="case-media-placeholder">Future directions for Marketplace education</div>
               </div>
             </div>
           </section>
