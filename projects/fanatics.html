@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fanatics — Lucille Trepanier</title>
+  <link rel="icon" href="../assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/work.css" />
+  <link rel="stylesheet" href="../css/case-study.css" />
+</head>
+<body>
+  <div id="work-lock-screen" class="work-lock-screen" aria-live="polite">
+    <div class="work-lock-screen-inner">
+      <h1 class="work-lock-title">Fanatics</h1>
+      <p class="work-lock-label">This page is private. Enter the password to view the full work list.</p>
+      <form id="work-lock-form" class="work-lock-form" action="#" method="post">
+        <label for="work-lock-password" class="visually-hidden">Password</label>
+        <input type="password" id="work-lock-password" class="work-lock-input" placeholder="Enter password" autocomplete="current-password" autofocus />
+        <button type="submit" class="work-lock-submit">Unlock</button>
+      </form>
+      <p id="work-lock-message" class="work-lock-message" aria-live="assertive"></p>
+    </div>
+  </div>
+
+  <div id="work-content" class="work-lock-hidden">
+  <header class="container page-header" id="page-header">
+    <div class="grid-12 header-grid">
+      <div class="span-6">
+        <span class="site-name">Lucille Trepanier</span><br />
+        <span class="site-tagline">Product Designer + AI</span>
+      </div>
+      <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="span-6" id="main-nav">
+        <a href="../index.html">Work</a>
+        <a href="../about.html">About</a>
+        <a href="#" target="_blank">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container case-study">
+    <div class="case-layout">
+      <aside class="case-sidebar">
+        <a href="../index.html" class="case-back">Back</a>
+
+        <nav class="case-toc" aria-label="Case study sections">
+          <a href="#overview">Overview</a>
+          <a href="#problem">The Problem</a>
+          <a href="#research-insights">Research Insights</a>
+          <a href="#strategy">Defining the Opportunity</a>
+          <a href="#design-exploration">Design Direction</a>
+          <a href="#final-solution">Final Product Experience</a>
+          <a href="#results">Impact</a>
+          <a href="#reflection">Reflection</a>
+        </nav>
+      </aside>
+
+      <article class="case-main">
+        <header id="overview" class="case-hero">
+          <p class="case-hero-kicker">Fanatics • Commerce Experience • Shipped</p>
+          <h1 class="case-hero-title">Designing a faster path from fandom to the right gear.</h1>
+
+          <div class="case-hero-image" role="img" aria-label="Fanatics commerce experience case study hero image"></div>
+
+          <dl class="case-meta-grid">
+            <div class="case-meta-item">
+              <dt>Role</dt>
+              <dd>Product Designer</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Timeline</dt>
+              <dd>Shipped</dd>
+            </div>
+            <div class="case-meta-item case-meta-item--shipped">
+              <dt>Date</dt>
+              <dd>2025</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Context</dt>
+              <dd>Speculative concept focused on discovery + conversion for licensed merch</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Tools</dt>
+              <dd>Figma, Google Docs</dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="case-body">
+          <section id="overview" class="case-section">
+            <p class="case-section-label">Overview</p>
+            <h2 class="case-section-title">Helping fans find the exact item they mean</h2>
+            <div class="case-section-body">
+              <p>
+                Sports merch catalogs are huge, seasonal, and filled with near-duplicates (players, alternates, years, editions).
+                Fans often know what they want, but not the exact product name or filters needed to find it.
+              </p>
+              <p>
+                This concept explores an AI-assisted discovery experience for Fanatics that turns natural language intent into precise browse paths,
+                reduces mis-buys, and increases confidence at checkout.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Catalog complexity + near-duplicate inventory</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">North star: “Find my gear” → refined results → confident purchase</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="problem" class="case-section">
+            <p class="case-section-label">The Problem</p>
+            <h2 class="case-section-title">Search and filters don’t match how fans think</h2>
+            <div class="case-section-body">
+              <p>
+                Fans search with messy real-world language (“retro Knicks hoodie from last year”, “women’s jersey like the one in the playoffs”),
+                but commerce systems require exact names, season tags, and structured filters.
+              </p>
+              <p>
+                The result: high bounce, endless scrolling, and uncertainty about authenticity, fit, and edition.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Failure modes: vague search → irrelevant results</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Confidence gaps: size/fit, authenticity, edition</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="research-insights" class="case-section">
+            <p class="case-section-label">Research Insights</p>
+            <h2 class="case-section-title">Three moments where people abandon</h2>
+            <div class="case-section-body">
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Ambiguous results</strong>
+                  People can’t tell which items match the moment they have in mind (player, year, edition, game).
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Filter overload</strong>
+                  Too many filters, unclear terminology, and hidden constraints make refinement feel like work.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Purchase anxiety</strong>
+                  Fit, returns, and “is this the official one?” uncertainty slows or stops checkout.
+                </div>
+              </div>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Journey map: intent → search → refine → decide</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Top questions at decision time (fit, authenticity, edition)</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="strategy" class="case-section">
+            <p class="case-section-label">Defining the Opportunity</p>
+            <h2 class="case-section-title">Translate intent into a confident decision</h2>
+            <div class="case-section-body">
+              <p>
+                The experience reframes “search” as a guided translation layer: fans express intent naturally, and the system returns a clear result set
+                plus the shortest path to refine.
+              </p>
+              <p>
+                <strong class="case-bullet-heading">Design principles</strong>
+                <span style="display: block; padding-left: 0.5rem;">• Start with intent: natural language and visual cues</span>
+                <span style="display: block; padding-left: 0.5rem;">• Reduce refinement steps: show only the next most-informative filters</span>
+                <span style="display: block; padding-left: 0.5rem;">• Earn trust: authenticity, edition, and return clarity surfaced early</span>
+                <span style="display: block; padding-left: 0.5rem;">• Keep it fast: minimal typing and quick compare behaviors</span>
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Opportunity map: discovery → decision support</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Information architecture: Find, Results, Compare, Checkout</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="design-exploration" class="case-section">
+            <p class="case-section-label">Design Direction</p>
+            <h2 class="case-section-title">Guided search + smart refinement + confident compare</h2>
+            <div class="case-section-body">
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>“Find my gear” entry</strong>
+                  A lightweight prompt that accepts intent (“game”, “player”, “year”, “budget”) and optionally an image reference.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Refinement chips</strong>
+                  The system proposes the top filters that will meaningfully narrow the set, based on the current ambiguity.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Decision support</strong>
+                  Side-by-side compare with edition, material, fit guidance, and return policy visibility.
+                </div>
+              </div>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Wireframes: guided entry + refinement chips</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Compare view: edition + fit + authenticity signals</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="final-solution" class="case-section">
+            <p class="case-section-label">Final Product Experience</p>
+            <h2 class="case-section-title">A faster route to “yes, that’s the one”</h2>
+            <div class="case-section-body">
+              <p>
+                The final concept combines guided entry, adaptive refinement chips, and a compare-first shopping flow that surfaces the
+                most confidence-building details early.
+              </p>
+              <p>
+                Instead of teaching users to search like a database, the system translates how fans talk about teams, moments, and players into
+                concrete product matches.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">High-fidelity mocks: results + compare</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Checkout confidence: size/fit + returns + authenticity</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="results" class="case-section">
+            <p class="case-section-label">Impact</p>
+            <h2 class="case-section-title">Reducing uncertainty in discovery and checkout</h2>
+            <div class="case-section-body">
+              <p>
+                Intended outcomes: higher search success rate, fewer refinements to purchase, lower return rates driven by edition/fit confusion,
+                and improved conversion for high-intent shoppers.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Success metrics (concept): search success + conversion</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Qualitative outcomes: trust + speed + confidence</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="reflection" class="case-section">
+            <p class="case-section-label">Reflection</p>
+            <h2 class="case-section-title">The product is the translation layer</h2>
+            <div class="case-section-body">
+              <p>
+                For large catalogs, the biggest design opportunity is often not adding inventory or more filters—it’s making intent legible,
+                and shaping the fastest path to a confident decision.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">What I’d test next: chip suggestions + compare behavior</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Future: live drops, team moments, and personalized collections</div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="container page-footer">
+    <div class="grid-12">
+      <div class="span-6">
+        <span class="footer-credit">Designed + coded by</span><br />
+        <span class="footer-name">Lucille Trepanier</span>
+      </div>
+      <div class="span-6 footer-right">
+        <div class="footer-socials">
+          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+          </a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.07 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.07 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 2.1 0 3.1-1.2 3.1-1.2"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  </div>
+
+  <script src="../js/work-lock.js"></script>
+  <script src="../js/main.js"></script>
+</body>
+</html>

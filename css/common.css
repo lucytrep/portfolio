@@ -74,6 +74,13 @@ body {
   background: var(--color-background);
   color: var(--color-text);
   font-family: var(--font-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 /* Hide native cursor when JS custom cursor is enabled */
@@ -256,6 +263,12 @@ p,
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+}
+
+.page-header nav a[aria-current='page'] {
+  font-weight: 400;
+  text-decoration: none;
+  color: #b184ff;
 }
 
 .page-header nav a + a {

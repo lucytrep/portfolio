@@ -110,3 +110,14 @@
     grid-column: span 6;
   }
 }
+
+/* Ensure footer sits at bottom on short pages */
+#work-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#work-content main {
+  flex: 1;
+}

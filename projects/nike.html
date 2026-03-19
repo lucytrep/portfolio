@@ -3,12 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meta In-App Feature Exploration — Lucille Trepanier</title>
+  <title>Nike — Lucille Trepanier</title>
   <link rel="icon" href="../assets/cursor.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../css/common.css" />
+  <link rel="stylesheet" href="../css/work.css" />
   <link rel="stylesheet" href="../css/case-study.css" />
 </head>
 <body>
+  <div id="work-lock-screen" class="work-lock-screen" aria-live="polite">
+    <div class="work-lock-screen-inner">
+      <h1 class="work-lock-title">Nike</h1>
+      <p class="work-lock-label">This page is private. Enter the password to view the full work list.</p>
+      <form id="work-lock-form" class="work-lock-form" action="#" method="post">
+        <label for="work-lock-password" class="visually-hidden">Password</label>
+        <input type="password" id="work-lock-password" class="work-lock-input" placeholder="Enter password" autocomplete="current-password" autofocus />
+        <button type="submit" class="work-lock-submit">Unlock</button>
+      </form>
+      <p id="work-lock-message" class="work-lock-message" aria-live="assertive"></p>
+    </div>
+  </div>
+
+  <div id="work-content" class="work-lock-hidden">
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6">
@@ -47,10 +62,10 @@
 
       <article class="case-main">
         <header id="overview" class="case-hero">
-          <p class="case-hero-kicker">Facebook Marketplace • Chat • 2025</p>
-          <h1 class="case-hero-title">Redesigning Marketplace Chat for Faster, Clearer Transactions</h1>
+          <p class="case-hero-kicker">Nike • Member Experience • Shipped</p>
+          <h1 class="case-hero-title">Designing an AI training companion that turns intent into consistent action.</h1>
 
-          <div class="case-hero-image" role="img" aria-label="Meta Facebook Marketplace in-app feature framework hero image"></div>
+          <div class="case-hero-image" role="img" aria-label="Nike training companion case study hero image"></div>
 
           <dl class="case-meta-grid">
             <div class="case-meta-item">
@@ -59,19 +74,19 @@
             </div>
             <div class="case-meta-item">
               <dt>Timeline</dt>
-              <dd>6.5 weeks</dd>
+              <dd>Shipped</dd>
             </div>
             <div class="case-meta-item case-meta-item--shipped">
               <dt>Date</dt>
-              <dd>2025</dd>
+              <dd>2024</dd>
             </div>
             <div class="case-meta-item">
               <dt>Context</dt>
-              <dd>Parsons School of Design – The New School</dd>
+              <dd>Speculative concept focused on member retention + habit formation</dd>
             </div>
             <div class="case-meta-item">
               <dt>Tools</dt>
-              <dd>Figma, Zoom, Google Docs, Illustrator, ChatGPT</dd>
+              <dd>Figma, Google Docs</dd>
             </div>
           </dl>
         </header>
@@ -79,216 +94,187 @@
         <div class="case-body">
           <section id="overview" class="case-section">
             <p class="case-section-label">Overview</p>
-            <h2 class="case-section-title">Rethinking How Marketplace Conversations Work</h2>
+            <h2 class="case-section-title">From “I want to train” to a plan that adapts in real life</h2>
             <div class="case-section-body">
               <p>
-                Facebook Marketplace connects billions of users, but its chat experience hasn’t evolved to support the scale of interactions happening within it.
-                Buyers and sellers are left navigating cluttered inboxes, unclear message order, and fragmented workflows.
+                Nike members often start with a clear goal—run a 5K, lift consistently, return from an injury—but daily variability makes it hard
+                to sustain a plan.
               </p>
               <p>
-                This project rethinks Marketplace chat as a structured transaction space—introducing AI summaries, queue visibility, and integrated actions
-                to help users move from conversation to completion more efficiently.
+                This concept explores an AI training companion inside the Nike ecosystem that personalizes plans, adjusts to recovery and schedule changes,
+                and reduces the decision fatigue that causes drop-off.
               </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Marketplace entry points across surfaces</div>
+                <div class="case-media-placeholder">Ecosystem map: plan → workouts → recovery → retail loop</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Consolidated feature framework overview</div>
+                <div class="case-media-placeholder">North star flow: goal intake → adaptive plan → day-of coaching</div>
               </div>
             </div>
           </section>
 
           <section id="problem" class="case-section">
             <p class="case-section-label">The Problem</p>
-            <h2 class="case-section-title">Conversations Without Structure Create Friction</h2>
+            <h2 class="case-section-title">Consistency breaks when the plan can’t flex</h2>
             <div class="case-section-body">
               <p>
-                Marketplace messaging is chaotic. Sellers receive dozens of messages with no clear order, while buyers compete for attention without knowing where they stand.
+                Training plans are usually built for ideal conditions. In reality, people miss days, change schedules, feel soreness, travel, or lose motivation.
+                When plans don’t adapt, users either abandon the plan or overcorrect.
               </p>
               <p>
-                Important signals—like intent, urgency, and availability—are buried inside threads. As a result, users move conversations off-platform,
-                creating fragmented and inefficient transactions.
+                The challenge is to support progress without requiring perfect discipline.
               </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Audit of overlapping Marketplace surfaces</div>
+                <div class="case-media-placeholder">Decision fatigue: “what should I do today?”</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Examples of competing banners and modules</div>
+                <div class="case-media-placeholder">Drop-off moments: missed day → guilt → abandonment</div>
               </div>
             </div>
           </section>
 
           <section id="research-insights" class="case-section">
             <p class="case-section-label">Research Insights</p>
-            <h2 class="case-section-title">What Breaks Down in Real Transactions</h2>
+            <h2 class="case-section-title">People want coaching, not more tracking</h2>
             <div class="case-section-body">
-              <p>
-                I conducted user interviews and system analysis to understand how people buy and sell through Marketplace, and where communication breaks down.
-              </p>
               <div class="case-section-grid-3">
                 <div class="case-section-grid-3-item">
-                  <strong>Messages lack structure</strong>
-                  Users can’t easily track who messaged first, who is still active, or which threads are closest to completing a transaction.
+                  <strong>Plans need “make-up” logic</strong>
+                  Missing a day shouldn’t reset the whole journey—users need a safe way back in.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Too much back-and-forth</strong>
-                  Simple transactions require excessive messaging to clarify basics like availability, price, or pickup timing.
+                  <strong>Recovery is the blind spot</strong>
+                  People struggle to understand soreness, sleep, and load—so they either do too much or stop entirely.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Trust is unclear</strong>
-                  Buyers and sellers struggle to identify serious participants, leading to stalled conversations and abandoned threads.
+                  <strong>Motivation is contextual</strong>
+                  Small wins, streak protection, and day-of guidance matter more than long dashboards.
                 </div>
               </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Inventory of Marketplace education and promo surfaces</div>
+                <div class="case-media-placeholder">Insight synthesis board</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Key research insights and user quotes on noise</div>
+                <div class="case-media-placeholder">Behavior loop: cue → action → reward → identity</div>
               </div>
             </div>
           </section>
 
           <section id="strategy" class="case-section">
             <p class="case-section-label">Defining the Opportunity</p>
-            <h2 class="case-section-title">Turning Messaging Into a Decision-Making Tool</h2>
+            <h2 class="case-section-title">A flexible plan with one clear next step</h2>
             <div class="case-section-body">
               <p>
-                How might we transform Marketplace chat into a system that not only hosts conversations, but actively supports decision-making and transaction flow?
+                The concept centers on reducing “what do I do today?” into a single adaptive recommendation that considers goal, time, recovery, and history.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Make transaction state visible</strong>
-                  Elevate information like “who messaged first,” “who’s waiting,” and “what’s next” so users can quickly prioritize.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Reduce manual coordination</strong>
-                  Bring key actions—like scheduling, confirming price, and sharing pickup details—directly into the conversation space.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Use AI where it truly helps</strong>
-                  Leverage AI to summarize intent and highlight important signals, without replacing human judgment or creating false certainty.
-                </div>
-              </div>
+              <p>
+                <strong class="case-bullet-heading">Design principles</strong>
+                <span style="display: block; padding-left: 0.5rem;">• Keep the user in control: suggestions, not prescriptions</span>
+                <span style="display: block; padding-left: 0.5rem;">• Be explicit about trade-offs: speed vs recovery vs consistency</span>
+                <span style="display: block; padding-left: 0.5rem;">• Make re-entry easy: protect streaks and offer “return” workouts</span>
+                <span style="display: block; padding-left: 0.5rem;">• Reward consistency, not perfection</span>
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Opportunity mapping across Marketplace journey</div>
+                <div class="case-media-placeholder">Opportunity framing + job stories</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Principles for attention, frequency, and value</div>
+                <div class="case-media-placeholder">Information architecture: Today, Plan, Insights, Gear</div>
               </div>
             </div>
           </section>
 
           <section id="design-exploration" class="case-section">
             <p class="case-section-label">Design Direction</p>
-            <h2 class="case-section-title">Structuring Chat Around Action, Not Just Messages</h2>
+            <h2 class="case-section-title">An AI companion embedded in the Nike ecosystem</h2>
             <div class="case-section-body">
-              <p>
-                I reframed Marketplace chat as more than messaging—it becomes a transaction layer that guides buyers and sellers from inquiry to completion.
-              </p>
               <div class="case-section-grid-3">
                 <div class="case-section-grid-3-item">
-                  <strong>Conversation as a queue</strong>
-                  Threads are organized around transaction status and recency, helping sellers see who is next in line and who has dropped off.
+                  <strong>Goal intake</strong>
+                  A short setup that translates intent into constraints: time, frequency, equipment, injury context, and preferences.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>AI-supported, not AI-led</strong>
-                  AI surfaces summaries, key asks, and unresolved details so users can act faster without digging through long histories.
+                  <strong>Adaptive “Today” card</strong>
+                  One recommendation with an explanation and alternatives (shorter, easier, or more intense).
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Actions inside the thread</strong>
-                  Scheduling, confirming price, and sharing logistics live inside the conversation, so users don’t have to jump across surfaces to move forward.
+                  <strong>Recovery-aware adjustments</strong>
+                  When users report soreness or low energy, the system adapts load and suggests recovery work.
                 </div>
               </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Wireframes of Marketplace trays and inline modules</div>
+                <div class="case-media-placeholder">Flow: setup → first week plan → day-of changes</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Explorations of banner, hub, and nudge combinations</div>
+                <div class="case-media-placeholder">Wireframes: Today card + alternatives + rationale</div>
               </div>
             </div>
           </section>
 
           <section id="final-solution" class="case-section">
             <p class="case-section-label">Final Product Experience</p>
-            <h2 class="case-section-title">A System That Moves Users From Message to Match</h2>
+            <h2 class="case-section-title">Clarity first: one next step, with context</h2>
             <div class="case-section-body">
               <p>
-                The final experience treats Marketplace chat as a structured transaction space, supported by AI summaries, queue visibility, and integrated actions.
+                The final concept emphasizes a lightweight daily flow: open the app, see one recommended next action, and start.
+                Users can swap the workout, shorten it, or convert to recovery with transparent impact on the plan.
               </p>
               <p>
-                Buyers and sellers can quickly understand who they’re talking to, what’s been agreed on, and what needs to happen next—whether that’s confirming price,
-                scheduling pickup, or completing payment.
+                The companion also supports “make-up logic” after missed days by reshaping the plan rather than restarting it.
               </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Final UI examples of Marketplace education hub and trays</div>
+                <div class="case-media-placeholder">High-fidelity mocks: Today card + workout detail</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">System diagram connecting surfaces, rules, and owners</div>
+                <div class="case-media-placeholder">Make-up logic: missed day → plan reshapes</div>
               </div>
             </div>
           </section>
 
           <section id="results" class="case-section">
             <p class="case-section-label">Impact</p>
-            <h2 class="case-section-title">Faster Decisions, Fewer Drop-Offs</h2>
+            <h2 class="case-section-title">Supporting consistency through adaptability</h2>
             <div class="case-section-body">
               <p>
-                The redesigned system reduces message overload by prioritizing active, high-intent conversations and making transaction state easier to understand at a glance.
-              </p>
-              <p>
-                By structuring chat around clear actions and AI-supported summaries, buyers and sellers can make decisions faster, with fewer abandoned threads and off-platform detours.
+                Intended outcomes: reduced decision fatigue, smoother re-entry after missed days, and clearer feedback loops that prioritize consistency.
               </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Before-and-after comparison of surface usage</div>
+                <div class="case-media-placeholder">Success metrics (concept): weekly active training + plan adherence</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Impact highlights from internal experiments</div>
+                <div class="case-media-placeholder">Qualitative outcomes: confidence + reduced guilt</div>
               </div>
             </div>
           </section>
 
           <section id="reflection" class="case-section">
             <p class="case-section-label">Reflection</p>
-            <h2 class="case-section-title">What Designing at Marketplace Scale Taught Me</h2>
+            <h2 class="case-section-title">Designing AI for trust requires legibility</h2>
             <div class="case-section-body">
               <p>
-                Designing messaging at scale is about coordination, not just communication.
+                The key design challenge is not generating a plan—it’s communicating why a recommendation changed and what the user can do about it.
+                This concept prioritizes transparency and user control to build trust in adaptive coaching.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Design the System</strong>
-                  Creating value in Marketplace chat meant defining how conversations move, not only how messages look.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Humans + AI Roles</strong>
-                  AI is most useful when it summarizes and highlights, while people stay in control of decisions and tone.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Flexibility + Focus</strong>
-                  Giving teams room to experiment works best when it happens inside clear constraints that protect the user experience.
-                </div>
-              </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
-                <div class="case-media-placeholder">Reflection summary on system design</div>
+                <div class="case-media-placeholder">What I’d test next: explanation UI + swap behavior</div>
               </div>
               <div class="case-image-block">
-                <div class="case-media-placeholder">Future directions for Marketplace education</div>
+                <div class="case-media-placeholder">Future: cross-sport planning and community accountability</div>
               </div>
             </div>
           </section>
@@ -316,7 +302,9 @@
     </div>
   </footer>
 
+  </div>
+
+  <script src="../js/work-lock.js"></script>
   <script src="../js/main.js"></script>
 </body>
 </html>
-

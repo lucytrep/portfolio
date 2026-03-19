@@ -14,6 +14,55 @@
   max-width: var(--hero-max-width);
 }
 
+.about-hero-media {
+  grid-column: 1 / -1;
+  margin-top: var(--space-3);
+}
+
+.about-hero-imageSwap {
+  width: 100%;
+  aspect-ratio: 7 / 8;
+  background: var(--color-bg-subtle);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.about-hero-image--hover {
+  opacity: 0;
+  object-position: 50% 30%;
+  transition: opacity 700ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-hero-imageSwap:hover .about-hero-image--hover {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 48rem) {
+  .about-hero-content {
+    grid-column: 1 / span 7;
+    max-width: none;
+  }
+
+  .about-hero-media {
+    grid-column: 9 / -1;
+    margin-top: 0;
+    align-self: start;
+  }
+}
+
 .about-label {
   margin: 0 0 var(--space-1) 0;
   font-size: var(--font-size-xs);

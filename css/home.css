@@ -2,7 +2,7 @@
 
 .section-hero {
   padding-top: 11rem;
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
 }
 
 .hero-content {
@@ -83,6 +83,11 @@
   font-size: var(--font-size-nav);
   font-weight: 400;
   color: var(--color-light);
+}
+
+.project-year .meta-sep {
+  display: inline-block;
+  margin: 0 0.35rem;
 }
 
 .project-description {
