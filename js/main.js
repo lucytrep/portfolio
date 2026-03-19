@@ -1,6 +1,37 @@
 (function () {
   document.body.classList.add('has-custom-cursor');
 
+  // Remember per-page scroll position and restore it on return.
+  (function () {
+    if (!window.sessionStorage) return;
+    var key = 'scroll:' + window.location.pathname;
+
+    function saveScroll() {
+      try {
+        window.sessionStorage.setItem(key, String(window.scrollY || 0));
+      } catch (e) {}
+    }
+
+    // Restore only when there is no hash target in the URL.
+    if (!window.location.hash) {
+      var saved = window.sessionStorage.getItem(key);
+      if (saved !== null) {
+        var y = parseInt(saved, 10);
+        if (!isNaN(y) && y > 0) {
+          window.requestAnimationFrame(function () {
+            window.requestAnimationFrame(function () {
+              window.scrollTo(0, y);
+            });
+          });
+        }
+      }
+    }
+
+    window.addEventListener('scroll', saveScroll, { passive: true });
+    window.addEventListener('pagehide', saveScroll);
+    window.addEventListener('beforeunload', saveScroll);
+  })();
+
   var header = document.getElementById('page-header');
   var hamburger = header && header.querySelector('.hamburger');
   if (header && hamburger) {
