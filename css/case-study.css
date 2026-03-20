@@ -108,11 +108,20 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   border-radius: 1.5rem;
+  overflow: hidden;
+  border: 0.5px solid #6b6b6b;
   background: radial-gradient(circle at 0% 0%, #ffd6ff 0%, #f9e3ff 25%, transparent 55%),
               radial-gradient(circle at 100% 0%, #ffe4c4 0%, #ffcba4 30%, transparent 60%),
               radial-gradient(circle at 0% 100%, #c3e5ff 0%, #9fd4ff 35%, transparent 60%),
               radial-gradient(circle at 100% 100%, #f8d4ff 0%, #f1c0ff 40%, transparent 65%),
               linear-gradient(135deg, #f7f2ff 0%, #ffe7d9 40%, #ffd7f6 75%, #f0f6ff 100%);
+}
+
+.case-hero-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .case-meta-grid {

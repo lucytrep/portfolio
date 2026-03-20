@@ -246,6 +246,53 @@ p,
   letter-spacing: 0.02em;
 }
 
+/* Animated logo (replaces site-name) */
+.page-header .site-logo {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  background: transparent;
+}
+
+.page-header .site-logo-inner {
+  display: block;
+  position: relative;
+  height: 1rem;
+  width: auto;
+  max-width: 9.5rem;
+  background: transparent;
+}
+
+.page-header .site-logo-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: auto;
+  max-width: 9.5rem;
+  object-fit: contain;
+  object-position: left center;
+  opacity: 0;
+  background: transparent;
+  animation: site-logo-cycle 3s steps(1) infinite;
+}
+
+.page-header .site-logo:hover .site-logo-img {
+  animation-play-state: paused;
+}
+
+.page-header .site-logo-img:nth-child(1) { animation-delay: 0s; }
+.page-header .site-logo-img:nth-child(2) { animation-delay: 0.5s; }
+.page-header .site-logo-img:nth-child(3) { animation-delay: 1s; }
+.page-header .site-logo-img:nth-child(4) { animation-delay: 1.5s; }
+.page-header .site-logo-img:nth-child(5) { animation-delay: 2s; }
+.page-header .site-logo-img:nth-child(6) { animation-delay: 2.5s; }
+
+@keyframes site-logo-cycle {
+  0%, 16.666% { opacity: 1; }
+  16.667%, 100% { opacity: 0; }
+}
+
 .page-header .site-tagline {
   display: block;
   font-size: var(--font-size-sm);
