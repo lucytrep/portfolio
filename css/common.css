@@ -91,7 +91,7 @@ body.has-custom-cursor * {
 
 /* Cursor pill (project hover) */
 .cursor-pill {
-  --cursor-dot-size: 26px;
+  --cursor-dot-size: 18px;
   --cursor-pill-expanded-width: 172px;
   --cursor-pill-padding-x: 10px;
   position: fixed;
@@ -257,9 +257,9 @@ p,
 .page-header .site-logo-inner {
   display: block;
   position: relative;
-  height: 1rem;
-  width: auto;
-  max-width: 9.5rem;
+  height: 0.75rem;
+  width: 7rem;
+  max-width: 7rem;
   background: transparent;
 }
 
@@ -268,8 +268,8 @@ p,
   left: 0;
   top: 0;
   height: 100%;
-  width: auto;
-  max-width: 9.5rem;
+  width: 100%;
+  max-width: 7rem;
   object-fit: contain;
   object-position: left center;
   opacity: 0;
