@@ -117,6 +117,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center calc(50% + 3rem);
   display: block;
 }
 
@@ -351,5 +352,25 @@
 
   .case-section-grid-3 {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 23.4375rem) {
+  .case-study {
+    padding-top: var(--space-4);
+    padding-bottom: var(--space-4);
+  }
+
+  .case-hero-title {
+    font-size: clamp(1.35rem, 5.5vw, 2.25rem);
+  }
+
+  .case-section-title {
+    font-size: var(--font-size-base);
+  }
+
+  .case-main,
+  .case-section-body {
+    min-width: 0;
   }
 }

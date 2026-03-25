@@ -92,12 +92,10 @@
             <h2 class="case-section-title">Rethinking How Marketplace Conversations Work</h2>
             <div class="case-section-body">
               <p>
-                Facebook Marketplace connects billions of users, but its chat experience hasn’t evolved to support the scale of interactions happening within it.
-                Buyers and sellers are left navigating cluttered inboxes, unclear message order, and fragmented workflows.
+                This project restructures unstructured Marketplace conversations into guided transaction flows. AI summaries, buyer prioritization, scheduling, and payments work together as a connected system—not isolated features.
               </p>
               <p>
-                This project rethinks Marketplace chat as a structured transaction space—introducing AI summaries, queue visibility, and integrated actions
-                to help users move from conversation to completion more efficiently.
+                The goal is to improve transaction outcomes. Users move from first message to completed exchange with less confusion, fewer dropped threads, and clearer next steps at every stage.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -115,11 +113,13 @@
             <h2 class="case-section-title">Conversations Without Structure Create Friction</h2>
             <div class="case-section-body">
               <p>
-                Marketplace messaging is chaotic. Sellers receive dozens of messages with no clear order, while buyers compete for attention without knowing where they stand.
+                Marketplace conversations break down at scale. Sellers receive many messages on a single listing with no way to identify serious buyers. Buyers cannot tell if an item is still available, when they might get a response, or what happens next.
               </p>
               <p>
-                Important signals—like intent, urgency, and availability—are buried inside threads. As a result, users move conversations off-platform,
-                creating fragmented and inefficient transactions.
+                As threads grow, intent gets buried. Users repeat the same questions. Coordination becomes manual. Many move off platform to texting—which reduces trust, removes visibility, and increases the chance that transactions never complete.
+              </p>
+              <p>
+                The core issue is not messaging itself. The system does not provide structure to help users make decisions or complete a transaction.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -137,22 +137,14 @@
             <h2 class="case-section-title">What Breaks Down in Real Transactions</h2>
             <div class="case-section-body">
               <p>
-                I conducted user interviews and system analysis to understand how people buy and sell through Marketplace, and where communication breaks down.
+                User interviews confirmed what I suspected: people struggled to track multiple chats, understand who was serious, and move from interest to action. As message volume increased, conversations became harder to follow and decisions were delayed.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Messages lack structure</strong>
-                  Users can’t easily track who messaged first, who is still active, or which threads are closest to completing a transaction.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Too much back-and-forth</strong>
-                  Simple transactions require excessive messaging to clarify basics like availability, price, or pickup timing.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Trust is unclear</strong>
-                  Buyers and sellers struggle to identify serious participants, leading to stalled conversations and abandoned threads.
-                </div>
-              </div>
+              <p>
+                This led me to look beyond Marketplace. I studied platforms like Depop and eBay that handle high volumes of buyer-seller interaction. Across these systems, a few patterns stood out. Visibility drives action—users act when important information is clearly surfaced. Structure reduces cognitive load—structured interactions are easier to navigate than open conversations. Defaults shape behavior—simple, guided actions lead users toward outcomes more effectively than freeform choice.
+              </p>
+              <p>
+                The takeaway was clear. The issue is not messaging. It’s the lack of structure around it.
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
@@ -169,22 +161,11 @@
             <h2 class="case-section-title">Turning Messaging Into a Decision-Making Tool</h2>
             <div class="case-section-body">
               <p>
-                How might we transform Marketplace chat into a system that not only hosts conversations, but actively supports decision-making and transaction flow?
+                If unstructured messaging fails at scale, the opportunity is to introduce structure directly into the conversation itself. Instead of expecting users to manage everything manually, the system can guide them through key steps: identifying intent, coordinating details, completing the transaction.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Make transaction state visible</strong>
-                  Elevate information like “who messaged first,” “who’s waiting,” and “what’s next” so users can quickly prioritize.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Reduce manual coordination</strong>
-                  Bring key actions—like scheduling, confirming price, and sharing pickup details—directly into the conversation space.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Use AI where it truly helps</strong>
-                  Leverage AI to summarize intent and highlight important signals, without replacing human judgment or creating false certainty.
-                </div>
-              </div>
+              <p>
+                How might we structure Marketplace conversations so users move from first message to completed transaction?
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
@@ -201,22 +182,14 @@
             <h2 class="case-section-title">Structuring Chat Around Action, Not Just Messages</h2>
             <div class="case-section-body">
               <p>
-                I reframed Marketplace chat as more than messaging—it becomes a transaction layer that guides buyers and sellers from inquiry to completion.
+                I approached this as system design, not feature ideation. The shift was from freeform chat to guided interactions—surfacing next steps, introducing prioritization logic, and reducing the decisions users had to make on their own.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Conversation as a queue</strong>
-                  Threads are organized around transaction status and recency, helping sellers see who is next in line and who has dropped off.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>AI-supported, not AI-led</strong>
-                  AI surfaces summaries, key asks, and unresolved details so users can act faster without digging through long histories.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Actions inside the thread</strong>
-                  Scheduling, confirming price, and sharing logistics live inside the conversation, so users don’t have to jump across surfaces to move forward.
-                </div>
-              </div>
+              <p>
+                Early ideas included manual sorting and tagging tools. Those required too much effort from users and would not scale. The solution had to guide behavior within the chat itself, not add more work outside it.
+              </p>
+              <p>
+                I focused on system logic: what the interface should surface (key information, suggested actions), how buyers should be prioritized, and where users needed clarity on next steps. The result feels like a deliberate product strategy, not a collection of features.
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
@@ -229,26 +202,20 @@
           </section>
 
           <section id="testing" class="case-section">
-            <p class="case-section-label">Testing &amp; Iteration</p>
-            <h2 class="case-section-title">Narrowing focus through real feedback</h2>
+            <p class="case-section-label">Test &amp; Iterate</p>
+            <h2 class="case-section-title">Test &amp; Iterate</h2>
             <div class="case-section-body">
               <p>
-                I put mid-fi prototypes in front of a mix of people including peers, classmates, and Parsons graduate alumni brought in for feedback.
-                That session was a turning point.
+                I tested full conversation flows, not just individual UI pieces. The goal was to see if structured interactions could help users act more quickly—identifying serious buyers, scheduling within chat, moving from conversation to payment.
               </p>
               <p>
-                The honest takeaway was that I had tried to tackle too much.
-                The feature scope was wide, and the feedback helped me see that clearly.
-                The alumni in particular pushed me to narrow in on what actually mattered, which led me to focus on the chat experience and how conversations flow, or more accurately, how they fail to.
+                I tested these flows because they represent the critical path from first message to completed transaction. Isolated features would not tell me if the system held together.
               </p>
               <p>
-                From there I reconsidered how and where AI should show up in the experience.
-                Rather than layering it across multiple surfaces, I pulled it back to where it could do the most useful work, inside the conversation itself.
-                I also revisited which UI patterns to draw from and why, making sure the decisions felt grounded rather than decorative.
+                The results were clear. Users preferred guided actions over typing repeated messages. Visibility into intent reduced confusion. Full flows were more effective than isolated components.
               </p>
               <p>
-                The second round of feedback validated that tighter focus.
-                Simplifying the scope made everything sharper, and the final direction felt much more intentional because of it.
+                This changed the design. I stopped layering features across surfaces and focused on connected experiences inside the conversation itself. The scope tightened, and the direction became more intentional.
               </p>
             </div>
           </section>
@@ -258,11 +225,10 @@
             <h2 class="case-section-title">A System That Moves Users From Message to Match</h2>
             <div class="case-section-body">
               <p>
-                The final experience treats Marketplace chat as a structured transaction space, supported by AI summaries, queue visibility, and integrated actions.
+                The final solution is a cohesive system. AI summaries reduce cognitive load so users do not need to scroll through long threads. A queue system helps sellers prioritize buyers and manage multiple conversations. Scheduling removes back-and-forth by letting users select and confirm times directly in chat. Payments complete the transaction loop without leaving the platform.
               </p>
               <p>
-                Buyers and sellers can quickly understand who they’re talking to, what’s been agreed on, and what needs to happen next—whether that’s confirming price,
-                scheduling pickup, or completing payment.
+                The system also handles edge cases. Multiple buyers are managed through the queue. Users can choose cash or in-app payment depending on preference. Buyers and sellers each see clear next steps based on their role—so the experience adapts to who you are and where you are in the flow.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -280,10 +246,10 @@
             <h2 class="case-section-title">Faster Decisions, Fewer Drop-Offs</h2>
             <div class="case-section-body">
               <p>
-                The redesigned system reduces message overload by prioritizing active, high-intent conversations and making transaction state easier to understand at a glance.
+                Adding structure reduces message overload, speeds up transactions, and improves trust. Users understand intent more clearly and coordinate faster. Fewer conversations are abandoned mid-flow.
               </p>
               <p>
-                By structuring chat around clear actions and AI-supported summaries, buyers and sellers can make decisions faster, with fewer abandoned threads and off-platform detours.
+                This ties back to the original problem. Conversations no longer break down at scale. Buyers and sellers stay on platform. Transaction outcomes improve because the system supports completion, not just communication.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -301,22 +267,11 @@
             <h2 class="case-section-title">What Designing at Marketplace Scale Taught Me</h2>
             <div class="case-section-body">
               <p>
-                Designing messaging at scale is about coordination, not just communication.
+                This project reinforced the importance of designing systems, not individual features. At scale, unstructured conversations create confusion. Structuring behavior through the interface—guiding users toward outcomes instead of leaving them to figure it out—makes the difference.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Design the System</strong>
-                  Creating value in Marketplace chat meant defining how conversations move, not only how messages look.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Humans + AI Roles</strong>
-                  AI is most useful when it summarizes and highlights, while people stay in control of decisions and tone.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Flexibility + Focus</strong>
-                  Giving teams room to experiment works best when it happens inside clear constraints that protect the user experience.
-                </div>
-              </div>
+              <p>
+                Next, I would validate the full flows with more users, stress-test edge cases like high-volume sellers, and measure impact on transaction completion rates and trust. The system is designed to scale; the next step is proving it does.
+              </p>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">

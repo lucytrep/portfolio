@@ -95,6 +95,28 @@
   max-width: 52rem;
 }
 
+@media (max-width: 50rem) {
+  .about-hero {
+    padding-top: 7rem;
+  }
+
+  .about-hero-content {
+    max-width: none;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 23.4375rem) {
+  .about-hero {
+    padding-top: 5.5rem;
+  }
+
+  .about-title {
+    font-size: clamp(1.25rem, 5.2vw, 1.625rem);
+  }
+}
+
 .about-section-title {
   margin: 0 0 var(--space-1) 0;
   font-size: var(--font-size-lg);
