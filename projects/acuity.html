@@ -135,7 +135,6 @@
                   "I still don't know if this is serious enough to trouble the doctor."
                 </div>
               </div>
-              <br />
               <p>
                 Existing wearables are highly capable at measuring health data.
                 However, measurement without interpretation leaves users in precisely the same state of uncertainty they began with.
@@ -197,13 +196,13 @@
                 The focus was narrowed to a specific and underserved window in the patient experience: the interval between “something feels off” and “I know what to do.”
                 The guiding design question became: how might people be helped to understand when something is wrong and take action before it is too late?
               </p>
-              <p>
-                <strong class="case-bullet-heading">Design principles</strong>
-                <span style="display: block; padding-left: 0.5rem;">• Translate rather than measure: Surface meaning from signals rather than presenting raw data</span>
-                <span style="display: block; padding-left: 0.5rem;">• Reduce friction at the moment of decision: Deliver one clear next action rather than a dashboard</span>
-                <span style="display: block; padding-left: 0.5rem;">• Build for the highest-risk users: Design for the population most likely to be missed by existing systems</span>
-                <span style="display: block; padding-left: 0.5rem;">• Earn trust through personalization: Learn each user's baseline before classifying risk</span>
-              </p>
+              <p><strong class="case-bullet-heading">Design principles</strong></p>
+              <ul>
+                <li>Translate rather than measure: Surface meaning from signals rather than presenting raw data</li>
+                <li>Reduce friction at the moment of decision: Deliver one clear next action rather than a dashboard</li>
+                <li>Build for the highest-risk users: Design for the population most likely to be missed by existing systems</li>
+                <li>Earn trust through personalization: Learn each user's baseline before classifying risk</li>
+              </ul>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block">
@@ -223,26 +222,25 @@
                 ACUITY is constructed across three integrated layers: wearable sensing, AI interpretation, and app-guided action.
                 These layers connect into a single decision system oriented around one output.
               </p>
-              <p>
-                <strong class="case-bullet-heading">System architecture</strong>
-                three layers, one decision.<br />
-                <span style="display: block; padding-left: 0.5rem;">• Stable: Signals remain within the user's personal baseline. No action is required.</span>
-                <span style="display: block; padding-left: 0.5rem;">• Elevated: Meaningful deviation has been detected. A medical evaluation is recommended.</span>
-                <span style="display: block; padding-left: 0.5rem;">• Emergent: Significant changes paired with reported symptoms require immediate attention.</span>
-              </p>
-              <p>
-                <strong class="case-bullet-heading">What ACUITY detects</strong>
-                <span style="display: block; padding-left: 0.5rem;">• Blood pressure deviations from the user's established personal baseline</span>
-                <span style="display: block; padding-left: 0.5rem;">• Heart rate variability patterns over time</span>
-                <span style="display: block; padding-left: 0.5rem;">• Sleep quality and consistency metrics</span>
-                <span style="display: block; padding-left: 0.5rem;">• User-logged symptoms (because physiological changes do not always appear in biometric data)</span>
-              </p>
-              <p>
-                <strong class="case-bullet-heading">AI engine</strong>
-                <span style="display: block; padding-left: 0.5rem;">• Individual baseline modeling that learns what is physiologically normal for each specific user</span>
-                <span style="display: block; padding-left: 0.5rem;">• A risk classification engine that interprets deviation across multiple signal types simultaneously</span>
-                <span style="display: block; padding-left: 0.5rem;">• Time-series anomaly detection that identifies patterns before they reach critical thresholds</span>
-              </p>
+              <p><strong class="case-bullet-heading">System architecture</strong> Three layers, one decision.</p>
+              <ul>
+                <li>Stable: Signals remain within the user's personal baseline. No action is required.</li>
+                <li>Elevated: Meaningful deviation has been detected. A medical evaluation is recommended.</li>
+                <li>Emergent: Significant changes paired with reported symptoms require immediate attention.</li>
+              </ul>
+              <p><strong class="case-bullet-heading">What ACUITY detects</strong></p>
+              <ul>
+                <li>Blood pressure deviations from the user's established personal baseline</li>
+                <li>Heart rate variability patterns over time</li>
+                <li>Sleep quality and consistency metrics</li>
+                <li>User-logged symptoms (because physiological changes do not always appear in biometric data)</li>
+              </ul>
+              <p><strong class="case-bullet-heading">AI engine</strong></p>
+              <ul>
+                <li>Individual baseline modeling that learns what is physiologically normal for each specific user</li>
+                <li>A risk classification engine that interprets deviation across multiple signal types simultaneously</li>
+                <li>Time-series anomaly detection that identifies patterns before they reach critical thresholds</li>
+              </ul>
               <p>
                 Strategic focus: the design narrows to patients experiencing early cardiovascular symptoms that do not follow classic textbook presentations—because this group is frequently underserved and most likely to benefit from early intervention.
               </p>
@@ -266,13 +264,13 @@
                 Figma Make enabled fast generation and iteration of the mobile app interface and interaction flows.
                 Midjourney supported visual concept development for the wearable hardware form factor.
               </p>
-              <p>
-                <strong class="case-bullet-heading">Key interaction decisions</strong>
-                <span style="display: block; padding-left: 0.5rem;">• Two wrist vibrations signal the need for attention. The pattern is subtle enough not to alarm and distinct enough to prompt engagement.</span>
-                <span style="display: block; padding-left: 0.5rem;">• A deliberate pinch gesture activates the care card on the paired device, requiring intentional input rather than accidental contact.</span>
-                <span style="display: block; padding-left: 0.5rem;">• A wave gesture dismisses an alert. Holding the pinch keeps the system in active monitoring mode.</span>
-                <span style="display: block; padding-left: 0.5rem;">• No dashboards or raw metrics are surfaced to the user. The interface delivers one recommended next action per alert.</span>
-              </p>
+              <p><strong class="case-bullet-heading">Key interaction decisions</strong></p>
+              <ul>
+                <li>Two wrist vibrations signal the need for attention. The pattern is subtle enough not to alarm and distinct enough to prompt engagement.</li>
+                <li>A deliberate pinch gesture activates the care card on the paired device, requiring intentional input rather than accidental contact.</li>
+                <li>A wave gesture dismisses an alert. Holding the pinch keeps the system in active monitoring mode.</li>
+                <li>No dashboards or raw metrics are surfaced to the user. The interface delivers one recommended next action per alert.</li>
+              </ul>
               <p>
                 The gesture-based interaction model and three-tier risk classification performed well during prototype evaluation sessions.
                 Users responded more effectively to being told what to do than to being shown data.
