@@ -185,6 +185,36 @@
     );
   })();
 
+  // Scroll reveal
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.IntersectionObserver) return;
+
+    var targets = document.querySelectorAll(
+      '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair'
+    );
+    if (!targets.length) return;
+
+    targets.forEach(function (el) {
+      el.classList.add('reveal-hidden');
+    });
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('reveal-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.08 }
+    );
+
+    targets.forEach(function (el) {
+      observer.observe(el);
+    });
+  })();
+
   // Case study: highlight sidebar link for section in view
   (function () {
     var toc = document.querySelector('.case-toc');
