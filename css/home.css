@@ -63,6 +63,7 @@
   margin-bottom: var(--space-2);
   transition: opacity 180ms ease;
   overflow: hidden;
+  border-radius: 0.8rem;
 }
 
 .project-card-image video {
