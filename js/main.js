@@ -416,4 +416,47 @@
       if (e.key === 'ArrowRight') show(current + 1);
     });
   })();
+
+  // Journey section slideshows — start rotating when scrolled into view
+  (function () {
+    var slideshows = document.querySelectorAll('[data-slideshow]');
+    if (!slideshows.length) return;
+
+    slideshows.forEach(function (container) {
+      var slides = container.querySelectorAll('.journey-slide');
+      if (slides.length < 2) return;
+
+      var current = 0;
+      var timer = null;
+
+      function advance() {
+        slides[current].classList.remove('journey-slide--active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('journey-slide--active');
+      }
+
+      function start() {
+        if (timer) return;
+        timer = setInterval(advance, 2500);
+      }
+
+      function stop() {
+        clearInterval(timer);
+        timer = null;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            start();
+          } else {
+            stop();
+          }
+        });
+      }, { threshold: 0.2 });
+
+      observer.observe(container);
+    });
+  })();
+
 })();

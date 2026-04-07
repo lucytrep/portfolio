@@ -490,8 +490,21 @@ p,
   display: block;
 }
 
-/* Responsive: header + footer at 50rem (800px) */
-@media (max-width: 50rem) {
+/* Keep header opaque between 1000–1300px */
+@media (max-width: 81.25rem) {
+  .page-header.header-scrolled {
+    background-color: var(--color-background);
+    border-bottom-color: var(--color-border);
+  }
+}
+
+/* Responsive: header + footer at 62.5rem (1000px) */
+@media (max-width: 62.5rem) {
+  .page-header.header-scrolled {
+    background-color: var(--color-background);
+    border-bottom-color: var(--color-border);
+  }
+
   .page-header {
     padding-top: var(--space-2);
     padding-bottom: var(--space-2);

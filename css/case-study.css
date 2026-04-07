@@ -1,5 +1,11 @@
 /* Case study detail pages */
 
+/* Keep header opaque on case study pages at all viewport sizes */
+.page-header.header-scrolled {
+  background-color: var(--color-background);
+  border-bottom-color: var(--color-border);
+}
+
 .case-study {
   padding-top: 3rem;
   padding-bottom: var(--space-6);
@@ -94,7 +100,7 @@
 
 .case-hero-title {
   margin: 0;
-  font-size: 3.25rem;
+  font-size: clamp(1.75rem, 5vw, 3.25rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -212,7 +218,7 @@
 
 .case-section-title {
   margin: 0 0 var(--space-2) 0;
-  font-size: 2.25rem;
+  font-size: clamp(1.375rem, 3.5vw, 2.25rem);
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.15;
@@ -226,7 +232,7 @@
 
 /* Standalone <strong> inside a <p> used as a subheading (e.g. "Future Directions") */
 .case-section-body p:has(> strong:only-child) {
-  font-size: 1.75rem;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
   font-weight: 500;
   letter-spacing: -0.025em;
   color: var(--color-text);
@@ -339,7 +345,6 @@
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--color-text);
-  white-space: nowrap;
 }
 
 .case-bullet-heading {
@@ -406,7 +411,7 @@
   border-radius: 0.8rem;
 }
 
-@media (max-width: 50rem) {
+@media (max-width: 37.5rem) {
   .case-image-natural-grid-row--3col {
     grid-template-columns: 1fr;
   }
@@ -425,16 +430,28 @@
   color: var(--color-light);
 }
 
-@media (max-width: 62rem) {
+@media (max-width: 62.5rem) {
   .case-meta-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* Move carousel buttons inside the content area so they don't overflow the viewport */
+  .case-carousel-prev { left: 0.625rem; }
+  .case-carousel-next { right: 0.625rem; }
 }
 
-@media (max-width: 50rem) {
+/* Under 1300px: reduce right whitespace, let content breathe */
+@media (max-width: 81.25rem) {
+  .case-layout {
+    grid-template-columns: minmax(200px, 1fr) minmax(0, 60rem) minmax(2rem, 1fr);
+  }
+}
+
+@media (max-width: 62.5rem) {
   .case-study {
     padding-top: var(--space-5);
     padding-bottom: var(--space-5);
+    overflow-x: clip;
   }
 
   .case-layout {
@@ -460,21 +477,53 @@
     padding-bottom: var(--space-4);
   }
 
-  .case-section-title {
-    font-size: 1.625rem;
-    letter-spacing: -0.015em;
-  }
-
   .case-meta-grid {
     grid-template-columns: 1fr;
   }
 
+}
+
+@media (max-width: 43.75rem) {
+  .case-section-grid-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 37.5rem) {
   .case-section-media-row {
     grid-template-columns: 1fr;
   }
 
-  .case-section-grid-3 {
-    grid-template-columns: 1fr;
+  /* Collapse all image grid rows, including inline-styled ones */
+  .case-image-natural-grid-row {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* 4-image rows go 2×2 instead of single column */
+  .case-image-natural-grid-row--4col {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Reset research carousel fixed-height constraints so stacked images show fully */
+  .research-carousel .case-carousel-viewport {
+    aspect-ratio: unset;
+    height: auto;
+  }
+
+  .research-carousel .case-carousel-track {
+    height: auto;
+  }
+
+  .research-carousel .case-carousel-slide,
+  .research-carousel .case-image-natural-grid-row,
+  .research-carousel .case-image-natural {
+    height: auto;
+    overflow: visible;
+  }
+
+  .research-carousel .case-image-natural img {
+    height: auto;
+    object-fit: contain;
   }
 }
 
@@ -625,7 +674,7 @@
   display: block;
 }
 
-@media (max-width: 50rem) {
+@media (max-width: 37.5rem) {
   .phone-card-grid {
     grid-template-columns: 1fr;
   }
