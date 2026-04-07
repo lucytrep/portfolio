@@ -1,5 +1,11 @@
 /* Homepage only: hero + project grid. Uses design tokens from common.css. */
 
+/* Keep header opaque on the homepage at all viewport sizes */
+.page-header.header-scrolled {
+  background-color: var(--color-background);
+  border-bottom-color: var(--color-border);
+}
+
 .section-hero {
   padding-top: 11rem;
   padding-bottom: var(--space-2);
