@@ -41,6 +41,16 @@
     });
   }
 
+  // Header: fade background + border when scrolled, restore at top
+  (function () {
+    if (!header) return;
+    function updateHeader() {
+      header.classList.toggle('header-scrolled', window.scrollY > 4);
+    }
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+  })();
+
   // Cursor pill: expand on project hover
   (function () {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -256,5 +266,154 @@
     });
     setActive();
     window.addEventListener('scroll', setActive, { passive: true });
+  })();
+
+  // Carousels
+  (function () {
+    var carousels = document.querySelectorAll('[data-carousel]');
+    carousels.forEach(function (carousel) {
+      var track = carousel.querySelector('.case-carousel-track');
+      var slides = carousel.querySelectorAll('.case-carousel-slide');
+      var prevBtn = carousel.querySelector('.case-carousel-prev');
+      var nextBtn = carousel.querySelector('.case-carousel-next');
+      if (!track || !slides.length) return;
+
+      var current = 0;
+
+      function update() {
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        if (prevBtn) prevBtn.disabled = current === 0;
+        if (nextBtn) nextBtn.disabled = current === slides.length - 1;
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (current > 0) { current--; update(); }
+      });
+      if (nextBtn) nextBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (current < slides.length - 1) { current++; update(); }
+      });
+
+      update();
+    });
+  })();
+
+  // Lightbox: click any content image or video to enlarge; arrow-navigate between all media
+  (function () {
+    // Collect images and videos in main content; skip home-page project-link thumbnails and hero videos
+    var mediaEls = Array.from(
+      document.querySelectorAll('main img, article img, main video, article video')
+    ).filter(function (el) {
+      return !el.closest('.project-link') && !el.closest('.case-hero-image');
+    });
+    if (!mediaEls.length) return;
+
+    var current = 0;
+
+    // Build overlay DOM
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox-overlay';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-label', 'Media viewer');
+
+    var lbImg = document.createElement('img');
+    lbImg.className = 'lightbox-img';
+    lbImg.alt = '';
+
+    var lbVideo = document.createElement('video');
+    lbVideo.className = 'lightbox-video';
+    lbVideo.setAttribute('playsinline', '');
+    lbVideo.muted = true;
+    lbVideo.loop = true;
+    lbVideo.autoplay = true;
+    lbVideo.controls = true;
+
+    var closeBtn = document.createElement('button');
+    closeBtn.className = 'lightbox-close';
+    closeBtn.setAttribute('aria-label', 'Close');
+    closeBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><line x1="1" y1="1" x2="13" y2="13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/><line x1="13" y1="1" x2="1" y2="13" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/></svg>';
+
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'lightbox-prev';
+    prevBtn.setAttribute('aria-label', 'Previous');
+    prevBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="11,3 5,9 11,15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'lightbox-next';
+    nextBtn.setAttribute('aria-label', 'Next');
+    nextBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="7,3 13,9 7,15" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    overlay.appendChild(lbImg);
+    overlay.appendChild(lbVideo);
+    overlay.appendChild(closeBtn);
+    overlay.appendChild(prevBtn);
+    overlay.appendChild(nextBtn);
+    document.body.appendChild(overlay);
+
+    function show(index) {
+      current = ((index % mediaEls.length) + mediaEls.length) % mediaEls.length;
+      var el = mediaEls[current];
+      var isVideo = el.tagName === 'VIDEO';
+
+      lbImg.style.display = isVideo ? 'none' : '';
+      lbVideo.style.display = isVideo ? '' : 'none';
+
+      if (isVideo) {
+        var src = el.getAttribute('src') || el.currentSrc || '';
+        lbVideo.src = src;
+        lbVideo.load();
+        lbVideo.play().catch(function () {});
+      } else {
+        lbImg.src = el.currentSrc || el.src || el.getAttribute('src') || '';
+        lbImg.alt = el.alt || '';
+      }
+
+      var single = mediaEls.length <= 1;
+      prevBtn.style.visibility = single ? 'hidden' : '';
+      nextBtn.style.visibility = single ? 'hidden' : '';
+    }
+
+    function open(index) {
+      show(index);
+      var sbw = window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = 'hidden';
+      if (sbw) document.body.style.paddingRight = sbw + 'px';
+      overlay.classList.add('is-open');
+    }
+
+    function close() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      lbVideo.pause();
+      lbVideo.removeAttribute('src');
+    }
+
+    // Mark elements and attach click listeners
+    mediaEls.forEach(function (el, i) {
+      el.classList.add('lightbox-target');
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        open(i);
+      }, true); // capture phase so it fires before any parent link navigation
+    });
+
+    closeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
+    prevBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current - 1); });
+    nextBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current + 1); });
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (!overlay.classList.contains('is-open')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
   })();
 })();

@@ -59,7 +59,7 @@
 
 .about-kicker {
   margin: 0 0 var(--space-2) 0;
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -69,7 +69,7 @@
 .about-title {
   margin: 0;
   font-size: 2.5rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: var(--line-height-tight);
   letter-spacing: -0.02em;
 }
@@ -96,7 +96,7 @@
   grid-column: 1 / span 2;
   margin: 0;
   padding-top: 0.2rem; /* optical alignment with first line of heading */
-  font-size: var(--font-size-xs);
+  font-size: var(--font-size-sm);
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.12em;
