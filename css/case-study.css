@@ -6,6 +6,42 @@
   border-bottom-color: var(--color-border);
 }
 
+/* ── Editorial hero (shared across all case studies) ── */
+.cs-ed {
+  background: #fff;
+}
+
+.cs-ed-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0 0.5rem 0.5rem;
+}
+
+.cs-ed-img {
+  background: #e0e0e0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.cs-ed-img--full {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 7;
+}
+
+.cs-ed-img--full:first-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.cs-ed-img--tall {
+  aspect-ratio: 16 / 9;
+}
+
+.cs-ed-img--half {
+  aspect-ratio: 4 / 3;
+}
+
 .case-study {
   padding-top: 3rem;
   padding-bottom: var(--space-6);

@@ -354,7 +354,7 @@ p,
   background: var(--color-background);
   padding-top: 0.625rem;
   padding-bottom: 0.625rem;
-  border-bottom: var(--border-width) solid var(--color-border);
+  border-bottom: none;
   font-weight: 400;
   transition: background-color 150ms ease, border-color 150ms ease;
 }

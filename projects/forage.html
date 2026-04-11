@@ -7,6 +7,28 @@
   <link rel="icon" href="../assets/cursor.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../css/common.css" />
   <link rel="stylesheet" href="../css/case-study.css" />
+  <style>
+    .cs-launch-zone { background: #fff; padding: 0 0.5rem 0.5rem; }
+    .cs-launch-inner { width: 100%; }
+    .cs-launch-slot { position: relative; width: 100%; }
+    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
+    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: var(--color-bg-subtle); }
+    #cs-fly-wrap.is-flying { position: fixed; inset: auto; z-index: 50; pointer-events: none; will-change: top, left, width, height; }
+    #cs-fly-wrap.is-landed { position: static; inset: auto; width: 100%; height: 100%; border-radius: 0; border: none; background: none; }
+    #page-header { z-index: 100; }
+    #cs-hero-target { background: transparent; border: none; }
+    .case-hero--init .case-hero-kicker,
+    .case-hero--init .case-hero-title,
+    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
+    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
+    @media (prefers-reduced-motion: reduce) {
+      .case-hero--init .case-hero-kicker,
+      .case-hero--init .case-hero-title,
+      .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
 </head>
 <body>
   <header class="container page-header" id="page-header">
@@ -21,18 +43,38 @@
         <span class="hamburger-bar"></span>
       </button>
       <nav class="span-6" id="main-nav">
-        <a href="../index.html">Work</a>
-        <a href="../gallery.html">Gallery</a>
+        <a href="../case-studies.html">Work</a>
+        <a href="../archive.html">Archive</a>
         <a href="../about.html">About</a>
         <a href="#" target="_blank">Resume</a>
       </nav>
     </div>
   </header>
 
+  <div class="cs-ed">
+    <div class="cs-ed-grid">
+      <div class="cs-ed-img cs-ed-img--full"></div>
+      <div class="cs-ed-img cs-ed-img--half"></div>
+      <div class="cs-ed-img cs-ed-img--half"></div>
+      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall"></div>
+      <div class="cs-ed-img cs-ed-img--half"></div>
+      <div class="cs-ed-img cs-ed-img--half"></div>
+    </div>
+  </div>
+
+  <div class="cs-launch-zone" aria-hidden="true">
+    <div class="cs-launch-inner">
+      <div class="cs-launch-slot">
+        <div class="cs-launch-placeholder"></div>
+        <div id="cs-fly-wrap"></div>
+      </div>
+    </div>
+  </div>
+
   <main class="container case-study">
     <div class="case-layout">
       <aside class="case-sidebar">
-        <a href="../index.html" class="case-back">Back</a>
+        <a href="../case-studies.html" class="case-back">Back</a>
 
         <nav class="case-toc" aria-label="Case study sections">
           <a href="#overview">Overview</a>
@@ -52,7 +94,7 @@
           <p class="case-hero-kicker">Forage • Spot. Gather. Create. • 2026</p>
           <h1 class="case-hero-title">Forage: Capturing Inspiration at the Speed of Perception</h1>
 
-          <div class="case-hero-image" role="img" aria-label="Forage wearable ring + AI capture overview"></div>
+          <div class="case-hero-image" id="cs-hero-target" role="img" aria-label="Forage wearable ring + AI capture overview"></div>
 
           <dl class="case-meta-grid">
             <div class="case-meta-item">
@@ -378,13 +420,103 @@
             <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
           </a>
           <a href="https://www.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          <a href="https://github.com/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+          
         </div>
       </div>
     </div>
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var flyWrap    = document.getElementById('cs-fly-wrap');
+    var launchSlot = document.querySelector('.cs-launch-slot');
+    var heroTarget = document.getElementById('cs-hero-target');
+    var hero       = document.querySelector('.case-hero');
+    if (!flyWrap || !launchSlot || !heroTarget || !hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      flyWrap.classList.add('is-landed');
+      heroTarget.appendChild(flyWrap);
+      hero.classList.add('case-hero--revealed');
+      return;
+    }
+    var state = 'pre';
+    var srcRect = null, tgtRect = null, startScroll = 0, endScroll = 1, navH = 0;
+    function measure() {
+      var s = flyWrap.getBoundingClientRect(), t = heroTarget.getBoundingClientRect();
+      var navEl = document.getElementById('page-header');
+      navH = navEl ? navEl.getBoundingClientRect().height : 0;
+      var sy = window.scrollY, vh = window.innerHeight;
+      srcRect = { top: s.top + sy, left: s.left, width: s.width, height: s.height };
+      tgtRect = { top: t.top + sy, left: t.left, width: t.width, height: t.height };
+      startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
+      endScroll   = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
+      if (endScroll <= startScroll) endScroll = startScroll + 1;
+    }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function applyFlyRect(progress) {
+      var p = Math.max(0, Math.min(1, progress));
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var width  = lerp(srcRect.width,  tgtRect.width,  p);
+      var height = lerp(srcRect.height, tgtRect.height, p);
+      var br     = lerp(12, 24, p);
+      flyWrap.style.top          = Math.max(navH, (vh - height) / 2) + 'px';
+      flyWrap.style.left         = ((vw - width) / 2) + 'px';
+      flyWrap.style.width        = width  + 'px';
+      flyWrap.style.height       = height + 'px';
+      flyWrap.style.borderRadius = br     + 'px';
+    }
+    function returnToLaunch() {
+      if (flyWrap.parentElement !== launchSlot) launchSlot.appendChild(flyWrap);
+      flyWrap.classList.remove('is-flying', 'is-landed');
+      flyWrap.style.cssText = '';
+      state = 'pre';
+    }
+    function startFlight() {
+      if (flyWrap.parentElement !== launchSlot) launchSlot.appendChild(flyWrap);
+      flyWrap.classList.remove('is-landed');
+      flyWrap.classList.add('is-flying');
+      state = 'flying';
+    }
+    function land() {
+      if (state === 'landing' || state === 'landed') return;
+      state = 'landing';
+      var t = heroTarget.getBoundingClientRect();
+      flyWrap.style.top = t.top + 'px'; flyWrap.style.left = t.left + 'px';
+      flyWrap.style.width = t.width + 'px'; flyWrap.style.height = t.height + 'px';
+      flyWrap.style.borderRadius = '1.5rem';
+      requestAnimationFrame(function () {
+        flyWrap.classList.remove('is-flying');
+        flyWrap.classList.add('is-landed');
+        flyWrap.style.cssText = '';
+        heroTarget.appendChild(flyWrap);
+        var lz = document.querySelector('.cs-launch-zone');
+        if (lz) lz.style.display = 'none';
+        state = 'landed';
+      });
+    }
+    function onScroll() {
+      if (!srcRect) return;
+      if (state === 'landed' || state === 'landing') return;
+      var progress = (window.scrollY - startScroll) / (endScroll - startScroll);
+      if (progress <= 0) { if (state !== 'pre') returnToLaunch(); hero.classList.remove('case-hero--revealed'); return; }
+      if (progress >= 1) { if (state !== 'landed' && state !== 'landing') land(); hero.classList.add('case-hero--revealed'); return; }
+      if (state !== 'flying') startFlight();
+      applyFlyRect(progress);
+      if (progress >= 0.85) { hero.classList.add('case-hero--revealed'); } else { hero.classList.remove('case-hero--revealed'); }
+    }
+    hero.classList.add('case-hero--init');
+    window.addEventListener('load', function () { measure(); onScroll(); });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (state === 'pre' || state === 'flying') { if (state === 'flying') returnToLaunch(); measure(); onScroll(); }
+      }, 150);
+    });
+  })();
+  </script>
 </body>
 </html>
-

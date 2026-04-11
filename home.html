@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lucille Trepanier — Product Designer</title>
+  <link rel="icon" href="assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/common.css" />
+  <style>
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    /* Flash stage: fixed, always covers full viewport */
+    .splash-stage {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: #000;
+      z-index: 0;
+    }
+
+    .splash-layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    .splash-layer img,
+    .splash-layer video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      pointer-events: none;
+    }
+
+    /* Interaction overlay — white bg + centered content */
+    #interaction-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255, 255, 255, 0);
+      pointer-events: none;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      transition: background 0.5s ease;
+    }
+
+    #interaction-overlay.is-active {
+      background: rgba(255, 255, 255, 0.9);
+      pointer-events: auto;
+    }
+
+    .overlay-headline {
+      font-family: var(--font-sans, sans-serif);
+      font-size: clamp(1.75rem, 3.5vw, 3rem);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #000;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+      max-width: 80vw;
+      line-height: 1.15;
+      margin: 0 0 1.75rem 0;
+    }
+
+    #interaction-overlay.is-active .overlay-headline {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #explore-btn {
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.6s ease 0.25s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s;
+      white-space: nowrap;
+      margin: 0;
+    }
+
+    #interaction-overlay.is-active #explore-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #explore-btn a {
+      display: inline-block;
+      font-family: var(--font-sans, sans-serif);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      text-decoration: none;
+      border: 1.5px solid #000;
+      padding: 0.7rem 2rem;
+      border-radius: 999px;
+      background: #000;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    #explore-btn a:hover {
+      background: #222;
+      border-color: #222;
+    }
+
+    /* Header: fixed, hidden above viewport initially */
+    #page-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: transparent !important;
+      border-bottom-color: transparent !important;
+      transform: translateY(-100%);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #page-header.is-visible {
+      transform: translateY(0);
+    }
+
+    /* All header copy black, no background */
+    #page-header .site-name,
+    #page-header .site-tagline,
+    #page-header nav a {
+      color: #000 !important;
+    }
+
+    #page-header .hamburger-bar {
+      background: #000 !important;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="container page-header" id="page-header">
+    <div class="grid-12 header-grid">
+      <div class="span-6">
+        <a href="index.html" class="site-name">LUCILLE TREPANIER</a>
+        <span class="site-tagline">Product Designer</span>
+      </div>
+      <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="span-6" id="main-nav">
+        <a href="case-studies.html">Work</a>
+        <a href="archive.html">Archive</a>
+        <a href="about.html">About</a>
+        <a href="#" target="_blank" rel="noopener noreferrer">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="splash-stage" id="splash-stage"></div>
+
+  <div id="interaction-overlay">
+    <p class="overlay-headline">See what I'm building.</p>
+    <div id="explore-btn"><a href="case-studies.html">Explore</a></div>
+  </div>
+
+  <script>
+    // Base video assets — each video appears twice with independent seek tracking
+    var videoAssets = [
+      { src: 'assets/images/gallery/Chet.mp4',                               type: 'video' },
+      { src: 'assets/images/gallery/Stories.mp4',                            type: 'video' },
+      { src: 'assets/images/gallery/fanatics-v3.mp4',                        type: 'video' },
+      { src: 'assets/images/gallery/brooks.mp4',                             type: 'video' },
+      { src: 'assets/images/gallery/sky-brown.mp4',                          type: 'video' },
+      { src: 'assets/images/meta-in-app/logo.mp4',                           type: 'video' },
+      { src: 'assets/images/axsphere/preview.mp4',                           type: 'video' },
+      { src: 'assets/images/axsphere/preview2.mp4',                          type: 'video' },
+      { src: 'assets/images/axsphere/AxsphereTitle.mp4',                     type: 'video' },
+      { src: 'assets/images/axsphere/Crowd.mp4',                             type: 'video' },
+      { src: 'assets/images/axsphere/Map.mp4',                               type: 'video' },
+      { src: 'assets/images/axsphere/Controls.mov',                          type: 'video' },
+      { src: 'assets/images/axsphere/LucyTrepanier_MotionProject1_Icons.mp4',      type: 'video' },
+      { src: 'assets/images/axsphere/LucyTrepanier_MotionProject1_Features.mp4',   type: 'video' },
+      { src: 'assets/images/axsphere/LucyTrepanier_MotionProject1_Categories.mp4', type: 'video' },
+    ];
+
+    // Image assets (appear once)
+    var imageAssets = [
+      { src: 'assets/images/gallery/wnba-way-1.jpg',   type: 'image' },
+      { src: 'assets/images/gallery/wnba-way-2.jpg',   type: 'image' },
+      { src: 'assets/images/gallery/mn-party.jpg',     type: 'image' },
+      { src: 'assets/images/gallery/mn-party-2.jpg',   type: 'image' },
+      { src: 'assets/images/gallery/wnba-live-1.jpg',  type: 'image' },
+      { src: 'assets/images/gallery/wnba-live-2.jpg',  type: 'image' },
+      { src: 'assets/images/gallery/wnba-live-3.jpg',  type: 'image' },
+      { src: 'assets/images/gallery/sabrina.jpg',      type: 'image' },
+      { src: 'assets/images/axsphere/LogoVideo.mp4',           type: 'video', offsetKey: 'assets/images/axsphere/LogoVideo.mp4' },
+      { src: 'assets/images/axsphere/LucyTrepanier_Web_2.jpg', type: 'image' },
+      { src: 'assets/images/axsphere/LucyTrepanier_Web_3.jpg', type: 'image' },
+    ];
+
+    // Build full asset list: each video duplicated with a '_dup' key
+    var allAssets = [];
+    var videoDups = videoAssets.map(function(a) {
+      return { src: a.src, type: 'video', offsetKey: a.src + '_dup' };
+    });
+    // Tag originals with their own offsetKey
+    videoAssets.forEach(function(a) { a.offsetKey = a.src; });
+
+    allAssets = videoAssets.concat(videoDups).concat(imageAssets);
+
+    // Fisher-Yates shuffle
+    for (var i = allAssets.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = allAssets[i]; allAssets[i] = allAssets[j]; allAssets[j] = tmp;
+    }
+
+    var stage = document.getElementById('splash-stage');
+
+    // Double-buffer layers — no black gap between cuts
+    var layerA = document.createElement('div');
+    var layerB = document.createElement('div');
+    layerA.className = 'splash-layer';
+    layerB.className = 'splash-layer';
+    layerA.style.zIndex = '1';
+    layerB.style.zIndex = '0';
+    stage.appendChild(layerA);
+    stage.appendChild(layerB);
+
+    var front = layerA;
+    var back  = layerB;
+    var idx   = 0;
+
+    var videoOffsets = {};
+
+    function createEl(asset) {
+      var el;
+      if (asset.type === 'video') {
+        var key = asset.offsetKey || asset.src;
+        el = document.createElement('video');
+        el.src = asset.src;
+        el.muted = true;
+        el.playsInline = true;
+        el.preload = 'auto';
+        el.addEventListener('loadedmetadata', (function(k, isDup) {
+          return function () {
+            var dur = el.duration;
+            var prev = videoOffsets[k];
+            var seekTo;
+            if (prev === undefined) {
+              // First appearance: originals start ~50%, dups start ~25% (far apart)
+              seekTo = isDup ? dur * 0.25 : dur * 0.5;
+            } else {
+              var offset = 2 + Math.random() * 4; // 2–6s drift each loop
+              seekTo = (prev + offset) % dur;
+            }
+            videoOffsets[k] = seekTo;
+            el.currentTime = seekTo;
+          };
+        })(key, !!asset.offsetKey && asset.offsetKey.indexOf('_dup') !== -1));
+        el.addEventListener('seeked', function () {
+          el.play().catch(function () {});
+        });
+      } else {
+        el = document.createElement('img');
+        el.src = asset.src;
+        el.alt = '';
+      }
+      return el;
+    }
+
+    function loadInto(layer, asset) {
+      var old = layer.querySelector('video');
+      if (old) old.pause();
+      layer.innerHTML = '';
+      layer.appendChild(createEl(asset));
+    }
+
+    // Seed both layers
+    loadInto(front, allAssets[idx % allAssets.length]); idx++;
+    loadInto(back,  allAssets[idx % allAssets.length]); idx++;
+
+    // Flash at 180ms — instant z-index swap, no opacity transition
+    setInterval(function () {
+      front.style.zIndex = '0';
+      back.style.zIndex  = '1';
+      var tmp = front; front = back; back = tmp;
+
+      loadInto(back, allAssets[idx % allAssets.length]);
+      idx++;
+    }, 180);
+
+    // Scroll-driven overlay — scroll down to reveal, scroll up to dismiss
+    var overlay = document.getElementById('interaction-overlay');
+    var header  = document.getElementById('page-header');
+
+    var touchStartY = 0;
+
+    function showOverlay() {
+      overlay.classList.add('is-active');
+      header.classList.add('is-visible');
+    }
+
+    function hideOverlay() {
+      overlay.classList.remove('is-active');
+      header.classList.remove('is-visible');
+    }
+
+    window.addEventListener('wheel', function (e) {
+      if (e.deltaY > 0) {
+        showOverlay();
+      } else if (e.deltaY < 0) {
+        hideOverlay();
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchstart', function (e) {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function (e) {
+      var dy = touchStartY - e.touches[0].clientY;
+      if (dy > 10) {
+        showOverlay();
+      } else if (dy < -10) {
+        hideOverlay();
+      }
+    }, { passive: true });
+  </script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
