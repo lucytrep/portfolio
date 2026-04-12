@@ -1,0 +1,552 @@
+<!-- Canonical page source for /projects/meta-in-app/. Edit this file, not /projects/meta-in-app.html. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta In-App Feature Exploration — Lucille Trepanier</title>
+  <link rel="icon" href="../../assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/common.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    .cs-launch-zone { background: #fff; padding: 0 0.5rem 0.5rem; }
+    .cs-launch-inner { width: 100%; }
+    .cs-launch-slot { position: relative; width: 100%; }
+    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
+    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; }
+    #cs-fly-wrap.is-flying { position: fixed; inset: auto; z-index: 50; pointer-events: none; will-change: top, left, width, height; }
+    #cs-fly-wrap.is-landed { position: static; inset: auto; width: 100%; height: 100%; border-radius: 0; border: none; background: none; }
+    #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
+    #page-header { z-index: 100; }
+    #cs-hero-target { background: transparent; border: none; }
+    .case-hero--init .case-hero-kicker,
+    .case-hero--init .case-hero-title,
+    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
+    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
+    .opportunity-img-block { position: relative; cursor: pointer; }
+    .opportunity-img-block::after { content: ''; position: absolute; inset: 0; background: rgba(0,0,0,0); border-radius: inherit; transition: background 0.25s ease; pointer-events: none; }
+    .opportunity-img-block:hover::after { background: rgba(0,0,0,0.35); }
+    @media (prefers-reduced-motion: reduce) {
+      .case-hero--init .case-hero-kicker,
+      .case-hero--init .case-hero-title,
+      .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="container page-header" id="page-header">
+    <div class="grid-12 header-grid">
+      <div class="span-6">
+        <a href="../../" class="site-name">LUCILLE TREPANIER</a>
+        <span class="site-tagline">Product Designer</span>
+      </div>
+      <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="span-6" id="main-nav">
+        <a href="../../case-studies/">Work</a>
+        <a href="../../archive/">Archive</a>
+        <a href="../../about/">About</a>
+        <a href="#" target="_blank">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="cs-ed">
+    <div class="cs-ed-grid">
+      <div class="cs-ed-img cs-ed-img--full" style="position:relative;">
+        <iframe src="https://player.vimeo.com/video/1182137743?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&controls=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:100%;height:100%;transform:translate(-50%,-50%) scale(1.3);border-radius:inherit;" title="LucyTrepanier_MotionProject2_Final"></iframe>
+      </div>
+      <script src="https://player.vimeo.com/api/player.js"></script>
+      <div class="cs-ed-img cs-ed-img--half" style="background:none;">
+        <img src="../../assets/images/meta-in-app/Phone.png" alt="Marketplace chat phone mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half" style="position:relative;background:#001669;">
+        <iframe src="https://player.vimeo.com/video/1182268510?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:130%;height:130%;transform:translate(-50%,-50%);border-radius:inherit;" title="UI for website"></iframe>
+      </div>
+      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall" style="background:none;">
+        <img src="../../assets/images/meta-in-app/Slides.png" alt="Facebook Marketplace project slides" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half" style="background:none;">
+        <img src="../../assets/images/meta-in-app/Angled.png" alt="Marketplace angled phone mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half" style="background:none;">
+        <img src="../../assets/images/meta-in-app/Hand.png" alt="Marketplace hand holding phone" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+    </div>
+  </div>
+
+  <div class="cs-launch-zone" aria-hidden="true">
+    <div class="cs-launch-inner">
+      <div class="cs-launch-slot">
+        <div class="cs-launch-placeholder"></div>
+        <div id="cs-fly-wrap">
+          <video src="../../assets/images/meta-in-app/logo.mp4" autoplay muted loop playsinline style="transform:scale(1.6);transform-origin:center;"></video>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="container case-study">
+    <div class="case-layout">
+      <aside class="case-sidebar">
+        <a href="../../case-studies/" class="case-back">Back</a>
+
+        <nav class="case-toc" aria-label="Case study sections">
+          <a href="#overview">Overview</a>
+          <a href="#problem">The Problem</a>
+          <a href="#research-insights">Research Insights</a>
+          <a href="#strategy">Defining the Opportunity</a>
+          <a href="#design-exploration">Design Exploration</a>
+          <a href="#testing">Test &amp; Iterate</a>
+          <a href="#final-solution">Final Product</a>
+          <a href="#results">Impact</a>
+          <a href="#reflection">Reflection</a>
+        </nav>
+      </aside>
+
+      <article class="case-main">
+        <header id="overview" class="case-hero">
+          <p class="case-hero-kicker">Facebook Marketplace • Chat • 2025</p>
+          <h1 class="case-hero-title">Redesigning Marketplace Chat for Faster, Clearer Transactions</h1>
+
+          <div class="case-hero-image" id="cs-hero-target" role="img" aria-label="Meta Marketplace chat redesign hero"></div>
+
+          <dl class="case-meta-grid">
+            <div class="case-meta-item">
+              <dt>Role</dt>
+              <dd>Product Designer</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Timeline</dt>
+              <dd>6.5 weeks</dd>
+            </div>
+            <div class="case-meta-item case-meta-item--shipped">
+              <dt>Date</dt>
+              <dd>2025</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Context</dt>
+              <dd>Parsons School of Design – The New School</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Tools</dt>
+              <dd>Figma, Zoom, Google Docs, Illustrator, ChatGPT</dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="case-body">
+          <section id="overview" class="case-section">
+            <p class="case-section-label">Overview</p>
+            <h2 class="case-section-title">Rethinking How Marketplace Conversations Work</h2>
+            <div class="case-section-body">
+              <p>
+                This project restructures unstructured Marketplace conversations into guided transaction flows. AI summaries, buyer prioritization, scheduling, and payments work together as a connected system—not isolated features.
+              </p>
+              <p>
+                The goal is to improve transaction outcomes. Users move from first message to completed exchange with less confusion, fewer dropped threads, and clearer next steps at every stage.
+              </p>
+            </div>
+            <div class="case-carousel" data-carousel>
+              <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="10,2 4,8 10,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="case-carousel-viewport">
+                <div class="case-carousel-track">
+                  <div class="case-carousel-slide">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;border-radius:0.8rem;overflow:hidden;">
+                      <div class="cs-ed-img" style="grid-row:span 2;background:none;position:relative;min-height:0;">
+                        <video src="../../assets/images/meta-in-app/Inbox.mov" autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;"></video>
+                      </div>
+                      <div class="cs-ed-img" style="aspect-ratio:16/9;background:none;">
+                        <video src="../../assets/images/meta-in-app/mission.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                      </div>
+                      <div class="cs-ed-img" style="aspect-ratio:16/9;position:relative;">
+                        <iframe src="https://player.vimeo.com/video/1182280903?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" title="Icons"></iframe>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="case-carousel-slide">
+                    <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;position:relative;">
+                      <iframe src="https://player.vimeo.com/video/1182284414?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:120%;height:120%;transform:translate(-50%,-50%);border:none;" title="Overview"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="case-carousel-btn case-carousel-next" aria-label="Next slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6,2 12,8 6,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <section id="problem" class="case-section">
+            <p class="case-section-label">The Problem</p>
+            <h2 class="case-section-title">Conversations Without Structure Create Friction</h2>
+            <div class="case-section-body">
+              <p>
+                Marketplace conversations break down at scale. Sellers receive many messages on a single listing with no way to identify serious buyers. Buyers cannot tell if an item is still available, when they might get a response, or what happens next.
+              </p>
+              <p>
+                As threads grow, intent gets buried. Users repeat the same questions. Coordination becomes manual. Many move off platform to texting—which reduces trust, removes visibility, and increases the chance that transactions never complete.
+              </p>
+              <p>
+                The core issue is not messaging itself. The system does not provide structure to help users make decisions or complete a transaction.
+              </p>
+            </div>
+            <div class="case-carousel" data-carousel>
+              <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="10,2 4,8 10,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="case-carousel-viewport">
+                <div class="case-carousel-track">
+                  <div class="case-carousel-slide" style="aspect-ratio:16/9;">
+                    <div style="border-radius:0.8rem;overflow:hidden;height:100%;background:#fff;">
+                      <video src="../../assets/images/meta-in-app/problem.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;"></video>
+                    </div>
+                  </div>
+                  <div class="case-carousel-slide" style="aspect-ratio:16/9;">
+                    <div style="border-radius:0.8rem;overflow:hidden;height:100%;">
+                      <img src="../../assets/images/meta-in-app/analogous audit.png" alt="Analogous audit" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" />
+                    </div>
+                  </div>
+                  <div class="case-carousel-slide" style="aspect-ratio:16/9;">
+                    <div style="border-radius:0.8rem;overflow:hidden;height:100%;">
+                      <img src="../../assets/images/meta-in-app/journey.png" alt="System map" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="case-carousel-btn case-carousel-next" aria-label="Next slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6,2 12,8 6,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <section id="research-insights" class="case-section">
+            <p class="case-section-label">Research Insights</p>
+            <h2 class="case-section-title">What Breaks Down in Real Transactions</h2>
+            <div class="case-section-body">
+              <p>
+                User interviews confirmed what I suspected: people struggled to track multiple chats, understand who was serious, and move from interest to action. As message volume increased, conversations became harder to follow and decisions were delayed.
+              </p>
+              <p>
+                This led me to look beyond Marketplace. I studied platforms like Depop and eBay that handle high volumes of buyer-seller interaction. Across these systems, a few patterns stood out. Visibility drives action—users act when important information is clearly surfaced. Structure reduces cognitive load—structured interactions are easier to navigate than open conversations. Defaults shape behavior—simple, guided actions lead users toward outcomes more effectively than freeform choice.
+              </p>
+              <p>
+                The takeaway was clear. The issue is not messaging. It’s the lack of structure around it.
+              </p>
+            </div>
+            <div class="case-carousel research-carousel" data-carousel>
+              <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="10,2 4,8 10,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="case-carousel-viewport">
+                <div class="case-carousel-track">
+                  <div class="case-carousel-slide">
+                    <div class="case-image-natural-grid-row" style="grid-template-columns: 1fr 4.5fr;">
+                      <div class="case-image-natural" style="overflow:hidden;border-radius:0.8rem;">
+                        <img src="../../assets/images/meta-in-app/participants.png" alt="Research participants" style="width:100%;display:block;object-fit:cover;object-position:top;transform:scale(1.08);transform-origin:top center;" />
+                      </div>
+                      <div class="case-image-natural">
+                        <img src="../../assets/images/meta-in-app/interviews.png" alt="User interviews" style="width:100%;display:block;" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="case-carousel-slide">
+                    <div class="case-image-natural-grid-row" style="grid-template-columns: 1fr 1fr 1fr;">
+                      <div class="case-image-natural">
+                        <img src="../../assets/images/meta-in-app/organize.png" alt="Organize insights" style="width:100%;display:block;" />
+                      </div>
+                      <div class="case-image-natural">
+                        <img src="../../assets/images/meta-in-app/efficiency.png" alt="Efficiency insights" style="width:100%;display:block;" />
+                      </div>
+                      <div class="case-image-natural">
+                        <img src="../../assets/images/meta-in-app/trust&amp;safety.png" alt="Trust and safety insights" style="width:100%;display:block;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="case-carousel-btn case-carousel-next" aria-label="Next slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6,2 12,8 6,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <section id="strategy" class="case-section">
+            <p class="case-section-label">Defining the Opportunity</p>
+            <h2 class="case-section-title">Turning Messaging Into a Decision-Making Tool</h2>
+            <div class="case-section-body">
+              <p>
+                If unstructured messaging fails at scale, the opportunity is to introduce structure directly into the conversation itself. Instead of expecting users to manage everything manually, the system can guide them through key steps: identifying intent, coordinating details, completing the transaction.
+              </p>
+              <p>
+                How might we structure Marketplace conversations so users move from first message to completed transaction?
+              </p>
+            </div>
+            <div style="margin-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2);">
+              <div class="case-image-block opportunity-img-block" style="aspect-ratio: 16 / 6;">
+                <img src="../../assets/images/meta-in-app/opportunity.png" alt="Opportunity mapping" style="width:100%;height:100%;object-fit:contain;display:block;" />
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2);">
+                <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                  <img src="../../assets/images/meta-in-app/feedback2.png" alt="User feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" />
+                </div>
+                <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                  <img src="../../assets/images/meta-in-app/feedback3.png" alt="Alumni feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="design-exploration" class="case-section">
+            <p class="case-section-label">Design Exploration</p>
+            <h2 class="case-section-title">Structuring Chat Around Action, Not Just Messages</h2>
+            <div class="case-section-body">
+              <p>
+                I approached this as system design, not feature ideation. The shift was from freeform chat to guided interactions—surfacing next steps, introducing prioritization logic, and reducing the decisions users had to make on their own.
+              </p>
+              <p>
+                Early ideas included manual sorting and tagging tools. Those required too much effort from users and would not scale. The solution had to guide behavior within the chat itself, not add more work outside it.
+              </p>
+              <p>
+                I focused on system logic: what the interface should surface (key information, suggested actions), how buyers should be prioritized, and where users needed clarity on next steps. The result feels like a deliberate product strategy, not a collection of features.
+              </p>
+            </div>
+            <div class="case-image-natural-grid">
+              <div class="case-image-natural-grid-row case-image-natural-grid-row--4col" style="grid-template-columns: repeat(4, 1fr);">
+                <div class="case-image-natural">
+                  <img src="../../assets/images/meta-in-app/inbox.jpg" alt="Inbox prioritization" style="width:100%;height:auto;display:block;" />
+                </div>
+                <div class="case-image-natural">
+                  <img src="../../assets/images/meta-in-app/convo.jpg" alt="Conversation flow" style="width:100%;height:auto;display:block;" />
+                </div>
+                <div class="case-image-natural">
+                  <img src="../../assets/images/meta-in-app/pay.jpg" alt="In-app payment" style="width:100%;height:auto;display:block;" />
+                </div>
+                <div class="case-image-natural">
+                  <img src="../../assets/images/meta-in-app/more.jpg" alt="More options" style="width:100%;height:auto;display:block;" />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="testing" class="case-section">
+            <p class="case-section-label">Test &amp; Iterate</p>
+            <h2 class="case-section-title">Test &amp; Iterate</h2>
+            <div class="case-section-body">
+              <p>
+                I tested full conversation flows, not just individual UI pieces. The goal was to see if structured interactions could help users act more quickly—identifying serious buyers, scheduling within chat, moving from conversation to payment.
+              </p>
+              <p>
+                I tested these flows because they represent the critical path from first message to completed transaction. Isolated features would not tell me if the system held together.
+              </p>
+              <p>
+                The results were clear. Users preferred guided actions over typing repeated messages. Visibility into intent reduced confusion. Full flows were more effective than isolated components.
+              </p>
+              <p>
+                This changed the design. I stopped layering features across surfaces and focused on connected experiences inside the conversation itself. The scope tightened, and the direction became more intentional.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                <img src="../../assets/images/meta-in-app/lo-fi.png" alt="Lo-fi and mid-fi wireframes" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                <img src="../../assets/images/meta-in-app/testing.png" alt="Testing feedback" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+            </div>
+          </section>
+
+          <section id="final-solution" class="case-section">
+            <p class="case-section-label">Final Product</p>
+            <h2 class="case-section-title">A System That Moves Users From Message to Match</h2>
+            <div class="case-section-body">
+              <p>
+                The final solution is a cohesive system. AI summaries reduce cognitive load so users do not need to scroll through long threads. A queue system helps sellers prioritize buyers and manage multiple conversations. Scheduling removes back-and-forth by letting users select and confirm times directly in chat. Payments complete the transaction loop without leaving the platform.
+              </p>
+              <p>
+                The system also handles edge cases. Multiple buyers are managed through the queue. Users can choose cash or in-app payment depending on preference. Buyers and sellers each see clear next steps based on their role—so the experience adapts to who you are and where you are in the flow.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block">
+                <div class="case-media-placeholder">Final UI examples of Marketplace education hub and trays</div>
+              </div>
+              <div class="case-image-block">
+                <div class="case-media-placeholder">System diagram connecting surfaces, rules, and owners</div>
+              </div>
+            </div>
+          </section>
+
+          <section id="results" class="case-section">
+            <p class="case-section-label">Impact</p>
+            <h2 class="case-section-title">Faster Decisions, Fewer Drop-Offs</h2>
+            <div class="case-section-body">
+              <p>
+                Adding structure reduces message overload, speeds up transactions, and improves trust. Users understand intent more clearly and coordinate faster. Fewer conversations are abandoned mid-flow.
+              </p>
+              <p>
+                This ties back to the original problem. Conversations no longer break down at scale. Buyers and sellers stay on platform. Transaction outcomes improve because the system supports completion, not just communication.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                <img src="../../assets/images/meta-in-app/1.png" alt="Impact 1" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div class="case-image-block" style="aspect-ratio: 3 / 2; outline: 1px solid #e0e0e0;">
+                <video src="../../assets/images/meta-in-app/impact.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+              </div>
+            </div>
+            <div class="case-section-media-row" style="margin-top: var(--space-2);">
+              <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                <img src="../../assets/images/meta-in-app/2.png" alt="Impact 2" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div class="case-image-block" style="aspect-ratio: 3 / 2; outline: 1px solid #e0e0e0;">
+                <video src="../../assets/images/meta-in-app/emojis.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+              </div>
+            </div>
+          </section>
+
+          <section id="reflection" class="case-section">
+            <p class="case-section-label">Reflection</p>
+            <h2 class="case-section-title">What Designing at Marketplace Scale Taught Me</h2>
+            <div class="case-section-body">
+              <p>
+                This project reinforced the importance of designing systems, not individual features. At scale, unstructured conversations create confusion. Structuring behavior through the interface—guiding users toward outcomes instead of leaving them to figure it out—makes the difference.
+              </p>
+              <p>
+                Next, I would validate the full flows with more users, stress-test edge cases like high-volume sellers, and measure impact on transaction completion rates and trust. The system is designed to scale; the next step is proving it does.
+              </p>
+            </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                <img src="../../assets/images/meta-in-app/reflection.png" alt="Team working session" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div class="case-image-block" style="aspect-ratio: 3 / 2;">
+                <img src="../../assets/images/meta-in-app/reflection2.png" alt="Team critique session" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="container page-footer">
+    <div class="grid-12">
+      <div class="span-6">
+        <span class="footer-credit">Designed + coded by</span><br />
+        <span class="footer-name">Lucille Trepanier</span>
+      </div>
+      <div class="span-6 footer-right">
+        <div class="footer-socials">
+          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var flyWrap    = document.getElementById('cs-fly-wrap');
+    var launchSlot = document.querySelector('.cs-launch-slot');
+    var heroTarget = document.getElementById('cs-hero-target');
+    var hero       = document.querySelector('.case-hero');
+    if (!flyWrap || !launchSlot || !heroTarget || !hero) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      flyWrap.classList.add('is-landed');
+      heroTarget.appendChild(flyWrap);
+      hero.classList.add('case-hero--revealed');
+      return;
+    }
+    var state = 'pre';
+    var srcRect = null, tgtRect = null, startScroll = 0, endScroll = 1, navH = 0;
+    function measure() {
+      var s = flyWrap.getBoundingClientRect(), t = heroTarget.getBoundingClientRect();
+      var navEl = document.getElementById('page-header');
+      navH = navEl ? navEl.getBoundingClientRect().height : 0;
+      var sy = window.scrollY, vh = window.innerHeight;
+      srcRect = { top: s.top + sy, left: s.left, width: s.width, height: s.height };
+      tgtRect = { top: t.top + sy, left: t.left, width: t.width, height: t.height };
+      startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
+      endScroll   = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
+      if (endScroll <= startScroll) endScroll = startScroll + 1;
+    }
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function applyFlyRect(progress) {
+      var p = Math.max(0, Math.min(1, progress));
+      var vw = window.innerWidth, vh = window.innerHeight;
+      var width  = lerp(srcRect.width,  tgtRect.width,  p);
+      var height = lerp(srcRect.height, tgtRect.height, p);
+      var br     = lerp(12, 24, p);
+      flyWrap.style.top          = Math.max(navH, (vh - height) / 2) + 'px';
+      flyWrap.style.left         = ((vw - width) / 2) + 'px';
+      flyWrap.style.width        = width  + 'px';
+      flyWrap.style.height       = height + 'px';
+      flyWrap.style.borderRadius = br     + 'px';
+    }
+    function returnToLaunch() {
+      if (flyWrap.parentElement !== launchSlot) launchSlot.appendChild(flyWrap);
+      flyWrap.classList.remove('is-flying', 'is-landed');
+      flyWrap.style.cssText = '';
+      state = 'pre';
+    }
+    function startFlight() {
+      if (flyWrap.parentElement !== launchSlot) launchSlot.appendChild(flyWrap);
+      flyWrap.classList.remove('is-landed');
+      flyWrap.classList.add('is-flying');
+      state = 'flying';
+    }
+    function land() {
+      if (state === 'landing' || state === 'landed') return;
+      state = 'landing';
+      var t = heroTarget.getBoundingClientRect();
+      flyWrap.style.top = t.top + 'px'; flyWrap.style.left = t.left + 'px';
+      flyWrap.style.width = t.width + 'px'; flyWrap.style.height = t.height + 'px';
+      flyWrap.style.borderRadius = '1.5rem';
+      requestAnimationFrame(function () {
+        flyWrap.classList.remove('is-flying');
+        flyWrap.classList.add('is-landed');
+        flyWrap.style.cssText = '';
+        heroTarget.appendChild(flyWrap);
+        var lz = document.querySelector('.cs-launch-zone');
+        if (lz) lz.style.display = 'none';
+        state = 'landed';
+      });
+    }
+    function onScroll() {
+      if (!srcRect) return;
+      if (state === 'landed' || state === 'landing') return;
+      var progress = (window.scrollY - startScroll) / (endScroll - startScroll);
+      if (progress <= 0) { if (state !== 'pre') returnToLaunch(); hero.classList.remove('case-hero--revealed'); return; }
+      if (progress >= 1) { if (state !== 'landed' && state !== 'landing') land(); hero.classList.add('case-hero--revealed'); return; }
+      if (state !== 'flying') startFlight();
+      applyFlyRect(progress);
+      if (progress >= 0.85) { hero.classList.add('case-hero--revealed'); } else { hero.classList.remove('case-hero--revealed'); }
+    }
+    hero.classList.add('case-hero--init');
+    window.addEventListener('load', function () { measure(); onScroll(); });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function () {
+        if (state === 'pre' || state === 'flying') { if (state === 'flying') returnToLaunch(); measure(); onScroll(); }
+      }, 150);
+    });
+  })();
+  </script>
+</body>
+</html>
