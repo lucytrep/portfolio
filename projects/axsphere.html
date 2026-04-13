@@ -70,8 +70,8 @@ because those routes all redirect here. -->
 
     /* Landed state: fills hero-image container */
     #cs-fly-wrap.is-landed {
-      position: static;
-      inset: auto;
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       border-radius: 0;
@@ -149,23 +149,23 @@ because those routes all redirect here. -->
   <div class="cs-ed">
     <div class="cs-ed-grid">
       <div class="cs-ed-img cs-ed-img--full" style="position:relative;">
-        <iframe src="https://player.vimeo.com/video/1182096348?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&controls=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:100%;height:100%;transform:translate(-50%,-50%) scale(1.3);border-radius:inherit;" title="Motion Project 1"></iframe>
+        <iframe loading="lazy" src="https://player.vimeo.com/video/1182096348?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&controls=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:130%;height:130%;transform:translate(-50%,-50%);border-radius:inherit;" title="Motion Project 1"></iframe>
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
       <div class="cs-ed-img cs-ed-img--half" style="background:none;">
-        <img src="../assets/images/axsphere/Phone.png" alt="Axsphere app mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <img src="../assets/images/axsphere/Phone.jpg" alt="Axsphere app mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half" style="background:#E7E7E7;position:relative;">
-        <iframe src="https://player.vimeo.com/video/1182098028?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:177.8%;height:177.8%;transform:translate(-50%,-50%);border-radius:inherit;" title="live"></iframe>
+        <iframe loading="lazy" src="https://player.vimeo.com/video/1182098028?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:177.8%;height:177.8%;transform:translate(-50%,-50%);border-radius:inherit;" title="live"></iframe>
       </div>
       <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
-        <img src="../assets/images/axsphere/Slides.png" alt="Axsphere project slides" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <img src="../assets/images/axsphere/Slides.jpg" alt="Axsphere project slides" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half">
-        <img src="../assets/images/axsphere/Angled.png" alt="Axsphere angled mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <img src="../assets/images/axsphere/Angled.jpg" alt="Axsphere angled mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half">
-        <img src="../assets/images/axsphere/Hand.png" alt="Axsphere hand mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <img src="../assets/images/axsphere/Hand.jpg" alt="Axsphere hand mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
     </div>
   </div>
@@ -178,7 +178,9 @@ because those routes all redirect here. -->
         <div class="cs-launch-placeholder"></div>
         <!-- The flying video — JS moves this into #cs-hero-target on scroll -->
         <div id="cs-fly-wrap">
-          <iframe src="https://player.vimeo.com/video/1182137183?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="width:100%;height:100%;border:none;display:block;" title="LogoVideo"></iframe>
+          <div style="position:relative;width:100%;height:100%;overflow:hidden;">
+            <iframe loading="lazy" src="https://player.vimeo.com/video/1182137183?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:none;display:block;transform:translateZ(0);backface-visibility:hidden;" title="LogoVideo"></iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -203,7 +205,7 @@ because those routes all redirect here. -->
       </aside>
 
       <article class="case-main">
-        <header id="overview" class="case-hero">
+        <header id="case-intro" class="case-hero">
           <p class="case-hero-kicker">Axsphere • Product Platform • 2025</p>
           <h1 class="case-hero-title">Designing for confidence before arrival</h1>
 
@@ -251,12 +253,12 @@ because those routes all redirect here. -->
                 <div class="case-carousel-track">
                   <div class="case-carousel-slide">
                     <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3030/1836;position:relative;">
-                      <iframe src="https://player.vimeo.com/video/1182289329?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" title="OverviewAxs"></iframe>
+                      <iframe loading="lazy" src="https://player.vimeo.com/video/1182289329?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" title="OverviewAxs"></iframe>
                     </div>
                   </div>
                   <div class="case-carousel-slide">
                     <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3030/1836;border:0.25px solid #b0b0b0;">
-                      <video src="../assets/images/axsphere/LucyTrepanier_MotionProject1_Categories.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                      <video preload="none" src="../assets/images/axsphere/LucyTrepanier_MotionProject1_Categories.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
                     </div>
                   </div>
                 </div>
@@ -282,14 +284,14 @@ because those routes all redirect here. -->
             </div>
             <div class="case-section-media-row">
               <div style="border-radius:0.8rem;overflow:hidden;">
-                <video src="../assets/images/axsphere/VelKitchenV2.mov" autoplay muted loop playsinline style="width:100%;height:auto;display:block;"></video>
+                <video preload="none" src="../assets/images/axsphere/VelKitchenV2.mov" autoplay muted loop playsinline style="width:100%;height:auto;display:block;"></video>
               </div>
               <div style="display:flex;flex-direction:column;gap:var(--space-2);">
                 <div class="case-image-block" style="aspect-ratio: 16 / 9;">
-                  <video src="../assets/images/axsphere/LucyTrepanier_MotionProject1_Features.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                  <video preload="none" src="../assets/images/axsphere/LucyTrepanier_MotionProject1_Features.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
                 </div>
                 <div class="case-image-block" style="aspect-ratio: 16 / 9;">
-                  <video src="../assets/images/axsphere/LucyTrepanier_MotionProject1_Icons.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                  <video preload="none" src="../assets/images/axsphere/LucyTrepanier_MotionProject1_Icons.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
                 </div>
               </div>
             </div>
@@ -327,20 +329,20 @@ because those routes all redirect here. -->
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row" style="grid-template-columns: 1800fr 3048fr;">
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Participants.png" alt="Research participants" style="width:100%;height:auto;display:block;" />
+                        <img src="../assets/images/axsphere/Participants.jpg" alt="Research participants" style="width:100%;height:auto;display:block;" />
                       </div>
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Overview.png" alt="User interviews, task analysis, and affinity map overview" style="width:100%;height:auto;display:block;" />
+                        <img src="../assets/images/axsphere/Overview.jpg" alt="User interviews, task analysis, and affinity map overview" style="width:100%;height:auto;display:block;" />
                       </div>
                     </div>
                   </div>
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row" style="grid-template-columns: 3048fr 1800fr;">
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/KeyInsights.png" alt="Key insights" style="width:100%;height:auto;display:block;" />
+                        <img src="../assets/images/axsphere/KeyInsights.jpg" alt="Key insights" style="width:100%;height:auto;display:block;" />
                       </div>
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Themes.png" alt="Themes" style="width:100%;height:auto;display:block;" />
+                        <img src="../assets/images/axsphere/Themes.jpg" alt="Themes" style="width:100%;height:auto;display:block;" />
                       </div>
                     </div>
                   </div>
@@ -498,17 +500,17 @@ because those routes all redirect here. -->
                     <div class="phone-card-grid">
                       <div class="phone-card" style="background: none; padding: 0;">
                         <div class="phone-card-screen" style="width: 100%; box-shadow: none;">
-                          <video class="no-dim" src="../assets/images/axsphere/Onboarding.mp4" autoplay muted loop playsinline></video>
+                          <video preload="none" class="no-dim" src="../assets/images/axsphere/Onboarding.mp4" autoplay muted loop playsinline></video>
                         </div>
                       </div>
                       <div class="phone-card" style="background: none; padding: 0;">
                         <div class="phone-card-screen" style="width: 100%; box-shadow: none;">
-                          <video class="no-dim" src="../assets/images/axsphere/Map.mp4" autoplay muted loop playsinline></video>
+                          <video preload="none" class="no-dim" src="../assets/images/axsphere/Map.mp4" autoplay muted loop playsinline></video>
                         </div>
                       </div>
                       <div class="phone-card" style="background: none; padding: 0;">
                         <div class="phone-card-screen" style="width: 100%; box-shadow: none;">
-                          <video class="no-dim" src="../assets/images/axsphere/Crowd.mp4" autoplay muted loop playsinline></video>
+                          <video preload="none" class="no-dim" src="../assets/images/axsphere/Crowd.mp4" autoplay muted loop playsinline></video>
                         </div>
                       </div>
                     </div>
@@ -518,17 +520,17 @@ because those routes all redirect here. -->
                     <div class="phone-card-grid">
                       <div class="phone-card" style="background: none; padding: 0;">
                         <div class="phone-card-screen" style="width: 100%; box-shadow: none;">
-                          <video class="no-dim" src="../assets/images/axsphere/Reserve.mp4" autoplay muted loop playsinline></video>
+                          <video preload="none" class="no-dim" src="../assets/images/axsphere/Reserve.mp4" autoplay muted loop playsinline></video>
                         </div>
                       </div>
                       <div class="phone-card" style="background: none; padding: 0;">
                         <div class="phone-card-screen" style="width: 100%; box-shadow: none;">
-                          <video class="no-dim" src="../assets/images/axsphere/Comforts.mp4" autoplay muted loop playsinline></video>
+                          <video preload="none" class="no-dim" src="../assets/images/axsphere/Comforts.mp4" autoplay muted loop playsinline></video>
                         </div>
                       </div>
                       <div class="phone-card" style="background: none; padding: 0;">
                         <div class="phone-card-screen" style="width: 100%; box-shadow: none;">
-                          <video class="no-dim" src="../assets/images/axsphere/Account.mp4" autoplay muted loop playsinline></video>
+                          <video preload="none" class="no-dim" src="../assets/images/axsphere/Account.mp4" autoplay muted loop playsinline></video>
                         </div>
                       </div>
                     </div>
@@ -557,10 +559,10 @@ because those routes all redirect here. -->
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <video src="../assets/images/axsphere/AxsphereTitle.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                <video preload="none" src="../assets/images/axsphere/AxsphereTitle.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
               </div>
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <video src="../assets/images/axsphere/Controls.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+                <video preload="none" src="../assets/images/axsphere/Controls.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
               </div>
             </div>
             <div class="case-section-media-row" style="margin-top: var(--space-2);">
@@ -623,7 +625,7 @@ because those routes all redirect here. -->
             <p class="case-section-label">Final Deck</p>
             <h2 class="case-section-title">Full Presentation</h2>
             <div style="margin-top: var(--space-4); position: relative; width: 100%; aspect-ratio: 16 / 9;">
-              <iframe style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 0.8rem; position: absolute; inset: 0; width: 100%; height: 100%;" src="https://embed.figma.com/deck/oc8qdnRtyaqpq5ShIE743Q/LucyTrep_Axsphere?node-id=1-1847&viewport=-722%2C-3978%2C0.35&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
+              <iframe loading="lazy" style="border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 0.8rem; position: absolute; inset: 0; width: 100%; height: 100%;" src="https://embed.figma.com/deck/oc8qdnRtyaqpq5ShIE743Q/LucyTrep_Axsphere?node-id=1-1847&viewport=-722%2C-3978%2C0.35&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share" allowfullscreen></iframe>
             </div>
           </section>
         </div>
@@ -650,182 +652,6 @@ because those routes all redirect here. -->
   </footer>
 
   <script src="../js/main.js"></script>
-  <script>
-    /* ── Axsphere: scroll-driven hero video animation ── */
-    (function () {
-      'use strict';
-
-      /* Elements */
-      var flyWrap    = document.getElementById('cs-fly-wrap');
-      var launchSlot = document.querySelector('.cs-launch-slot');
-      var heroTarget = document.getElementById('cs-hero-target');
-      var hero       = document.querySelector('.case-hero');
-
-      if (!flyWrap || !launchSlot || !heroTarget || !hero) return;
-
-      /* Reduced motion: skip straight to landed state */
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        flyWrap.classList.add('is-landed');
-        heroTarget.appendChild(flyWrap);
-        hero.classList.add('case-hero--revealed');
-        return;
-      }
-
-      /* State machine: 'pre' → 'flying' → 'landing' → 'landed' (reversible to 'pre') */
-      var state = 'pre';
-
-      /* Cached page-space rects and scroll range — remeasured on load/resize */
-      var srcRect = null, tgtRect = null;
-      var startScroll = 0, endScroll = 1, navH = 0;
-
-      function measure() {
-        /* flyWrap must be in launch slot (position:absolute) when measuring */
-        var s  = flyWrap.getBoundingClientRect();
-        var t  = heroTarget.getBoundingClientRect();
-        var navEl = document.getElementById('page-header');
-        navH = navEl ? navEl.getBoundingClientRect().height : 0;
-        var sy = window.scrollY;
-        var vh = window.innerHeight;
-
-        srcRect = { top: s.top + sy, left: s.left, width: s.width, height: s.height };
-        tgtRect = { top: t.top + sy, left: t.left, width: t.width, height: t.height };
-
-        /* Trigger exactly when each element's center aligns with the viewport center.
-           At startScroll the fixed coords match the launch zone's natural position
-           exactly — zero jump. At endScroll they match the hero-image position.    */
-        startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
-        endScroll   = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
-        if (endScroll <= startScroll) endScroll = startScroll + 1;
-      }
-
-      function lerp(a, b, t) { return a + (b - a) * t; }
-
-      /* Apply fixed rect: video stays centered, only size interpolates.
-         Linear progress (scroll IS the easing) keeps motion glitch-free. */
-      function applyFlyRect(progress) {
-        var p  = Math.max(0, Math.min(1, progress));
-        var vw = window.innerWidth;
-        var vh = window.innerHeight;
-
-        var width  = lerp(srcRect.width,  tgtRect.width,  p);
-        var height = lerp(srcRect.height, tgtRect.height, p);
-        var br     = lerp(12, 24, p); /* border-radius: 0.75rem → 1.5rem */
-
-        /* Center in the space below the nav bar */
-        var left  = (vw - width) / 2;
-        var top   = Math.max(navH, (vh - height) / 2);
-
-        flyWrap.style.top          = top    + 'px';
-        flyWrap.style.left         = left   + 'px';
-        flyWrap.style.width        = width  + 'px';
-        flyWrap.style.height       = height + 'px';
-        flyWrap.style.borderRadius = br     + 'px';
-      }
-
-      /* ── State transition helpers ── */
-
-      function returnToLaunch() {
-        /* Move flyWrap back to launch slot and reset all styles/classes */
-        if (flyWrap.parentElement !== launchSlot) {
-          launchSlot.appendChild(flyWrap);
-        }
-        flyWrap.classList.remove('is-flying', 'is-landed');
-        flyWrap.style.cssText = '';
-        state = 'pre';
-      }
-
-      function startFlight() {
-        /* Ensure flyWrap is in launch slot before going fixed */
-        if (flyWrap.parentElement !== launchSlot) {
-          launchSlot.appendChild(flyWrap);
-        }
-        flyWrap.classList.remove('is-landed');
-        flyWrap.classList.add('is-flying');
-        state = 'flying';
-      }
-
-      function land() {
-        /* Guard: only land once */
-        if (state === 'landing' || state === 'landed') return;
-        state = 'landing';
-
-        /* Snap fixed position to exactly match hero-target before DOM move (avoids flash) */
-        var t = heroTarget.getBoundingClientRect();
-        flyWrap.style.top          = t.top    + 'px';
-        flyWrap.style.left         = t.left   + 'px';
-        flyWrap.style.width        = t.width  + 'px';
-        flyWrap.style.height       = t.height + 'px';
-        flyWrap.style.borderRadius = '1.5rem';
-
-        requestAnimationFrame(function () {
-          flyWrap.classList.remove('is-flying');
-          flyWrap.classList.add('is-landed');
-          flyWrap.style.cssText = ''; /* CSS class handles sizing */
-          heroTarget.appendChild(flyWrap);
-          var lz = document.querySelector('.cs-launch-zone');
-          if (lz) lz.style.display = 'none';
-          state = 'landed';
-        });
-      }
-
-      /* ── Main scroll handler ── */
-      function onScroll() {
-        if (!srcRect) return;
-        if (state === 'landed' || state === 'landing') return;
-
-        var progress = (window.scrollY - startScroll) / (endScroll - startScroll);
-
-        if (progress <= 0) {
-          /* Before animation window — video sits in launch zone normally */
-          if (state !== 'pre') returnToLaunch();
-          hero.classList.remove('case-hero--revealed');
-          return;
-        }
-
-        if (progress >= 1) {
-          /* Past animation window — video has landed */
-          if (state !== 'landed' && state !== 'landing') land();
-          hero.classList.add('case-hero--revealed');
-          return;
-        }
-
-        /* Mid-flight: interpolate position */
-        if (state !== 'flying') startFlight();
-        applyFlyRect(progress);
-
-        /* Surrounding content fades in over the last 15% of the animation */
-        if (progress >= 0.85) {
-          hero.classList.add('case-hero--revealed');
-        } else {
-          hero.classList.remove('case-hero--revealed');
-        }
-      }
-
-      /* ── Init ── */
-
-      /* Add init class so text starts hidden (JS-controlled: degrades gracefully without JS) */
-      hero.classList.add('case-hero--init');
-
-      window.addEventListener('load', function () {
-        measure();
-        onScroll(); /* handle mid-scroll page loads */
-      });
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-
-      /* Re-measure on resize (debounced) */
-      var resizeTimer;
-      window.addEventListener('resize', function () {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(function () {
-          if (state === 'pre' || state === 'flying') {
-            if (state === 'flying') returnToLaunch();
-            measure();
-            onScroll();
-          }
-        }, 150);
-      });
-    })();
-  </script>
+  <script>window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();</script>
 </body>
 </html>

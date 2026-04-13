@@ -1,5 +1,29 @@
 (function () {
   document.body.classList.add('has-custom-cursor');
+  var isCaseStudyPage = !!document.querySelector('.case-study');
+  var forceTopKey = 'force-top-case-study';
+  var shouldForceTop = false;
+
+  // Entering a project from the case studies index should always open at the top
+  // exactly once. Other revisits can use normal browser/session memory.
+  (function () {
+    if (!window.sessionStorage) return;
+    var fromCaseStudiesIndex =
+      /\/case-studies\/?$/.test(window.location.pathname) &&
+      !!document.querySelector('.section-projects');
+
+    if (!fromCaseStudiesIndex) return;
+
+    var projectLinks = document.querySelectorAll('.section-projects a.project-link[href]');
+    projectLinks.forEach(function (link) {
+      link.addEventListener('click', function () {
+        try {
+          var url = new URL(link.getAttribute('href'), window.location.href);
+          window.sessionStorage.setItem(forceTopKey, url.pathname);
+        } catch (e) {}
+      });
+    });
+  })();
 
   // Remember per-page scroll position and restore it on return.
   (function () {
@@ -12,8 +36,18 @@
       } catch (e) {}
     }
 
-    // Restore only when there is no hash target in the URL.
-    if (!window.location.hash) {
+    // Restore only when there is no hash target and the page wasn't intentionally
+    // opened from the case studies index with a "start at top" request.
+    var hasFlyingHero = !!document.getElementById('cs-fly-wrap');
+    var forceTopPath = window.sessionStorage.getItem(forceTopKey);
+    shouldForceTop = forceTopPath === window.location.pathname;
+    if (shouldForceTop) {
+      try {
+        window.sessionStorage.setItem(key, '0');
+      } catch (e) {}
+    }
+
+    if (!window.location.hash && !shouldForceTop && (!isCaseStudyPage || hasFlyingHero)) {
       var saved = window.sessionStorage.getItem(key);
       if (saved !== null) {
         var y = parseInt(saved, 10);
@@ -30,6 +64,82 @@
     window.addEventListener('scroll', saveScroll, { passive: true });
     window.addEventListener('pagehide', saveScroll);
     window.addEventListener('beforeunload', saveScroll);
+  })();
+
+  // Case studies opened from the case studies index should start at the top once.
+  // Otherwise, preserve normal browser memory for reloads / tab restores.
+  (function () {
+    if (!isCaseStudyPage) return;
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'auto';
+    }
+    if (!window.sessionStorage) return;
+    if (window.location.hash) return;
+    if (!shouldForceTop) return;
+
+    window.addEventListener('pageshow', function () {
+      window.requestAnimationFrame(function () {
+        window.scrollTo(0, 0);
+        try {
+          window.sessionStorage.removeItem(forceTopKey);
+        } catch (e) {}
+      });
+    }, { once: true });
+  })();
+
+  // Case study media: keep above-the-fold media eager, but lazy-load and pause
+  // offscreen autoplay media so pages feel much less heavy on entry.
+  (function () {
+    if (!isCaseStudyPage) return;
+
+    var eagerSelector = '.cs-ed, .cs-launch-zone, .case-hero, .case-hero-image';
+    var iframes = document.querySelectorAll('iframe');
+    iframes.forEach(function (iframe) {
+      if (iframe.closest(eagerSelector)) {
+        iframe.setAttribute('loading', 'eager');
+      } else if (!iframe.hasAttribute('loading')) {
+        iframe.setAttribute('loading', 'lazy');
+      }
+    });
+
+    var videos = document.querySelectorAll('video');
+    videos.forEach(function (video) {
+      if (!video.hasAttribute('playsinline')) {
+        video.setAttribute('playsinline', '');
+      }
+      if (!video.hasAttribute('preload')) {
+        video.setAttribute(
+          'preload',
+          video.closest(eagerSelector) ? 'auto' : 'metadata'
+        );
+      }
+    });
+
+    if (!window.IntersectionObserver) return;
+
+    var autoplayVideos = document.querySelectorAll('video[autoplay]');
+    if (!autoplayVideos.length) return;
+
+    var mediaObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          var video = entry.target;
+          if (entry.isIntersecting) {
+            var playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+              playPromise.catch(function () {});
+            }
+          } else {
+            video.pause();
+          }
+        });
+      },
+      { rootMargin: '250px 0px', threshold: 0.15 }
+    );
+
+    autoplayVideos.forEach(function (video) {
+      mediaObserver.observe(video);
+    });
   })();
 
   var header = document.getElementById('page-header');
@@ -458,5 +568,199 @@
       observer.observe(container);
     });
   })();
+
+  // Shared case-study fly hero animation.
+  window.initCaseStudyFlyHero = function () {
+    var flyWrap = document.getElementById('cs-fly-wrap');
+    var launchSlot = document.querySelector('.cs-launch-slot');
+    var heroTarget = document.getElementById('cs-hero-target');
+    var hero = document.querySelector('.case-hero');
+    var launchZone = document.querySelector('.cs-launch-zone');
+    var launchPlaceholder = document.querySelector('.cs-launch-placeholder');
+
+    if (!flyWrap || !launchSlot || !heroTarget || !hero) return;
+
+    function finishImmediately() {
+      flyWrap.classList.add('is-landed');
+      heroTarget.appendChild(flyWrap);
+      hero.classList.add('case-hero--revealed');
+      if (launchZone) launchZone.classList.add('is-complete');
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      finishImmediately();
+      return;
+    }
+
+    var state = 'pre';
+    var srcRect = null;
+    var tgtRect = null;
+    var startScroll = 0;
+    var endScroll = 1;
+
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    function getSourceRect() {
+      var rectSource = launchPlaceholder || launchSlot;
+      var rect = rectSource.getBoundingClientRect();
+      var sy = window.scrollY;
+      return {
+        top: rect.top + sy,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height
+      };
+    }
+
+    function getTargetRect() {
+      var rect = heroTarget.getBoundingClientRect();
+      var sy = window.scrollY;
+      return {
+        top: rect.top + sy,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height
+      };
+    }
+
+    function measure() {
+      srcRect = getSourceRect();
+      tgtRect = getTargetRect();
+      var vh = window.innerHeight;
+      startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
+      endScroll = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
+      if (endScroll <= startScroll) endScroll = startScroll + 1;
+    }
+
+    function resetInlineStyles() {
+      flyWrap.style.top = '';
+      flyWrap.style.left = '';
+      flyWrap.style.width = '';
+      flyWrap.style.height = '';
+      flyWrap.style.borderRadius = '';
+    }
+
+    function returnToLaunch() {
+      if (flyWrap.parentElement !== launchSlot) {
+        launchSlot.appendChild(flyWrap);
+      }
+      flyWrap.classList.remove('is-flying', 'is-landed');
+      resetInlineStyles();
+      if (launchZone) launchZone.classList.remove('is-complete');
+      state = 'pre';
+    }
+
+    function startFlight() {
+      if (flyWrap.parentElement !== launchSlot) {
+        launchSlot.appendChild(flyWrap);
+      }
+      flyWrap.classList.remove('is-landed');
+      flyWrap.classList.add('is-flying');
+      if (launchZone) launchZone.classList.remove('is-complete');
+      state = 'flying';
+    }
+
+    function applyFlyRect(progress) {
+      var p = Math.max(0, Math.min(1, progress));
+      var sy = window.scrollY;
+      var top = lerp(srcRect.top - sy, tgtRect.top - sy, p);
+      var left = lerp(srcRect.left, tgtRect.left, p);
+      var width = lerp(srcRect.width, tgtRect.width, p);
+      var height = lerp(srcRect.height, tgtRect.height, p);
+      var br = lerp(12, 24, p);
+
+      flyWrap.style.top = top + 'px';
+      flyWrap.style.left = left + 'px';
+      flyWrap.style.width = width + 'px';
+      flyWrap.style.height = height + 'px';
+      flyWrap.style.borderRadius = br + 'px';
+    }
+
+    function land() {
+      if (state === 'landing' || state === 'landed') return;
+      state = 'landing';
+      var collapseHeight = launchZone ? launchZone.getBoundingClientRect().height : 0;
+      tgtRect = getTargetRect();
+      applyFlyRect(1);
+      requestAnimationFrame(function () {
+        heroTarget.appendChild(flyWrap);
+        requestAnimationFrame(function () {
+          flyWrap.classList.remove('is-flying');
+          flyWrap.classList.add('is-landed');
+          resetInlineStyles();
+          if (launchZone) {
+            launchZone.classList.add('is-complete');
+            if (collapseHeight > 0) {
+              window.scrollBy(0, -collapseHeight);
+            }
+          }
+          state = 'landed';
+        });
+      });
+    }
+
+    function onScroll() {
+      if (!srcRect || !tgtRect) return;
+
+      if (state === 'landed' || state === 'landing') {
+        hero.classList.add('case-hero--revealed');
+        return;
+      }
+
+      var progress = (window.scrollY - startScroll) / (endScroll - startScroll);
+
+      if (progress <= 0) {
+        if (state !== 'pre') returnToLaunch();
+        hero.classList.remove('case-hero--revealed');
+        return;
+      }
+
+      if (progress >= 1) {
+        if (state !== 'landed' && state !== 'landing') land();
+        hero.classList.add('case-hero--revealed');
+        return;
+      }
+
+      if (state !== 'flying') startFlight();
+
+      tgtRect = getTargetRect();
+      applyFlyRect(progress);
+      hero.classList.toggle('case-hero--revealed', progress >= 0.85);
+    }
+
+    hero.classList.add('case-hero--init');
+
+    function refresh() {
+      if (state === 'flying') returnToLaunch();
+      measure();
+      onScroll();
+    }
+
+    window.addEventListener('load', function () {
+      measure();
+      onScroll();
+    });
+
+    var workEl = document.getElementById('work-content');
+    if (workEl && workEl.classList.contains('work-lock-hidden')) {
+      var mo = new MutationObserver(function () {
+        if (!workEl.classList.contains('work-lock-hidden')) {
+          mo.disconnect();
+          requestAnimationFrame(refresh);
+        }
+      });
+      mo.observe(workEl, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(refresh, 150);
+    });
+  };
 
 })();

@@ -19,7 +19,7 @@
 }
 
 .cs-ed-img {
-  background: #e0e0e0;
+  background: #fff;
   border-radius: 0.75rem;
   overflow: hidden;
 }
@@ -40,6 +40,15 @@
 
 .cs-ed-img--half {
   aspect-ratio: 4 / 3;
+}
+
+.cs-launch-zone.is-complete {
+  height: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .case-study {
@@ -154,6 +163,7 @@
 }
 
 .case-hero-image {
+  position: relative;
   margin-top: var(--space-4);
   margin-bottom: var(--space-4);
   width: 100%;
@@ -161,8 +171,14 @@
   display: flex;
   border-radius: 1.5rem;
   overflow: hidden;
-  border: 0.25px solid #b0b0b0;
-  background: var(--color-bg-subtle);
+  border: none;
+  background: #fff;
+}
+
+#cs-fly-wrap {
+  box-shadow: 0 0 0 0.25px #b0b0b0;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .case-hero-image video {
@@ -237,10 +253,14 @@
 .case-section {
   padding-top: var(--space-5);
   padding-bottom: var(--space-5);
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
 }
 
 .case-section:first-of-type {
   padding-top: 0;
+  content-visibility: visible;
+  contain-intrinsic-size: auto;
 }
 
 .case-section-label {

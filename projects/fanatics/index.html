@@ -16,7 +16,7 @@
     .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
     #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; }
     #cs-fly-wrap.is-flying { position: fixed; inset: auto; z-index: 50; pointer-events: none; will-change: top, left, width, height; }
-    #cs-fly-wrap.is-landed { position: static; inset: auto; width: 100%; height: 100%; border-radius: 0; border: none; background: none; }
+    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; border: none; background: none; }
     #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
     #page-header { z-index: 100; }
     #cs-hero-target { background: transparent; border: none; }
@@ -84,7 +84,7 @@
       <div class="cs-launch-slot">
         <div class="cs-launch-placeholder"></div>
         <div id="cs-fly-wrap">
-          <video src="../../assets/images/gallery/fanatics-v2.mp4" autoplay muted loop playsinline></video>
+          <video preload="none" src="../../assets/images/gallery/fanatics-v2.mp4" autoplay muted loop playsinline></video>
         </div>
       </div>
     </div>
@@ -109,7 +109,7 @@
       </aside>
 
       <article class="case-main">
-        <header id="overview" class="case-hero">
+        <header id="case-intro" class="case-hero">
           <p class="case-hero-kicker">Fanatics Fest • Ticketing Website • January 2025</p>
           <h1 class="case-hero-title">Building a ticketing experience worthy of the hype</h1>
 
@@ -407,106 +407,6 @@
 
   <script src="../../js/work-lock.js"></script>
   <script src="../../js/main.js"></script>
-  <script>
-  (function () {
-    'use strict';
-    var flyWrap    = document.getElementById('cs-fly-wrap');
-    var launchSlot = document.querySelector('.cs-launch-slot');
-    var heroTarget = document.getElementById('cs-hero-target');
-    var hero       = document.querySelector('.case-hero');
-    if (!flyWrap || !launchSlot || !heroTarget || !hero) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      flyWrap.classList.add('is-landed');
-      heroTarget.appendChild(flyWrap);
-      hero.classList.add('case-hero--revealed');
-      return;
-    }
-    var state = 'pre';
-    var srcRect = null, tgtRect = null, startScroll = 0, endScroll = 1, navH = 0;
-    function measure() {
-      var s = flyWrap.getBoundingClientRect(), t = heroTarget.getBoundingClientRect();
-      var navEl = document.getElementById('page-header');
-      navH = navEl ? navEl.getBoundingClientRect().height : 0;
-      var sy = window.scrollY, vh = window.innerHeight;
-      srcRect = { top: s.top + sy, left: s.left, width: s.width, height: s.height };
-      tgtRect = { top: t.top + sy, left: t.left, width: t.width, height: t.height };
-      startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
-      endScroll   = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
-      if (endScroll <= startScroll) endScroll = startScroll + 1;
-    }
-    function lerp(a, b, t) { return a + (b - a) * t; }
-    function applyFlyRect(progress) {
-      var p = Math.max(0, Math.min(1, progress));
-      var vw = window.innerWidth, vh = window.innerHeight;
-      var width  = lerp(srcRect.width,  tgtRect.width,  p);
-      var height = lerp(srcRect.height, tgtRect.height, p);
-      var br     = lerp(12, 24, p);
-      flyWrap.style.top          = Math.max(navH, (vh - height) / 2) + 'px';
-      flyWrap.style.left         = ((vw - width) / 2) + 'px';
-      flyWrap.style.width        = width  + 'px';
-      flyWrap.style.height       = height + 'px';
-      flyWrap.style.borderRadius = br     + 'px';
-    }
-    function returnToLaunch() {
-      if (flyWrap.parentElement !== launchSlot) launchSlot.appendChild(flyWrap);
-      flyWrap.classList.remove('is-flying', 'is-landed');
-      flyWrap.style.cssText = '';
-      state = 'pre';
-    }
-    function startFlight() {
-      if (flyWrap.parentElement !== launchSlot) launchSlot.appendChild(flyWrap);
-      flyWrap.classList.remove('is-landed');
-      flyWrap.classList.add('is-flying');
-      state = 'flying';
-    }
-    function land() {
-      if (state === 'landing' || state === 'landed') return;
-      state = 'landing';
-      var t = heroTarget.getBoundingClientRect();
-      flyWrap.style.top = t.top + 'px'; flyWrap.style.left = t.left + 'px';
-      flyWrap.style.width = t.width + 'px'; flyWrap.style.height = t.height + 'px';
-      flyWrap.style.borderRadius = '1.5rem';
-      requestAnimationFrame(function () {
-        flyWrap.classList.remove('is-flying');
-        flyWrap.classList.add('is-landed');
-        flyWrap.style.cssText = '';
-        heroTarget.appendChild(flyWrap);
-        var lz = document.querySelector('.cs-launch-zone');
-        if (lz) lz.style.display = 'none';
-        state = 'landed';
-      });
-    }
-    function onScroll() {
-      if (!srcRect) return;
-      if (state === 'landed' || state === 'landing') return;
-      var progress = (window.scrollY - startScroll) / (endScroll - startScroll);
-      if (progress <= 0) { if (state !== 'pre') returnToLaunch(); hero.classList.remove('case-hero--revealed'); return; }
-      if (progress >= 1) { if (state !== 'landed' && state !== 'landing') land(); hero.classList.add('case-hero--revealed'); return; }
-      if (state !== 'flying') startFlight();
-      applyFlyRect(progress);
-      if (progress >= 0.85) { hero.classList.add('case-hero--revealed'); } else { hero.classList.remove('case-hero--revealed'); }
-    }
-    hero.classList.add('case-hero--init');
-    window.addEventListener('load', function () { measure(); onScroll(); });
-    var workEl = document.getElementById('work-content');
-    if (workEl && workEl.classList.contains('work-lock-hidden')) {
-      var mo = new MutationObserver(function () {
-        if (!workEl.classList.contains('work-lock-hidden')) {
-          mo.disconnect();
-          requestAnimationFrame(function () { measure(); onScroll(); });
-        }
-      });
-      mo.observe(workEl, { attributes: true, attributeFilter: ['class'] });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    var resizeTimer;
-    window.addEventListener('resize', function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function () {
-        if (state === 'pre' || state === 'flying') { if (state === 'flying') returnToLaunch(); measure(); onScroll(); }
-      }, 150);
-    });
-  })();
-  </script>
+  <script>window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();</script>
 </body>
 </html>
