@@ -15,7 +15,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  padding: 0 0.5rem 0.5rem;
+  padding: 0.5rem;
 }
 
 .cs-ed-img {
@@ -29,10 +29,6 @@
   aspect-ratio: 16 / 7;
 }
 
-.cs-ed-img--full:first-child {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 
 .cs-ed-img--tall {
   aspect-ratio: 16 / 9;

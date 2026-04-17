@@ -25,6 +25,7 @@
       <nav class="span-6" id="main-nav">
       <a href="../case-studies/" aria-current="page">Work</a>
       <a href="../archive/">Archive</a>
+      <a href="https://lucytrep.github.io/" target="_blank" rel="noopener noreferrer">Code</a>
       <a href="../about/">About</a>
       <a href="#" target="_blank">Resume</a>
       </nav>
@@ -75,10 +76,10 @@
             <video src="../assets/images/acuity/logo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.2);transform-origin:center;"></video>
           </div>
           <div class="project-card-meta">
-            <h2 class="project-title">AI system design, 24-hour hackathon</h2>
+            <h2 class="project-title">24-Hour AI Health System</h2>
             <span class="project-year">ACUITY <span class="meta-sep">•</span> HACKATHON <span class="meta-sep">•</span> 2026</span>
           </div>
-          <p class="project-description">Designing an AI startup system from concept to pitch in 24 hours</p>
+          <p class="project-description">A wearable AI that turns early cardiovascular signals into clear action</p>
           <!-- <span class="project-category">Systems</span> -->
         </a>
       </article>
@@ -107,17 +108,17 @@
         </a>
       </article>
       <article class="project-card">
-        <a class="project-link" href="https://lucytrep.github.io/" target="_blank" rel="noopener noreferrer">
-          <div class="project-card-image" style="overflow:hidden;">
-            <video src="../assets/images/type-and-interaction/hero.mp4" autoplay muted loop playsinline oncanplay="this.playbackRate=1.5;"></video>
+        <div class="project-link" style="cursor:default;">
+          <div class="project-card-image" style="overflow:hidden;background:#0A102A;position:relative;">
+            <canvas id="draft-card-gradient" style="width:100%;height:100%;display:block;"></canvas>
+            <span id="draft-label" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Helvetica Neue',Helvetica,sans-serif;font-size:2.75rem;font-weight:500;letter-spacing:-0.02em;pointer-events:none;">Coming Soon 🎤︎︎</span>
           </div>
           <div class="project-card-meta">
-            <h2 class="project-title">Typeography and Interaction</h2>
-            <span class="project-year">PARSONS <span class="meta-sep">•</span> CONCEPT <span class="meta-sep">•</span> 2025</span>
+            <h2 class="project-title">AI Generative Design Tool</h2>
+            <span class="project-year">PARSONS <span class="meta-sep">•</span> CAPSTONE <span class="meta-sep">•</span> COMING SOON</span>
           </div>
-          <p class="project-description">Coded web projects from Typography and Interaction at Parsons</p>
-          <!-- <span class="project-category">Design</span> -->
-        </a>
+          <p class="project-description">A full App Store app that uses AI to generate design assets in real time</p>
+        </div>
       </article>
       <article class="project-card">
         <a class="project-link" href="../projects/fanatics/">
@@ -161,5 +162,95 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+    (function () {
+      var canvas = document.getElementById('draft-card-gradient');
+      if (!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var t = 0;
+
+      var label = document.getElementById('draft-label');
+
+      // Each group: base fill, accent blob color, mid tone, dark, text color
+      var groups = [
+        { base: '#0A102A', accent: [51,96,189],  mid: [10,16,42],   dark: [2,0,13],   text: '#3360BD'  },
+        { base: '#03010E', accent: [128,156,141], mid: [20,30,25],   dark: [3,1,14],   text: '#809C8D'  },
+        { base: '#8C1A56', accent: [250,100,178], mid: [140,26,86],  dark: [60,5,30],  text: '#FFC4EE'  },
+        { base: '#712E29', accent: [223,87,30],   mid: [191,49,26],  dark: [80,20,15], text: '#DC732D'  }
+      ];
+
+      function pickPalette() {
+        palette = groups[Math.floor(Math.random() * groups.length)];
+        canvas.style.background = palette.base;
+        if (label) label.style.color = palette.text;
+      }
+
+      var palette;
+      pickPalette();
+
+      // Swap palette silently whenever the user leaves the page
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) pickPalette();
+      });
+
+      function rgba(c, a) { return 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + a + ')'; }
+
+      function resize() {
+        var rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function draw() {
+        var w = canvas.width;
+        var h = canvas.height;
+        t += 0.004;
+
+        ctx.fillStyle = palette.base;
+        ctx.fillRect(0, 0, w, h);
+
+        var x1 = w * (0.5 + 0.2 * Math.sin(t * 0.4));
+        var y1 = h * (0.5 + 0.18 * Math.cos(t * 0.3));
+        var g1 = ctx.createRadialGradient(x1, y1, 0, x1, y1, Math.max(w, h) * 1.1);
+        g1.addColorStop(0,   rgba(palette.accent, 0.6));
+        g1.addColorStop(0.5, rgba(palette.mid, 0.5));
+        g1.addColorStop(1,   rgba(palette.dark, 0.9));
+        ctx.fillStyle = g1;
+        ctx.fillRect(0, 0, w, h);
+
+        var x2 = w * (0.08 + 0.22 * Math.cos(t * 0.28));
+        var y2 = h * (0.1 + 0.25 * Math.sin(t * 0.38));
+        var g2 = ctx.createRadialGradient(x2, y2, 0, x2, y2, Math.max(w, h) * 0.85);
+        g2.addColorStop(0,    rgba(palette.accent, 0.55));
+        g2.addColorStop(0.55, rgba(palette.mid, 0.25));
+        g2.addColorStop(1,    rgba(palette.dark, 0));
+        ctx.fillStyle = g2;
+        ctx.fillRect(0, 0, w, h);
+
+        var x3 = w * (0.88 + 0.1 * Math.sin(t * 0.32));
+        var y3 = h * (0.85 + 0.12 * Math.cos(t * 0.45));
+        var g3 = ctx.createRadialGradient(x3, y3, 0, x3, y3, Math.max(w, h) * 0.8);
+        g3.addColorStop(0,   rgba(palette.accent, 0.5));
+        g3.addColorStop(0.6, rgba(palette.mid, 0.2));
+        g3.addColorStop(1,   rgba(palette.dark, 0));
+        ctx.fillStyle = g3;
+        ctx.fillRect(0, 0, w, h);
+
+        var x4 = w * (0.55 + 0.3 * Math.cos(t * 0.22));
+        var y4 = h * (0.4 + 0.28 * Math.sin(t * 0.33));
+        var g4 = ctx.createRadialGradient(x4, y4, 0, x4, y4, Math.max(w, h) * 0.7);
+        g4.addColorStop(0,   rgba(palette.mid, 0.7));
+        g4.addColorStop(0.5, rgba(palette.accent, 0.3));
+        g4.addColorStop(1,   rgba(palette.dark, 0));
+        ctx.fillStyle = g4;
+        ctx.fillRect(0, 0, w, h);
+
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+  </script>
 </body>
 </html>

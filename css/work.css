@@ -20,21 +20,17 @@
 
 .work-lock-screen-inner {
   width: 100%;
-  max-width: 20rem;
-  text-align: center;
-}
-
-.work-lock-title {
-  margin: 0 0 0.5rem;
-  font-size: var(--font-size-xl, 1.625rem);
-  font-weight: 600;
-  color: var(--color-text, #000);
+  max-width: 26rem;
 }
 
 .work-lock-label {
-  margin: 0 0 1rem;
-  font-size: var(--font-size-sm, 0.875rem);
+  margin: 0 0 0.75rem;
+  font-family: var(--font-primary);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
   color: var(--color-muted, #6b6b6b);
+  text-align: center;
 }
 
 .work-lock-form {
@@ -45,40 +41,73 @@
 
 .work-lock-input {
   width: 100%;
-  padding: 0.625rem 0.75rem;
-  font: inherit;
+  min-height: 4rem;
+  padding: 0 1.1rem;
+  font-family: var(--font-primary);
   font-size: 1rem;
-  border: 1px solid var(--color-border, #eaeaea);
-  border-radius: 4px;
-  background: var(--color-background, #fff);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  border: 1px solid #d7d7d7;
+  border-radius: 0.6rem;
+  background: #fff;
   color: var(--color-text, #000);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
 }
 
 .work-lock-input:focus {
-  outline: 2px solid var(--color-text, #000);
-  outline-offset: 2px;
+  outline: none;
+  border-color: #000;
+  background: #fff;
+  box-shadow: none;
+}
+
+.work-lock-input::placeholder {
+  color: #8a8a8a;
 }
 
 .work-lock-submit {
-  padding: 0.625rem 1rem;
-  font: inherit;
-  font-size: 0.9375rem;
+  min-height: 3.75rem;
+  padding: 0 1.25rem;
+  font-family: var(--font-primary);
+  font-size: 1rem;
   font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--color-background, #fff);
-  background: var(--color-text, #000);
+  background: #000;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.6rem;
+  transition:
+    background 180ms ease,
+    opacity 180ms ease;
 }
 
-.work-lock-submit:hover {
-  opacity: 0.9;
+.work-lock-submit:hover,
+.work-lock-submit:focus-visible {
+  outline: none;
+  background: #111;
 }
 
-.work-lock-message {
-  margin: 0.75rem 0 0;
-  font-size: var(--font-size-sm, 0.875rem);
-  color: #c00;
-  min-height: 1.25rem;
+.work-lock-submit:active {
+  background: #000;
+}
+
+@media (max-width: 40rem) {
+  .work-lock-screen {
+    padding: 1rem;
+  }
+
+  .work-lock-screen-inner {
+    max-width: none;
+  }
+
+  .work-lock-input,
+  .work-lock-submit {
+    min-height: 3.5rem;
+    font-size: 1rem;
+  }
 }
 
 .visually-hidden {

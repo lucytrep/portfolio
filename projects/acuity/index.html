@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../../css/common.css" />
   <link rel="stylesheet" href="../../css/case-study.css" />
   <style>
-    .cs-launch-zone { background: #fff; padding: 0 0.5rem 0.5rem; }
+    .cs-launch-zone { background: #fff; padding: 0.5rem; }
     .cs-launch-inner { width: 100%; }
     .cs-launch-slot { position: relative; width: 100%; }
     .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
@@ -100,6 +100,7 @@
       <nav class="span-6" id="main-nav">
         <a href="../../case-studies/">Work</a>
         <a href="../../archive/">Archive</a>
+        <a href="https://lucytrep.github.io/" target="_blank" rel="noopener noreferrer">Code</a>
         <a href="../../about/">About</a>
         <a href="#" target="_blank">Resume</a>
       </nav>
@@ -353,13 +354,8 @@
                 <li>Earn trust through personalization: Learn each user's baseline before classifying risk</li>
               </ul>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block" style="overflow:hidden;">
-                <img src="../../assets/images/acuity/whiteboard2.jpg" alt="Research whiteboard" style="width:100%;height:100%;object-fit:cover;display:block;" />
-              </div>
-              <div class="case-image-block" style="overflow:hidden;">
-                <img src="../../assets/images/acuity/lucy.jpg" alt="Lucy presenting" style="width:100%;height:100%;object-fit:cover;display:block;" />
-              </div>
+            <div style="margin-top:var(--space-5);border-radius:0.8rem;overflow:hidden;">
+              <img src="../../assets/images/acuity/whiteboard2.jpg" alt="Research whiteboard" style="width:100%;height:auto;display:block;" />
             </div>
           </section>
 
@@ -477,7 +473,18 @@
                 The pitch was structured around a single core insight: people do not lack health data. They lack clarity about what that data means and when to act on it. ACUITY closes that gap.
               </p>
             </div>
-            <div style="margin-top:var(--space-5);border-radius:0.75rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 0 0 1px #e0e0e0;">
+            <div style="margin-top:var(--space-5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);">
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3/4;box-shadow:0 0 0 1px #e0e0e0;">
+                <video src="../../assets/images/acuity/wearable.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3/4;box-shadow:0 0 0 1px #e0e0e0;position:relative;">
+                <video src="../../assets/images/acuity/hand.mp4" autoplay muted loop playsinline style="position:absolute;top:18%;left:-16.65%;width:133.3%;height:75%;object-fit:cover;display:block;pointer-events:none;transform:rotate(270deg);transform-origin:center;"></video>
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3/4;box-shadow:0 0 0 1px #e0e0e0;background:#D2D4D4;position:relative;">
+                <video src="../../assets/images/acuity/phone.mp4" autoplay muted loop playsinline style="width:80%;height:80%;object-fit:contain;display:block;pointer-events:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></video>
+              </div>
+            </div>
+            <div style="margin-top:var(--space-2);border-radius:0.75rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 0 0 1px #e0e0e0;">
               <iframe
                 src="https://player.vimeo.com/video/1171057107?controls=0&autoplay=1&muted=1&loop=1&background=1"
                 style="width:100%;height:100%;border:0;"
@@ -521,27 +528,10 @@
             <h2 class="case-section-title">From Story to System in 24 Hours</h2>
             <div class="case-section-body">
               <p>
-                This project reinforced that the most consequential design decisions are structural rather than visual.
-                The most effective version of ACUITY was not the version with the greatest number of features.
-                It was the version that accomplished one objective with precision: communicating what action to take next.
+                The most effective version of ACUITY wasn't the one with the most features — it was the one that did one thing precisely: tell you what to do next. That clarity only emerged under constraint.
               </p>
               <p>
-                Operating within a compressed 24-hour timeline with a cross-university team accelerated every decision in the process.
-                The constraint eliminated ambiguity and produced a level of clarity in concept development, interface design, and pitch narrative that longer timelines do not consistently generate.
-              </p>
-              <p>
-                Artificial intelligence tools played a significant role in enabling the pace of execution throughout the project.
-                ChatGPT and Claude supported concept development and narrative refinement.
-                Midjourney generated wearable device concept imagery.
-                Figma Make enabled rapid interface prototyping.
-                Sora produced cinematic footage for the product demo video.
-                The experience demonstrated that AI tools deliver the most value when directed with clear design intent, rather than used as a substitute for design judgment.
-              </p>
-              <p>
-                The central takeaway from the experience is that as production timelines compress through AI-assisted workflows,
-                the value of design shifts decisively toward judgment, direction, and systems thinking.
-                ACUITY originated as a single question: what if people could understand the signals their body was sending before it was too late?
-                Within 24 hours, that question became a fully articulated product concept recognized among the standout projects of the event.
+                AI tools (Claude, Midjourney, Figma Make, Sora) enabled the pace, but the work still required clear design intent to direct them. The takeaway: as timelines compress, the value of design shifts toward judgment and systems thinking, not output volume.
               </p>
               <p>
                 Full reflection published on Medium by Sooim Kang and Lucy Trepanier.

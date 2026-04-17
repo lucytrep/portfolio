@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../../css/common.css" />
   <link rel="stylesheet" href="../../css/case-study.css" />
   <style>
-    .cs-launch-zone { background: #fff; padding: 0 0.5rem 0.5rem; }
+    .cs-launch-zone { background: #fff; padding: 0.5rem; }
     .cs-launch-inner { width: 100%; }
     .cs-launch-slot { position: relative; width: 100%; }
     .cs-launch-placeholder {
@@ -87,6 +87,61 @@
         linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0)) 0 0 / 100% 100% no-repeat,
         linear-gradient(135deg, #f7f6f2, #ebe8df 60%, #f2f0ea);
     }
+    .canvas-opportunity-steps {
+      margin-top: var(--space-5);
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4);
+      align-items: start;
+    }
+    .canvas-opportunity-column {
+      min-width: 0;
+    }
+    .canvas-opportunity-heading {
+      margin: 0 0 var(--space-2) 0;
+    }
+    .canvas-opportunity-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+    .canvas-opportunity-step {
+      aspect-ratio: 1213 / 223;
+      border-radius: 0.95rem;
+      overflow: hidden;
+      background: #fff;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(2rem) scale(0.985);
+      transition:
+        opacity 700ms ease,
+        transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0s linear 700ms;
+      will-change: opacity, transform;
+    }
+    .canvas-opportunity-step.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+      transition:
+        opacity 700ms ease,
+        transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0s linear 0s;
+    }
+    .canvas-opportunity-step img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #fff;
+      pointer-events: none;
+      user-select: none;
+    }
+    @media (max-width: 52rem) {
+      .canvas-opportunity-steps {
+        grid-template-columns: 1fr;
+      }
+    }
     @media (prefers-reduced-motion: reduce) {
       .case-hero--init .case-hero-kicker,
       .case-hero--init .case-hero-title,
@@ -113,6 +168,7 @@
       <nav class="span-6" id="main-nav">
         <a href="../../case-studies/">Work</a>
         <a href="../../archive/">Archive</a>
+        <a href="https://lucytrep.github.io/" target="_blank" rel="noopener noreferrer">Code</a>
         <a href="../../about/">About</a>
         <a href="#" target="_blank">Resume</a>
       </nav>
@@ -322,17 +378,51 @@
                 </div>
               </div>
             </div>
-            <div style="margin-top:var(--space-5);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
-              <div>
-                <p style="margin-bottom:var(--space-2);"><strong class="case-bullet-heading">Before</strong></p>
-                <div style="border-radius:0.8rem;overflow:hidden;">
-                  <video src="../../assets/images/figma-design-challenge/before.mp4" autoplay muted loop playsinline style="width:100%;height:auto;display:block;pointer-events:none;"></video>
+            <div class="canvas-opportunity-steps" data-opportunity-steps>
+              <div class="canvas-opportunity-column">
+                <p class="canvas-opportunity-heading"><strong class="case-bullet-heading">Before</strong></p>
+                <div class="canvas-opportunity-stack">
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="0">
+                    <img src="../../assets/images/figma-design-challenge/Frame 50.jpg" alt="Before step 1" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="1">
+                    <img src="../../assets/images/figma-design-challenge/Frame 52.jpg" alt="Before step 2" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="2">
+                    <img src="../../assets/images/figma-design-challenge/Frame 53.jpg" alt="Before step 3" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="3">
+                    <img src="../../assets/images/figma-design-challenge/Frame 54.jpg" alt="Before step 4" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="4">
+                    <img src="../../assets/images/figma-design-challenge/Frame 55.jpg" alt="Before step 5" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="5">
+                    <img src="../../assets/images/figma-design-challenge/Frame 56.jpg" alt="Before step 6" loading="lazy" />
+                  </div>
                 </div>
               </div>
-              <div>
-                <p style="margin-bottom:var(--space-2);"><strong class="case-bullet-heading">After</strong></p>
-                <div style="border-radius:0.8rem;overflow:hidden;">
-                  <video src="../../assets/images/figma-design-challenge/after.mp4" autoplay muted loop playsinline style="width:100%;height:auto;display:block;pointer-events:none;"></video>
+              <div class="canvas-opportunity-column">
+                <p class="canvas-opportunity-heading"><strong class="case-bullet-heading">After</strong></p>
+                <div class="canvas-opportunity-stack">
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="0">
+                    <img src="../../assets/images/figma-design-challenge/Frame 57.jpg" alt="After step 1" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="1">
+                    <img src="../../assets/images/figma-design-challenge/Frame 58.jpg" alt="After step 2" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="2">
+                    <img src="../../assets/images/figma-design-challenge/Frame 60.jpg" alt="After step 3" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="3">
+                    <img src="../../assets/images/figma-design-challenge/Frame 61.jpg" alt="After step 4" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="4">
+                    <img src="../../assets/images/figma-design-challenge/Frame 62.jpg" alt="After step 5" loading="lazy" />
+                  </div>
+                  <div class="canvas-opportunity-step" data-opportunity-step data-step-index="5">
+                    <img src="../../assets/images/figma-design-challenge/Frame 64.jpg" alt="After step 6" loading="lazy" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -452,29 +542,11 @@
             <h2 class="case-section-title">Designing systems is one challenge. Making them legible is another.</h2>
             <div class="case-section-body">
               <p>
-                This project pushed me to operate at two levels simultaneously: designing a system-level intervention, and communicating that system clearly under tight time constraints.
+                The system was strong — the gap was legibility. I produced a high volume of work but learned that clarity and narrative sequencing determine impact more than output. A strong idea loses effectiveness if it can't be grasped within seconds.
               </p>
               <p>
-                The core idea was strong — identifying duplication as an invisible inefficiency at scale and designing a behavior-shifting feature within Figma's ecosystem. Where I struggled was not in the design itself, but in how quickly that system could be understood by others.
+                AI helped accelerate early exploration, but introduced overhead without constraint. In time-bound environments, selective use matters more than access.
               </p>
-              <p>
-                I produced a high volume of work, but learned that clarity, hierarchy, and narrative sequencing are what determine impact. A strong system loses effectiveness if it cannot be grasped within seconds.
-              </p>
-              <p style="font-weight:600;color:var(--color-text);">This shifted how I approach product thinking</p>
-              <ul>
-                <li>Prioritize legibility before completeness</li>
-                <li>Design presentations that move from system → behavior → interface</li>
-                <li>Ensure every screen reinforces a single, clear idea</li>
-              </ul>
-              <p>
-                I also refined how I use AI in my workflow. While tools like Claude and ChatGPT helped accelerate early exploration and structuring, they introduced overhead when used without constraint. In time-bound environments, selective use matters more than access.
-              </p>
-              <p style="font-weight:600;color:var(--color-text);">Moving forward, my focus is on</p>
-              <ul>
-                <li>Designing systems that scale across teams and contexts</li>
-                <li>Communicating ideas with immediate clarity and confidence</li>
-                <li>Strengthening storytelling as a core product skill, not a secondary one</li>
-              </ul>
             </div>
           </section>
           <section class="case-section">
@@ -535,6 +607,53 @@
 
         video.addEventListener('play', clearRestart);
       });
+    })();
+  </script>
+  <script>
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.querySelectorAll('[data-opportunity-step]').forEach(function (step) {
+          step.classList.add('is-visible');
+        });
+        return;
+      }
+
+      var section = document.querySelector('[data-opportunity-steps]');
+      var steps = Array.from(document.querySelectorAll('[data-opportunity-step]'));
+      if (!steps.length) return;
+      if (!section) return;
+
+      var ticking = false;
+      var rowThresholds = [0.08, 0.26, 0.46, 0.66, 0.84, 0.98];
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function updateSteps() {
+        ticking = false;
+        var rect = section.getBoundingClientRect();
+        var viewport = window.innerHeight || document.documentElement.clientHeight;
+        var start = viewport * 0.78;
+        var end = viewport * 0.02;
+        var progress = clamp((start - rect.top) / (start - end), 0, 1);
+
+        steps.forEach(function (step) {
+          var index = parseInt(step.getAttribute('data-step-index') || '0', 10);
+          var threshold = rowThresholds[index] !== undefined ? rowThresholds[index] : 1;
+          step.classList.toggle('is-visible', progress >= threshold);
+        });
+      }
+
+      function requestUpdate() {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(updateSteps);
+      }
+
+      updateSteps();
+      window.addEventListener('scroll', requestUpdate, { passive: true });
+      window.addEventListener('resize', requestUpdate);
     })();
   </script>
 </body>
