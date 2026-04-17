@@ -142,7 +142,8 @@
   <script>
     (function () {
       var host = window.location.hostname;
-      if (host !== "lucytrep.com" && host !== "www.lucytrep.com") {
+      var isGithubPortfolioHost = host === "lucytrep.github.io";
+      if (isGithubPortfolioHost) {
         window.location.replace("case-studies/");
       }
     })();
@@ -316,6 +317,10 @@
       overlay.classList.remove('is-active');
       header.classList.remove('is-visible');
     }
+
+    window.setTimeout(function () {
+      showOverlay();
+    }, 3500);
 
     window.addEventListener('wheel', function (e) {
       if (e.deltaY > 0) {

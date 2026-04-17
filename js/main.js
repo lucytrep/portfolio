@@ -597,6 +597,7 @@
     var tgtRect = null;
     var startScroll = 0;
     var endScroll = 1;
+    var ticking = false;
 
     function lerp(a, b, t) {
       return a + (b - a) * t;
@@ -648,7 +649,14 @@
       }
       flyWrap.classList.remove('is-flying', 'is-landed');
       resetInlineStyles();
-      if (launchZone) launchZone.classList.remove('is-complete');
+      if (launchZone) {
+        launchZone.classList.remove('is-complete');
+        launchZone.style.height = '';
+        launchZone.style.paddingTop = '';
+        launchZone.style.paddingBottom = '';
+        launchZone.style.marginTop = '';
+        launchZone.style.marginBottom = '';
+      }
       state = 'pre';
     }
 
@@ -685,23 +693,34 @@
       tgtRect = getTargetRect();
       applyFlyRect(1);
       requestAnimationFrame(function () {
-        heroTarget.appendChild(flyWrap);
-        requestAnimationFrame(function () {
-          flyWrap.classList.remove('is-flying');
-          flyWrap.classList.add('is-landed');
-          resetInlineStyles();
-          if (launchZone) {
+        if (launchZone) {
+          launchZone.style.height = collapseHeight + 'px';
+          requestAnimationFrame(function () {
+            launchZone.style.height = '0px';
             launchZone.classList.add('is-complete');
-            if (collapseHeight > 0) {
-              window.scrollBy(0, -collapseHeight);
-            }
-          }
-          state = 'landed';
-        });
+          });
+        }
+        window.setTimeout(function () {
+          tgtRect = getTargetRect();
+          applyFlyRect(1);
+          requestAnimationFrame(function () {
+            heroTarget.appendChild(flyWrap);
+            requestAnimationFrame(function () {
+              flyWrap.classList.remove('is-flying');
+              flyWrap.classList.add('is-landed');
+              resetInlineStyles();
+              if (launchZone) {
+                launchZone.style.height = '0px';
+              }
+              state = 'landed';
+            });
+          });
+        }, 220);
       });
     }
 
     function onScroll() {
+      ticking = false;
       if (!srcRect || !tgtRect) return;
 
       if (state === 'landed' || state === 'landing') {
@@ -730,6 +749,12 @@
       hero.classList.toggle('case-hero--revealed', progress >= 0.85);
     }
 
+    function requestScrollUpdate() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(onScroll);
+    }
+
     hero.classList.add('case-hero--init');
 
     function refresh() {
@@ -754,7 +779,7 @@
       mo.observe(workEl, { attributes: true, attributeFilter: ['class'] });
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', requestScrollUpdate, { passive: true });
 
     var resizeTimer;
     window.addEventListener('resize', function () {

@@ -42,12 +42,19 @@
   aspect-ratio: 4 / 3;
 }
 
+.cs-launch-zone {
+  transition:
+    height 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    padding 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    margin 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: height;
+}
+
 .cs-launch-zone.is-complete {
   height: 0;
   padding: 0;
   margin: 0;
   overflow: hidden;
-  visibility: hidden;
   pointer-events: none;
 }
 
@@ -253,14 +260,10 @@
 .case-section {
   padding-top: var(--space-5);
   padding-bottom: var(--space-5);
-  content-visibility: auto;
-  contain-intrinsic-size: 900px;
 }
 
 .case-section:first-of-type {
   padding-top: 0;
-  content-visibility: visible;
-  contain-intrinsic-size: auto;
 }
 
 .case-section-label {
