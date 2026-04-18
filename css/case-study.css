@@ -200,6 +200,7 @@
   row-gap: var(--space-3);
   margin: var(--space-4) 0 0 0;
   padding: 0;
+  align-items: start;
 }
 
 .case-meta-item {
@@ -229,23 +230,9 @@
 }
 
 @media (min-width: 62rem) {
-  /* Custom spacing between meta columns on desktop:
-     small gaps by default, larger gaps after Timeline and Context */
   .case-meta-grid {
-    column-gap: var(--space-2);
-  }
-
-  .case-meta-grid .case-meta-item:nth-child(2),
-  .case-meta-grid .case-meta-item:nth-child(4) {
-    margin-right: var(--space-2);
-  }
-
-  .case-meta-item--shipped {
-    margin-left: -1.25rem;
-  }
-
-  .case-meta-grid .case-meta-item:last-child {
-    margin-left: var(--space-2);
+    grid-template-columns: minmax(10rem, 1fr) minmax(8rem, 0.85fr) minmax(11rem, 1fr) minmax(15rem, 1.2fr) minmax(14rem, 1.15fr);
+    column-gap: 2.25rem;
   }
 }
 

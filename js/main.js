@@ -29,6 +29,13 @@
   (function () {
     if (!window.sessionStorage) return;
     var key = 'scroll:' + window.location.pathname;
+    var navEntry =
+      typeof performance !== 'undefined' &&
+      performance.getEntriesByType &&
+      performance.getEntriesByType('navigation') &&
+      performance.getEntriesByType('navigation')[0];
+    var navType = navEntry && navEntry.type ? navEntry.type : 'navigate';
+    var shouldRestoreSavedScroll = navType === 'reload' || navType === 'back_forward';
 
     function saveScroll() {
       try {
@@ -47,14 +54,32 @@
       } catch (e) {}
     }
 
-    if (!window.location.hash && !shouldForceTop && (!isCaseStudyPage || hasFlyingHero)) {
+    if (
+      shouldRestoreSavedScroll &&
+      !window.location.hash &&
+      !shouldForceTop &&
+      (!isCaseStudyPage || hasFlyingHero)
+    ) {
       var saved = window.sessionStorage.getItem(key);
       if (saved !== null) {
         var y = parseInt(saved, 10);
         if (!isNaN(y) && y > 0) {
+          var userInteracted = false;
+
+          function markInteracted() {
+            userInteracted = true;
+          }
+
+          window.addEventListener('wheel', markInteracted, { passive: true, once: true });
+          window.addEventListener('touchstart', markInteracted, { passive: true, once: true });
+          window.addEventListener('keydown', markInteracted, { once: true });
+          window.addEventListener('mousedown', markInteracted, { once: true });
+
           window.requestAnimationFrame(function () {
             window.requestAnimationFrame(function () {
-              window.scrollTo(0, y);
+              if (!userInteracted) {
+                window.scrollTo(0, y);
+              }
             });
           });
         }
@@ -626,13 +651,33 @@
       };
     }
 
+    function getProjectedTargetRect() {
+      var rect = getTargetRect();
+      if (!launchZone || launchZone.classList.contains('is-complete')) return rect;
+
+      var collapseOffset = launchZone.getBoundingClientRect().height || 0;
+      return {
+        top: rect.top - collapseOffset,
+        left: rect.left,
+        width: rect.width,
+        height: rect.height
+      };
+    }
+
     function measure() {
       srcRect = getSourceRect();
-      tgtRect = getTargetRect();
+      tgtRect = getProjectedTargetRect();
       var vh = window.innerHeight;
       startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
       endScroll = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
       if (endScroll <= startScroll) endScroll = startScroll + 1;
+
+      // Short case-study heroes can collapse the animation into a tiny scroll
+      // window. Keep a minimum flight distance so the scale-in always reads.
+      var minFlightDistance = Math.min(vh * 0.45, 320);
+      if (endScroll - startScroll < minFlightDistance) {
+        endScroll = startScroll + minFlightDistance;
+      }
     }
 
     function resetInlineStyles() {
@@ -690,7 +735,7 @@
       if (state === 'landing' || state === 'landed') return;
       state = 'landing';
       var collapseHeight = launchZone ? launchZone.getBoundingClientRect().height : 0;
-      tgtRect = getTargetRect();
+      tgtRect = getProjectedTargetRect();
       applyFlyRect(1);
       requestAnimationFrame(function () {
         if (launchZone) {
@@ -744,7 +789,7 @@
 
       if (state !== 'flying') startFlight();
 
-      tgtRect = getTargetRect();
+      tgtRect = getProjectedTargetRect();
       applyFlyRect(progress);
       hero.classList.toggle('case-hero--revealed', progress >= 0.85);
     }

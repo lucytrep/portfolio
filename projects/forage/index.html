@@ -55,12 +55,21 @@
 
   <div class="cs-ed">
     <div class="cs-ed-grid">
-      <div class="cs-ed-img cs-ed-img--full"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
-      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <video src="../../assets/images/forage/computer.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../assets/images/forage/phone.jpg" alt="Forage phone" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
+        <img src="../../assets/images/forage/slides.jpg" alt="Forage slides" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <video src="../../assets/images/forage/ring_2.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <video src="../../assets/images/forage/selection.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+      </div>
     </div>
   </div>
 
@@ -68,7 +77,11 @@
     <div class="cs-launch-inner">
       <div class="cs-launch-slot">
         <div class="cs-launch-placeholder"></div>
-        <div id="cs-fly-wrap"></div>
+        <div id="cs-fly-wrap">
+          <div style="position:relative;width:100%;height:100%;overflow:hidden;">
+            <video preload="auto" src="../../assets/images/forage/scale.mov" autoplay muted loop playsinline style="position:absolute;top:50%;left:50%;width:100%;height:100%;transform:translate3d(-50%,-50%,0);object-fit:cover;backface-visibility:hidden;"></video>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -84,7 +97,6 @@
           <a href="#research-insights">Research Insights</a>
           <a href="#strategy">Defining the Opportunity</a>
           <a href="#design-exploration">Design Exploration</a>
-          <a href="#testing">Test &amp; Iterate</a>
           <a href="#final-solution">Final Product</a>
           <a href="#results">Impact</a>
           <a href="#reflection">Reflection</a>
@@ -101,11 +113,11 @@
           <dl class="case-meta-grid">
             <div class="case-meta-item">
               <dt>Role</dt>
-              <dd>Creative Direction and AI<br />Strategy</dd>
+              <dd>Creative Direction + AI Strategy</dd>
             </div>
             <div class="case-meta-item">
               <dt>Timeline</dt>
-              <dd>FigBuild 2026 Design Challenge</dd>
+              <dd>Hackathon sprint</dd>
             </div>
             <div class="case-meta-item">
               <dt>Date</dt>
@@ -113,15 +125,11 @@
             </div>
             <div class="case-meta-item">
               <dt>Context</dt>
-              <dd>Team: Sooim Kang, Melody Ekbatani<br />Kinza Ghanchi, Lucy Trepanier</dd>
+              <dd>FigBuild 2026 team project</dd>
             </div>
             <div class="case-meta-item">
               <dt>Tools</dt>
-              <dd>
-                Figma, Figma Make, Rhino 3D, Midjourney<br />
-                Adobe Illustrator, After Effects, Premiere Pro<br />
-                ChatGPT, Gemini, Google Docs
-              </dd>
+              <dd>Figma, Figma Make, Rhino 3D, Midjourney, Adobe Suite, ChatGPT, Gemini</dd>
             </div>
           </dl>
         </header>
@@ -141,13 +149,16 @@
                 Built for the FigBuild 2026 Design Challenge, the project explores how sensing and manipulating creative inputs can reshape what designers can capture, enhance, and build from over time.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Spot → Gather → Create system overview</div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                <img src="../../assets/images/forage/overview.jpg" alt="Forage overview" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Ring capture + gesture + AI archive flow</div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                <video src="../../assets/images/forage/text-outline.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;object-position:70% center;display:block;pointer-events:none;"></video>
               </div>
+            </div>
+            <div style="margin-top:var(--space-2);border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+              <video src="../../assets/images/forage/updated-walk-through-v2.mov" autoplay muted loop playsinline style="width:100%;height:auto;display:block;pointer-events:none;"></video>
             </div>
           </section>
 
@@ -166,13 +177,16 @@
                 The result is a persistent gap between finding inspiration and actually using it.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">In-the-wild inspiration vs interrupted capture</div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:4fr 2fr;gap:var(--space-2);align-items:stretch;">
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                <img src="../../assets/images/forage/problem.jpg" alt="Designer sensing the world" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Static references that lose light, motion, and context</div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;background:#fff;position:relative;">
+                <img src="../../assets/images/forage/problem-2.jpg" alt="Inspiration capture types" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;" />
               </div>
+            </div>
+            <div style="margin-top:var(--space-2);border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+              <img src="../../assets/images/forage/problem-3.jpg" alt="Designer frustrations with inspiration tools" style="width:100%;height:auto;display:block;" />
             </div>
           </section>
 
@@ -199,12 +213,22 @@
                 </div>
               </div>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Inspiration as a capturable sensory reflex</div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
+              <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                  <img src="../../assets/images/forage/research-1.jpg" alt="Research inspiration 1" style="width:100%;height:auto;display:block;" />
+                </div>
+                <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                  <img src="../../assets/images/forage/research-2.jpg" alt="Research inspiration 2" style="width:100%;height:auto;display:block;" />
+                </div>
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Where context gets lost in current capture tools</div>
+              <div style="display:flex;flex-direction:column;gap:var(--space-2);">
+                <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                  <img src="../../assets/images/forage/research-3.jpg" alt="Research inspiration 3" style="width:100%;height:auto;display:block;" />
+                </div>
+                <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                  <img src="../../assets/images/forage/research-4.jpg" alt="Research inspiration 4" style="width:100%;height:auto;display:block;" />
+                </div>
               </div>
             </div>
           </section>
@@ -234,12 +258,15 @@
                 </div>
               </div>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Opportunity: a new spatial capture category</div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);align-items:stretch;">
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                <img src="../../assets/images/forage/opp-1.jpg" alt="Team brainstorming at FigBuild" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Design principles for capture, gesture, and AI</div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                <img src="../../assets/images/forage/opp-2.jpg" alt="Writing on whiteboard at FigBuild" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                <img src="../../assets/images/forage/opp-3.jpg" alt="Gesture research hand positions" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
             </div>
           </section>
@@ -263,39 +290,43 @@
                 </div>
               </div>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Ring hardware concept + sensor integration</div>
+            <div class="case-carousel" data-carousel style="margin-top:var(--space-4);">
+              <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="10,2 4,8 10,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="case-carousel-viewport" style="overflow:hidden;">
+                <div class="case-carousel-track">
+                  <div class="case-carousel-slide">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:var(--space-2);aspect-ratio:16/9;">
+                      <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                        <img src="../../assets/images/forage/ex-1.jpg" alt="Forage app — image capture" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+                      </div>
+                      <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                        <img src="../../assets/images/forage/ex-2.jpg" alt="Forage app — typography capture" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+                      </div>
+                      <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                        <img src="../../assets/images/forage/ex-3.jpg" alt="Forage app — color capture" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+                      </div>
+                      <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                        <img src="../../assets/images/forage/ex-4.jpg" alt="Forage app — motion capture" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="case-carousel-slide">
+                    <div style="display:grid;grid-template-columns:4fr 2fr;gap:var(--space-2);aspect-ratio:16/9;">
+                      <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                        <img src="../../assets/images/forage/testing.jpg" alt="Forage ring hardware iterations" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                      </div>
+                      <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+                        <img src="../../assets/images/forage/testing-2.jpg" alt="Forage ring color variations" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Gesture capture system + archive surfaces</div>
-              </div>
-            </div>
-          </section>
-
-          <section id="testing" class="case-section">
-            <p class="case-section-label">Test &amp; Iterate</p>
-            <h2 class="case-section-title">Prototyping a System That Exists Beyond the Screen</h2>
-            <div class="case-section-body">
-              <p>
-                The primary challenge was translating a subjective, invisible experience into something measurable, capturable, and usable.
-                Testing and iteration focused on three areas: the physical hardware form, the gesture interaction model, and the digital interface.
-              </p>
-              <p>
-                Ring prototypes were developed in Rhino 3D to refine ergonomics, sensor placement, and jewelry-like aesthetics.
-                The gesture vocabulary was tested for minimal complexity—achievable one-handed in public—while avoiding accidental triggers.
-                One major design challenge was defining inspiration as data: rather than capturing inspiration itself, Forage focuses on the environmental signals most commonly associated with creative response—color relationships, typographic forms, motion patterns, visual composition, and texture.
-                An interactive Figma prototype was deployed at <strong>forage.figma.site</strong> to validate the full flow from capture through AI organization
-                into board management, confirming how designers mentally organize references across Field, Findings, Types, and Boards.
-              </p>
-            </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Rhino 3D ring iterations (ergonomics + camera placement)</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Gesture model testing + Figma prototype flow</div>
-              </div>
+              <button class="case-carousel-btn case-carousel-next" aria-label="Next slide">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="6,2 12,8 6,14" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
             </div>
           </section>
 
@@ -307,25 +338,25 @@
                 The final experience mirrors the natural creative process through three phases: spotting, gathering, and creating.
               </p>
               <p>
-                <strong>Spot:</strong> the designer wears the Forage ring throughout the day. Double-tapping activates capture mode with subtle haptic confirmation,
+                <span style="font-weight:600;color:var(--color-text);">Spot:</span> the designer wears the Forage ring throughout the day. Double-tapping activates capture mode with subtle haptic confirmation,
                 and the system passively senses the environment—no screen unlock, no app to open, and no deliberate interruption of attention.
               </p>
               <p>
-                <strong>Gather:</strong> when inspiration occurs, the designer draws a loose outline in the air to define the capture region,
+                <span style="font-weight:600;color:var(--color-text);">Gather:</span> when inspiration occurs, the designer draws a loose outline in the air to define the capture region,
                 then performs the appropriate gesture to record the asset type. A soft haptic pulse confirms capture in under one second.
               </p>
               <p>
-                <strong>Example scenarios:</strong> a designer walking through the city spots a rhythm in a sidewalk advertisement and captures a structured visual reference;
+                <span style="font-weight:600;color:var(--color-text);">Example scenarios:</span> a designer walking through the city spots a rhythm in a sidewalk advertisement and captures a structured visual reference;
                 a typographer traces a distinctive letterform on a storefront awning with a two-finger drag to capture typography (OCR + font match);
                 a motion designer holds and drags to record kinetic sculpture rhythm as an MP4/GIF preview plus a timing curve JSON for motion workflows.
               </p>
               <p>
-                <strong>Create:</strong> by the time the designer returns to the studio, Field is already organized.
+                <span style="font-weight:600;color:var(--color-text);">Create:</span> by the time the designer returns to the studio, Field is already organized.
                 AI Findings surface pattern clusters across the day's captures, and assets are available as downloadable files (HEX codes, MP4 clips,
                 timing curves, and font matches) that can be dragged into design files or added to project Boards.
               </p>
               <p>
-                <strong>Safeguards:</strong> the system automatically detects and avoids capturing identifiable faces, disables capture in sensitive locations,
+                <span style="font-weight:600;color:var(--color-text);">Safeguards:</span> the system automatically detects and avoids capturing identifiable faces, disables capture in sensitive locations,
                 and keeps all captured signals fully visible and editable in the archive.
               </p>
             </div>
@@ -391,20 +422,37 @@
                 it created genuine value.
               </p>
               <p>
-                <strong>What is next for Forage:</strong> vector shape capture, surface texture and material pattern modes, voice interaction for hands-free annotation,
+                <span style="font-weight:600;color:var(--color-text);">What is next for Forage:</span> vector shape capture, surface texture and material pattern modes, voice interaction for hands-free annotation,
                 AI-generated design variations based on recurring archive patterns, collaborative inspiration sharing and environmental mapping across cities,
                 and deeper AI modeling of personal creative preferences over time.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Reframing inspiration as a capturable sense</div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1.5fr 2fr 2fr;grid-template-rows:1fr 1.6fr;gap:var(--space-2);aspect-ratio:16/8;">
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;grid-column:1;grid-row:1;">
+                <img src="../../assets/images/forage/ref-3.jpg" alt="Team at FigBuild" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Observation-first design decisions</div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;grid-column:1;grid-row:2;">
+                <img src="../../assets/images/forage/ref-1.jpg" alt="FigBuild 2026 swag" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;grid-column:2;grid-row:1/3;">
+                <img src="../../assets/images/forage/ref-5.jpg" alt="Figma for Edu polaroid" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;grid-column:3;grid-row:1;">
+                <img src="../../assets/images/forage/ref-2.jpg" alt="FigBuild stamp activity" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;grid-column:3;grid-row:2;">
+                <img src="../../assets/images/forage/ref-4.jpg" alt="Team whiteboard session" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
             </div>
           </section>
+
+          <div style="margin-top:var(--space-5);">
+            <p class="case-section-label">Presentation</p>
+            <h2 class="case-section-title">Full Slide Deck</h2>
+            <div style="margin-top:var(--space-3);border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;aspect-ratio:16/9;">
+              <iframe src="https://embed.figma.com/deck/KBY0lmlZncXsjadVhICLeD/FigBuild2026_Forage?node-id=1-306&viewport=-117%2C-76%2C0.64&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&embed-host=share" allowfullscreen style="width:100%;height:100%;border:none;display:block;"></iframe>
+            </div>
+          </div>
         </div>
       </article>
     </div>
