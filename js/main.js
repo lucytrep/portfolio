@@ -43,6 +43,16 @@
       } catch (e) {}
     }
 
+    var saveScrollTicking = false;
+    function scheduleSaveScroll() {
+      if (saveScrollTicking) return;
+      saveScrollTicking = true;
+      window.requestAnimationFrame(function () {
+        saveScrollTicking = false;
+        saveScroll();
+      });
+    }
+
     // Restore only when there is no hash target and the page wasn't intentionally
     // opened from the case studies index with a "start at top" request.
     var hasFlyingHero = !!document.getElementById('cs-fly-wrap');
@@ -86,7 +96,7 @@
       }
     }
 
-    window.addEventListener('scroll', saveScroll, { passive: true });
+    window.addEventListener('scroll', scheduleSaveScroll, { passive: true });
     window.addEventListener('pagehide', saveScroll);
     window.addEventListener('beforeunload', saveScroll);
   })();
@@ -335,9 +345,11 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!window.IntersectionObserver) return;
 
-    var targets = document.querySelectorAll(
-      '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair'
-    );
+    var targetSelector = isCaseStudyPage
+      ? '.project-card, .about-row, .about-image-wide, .about-image-pair'
+      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair';
+
+    var targets = document.querySelectorAll(targetSelector);
     if (!targets.length) return;
 
     targets.forEach(function (el) {
@@ -400,7 +412,6 @@
       observer.observe(s.el);
     });
     setActive();
-    window.addEventListener('scroll', setActive, { passive: true });
   })();
 
   // Carousels

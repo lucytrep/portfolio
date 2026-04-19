@@ -59,7 +59,7 @@
       </article>
       <article class="project-card">
         <a class="project-link" href="../axsphere/">
-            <div class="project-card-image" role="img" aria-label="Axsphere Product Experience">
+            <div class="project-card-image" role="img" aria-label="Axsphere Product Experience" style="box-shadow:0 0 0 1px #e0e0e0;">
               <video src="../assets/images/axsphere/LogoVideo.mp4" autoplay muted loop playsinline></video>
             </div>
             <div class="project-card-meta">
@@ -122,26 +122,176 @@
           <p class="project-description">A full App Store app that uses AI to generate design assets in real time</p>
         </div>
       </article>
-      <article class="project-card">
-        <a class="project-link" href="../projects/fanatics/">
-          <div class="project-card-image" role="img" aria-label="Fanatics commerce discovery concept"></div>
-          <div class="project-card-meta">
-            <h2 class="project-title">Fanatics commerce discovery</h2>
-            <span class="project-year">FANATICS <span class="meta-sep">•</span> SHIPPED <span class="meta-sep">•</span> 2025</span>
-          </div>
-          <p class="project-description">AI-assisted guided search to help fans find the right gear faster</p>
-        </a>
-      </article>
-      <article class="project-card">
-        <a class="project-link" href="../projects/nike/">
-          <div class="project-card-image" role="img" aria-label="Nike AI training companion concept"></div>
-          <div class="project-card-meta">
-            <h2 class="project-title">Nike training companion</h2>
-            <span class="project-year">NIKE <span class="meta-sep">•</span> SHIPPED <span class="meta-sep">•</span> 2024</span>
-          </div>
-          <p class="project-description">AI coaching concept for habit-building and adaptive training plans</p>
-        </a>
-      </article>
+      <div id="shipped-wrapper" style="grid-column:span 12;position:relative;display:grid;grid-template-columns:1fr 1fr;column-gap:var(--grid-gap);row-gap:1rem;">
+        <article class="project-card" style="position:relative;">
+          <a class="project-link" href="../projects/fanatics/">
+            <div class="project-card-image" role="img" aria-label="Fanatics commerce discovery concept" style="overflow:hidden;">
+              <video src="../assets/images/fanatics/fanatics-v2.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+            </div>
+            <div class="project-card-meta">
+              <h2 class="project-title">Fanatics commerce discovery</h2>
+              <span class="project-year">FANATICS <span class="meta-sep">•</span> SHIPPED <span class="meta-sep">•</span> 2025</span>
+            </div>
+            <p class="project-description">AI-assisted guided search to help fans find the right gear faster</p>
+          </a>
+          <div id="fanatics-lock-overlay" style="position:absolute;inset:0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:radial-gradient(ellipse at center, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.92) 80%, rgba(255,255,255,1) 100%);border-radius:inherit;pointer-events:none;z-index:10;"></div>
+        </article>
+        <article class="project-card" style="position:relative;">
+          <a class="project-link" href="../projects/nike/">
+            <div class="project-card-image" role="img" aria-label="Nike AI training companion concept"></div>
+            <div class="project-card-meta">
+              <h2 class="project-title">Nike training companion</h2>
+              <span class="project-year">NIKE <span class="meta-sep">•</span> SHIPPED <span class="meta-sep">•</span> 2024</span>
+            </div>
+            <p class="project-description">AI coaching concept for habit-building and adaptive training plans</p>
+          </a>
+          <div id="nike-lock-overlay" style="position:absolute;inset:0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:radial-gradient(ellipse at center, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.92) 80%, rgba(255,255,255,1) 100%);border-radius:inherit;pointer-events:none;z-index:10;"></div>
+        </article>
+        <!-- Centered lock form spanning both cards -->
+        <div id="shipped-lock-form-wrap" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.6rem;pointer-events:none;z-index:20;">
+          <svg width="22" height="26" viewBox="0 0 28 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="1" y="13" width="26" height="18" rx="3" fill="#000"/>
+            <path d="M7 13V9a7 7 0 0 1 14 0v4" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="14" cy="22" r="2.5" fill="#fff"/>
+          </svg>
+          <form id="fanatics-lock-form" style="display:flex;flex-direction:column;align-items:center;gap:0.6rem;width:260px;pointer-events:auto;">
+            <input id="fanatics-lock-input" type="password" placeholder="Password" style="width:100%;padding:0.8rem 1rem;border:1px solid #ddd;border-radius:0.75rem;font-size:1rem;font-family:inherit;outline:none;text-align:center;" />
+            <button type="submit" style="width:100%;padding:0.8rem 0;background:#000;color:#fff;border:none;border-radius:0.75rem;font-size:1rem;font-family:inherit;cursor:pointer;">Unlock</button>
+            <span id="fanatics-lock-msg" style="font-size:0.7rem;color:#c00;"></span>
+          </form>
+        </div>
+        <script>
+          (function () {
+            var HASH = '86ba97911dbe32559b19994bdb49f21152da1d5da59f90168f894609b8127577';
+            var SK = 'shipped_unlocked';
+
+            function sha256Fallback(ascii) {
+              function rightRotate(value, amount) {
+                return (value >>> amount) | (value << (32 - amount));
+              }
+
+              var mathPow = Math.pow;
+              var maxWord = mathPow(2, 32);
+              var lengthProperty = 'length';
+              var i;
+              var j;
+              var result = '';
+              var words = [];
+              var asciiBitLength = ascii[lengthProperty] * 8;
+
+              var hash = sha256Fallback.h = sha256Fallback.h || [];
+              var k = sha256Fallback.k = sha256Fallback.k || [];
+              var primeCounter = k[lengthProperty];
+              var isComposite = {};
+
+              for (var candidate = 2; primeCounter < 64; candidate++) {
+                if (!isComposite[candidate]) {
+                  for (i = 0; i < 313; i += candidate) {
+                    isComposite[i] = candidate;
+                  }
+                  hash[primeCounter] = (mathPow(candidate, 0.5) * maxWord) | 0;
+                  k[primeCounter++] = (mathPow(candidate, 1 / 3) * maxWord) | 0;
+                }
+              }
+
+              ascii += '\x80';
+              while (ascii[lengthProperty] % 64 - 56) ascii += '\x00';
+              for (i = 0; i < ascii[lengthProperty]; i++) {
+                j = ascii.charCodeAt(i);
+                if (j >> 8) throw new Error('Invalid character');
+                words[i >> 2] |= j << ((3 - i) % 4) * 8;
+              }
+              words[words[lengthProperty]] = (asciiBitLength / maxWord) | 0;
+              words[words[lengthProperty]] = asciiBitLength;
+
+              for (j = 0; j < words[lengthProperty];) {
+                var w = words.slice(j, j += 16);
+                var oldHash = hash.slice(0);
+
+                for (i = 0; i < 64; i++) {
+                  var w15 = w[i - 15];
+                  var w2 = w[i - 2];
+                  var a = hash[0];
+                  var e = hash[4];
+                  var temp1 = hash[7]
+                    + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25))
+                    + ((e & hash[5]) ^ ((~e) & hash[6]))
+                    + k[i]
+                    + (
+                      w[i] = i < 16 ? w[i] : (
+                        w[i - 16]
+                        + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15 >>> 3))
+                        + w[i - 7]
+                        + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2 >>> 10))
+                      ) | 0
+                    );
+                  var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22))
+                    + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
+
+                  hash = [(temp1 + temp2) | 0].concat(hash);
+                  hash[4] = (hash[4] + temp1) | 0;
+                  hash.pop();
+                }
+
+                for (i = 0; i < 8; i++) {
+                  hash[i] = (hash[i] + oldHash[i]) | 0;
+                }
+              }
+
+              for (i = 0; i < 8; i++) {
+                for (j = 3; j + 1; j--) {
+                  var b = (hash[i] >> (j * 8)) & 255;
+                  result += ((b < 16) ? 0 : '') + b.toString(16);
+                }
+              }
+              return result;
+            }
+
+            function hashInput(str) {
+              if (window.crypto && window.crypto.subtle && typeof window.TextEncoder !== 'undefined') {
+                return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function (buf) {
+                  return Array.from(new Uint8Array(buf)).map(function (b) {
+                    return b.toString(16).padStart(2, '0');
+                  }).join('');
+                });
+              }
+
+              return Promise.resolve(sha256Fallback(str));
+            }
+
+            function unlockAll() {
+              try { sessionStorage.setItem(SK, '1'); } catch(e) {}
+              ['fanatics-lock-overlay','nike-lock-overlay','shipped-lock-form-wrap'].forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.style.display = 'none';
+              });
+            }
+
+            try { if (sessionStorage.getItem(SK) === '1') { unlockAll(); return; } } catch(e) {}
+
+            var form = document.getElementById('fanatics-lock-form');
+            var input = document.getElementById('fanatics-lock-input');
+            var msg = document.getElementById('fanatics-lock-msg');
+            form.addEventListener('submit', function (e) {
+              e.preventDefault();
+              msg.textContent = '';
+              hashInput(input.value.trim())
+                .then(function (hash) {
+                  if (hash === HASH) {
+                    unlockAll();
+                  } else {
+                    msg.textContent = 'Incorrect password.';
+                    input.value = '';
+                    input.focus();
+                  }
+                })
+                .catch(function () {
+                  msg.textContent = 'Unable to verify password here.';
+                });
+            });
+          })();
+        </script>
+      </div>
     </div>
   </main>
 
