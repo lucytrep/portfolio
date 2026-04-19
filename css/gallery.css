@@ -51,37 +51,88 @@
   gap: 2rem;
 }
 
-/* Two horizontal bands — each is a 3-col grid (2fr 1.5fr 2fr) */
+/* Two horizontal bands — opened up so fewer pieces sit on screen at once */
 .gallery-band {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 2fr;
-  gap: 1.75rem;
-  align-items: stretch;
-  min-height: 64rem;
+  grid-template-columns: minmax(0, 1.24fr) minmax(0, 0.86fr);
+  column-gap: 2.4rem;
+  row-gap: 2rem;
+  align-items: start;
+  min-height: 94rem;
 }
 
 .gallery-band:last-child {
-  min-height: 40rem;
+  min-height: auto;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  align-items: end;
+}
+
+.gallery-band:last-child .gallery-col--bottom-fanfest .gallery-item-media {
+  aspect-ratio: 16 / 7.9;
+  min-height: 28rem;
 }
 
 /* Single flex-column for stacking items vertically */
 .gallery-col {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 2rem;
+}
+
+.gallery-col--top-band-secondary {
+  min-height: 100%;
+}
+
+.gallery-col--top-band-secondary .gallery-item--top-feature {
+  flex: 1.34;
+}
+
+.gallery-col--top-band-secondary .gallery-item--top-feature .gallery-item-media {
+  min-height: 26rem;
+}
+
+.gallery-col--top-band-secondary .gallery-item--top-compact {
+  flex: 0 0 auto;
+}
+
+.gallery-col--top-band-secondary .gallery-item--top-compact .gallery-item-media {
+  aspect-ratio: 16 / 8.8;
+}
+
+.gallery-col--top-band-secondary .gallery-item--top-portrait-grow {
+  flex: 0 0 auto;
+}
+
+.gallery-col--top-band-secondary .gallery-item--top-portrait-grow .gallery-item-media {
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+  max-height: 26rem;
 }
 
 /* Paired items (2 portraits side by side) */
 .gallery-pair {
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 2rem;
 }
 
 .gallery-pair-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1.75rem;
+  gap: 2rem;
+}
+
+.gallery-band > .gallery-col:nth-child(3) {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.gallery-band > .gallery-col:nth-child(3) > .gallery-item,
+.gallery-band > .gallery-col:nth-child(3) > .gallery-pair-row {
+  min-height: 0;
 }
 
 /* Grow variant: fills remaining column height */
@@ -166,48 +217,152 @@
   flex-shrink: 0;
 }
 
+/* ─── Arch-row locked row system ─────────────────────────── */
+
+.arch-row {
+  display: grid;
+  gap: 2rem;
+}
+
+.arch-row--2col           { grid-template-columns: 1fr 1fr; }
+.arch-row--3col           { grid-template-columns: 1fr 1fr 1fr; }
+.arch-row--3col-wide-last { grid-template-columns: 0.8fr 0.8fr 1.6fr; }
+.arch-row--1col           { grid-template-columns: 1fr; }
+
+/* Desktop row heights — all items in a row share the same height */
+.arch-row--landscape { height: 480px; }
+.arch-row--compact   { height: 260px; }
+.arch-row--portrait  { height: 600px; }
+.arch-row--tall      { height: 800px; }
+
+.arch-row .gallery-item {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Media fills remaining height after title */
+.arch-row .gallery-item-media {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: unset;
+}
+
+/* Side-by-side pair within one grid cell */
+.arch-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  height: 100%;
+}
+
+.arch-pair .gallery-item {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.arch-pair .gallery-item-media {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: unset;
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-bg-subtle);
+  border: var(--border-width) solid var(--color-border);
+  display: flex;
+}
+
+/* Stacked sub-column: two items sharing one grid cell vertically */
+.arch-row-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  min-height: 0;
+}
+
+.arch-row-stack .gallery-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.arch-row-stack .gallery-item-media {
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: unset;
+  width: 100%;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-bg-subtle);
+  border: var(--border-width) solid var(--color-border);
+  display: flex;
+}
+
 /* ─── Responsive ──────────────────────────────────────────── */
 
+/* ── Tablet: scale row heights down (800px – 1000px) ── */
 @media (max-width: 62.5rem) {
   .gallery {
     padding-top: 5.5rem;
     padding-bottom: calc(var(--space-6) + 1.5rem);
   }
 
-  .gallery-band {
-    grid-template-columns: 1fr 1fr;
-    min-height: auto;
-  }
+  .gallery-grid { gap: 1.5rem; }
+  .arch-row { gap: 1.5rem; }
+  .arch-row-stack { gap: 1.5rem; }
+  .arch-pair { gap: 1.5rem; }
 
-  .gallery-item--grow {
-    flex: unset;
-  }
-
-  .gallery-item--grow .gallery-item-media {
-    flex: unset;
-    aspect-ratio: 4 / 3;
-  }
+  .arch-row--landscape { height: 380px; }
+  .arch-row--compact   { height: 210px; }
+  .arch-row--portrait  { height: 480px; }
+  .arch-row--tall      { height: 640px; }
 }
 
-@media (max-width: 37.5rem) {
-  .gallery-band {
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
-  }
-
-  .gallery-pair-row {
-    grid-template-columns: 1fr;
-    gap: 1.1rem;
-  }
-
+/* ── Mobile: stack rows (≤ 800px) ── */
+@media (max-width: 50rem) {
   .gallery {
     padding-top: 3.5rem;
     padding-bottom: var(--space-5);
   }
 
-  .gallery-grid,
-  .gallery-col,
-  .gallery-pair {
-    gap: 1.1rem;
+  .gallery-grid { gap: 1.1rem; }
+  .arch-row { gap: 1.1rem; }
+  .arch-row-stack { gap: 1.1rem; }
+  .arch-pair { gap: 1.1rem; grid-template-columns: 1fr; }
+
+  /* All rows collapse to single column */
+  .arch-row--2col,
+  .arch-row--3col,
+  .arch-row--3col-wide-last,
+  .arch-row--1col,
+  .arch-row--portrait,
+  .arch-row--tall {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  /* All arch-pairs collapse to single column */
+  .arch-pair {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  /* Ecommerce + Sky Brown stay side by side */
+  .arch-pair--persist {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Standard aspect-ratios for collapsed items */
+  .arch-row .gallery-item-media,
+  .arch-row-stack .gallery-item-media {
+    aspect-ratio: 16 / 9;
+  }
+
+  /* Persist pair items stay portrait */
+  .arch-pair--persist .gallery-item-media {
+    aspect-ratio: 3 / 4;
   }
 }

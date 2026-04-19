@@ -662,13 +662,24 @@
       };
     }
 
-    function getProjectedTargetRect() {
+    var projectionStrength = Number(window.__caseStudyFlyProjectionStrength);
+    if (!Number.isFinite(projectionStrength)) projectionStrength = 1;
+    projectionStrength = Math.max(0, Math.min(1, projectionStrength));
+
+    var projectionEase = Number(window.__caseStudyFlyProjectionEase);
+    if (!Number.isFinite(projectionEase)) projectionEase = 1;
+    projectionEase = Math.max(1, projectionEase);
+
+    function getProjectedTargetRect(progress) {
       var rect = getTargetRect();
       if (!launchZone || launchZone.classList.contains('is-complete')) return rect;
 
       var collapseOffset = launchZone.getBoundingClientRect().height || 0;
+      var normalizedProgress = typeof progress === 'number' ? Math.max(0, Math.min(1, progress)) : 1;
+      var projectedOffset = collapseOffset * projectionStrength * Math.pow(normalizedProgress, projectionEase);
+
       return {
-        top: rect.top - collapseOffset,
+        top: rect.top - projectedOffset,
         left: rect.left,
         width: rect.width,
         height: rect.height
@@ -677,7 +688,7 @@
 
     function measure() {
       srcRect = getSourceRect();
-      tgtRect = getProjectedTargetRect();
+      tgtRect = getProjectedTargetRect(1);
       var vh = window.innerHeight;
       startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
       endScroll = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
@@ -746,7 +757,7 @@
       if (state === 'landing' || state === 'landed') return;
       state = 'landing';
       var collapseHeight = launchZone ? launchZone.getBoundingClientRect().height : 0;
-      tgtRect = getProjectedTargetRect();
+      tgtRect = getProjectedTargetRect(1);
       applyFlyRect(1);
       requestAnimationFrame(function () {
         if (launchZone) {
@@ -800,7 +811,7 @@
 
       if (state !== 'flying') startFlight();
 
-      tgtRect = getProjectedTargetRect();
+      tgtRect = getProjectedTargetRect(progress);
       applyFlyRect(progress);
       hero.classList.toggle('case-hero--revealed', progress >= 0.85);
     }

@@ -536,11 +536,12 @@ p,
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: flex-end;
     gap: var(--hamburger-gap);
     width: var(--touch-target);
     height: var(--touch-target);
     padding: 0;
-    margin: 0;
+    margin: 0 -0.5rem 0 0;
     border: 0;
     background: transparent;
     color: var(--color-text);
