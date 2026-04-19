@@ -346,8 +346,8 @@
     if (!window.IntersectionObserver) return;
 
     var targetSelector = isCaseStudyPage
-      ? '.project-card, .about-row, .about-image-wide, .about-image-pair'
-      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair';
+      ? '.project-card, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item'
+      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item';
 
     var targets = document.querySelectorAll(targetSelector);
     if (!targets.length) return;
@@ -451,7 +451,7 @@
     var mediaEls = Array.from(
       document.querySelectorAll('main img, article img, main video, article video')
     ).filter(function (el) {
-      return !el.closest('.project-link') && !el.closest('.case-hero-image');
+      return !el.closest('.project-link') && !el.closest('.case-hero-image') && !el.closest('.about-hero-imageSwap');
     });
     if (!mediaEls.length) return;
 
@@ -603,6 +603,32 @@
 
       observer.observe(container);
     });
+  })();
+
+  // About hero portrait swap fallback — if the user scrolls without hovering,
+  // switch to the second portrait so the interaction is still discovered.
+  (function () {
+    var imageSwap = document.querySelector('.about-hero-imageSwap');
+    var hero = document.querySelector('.about-hero');
+    if (!imageSwap || !hero) return;
+
+    var ticking = false;
+
+    function syncAutoSwap() {
+      ticking = false;
+      var threshold = Math.min(120, Math.max(48, hero.offsetHeight * 0.12));
+      imageSwap.classList.toggle('is-auto-swapped', (window.scrollY || 0) > threshold);
+    }
+
+    function requestSync() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(syncAutoSwap);
+    }
+
+    syncAutoSwap();
+    window.addEventListener('scroll', requestSync, { passive: true });
+    window.addEventListener('resize', requestSync);
   })();
 
   // Shared case-study fly hero animation.
@@ -811,7 +837,6 @@
 
       if (state !== 'flying') startFlight();
 
-      tgtRect = getProjectedTargetRect(progress);
       applyFlyRect(progress);
       hero.classList.toggle('case-hero--revealed', progress >= 0.85);
     }

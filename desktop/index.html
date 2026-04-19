@@ -16,14 +16,18 @@
       height: 100vh;
       background: #888;
     }
-    .desktop-bg {
+    .desktop-bg-slide {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center top;
-      filter: brightness(0.88);
+      object-position: center center;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+    .desktop-bg-slide.is-active {
+      opacity: 1;
     }
 
     /* ── Menubar ── */
@@ -110,14 +114,26 @@
 </head>
 <body>
 <div class="desktop">
-  <img src="../assets/images/about-test/desktop-bg-2.jpg" class="desktop-bg" alt="" />
+  <img src="../assets/images/wallpaper/art-institute-of-chicago-fja2UYOT6jg-unsplash.jpg" class="desktop-bg-slide is-active" alt="" />
+  <img src="../assets/images/wallpaper/art-institute-of-chicago-Ro0D9JQUmTA-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/birmingham-museums-trust-0pJPixfGfVo-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/birmingham-museums-trust-8wcoY3wcbL0-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/birmingham-museums-trust-HEEvYhNzpEo-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-84R6ipsqaxo-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-8xd8LoQJyFk-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-CgbXlAtjIEo-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-DfBSs2SSNwQ-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-H-4WME4eoOo-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-hSkbqHnt-g4-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/europeana-Y8nTMVrZsrE-unsplash.jpg" class="desktop-bg-slide" alt="" />
+  <img src="../assets/images/wallpaper/federico-di-dio-photography-XVOBr3F95RY-unsplash.jpg" class="desktop-bg-slide" alt="" />
 
   <!-- Menubar -->
   <div class="menubar">
     <div class="menubar-left">
       <span class="menubar-apple">&#63743;</span>
       <span class="menubar-item" id="portfolio-menu-trigger" style="position:relative;cursor:default;">
-        Lucy's Portfolio
+        Lucy's Desktop
         <!-- Dropdown -->
         <div id="portfolio-dropdown" style="
           display:none;
@@ -601,6 +617,18 @@
       btn.closest('.dp').remove();
     });
   });
+
+  // ── Wallpaper slideshow — cycle every 9s ───────────────────
+  (function () {
+    var slides = document.querySelectorAll('.desktop-bg-slide');
+    if (slides.length < 2) return;
+    var current = 0;
+    setInterval(function () {
+      slides[current].classList.remove('is-active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('is-active');
+    }, 9000);
+  })();
 </script>
 </body>
 </html>
