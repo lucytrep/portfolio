@@ -462,3 +462,108 @@
     font-size: clamp(1.4rem, 5.5vw, 1.75rem);
   }
 }
+
+/* ─── Journey Cinematic Scroll Stage ─────────────────────── */
+
+/* Film strip */
+.jc-film-strip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.jc-film-item {
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-bg-subtle);
+}
+
+.jc-film-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Invisible reference grid — used only for measuring final hero positions */
+.jc-grid-ref {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding-inline: var(--container-padding);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.jc-ref-item {
+  aspect-ratio: 3 / 2.9;
+}
+
+/* Hero images (JS-positioned, animated from right to grid) */
+.jc-hero-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-bg-subtle);
+  will-change: transform, opacity;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jc-hero-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Kicker label + headline that fades in above the grid */
+.jc-kicker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Text grid that fades in below the locked images */
+.jc-text-grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jc-text-item h3 {
+  margin: 0 0 var(--space-2) 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.jc-text-item p {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  color: var(--color-prose);
+  line-height: 1.7;
+}

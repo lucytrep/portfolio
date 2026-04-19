@@ -52,7 +52,7 @@
     </section>
 
     <!-- ─── The Journey ──────────────────────────────────── -->
-    <section class="about-journey">
+    <section class="about-journey" id="about-journey">
       <div class="about-journey-header">
         <p class="about-kicker">The Journey</p>
         <h2 class="about-journey-title">Told I'd never make it to university.<br>Now completing a master's in New York.</h2>
@@ -119,5 +119,308 @@
   </footer>
 
   <script src="../js/main.js"></script>
+  <script>
+  // ── Journey cinematic scroll animation (first-visit only) ──
+  (function () {
+    'use strict';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.innerWidth < 800) return;
+
+    var SEEN_KEY = 'jc-v2';
+    var journeySection = document.getElementById('about-journey');
+    if (!journeySection) return;
+
+    // Clear flag on reload so animation replays on refresh
+    var navEntry = window.performance && performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if ((navEntry && navEntry.type === 'reload') ||
+        (window.performance && performance.navigation && performance.navigation.type === 1)) {
+      sessionStorage.removeItem(SEEN_KEY);
+    }
+    if (sessionStorage.getItem(SEEN_KEY)) return;
+
+    var base = '../assets/images/about/';
+
+    var filmSrcs = [
+      'nanaimo/whistler.JPG', 'toronto/research.jpg', 'nanaimo/surf.JPG',
+      'ny/parsons.JPG', 'toronto/raps.JPG', 'nanaimo/beach.JPG',
+      'ny/sunset.jpg', 'toronto/run.JPG', 'nanaimo/swell.jpg',
+      'ny/usopen.JPG', 'toronto/skyline.JPG', 'ny/roseroom.jpg',
+    ];
+
+    var heroData = [
+      { src: 'nanaimo/hammock.jpg', title: 'Nanaimo, Vancouver Island',
+        body: 'Grew up staring at Vancouver across the strait, knowing I\'d belong in a city one day. I was told post-secondary wasn\'t realistic for me because of my cognitive disabilities — so I learned to approach things differently. Technology became the language I think, create, and build in.' },
+      { src: 'toronto/paris.jpg', title: 'Paris + Toronto',
+        body: 'At 17 I studied graphic design through Parsons in Paris — and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.' },
+      { src: 'ny/dumbo.jpg', title: 'New York',
+        body: 'Moved here this past August and plan to stay. I\'m at Parsons School of Design studying Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that\'s hard to replicate.' },
+    ];
+
+    // ── Spacer — provides scroll distance for the animation ──
+    // Inserted before the journey section (which stays in normal flow)
+    var spacer = document.createElement('div');
+    spacer.style.cssText = 'height:350vh;';
+    journeySection.parentNode.insertBefore(spacer, journeySection);
+
+    // Hide the static journey section — animation builds it live
+    journeySection.style.visibility = 'hidden';
+
+    // ── Fixed overlay — plays on top, fades out at the end ───
+    var overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:var(--color-background);overflow:hidden;opacity:0;pointer-events:none;';
+    document.body.appendChild(overlay);
+
+    // Film strip
+    var filmStrip = document.createElement('div');
+    filmStrip.className = 'jc-film-strip';
+    overlay.appendChild(filmStrip);
+
+    filmSrcs.forEach(function (src) {
+      var item = document.createElement('div');
+      item.className = 'jc-film-item';
+      var img = document.createElement('img');
+      img.src = base + src;
+      img.loading = 'lazy';
+      img.draggable = false;
+      item.appendChild(img);
+      filmStrip.appendChild(item);
+    });
+
+    // Hero images
+    var heroEls = heroData.map(function (item) {
+      var div = document.createElement('div');
+      div.className = 'jc-hero-item';
+      var img = document.createElement('img');
+      img.src = base + item.src;
+      img.loading = 'eager';
+      img.draggable = false;
+      div.appendChild(img);
+      overlay.appendChild(div);
+      return div;
+    });
+
+    // Kicker + headline (matches static journey section header)
+    var kicker = document.createElement('div');
+    kicker.className = 'jc-kicker';
+    var kickerP = document.createElement('p');
+    kickerP.className = 'about-kicker';
+    kickerP.textContent = 'The Journey';
+    var kickerH2 = document.createElement('h2');
+    kickerH2.className = 'about-journey-title';
+    kickerH2.style.marginBottom = '0';
+    kickerH2.innerHTML = 'Told I\'d never make it to university.<br>Now completing a master\'s in New York.';
+    kicker.appendChild(kickerP);
+    kicker.appendChild(kickerH2);
+    overlay.appendChild(kicker);
+
+    // Text grid
+    var textGrid = document.createElement('div');
+    textGrid.className = 'jc-text-grid';
+    heroData.forEach(function (item) {
+      var div = document.createElement('div');
+      div.className = 'jc-text-item';
+      var h3 = document.createElement('h3');
+      h3.textContent = item.title;
+      var p = document.createElement('p');
+      p.textContent = item.body;
+      div.appendChild(h3);
+      div.appendChild(p);
+      textGrid.appendChild(div);
+    });
+    overlay.appendChild(textGrid);
+
+    // ── Helpers ───────────────────────────────────────────────
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+    function easeOut3(t) { return 1 - Math.pow(1 - t, 3); }
+    function easeInOut3(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
+
+    // ── State ─────────────────────────────────────────────────
+    var spacerY0 = 0, scrollRange = 1;
+    var filmItemW = 0, filmItemH = 0, filmGap = 0, totalFilmW = 0;
+    var heroFinal = [];
+    var ticking = false, completed = false;
+
+    // ── Measure ───────────────────────────────────────────────
+    function measure() {
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+
+      spacerY0    = spacer.getBoundingClientRect().top + window.scrollY;
+      scrollRange = Math.max(1, spacer.offsetHeight);
+
+      // Hero final positions — computed first so film items match
+      var mainEl = document.querySelector('main');
+      var pad    = mainEl ? parseFloat(getComputedStyle(mainEl).paddingLeft) : Math.round(vw * 0.04);
+      var gap    = Math.round(vw * 0.016); // tighter cinematic gap
+      var avail  = vw - 2 * pad;
+      var cardW  = (avail - 2 * gap) / 3;
+      var cardH  = cardW * (2.9 / 3);
+
+      // Film sizing — match hero card dimensions for seamless transition
+      filmItemW  = Math.round(cardW);
+      filmItemH  = Math.round(cardH);
+      filmGap    = Math.round(vw * 0.012);
+      totalFilmW = filmSrcs.length * (filmItemW + filmGap) - filmGap;
+
+      filmStrip.style.gap = filmGap + 'px';
+      Array.from(filmStrip.children).forEach(function (c) {
+        c.style.width  = filmItemW + 'px';
+        c.style.height = filmItemH + 'px';
+      });
+      filmStrip.style.top = Math.round((vh - filmItemH) / 2) + 'px';
+
+      // Kicker sits near the top; gridTop is derived from kicker + header height + gap
+      var kickerTop = Math.round(vh * 0.06); // ~6% from top — small breathing room below nav
+      var gridTop   = kickerTop + 185;       // kicker label (~20) + headline (~110) + gap (~55)
+
+      heroFinal = [0, 1, 2].map(function (i) {
+        return { left: pad + i * (cardW + gap), top: gridTop, width: cardW, height: cardH };
+      });
+
+      heroEls.forEach(function (el, i) {
+        el.style.width  = heroFinal[i].width  + 'px';
+        el.style.height = heroFinal[i].height + 'px';
+      });
+
+      kicker.style.top  = kickerTop + 'px';
+      kicker.style.left = pad + 'px';
+
+      textGrid.style.gap  = gap + 'px';
+      if (heroFinal[0]) {
+        // 28px gap below images (matches var(--space-4))
+        textGrid.style.top  = Math.round(heroFinal[0].top + heroFinal[0].height + 28) + 'px';
+        textGrid.style.left = pad + 'px';
+        textGrid.style.right = pad + 'px';
+      }
+    }
+
+    // ── Tick ──────────────────────────────────────────────────
+    function tick() {
+      ticking = false;
+      if (completed) return;
+
+      var vw  = window.innerWidth;
+      var raw = (window.scrollY - spacerY0) / scrollRange;
+      var p   = clamp(raw, 0, 1);
+
+      // Overlay: invisible before spacer, fades in over first 5% of scroll
+      if (raw <= 0) {
+        overlay.style.opacity        = '0';
+        overlay.style.pointerEvents  = 'none';
+        return;
+      }
+      var overlayAlpha = raw < 0.05 ? raw / 0.05 : 1;
+      overlay.style.opacity       = overlayAlpha;
+      overlay.style.pointerEvents = 'auto';
+
+      // — Film strip (0 → 0.65) —
+      var filmP  = clamp(p / 0.65, 0, 1);
+      var filmE  = easeInOut3(filmP);
+      filmStrip.style.transform = 'translateX(' + lerp(vw + 60, -(totalFilmW - vw * 0.38), filmE) + 'px)';
+      filmStrip.style.opacity   = filmP < 0.78 ? 1 : clamp(1 - (filmP - 0.78) / 0.22, 0, 1);
+      var filmScale = lerp(0.60, 1, filmE);
+      Array.from(filmStrip.children).forEach(function (c) { c.style.transform = 'scale(' + filmScale + ')'; });
+
+      // — Hero images staggered (0.50 → 0.87) —
+      heroEls.forEach(function (el, i) {
+        var hS = 0.50 + i * 0.055, hE = hS + 0.34;
+        var hp = clamp((p - hS) / (hE - hS), 0, 1);
+        var he = easeOut3(hp);
+        var fp = heroFinal[i];
+        if (!fp || !fp.width) return;
+        var s  = lerp(0.50, 1, he);
+        var cx = lerp(vw + 80 + i * (fp.width * 0.9 + 36), fp.left + fp.width  / 2, he);
+        var cy = fp.top + fp.height / 2;
+        el.style.transform       = 'translate(' + (cx - fp.width*s/2) + 'px,' + (cy - fp.height*s/2) + 'px) scale(' + s + ')';
+        el.style.transformOrigin = '0 0';
+        el.style.opacity         = hp > 0 ? 1 : 0;
+      });
+
+      // — Kicker (0.72 → 0.84) —
+      kicker.style.opacity   = clamp((p - 0.72) / 0.12, 0, 1);
+
+      // — Text (0.84 → 1.0) —
+      textGrid.style.opacity = clamp((p - 0.84) / 0.16, 0, 1);
+
+      if (p >= 1) complete();
+    }
+
+    // ── Complete ──────────────────────────────────────────────
+    function complete() {
+      completed = true;
+      sessionStorage.setItem(SEEN_KEY, '1');
+
+      // ─ Step 1: measure while overlay is still position:fixed ──────────────
+      // textGrid.scrollHeight is valid because the overlay has been rendered.
+      var textTop  = parseFloat(textGrid.style.top) || 0;
+      var textH    = Math.max(textGrid.scrollHeight, 160);
+      var sectionH = Math.ceil(Math.max(
+        textTop + textH,
+        heroFinal.reduce(function (m, fp) { return Math.max(m, fp.top + fp.height); }, 0)
+      ) + 80);
+
+      // ─ Step 2: silent scroll to spacerY0 ──────────────────────────────────
+      // The overlay is opaque and position:fixed, so the user sees nothing.
+      // After conversion the overlay lands at ~spacerY0, making its top = viewport 0.
+      window.scrollTo(0, spacerY0);
+
+      // ─ Step 3: lock content in place (overlay still fixed, invisible) ──────
+      filmStrip.remove();
+      heroEls.forEach(function (el, i) {
+        var fp = heroFinal[i];
+        el.style.left          = fp.left + 'px';
+        el.style.top           = fp.top  + 'px';
+        el.style.transform     = 'none';
+        el.style.pointerEvents = 'auto';
+      });
+      kicker.style.pointerEvents   = 'auto';
+      textGrid.style.pointerEvents = 'auto';
+      textGrid.style.opacity       = '1';
+      kicker.style.opacity         = '1';
+
+      // ─ Step 4: convert overlay → in-flow section, insert BEFORE footer ────
+      // Do this BEFORE removing the spacer so the document stays tall enough
+      // that scrollY = spacerY0 is not clamped by the browser.
+      // (doc height at this point: pre-content + spacer(350vh) + journey + sectionH + footer)
+      overlay.style.cssText =
+        'position:relative;width:100%;height:' + sectionH + 'px;' +
+        'overflow:visible;background:var(--color-background);';
+      var footer = document.querySelector('.page-footer');
+      footer.parentNode.insertBefore(overlay, footer);
+
+      // ─ Step 5: now remove spacer + journey section ─────────────────────────
+      // New doc height: ~spacerY0 + sectionH + footerH
+      // New scrollMax: ~spacerY0 + sectionH + footerH − vh > spacerY0 → no clamping.
+      spacer.remove();
+      journeySection.remove();
+
+      // ─ Step 6: pixel-perfect correction ───────────────────────────────────
+      // Main's bottom padding (if any) may offset the overlay by a few px.
+      // getBoundingClientRect forces a layout; scrollTo corrects any delta.
+      var delta = overlay.getBoundingClientRect().top;
+      if (Math.abs(delta) > 0) {
+        window.scrollTo(0, window.scrollY + delta);
+      }
+    }
+
+    // ── Listeners ─────────────────────────────────────────────
+    function onScroll() {
+      if (completed) { window.removeEventListener('scroll', onScroll); return; }
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(tick);
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    window.addEventListener('resize', function () {
+      measure();
+      if (!completed) requestAnimationFrame(tick);
+    });
+
+    requestAnimationFrame(function () { measure(); tick(); });
+  })();
+  </script>
 </body>
 </html>
