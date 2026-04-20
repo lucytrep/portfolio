@@ -26,7 +26,7 @@
         <a href="../archive/">Archive</a>
         <a href="https://lucytrep.github.io/" target="_blank" rel="noopener noreferrer">Code</a>
         <a href="../about/" aria-current="page">About</a>
-        <a href="#" target="_blank" rel="noopener noreferrer">Resume</a>
+        <a href="../assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </div>
   </header>
@@ -41,7 +41,7 @@
         <p class="about-subtitle">
           Dyslexic by nature: wired to see what others overlook. Completing a masters in Digital Product Design at Parsons, focused on clarity, accessibility, and building confident user experiences.
         </p>
-        <a href="../desktop/" class="about-desktop-btn">View my desktop →</a>
+        <a href="../desktop/" class="about-desktop-btn">Behind the scenes →</a>
       </div>
       <div class="about-hero-media">
         <div class="about-hero-imageSwap">
@@ -187,13 +187,15 @@
       filmStrip.appendChild(item);
     });
 
-    // Hero images
+    // Hero images — high priority so they're decoded before they animate in
     var heroEls = heroData.map(function (item) {
       var div = document.createElement('div');
       div.className = 'jc-hero-item';
       var img = document.createElement('img');
       img.src = base + item.src;
       img.loading = 'eager';
+      img.setAttribute('fetchpriority', 'high');
+      img.decoding = 'async';
       img.draggable = false;
       div.appendChild(img);
       overlay.appendChild(div);
@@ -417,6 +419,13 @@
     window.addEventListener('resize', function () {
       measure();
       if (!completed) requestAnimationFrame(tick);
+    });
+
+    // Re-measure once all resources (fonts, images) have loaded so spacerY0
+    // reflects the fully-settled layout. On first visit this corrects any
+    // shift from web-font swap or above-fold images changing height.
+    window.addEventListener('load', function () {
+      if (!completed) { measure(); tick(); }
     });
 
     requestAnimationFrame(function () { measure(); tick(); });
