@@ -642,6 +642,11 @@
   pointer-events: none;
 }
 
+/* Impact carousel — stacked images, buttons sit at top of slide */
+.impact-carousel .case-carousel-btn {
+  top: calc(50% - var(--space-4));
+}
+
 /* Research carousel — lock both slides to the same height */
 .research-carousel .case-carousel-viewport {
   aspect-ratio: 4848 / 2160;

@@ -263,14 +263,17 @@
             }
 
             function unlockAll() {
-              try { sessionStorage.setItem(SK, '1'); } catch(e) {}
+              try {
+                sessionStorage.setItem(SK, '1');
+                sessionStorage.setItem('work_unlocked', '1');
+              } catch(e) {}
               ['fanatics-lock-overlay','nike-lock-overlay','shipped-lock-form-wrap'].forEach(function(id) {
                 var el = document.getElementById(id);
                 if (el) el.style.display = 'none';
               });
             }
 
-            try { if (sessionStorage.getItem(SK) === '1') { unlockAll(); return; } } catch(e) {}
+            try { if (sessionStorage.getItem(SK) === '1' || sessionStorage.getItem('work_unlocked') === '1') { unlockAll(); return; } } catch(e) {}
 
             var form = document.getElementById('fanatics-lock-form');
             var input = document.getElementById('fanatics-lock-input');
