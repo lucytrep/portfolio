@@ -19,8 +19,7 @@
 }
 
 .work-lock-screen-inner {
-  width: 100%;
-  max-width: 26rem;
+  width: 260px;
   text-align: center;
 }
 
@@ -53,20 +52,21 @@
 
 .work-lock-input {
   width: 100%;
-  min-height: 4rem;
-  padding: 0 1.1rem;
+  padding: 0.8rem 1rem;
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 400;
   letter-spacing: -0.01em;
-  border: 1px solid #d7d7d7;
-  border-radius: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 0.75rem;
   background: #fff;
   color: var(--color-text, #000);
+  text-align: center;
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
     background 180ms ease;
+  box-sizing: border-box;
 }
 
 .work-lock-input:focus {
@@ -81,16 +81,17 @@
 }
 
 .work-lock-submit {
-  min-height: 3.75rem;
-  padding: 0 1.25rem;
+  width: 100%;
+  padding: 0.8rem 0;
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--color-background, #fff);
+  color: #fff;
   background: #000;
   border: none;
-  border-radius: 0.6rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
   transition:
     background 180ms ease,
     opacity 180ms ease;
@@ -112,13 +113,8 @@
   }
 
   .work-lock-screen-inner {
-    max-width: none;
-  }
-
-  .work-lock-input,
-  .work-lock-submit {
-    min-height: 3.5rem;
-    font-size: 1rem;
+    width: 90%;
+    max-width: 260px;
   }
 }
 

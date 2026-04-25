@@ -147,7 +147,8 @@
   </header>
 
   <!-- Video plays once, then loops silently behind the overlay -->
-  <video class="hero-video" id="hero-video" src="assets/HeroVideo.mp4" autoplay muted playsinline></video>
+  <!-- src set by JS: Mobile.mp4 on small screens, HeroVideo.mp4 on desktop -->
+  <video class="hero-video" id="hero-video" autoplay muted playsinline preload="auto"></video>
 
   <div id="interaction-overlay">
     <p class="overlay-headline">See what I'm building.</p>
@@ -157,6 +158,15 @@
   <script>
     var video   = document.getElementById('hero-video');
     var overlay = document.getElementById('interaction-overlay');
+
+    // Pick mobile or desktop video before loading
+    video.src = window.matchMedia('(max-width: 768px)').matches
+      ? 'assets/Mobile.mp4'
+      : 'assets/HeroVideo.mp4';
+    video.load();
+
+    // iOS Safari sometimes needs an explicit play() call
+    video.play().catch(function () {});
 
     video.addEventListener('ended', function () {
       // Loop the video silently behind the overlay
