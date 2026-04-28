@@ -28,19 +28,26 @@
     #cs-fly-wrap.is-flying {
       position: fixed;
       inset: auto;
+      top: 0;
+      left: 0;
       z-index: 50;
       pointer-events: none;
-      will-change: top, left, width, height;
+      will-change: transform, width, height;
+      transform-origin: 0 0;
     }
     #cs-fly-wrap.is-landed {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      border-radius: 0;
+      border-radius: 0.75rem;
       border: none;
       background: none;
+      box-shadow: 0 0 0 1px #d7d7d7;
+      animation: flyLand 200ms ease forwards;
     }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
     #page-header { z-index: 100; }
     #cs-hero-target { background: transparent; border: none; }
     .case-hero--init .case-hero-kicker,
@@ -88,7 +95,7 @@
         linear-gradient(135deg, #f7f6f2, #ebe8df 60%, #f2f0ea);
     }
     .canvas-opportunity-steps {
-      margin-top: var(--space-5);
+      margin-top: var(--space-4);
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: var(--space-4);
@@ -137,7 +144,12 @@
       pointer-events: none;
       user-select: none;
     }
-    @media (max-width: 52rem) {
+    @media (max-width: 62.5rem) {
+      .canvas-opportunity-steps {
+        gap: var(--space-2);
+      }
+    }
+    @media (max-width: 36rem) {
       .canvas-opportunity-steps {
         grid-template-columns: 1fr;
       }
@@ -262,10 +274,10 @@
             <h2 class="case-section-title">Canvas Health - reducing digital waste through system-level design</h2>
             <div class="case-section-body">
               <p>
-                Canvas Health rethinks how design tools manage invisible accumulation. By making duplication visible at the moment it happens, introducing lightweight interventions, and automating cleanup over time, the system helps designers maintain performant files while reducing unnecessary storage and energy use.
+                Canvas Health is a system feature for Figma that reduces duplicate frames and file bloat at scale. It is designed for product designers working in large, fast-moving files where duplication is constant and invisible. The core problem is a lack of visibility and control over accumulation, leading to slower performance and unnecessary storage overhead.
               </p>
               <p>
-                Rather than relying on manual cleanup, the product shifts behavior through feedback, nudges, and system defaults - aligning user workflows with both performance and sustainability goals.
+                The system introduces real-time duplication feedback, prioritizes high-impact frames, and automates cleanup through defaults and one-click actions. This shifts file health from a manual task to a continuous, system-driven behavior.
               </p>
             </div>
             <div class="case-carousel" data-carousel>
@@ -277,7 +289,7 @@
                   <div class="case-carousel-slide">
                     <div class="case-section-body" style="margin-bottom:var(--space-3);">
                       <p><strong class="case-bullet-heading">Before</strong></p>
-                      <p>The Figma canvas had no system for identifying or managing duplicate frames. Designers had no visibility into file health, duplication levels, or storage impact — accumulation happened silently and cleanup was entirely manual.</p>
+                      <p>Before Canvas Health, duplicate frames accumulated silently across large files. Designers had no visibility into file health, no sense of which duplication was most costly, and no built-in way to clean up bloat before it affected performance.</p>
                     </div>
                     <div style="border-radius:0.8rem;overflow:hidden;">
                       <img src="../../assets/images/figma-design-challenge/before.jpg" alt="Before — Figma canvas with duplicate frames" style="width:100%;height:auto;display:block;" />
@@ -286,7 +298,7 @@
                   <div class="case-carousel-slide">
                     <div class="case-section-body" style="margin-bottom:var(--space-3);">
                       <p><strong class="case-bullet-heading">After</strong></p>
-                      <p>Canvas Health Mode surfaces duplication in real time, highlights high-impact frames, and enables one-click archiving — making file health actionable without interrupting the design workflow.</p>
+                      <p>After Canvas Health, designers receive real-time duplication feedback, see which frames have the highest impact, and can remove or archive clutter in one click. File health becomes a continuous system behavior instead of a manual cleanup task.</p>
                     </div>
                     <div style="border-radius:0.8rem;overflow:hidden;">
                       <img src="../../assets/images/figma-design-challenge/after.jpg" alt="After — Canvas Health mode active" style="width:100%;height:auto;display:block;" />
@@ -305,10 +317,10 @@
             <h2 class="case-section-title">Digital accumulation is invisible, so behavior never changes</h2>
             <div class="case-section-body">
               <p>
-                Designers are not careless - they are operating in a system where duplication is instant and frictionless, cleanup is manual and time-consuming, and deletion feels risky and irreversible.
+                Designers duplicate constantly to explore, iterate, and version-but the system provides no visibility into what accumulates. Duplicate frames, unused components, and redundant versions stack silently, with no signal of impact or urgency.
               </p>
               <p>
-                As a result, files grow silently over time: duplicate frames and unused components accumulate, version histories expand indefinitely, and performance degrades only after scale becomes a problem. There is no system signal connecting everyday actions to their impact on file performance, infrastructure cost, or environmental footprint.
+                Cleanup is manual, time-consuming, and risky, so it is consistently deferred. By the time performance degrades, files are already bloated, harder to navigate, and expensive to maintain. A typical file in my audit contained ~30% duplicated frames. Designers duplicated screens to explore variations or pull in external components, but without clear labeling or feedback, versions quickly became indistinguishable. By the time the file slowed down, it was unclear which frames were active, leading to hesitation, over-retention, and time-consuming manual cleanup.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -325,21 +337,21 @@
             <p class="case-section-label">Research Insights</p>
             <h2 class="case-section-title">Understanding how waste accumulates at scale</h2>
             <div class="case-section-body">
-              <p>
-                I combined self-audit, platform research, and external validation to understand how and why digital waste persists.
-              </p>
               <div class="case-section-grid-3">
                 <div class="case-section-grid-3-item">
-                  <strong>Waste is invisible until failure</strong>
-                  Designers only notice waste when files become slow or unusable—by then, accumulation is deeply embedded in their habits and hard to undo.
+                  <strong>Accumulation is only visible at failure</strong>
+                  Designers do not perceive duplication as a problem until performance breaks.
+                  Implication: Surface file health in real time, before degradation.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Defaults drive behavior</strong>
-                  Quick duplication is effortless—a single shortcut—while cleanup requires deliberate intention and dedicated time most designers never actually set aside.
+                  <strong>System defaults reinforce duplication over cleanup</strong>
+                  Creating new frames is instant, while cleanup requires deliberate effort that is rarely prioritized.
+                  Implication: Shift effort toward automated or low-friction cleanup actions.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Fear prevents deletion</strong>
-                  Uncertainty around losing the right version leads to "just in case" saving habits that compound silently across every file over time.
+                  <strong>Uncertainty drives over-retention</strong>
+                  Designers keep duplicates to avoid losing work, even when it creates long-term clutter.
+                  Implication: Provide safe, reversible ways to remove or archive unused frames.
                 </div>
               </div>
             </div>
@@ -358,25 +370,11 @@
             <h2 class="case-section-title">Making system impact visible at the moment of action</h2>
             <div class="case-section-body">
               <p>
-                The core issue is not awareness; it is timing. The system provides no feedback when duplication happens.
+                The opportunity was to shift file health from a reactive cleanup task to a system-level behavior. Instead of optimizing cleanup flows, I focused on intervening at the moment duplication occurs, where habits are formed and impact is created.
               </p>
               <p>
-                How might we make digital waste visible at the moment it is created, so designers can act early instead of reacting to performance breakdown?
+                This led to three priorities: real-time visibility into duplication, lightweight guidance that does not interrupt design flow, and automated cleanup where manual action would be ignored. I deprioritized heavy audit tools and post-hoc management, which rely on behavior that rarely happens.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Surface invisible impact</strong>
-                  Make file health and duplication visible in real time, so designers understand the cost of their habits before files become unmanageable.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Guide, do not force behavior</strong>
-                  Introduce lightweight, contextual nudges at the right moments—guiding behavior toward healthier file habits without interrupting or constraining creative work.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Automate where possible</strong>
-                  Where habit change alone isn't enough, automate cleanup in the background so files stay healthy without requiring deliberate manual effort from the designer.
-                </div>
-              </div>
             </div>
             <div class="canvas-opportunity-steps" data-opportunity-steps>
               <div class="canvas-opportunity-column">
@@ -433,24 +431,13 @@
             <h2 class="case-section-title">Designing a system, not a feature</h2>
             <div class="case-section-body">
               <p>
-                Instead of a single tool, I designed Canvas Health Mode - a system of interventions across the workflow.
+                I focused on embedding interventions directly into the workflow instead of adding a separate management layer. A standalone tool would rely on designers opting in, so the system needed to act at the moments where duplication actually occurs.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Moment of creation</strong>
-                  Duplication triggers immediate visual feedback so designers see file weight increase in real time and can make an informed choice before continuing.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Moment of accumulation</strong>
-                  The system tracks patterns of redundancy across sessions and surfaces accumulated impact before it compounds into a noticeable performance problem.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Moment of intervention</strong>
-                  When thresholds are reached, the system surfaces clear suggestions or automated cleanup options—both remain fully reversible so nothing is lost without consent.
-                </div>
-              </div>
+              <p>
+                This led to distributing feedback across three points: creation, accumulation, and intervention. The tradeoff was balancing visibility with interruption-signals had to be noticeable without disrupting flow, and actions had to feel safe to reduce hesitation. Reversibility became a core constraint, ensuring designers could act without risking loss.
+              </p>
             </div>
-            <div class="case-carousel" data-carousel style="margin-top:var(--space-5);">
+            <div class="case-carousel" data-carousel style="margin-top:var(--space-4);">
               <div class="case-carousel-viewport" style="overflow:hidden;">
                 <div class="case-carousel-track">
                   <div class="case-carousel-slide">
@@ -474,22 +461,14 @@
             <h2 class="case-section-title">A system that integrates into existing workflows</h2>
             <div class="case-section-body">
               <p>
-                Canvas Health Mode introduces three key touchpoints:
+                Canvas Health operates as a real-time system loop embedded in the design workflow. When a designer duplicates a frame, the system detects identical or minimally changed structures and immediately surfaces a health signal tied to file growth. This makes the cost of duplication visible at the moment it happens.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Canvas Health Visualization</strong>
-                  Real-time overlays surface duplication and file health directly on the canvas, giving designers immediate visibility into the cost of their current file structure.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Smart Archival Nudges</strong>
-                  Contextual prompts suggest archiving older versions at the right moment, making the storage and performance impact of taking action immediately clear.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Adaptive System Tools</strong>
-                  Embedded indicators and cleanup actions activate when thresholds are reached and remain fully reversible, so designers stay in control of every change.
-                </div>
-              </div>
+              <p>
+                If ignored, the system tracks patterns across the file-flagging repeated structures, stale versions (e.g. &gt;90 days), and high-density duplication zones. Once thresholds are met, it escalates with prioritized actions, allowing designers to archive or remove redundant frames in one step.
+              </p>
+              <p>
+                All actions are reversible, reducing hesitation and enabling continuous cleanup. This shifts file health from a reactive task to an ongoing system-managed loop: duplication → visibility → decision → resolution.
+              </p>
             </div>
             <div class="case-carousel" data-carousel>
               <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
@@ -520,13 +499,10 @@
             <h2 class="case-section-title">Aligning user behavior with system performance</h2>
             <div class="case-section-body">
               <p>
-                User: faster, more responsive files; reduced manual cleanup effort; clear signals before performance issues occur.
-              </p>
-              <p>
-                Business (Figma): reduced storage and compute costs; improved performance at scale; more efficient infrastructure usage. Sustainability: less unnecessary data storage and transfer; reduced energy consumption across systems; waste prevented before accumulation.
+                A self-audit of my own Figma files found ~30% of frames were duplicates, created during normal exploration with no system feedback to prompt cleanup. Canvas Health removes the need for manual audits by surfacing duplication at the moment it occurs and enabling one-step resolution. At infrastructure scale, fewer redundant frames means lower file size growth and reduced sync load across Figma's 24/7 cloud architecture.
               </p>
             </div>
-            <div style="margin-top:var(--space-5);border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
               <video src="../../assets/images/figma-design-challenge/impact.mp4" autoplay muted loop playsinline style="width:100%;height:auto;display:block;pointer-events:none;"></video>
             </div>
           </section>
@@ -536,10 +512,10 @@
             <h2 class="case-section-title">Designing systems is one challenge. Making them legible is another.</h2>
             <div class="case-section-body">
               <p>
-                The system was strong — the gap was legibility. I produced a high volume of work but learned that clarity and narrative sequencing determine impact more than output. A strong idea loses effectiveness if it can't be grasped within seconds.
+                This project exposed a gap between system design and system clarity. The logic was strong, but the popup interaction made it harder to understand within the core workspace. Post-submission feedback confirmed it: the system needed to feel embedded, not layered on top. I'd redesign it to live within Figma's existing panels, and anchor the experience around one immediately legible moment before expanding the system.
               </p>
               <p>
-                AI helped accelerate early exploration, but introduced overhead without constraint. In time-bound environments, selective use matters more than access.
+                The "default-on" setting is also worth revisiting. It was a deliberate choice to make cleanup passive, but in enterprise contexts with shared libraries and access hierarchies, it introduces friction. A middle ground: default-on for personal files, admin-controlled for teams.
               </p>
             </div>
           </section>
@@ -574,7 +550,13 @@
   </footer>
 
   <script src="../../js/main.js"></script>
-  <script>window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();</script>
+  <script>
+    window.__caseStudyFlyProjectionStrength = 1;
+    window.__caseStudyFlyProjectionEase = 2.8;
+    window.__caseStudyRevealOnLand = true;
+    window.__caseStudyVerticalBias = 160;
+    window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();
+  </script>
   <script>
     (function () {
       var delayedVideos = document.querySelectorAll('video[data-loop-delay]');

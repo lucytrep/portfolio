@@ -48,13 +48,16 @@ See /ROUTING.md -->
       background: transparent;
     }
 
-    /* Fixed state: JS sets top/left/width/height */
+    /* Fixed state: JS sets position via transform */
     #cs-fly-wrap.is-flying {
       position: fixed;
       inset: auto;
+      top: 0;
+      left: 0;
       z-index: 50;
       pointer-events: none;
-      will-change: top, left, width, height;
+      will-change: transform, width, height;
+      transform-origin: 0 0;
     }
 
     /* Nav always sits above the flying video */
@@ -74,10 +77,14 @@ See /ROUTING.md -->
       inset: 0;
       width: 100%;
       height: 100%;
-      border-radius: 0;
+      border-radius: 0.75rem;
       border: none;
       background: none;
+      box-shadow: 0 0 0 1px #d7d7d7;
+      animation: flyLand 200ms ease forwards;
     }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
 
     #cs-fly-wrap video,
     #cs-fly-wrap iframe {
@@ -111,6 +118,36 @@ See /ROUTING.md -->
       opacity: 1;
       transform: translateY(0);
       transition-delay: 0.18s;
+    }
+
+    .axsphere-quote {
+      margin: var(--space-4) 0;
+    }
+
+    .axsphere-quote blockquote {
+      margin: 0;
+      padding: 0;
+    }
+
+    .axsphere-quote p {
+      margin: 0;
+      font-size: 1.15rem;
+      line-height: normal;
+      letter-spacing: -0.01em;
+      color: var(--color-text);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .axsphere-quote p strong {
+      font-weight: inherit;
+    }
+
+    .axsphere-quote figcaption {
+      margin-top: 0.9rem;
+      font-size: 0.84rem !important;
+      line-height: 1.5;
+      color: var(--color-prose);
     }
 
     /* Reduced motion: skip animation, show everything */
@@ -243,7 +280,7 @@ See /ROUTING.md -->
             <h2 class="case-section-title">Understanding Spaces Before You Visit</h2>
             <div class="case-section-body">
               <p>
-                Axsphere rethinks how people choose where to go. By filtering spaces based on atmosphere and accessibility, verifying features in real-time, and crowdsourcing current conditions, the experience removes guesswork, builds arrival confidence, and makes every outing more comfortable.
+                Axsphere is a decision layer for choosing physical spaces, built for people who need to understand accessibility and atmosphere before arriving. It aggregates real-time signals and user-contributed data to answer questions like noise level, crowd density, elevator access, and spatial constraints. Instead of relying on static reviews or calling ahead, the system surfaces current, situational context in one place. The result is faster decisions and fewer failed outings caused by unknown conditions.
               </p>
             </div>
             <div class="case-carousel" data-carousel>
@@ -275,12 +312,13 @@ See /ROUTING.md -->
             <h2 class="case-section-title">Accessibility Information Lacks Real Context</h2>
             <div class="case-section-body">
               <p>
-                Accessibility details online are often reduced to a single symbol or checklist item, with little context about what a visit is actually like.
-                People can’t reliably assess factors like noise, lighting, crowd density, or spatial layout ahead of time.
+                A user choosing between two cafes calls both ahead to ask about elevator access and crowd levels. One confirms basic accessibility, the other can’t give a clear answer. They choose the safer option, even if it’s less convenient, because the risk of arriving and getting stuck is too high.
               </p>
               <p>
-                This lack of transparency creates uncertainty and can make visiting new places stressful.
-                For people navigating physical, cognitive, or situational accessibility needs, uncertainty can become a barrier to exploring their city.
+                Information about physical spaces is flattened into static labels that don’t reflect real conditions. Critical details like elevator availability, crowd levels, spatial layout, and sensory environment are often missing or outdated.
+              </p>
+              <p>
+                As a result, people call ahead, scan reviews, and rely on past visits to determine if a space will work. When that information is incomplete or wrong, it leads to canceled plans, uncomfortable experiences, or avoiding new places entirely.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -300,24 +338,23 @@ See /ROUTING.md -->
 
           <section id="research-insights" class="case-section">
             <p class="case-section-label">Research Insights</p>
-            <h2 class="case-section-title">What People Need to Feel Prepared</h2>
+            <h2 class="case-section-title">What Research Revealed</h2>
             <div class="case-section-body">
               <p>
-                I interviewed people with a range of accessibility needs to understand how they evaluate spaces before visiting, what signals they trust,
-                and how uncertainty affects their decision-making.
+                Conducted secondary research on existing accessibility platforms, contextual observation of people researching spaces at home before outings, and interviews with 3 to 5 people managing mobility and physical access needs.
               </p>
               <div class="case-section-grid-3">
                 <div class="case-section-grid-3-item">
-                  <strong>Accessibility lacks clarity</strong>
-                  Most platforms use a single icon or label, making it hard for people to know whether a space will actually work for their specific needs.
+                  <strong>Static labels don’t support real decisions</strong>
+                  Users don’t trust binary accessibility indicators because they lack context and vary by individual needs. Replace one-size labels with layered, interpretable signals.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Atmosphere shapes comfort</strong>
-                  Environmental factors like noise, lighting, and crowd density strongly shape whether a space feels comfortable—yet most platforms don't surface them.
+                  <strong>Atmosphere is a primary filter</strong>
+                  Noise, lighting, and crowd density consistently determine whether a space is usable. Elevate atmosphere to first-class, comparable inputs.
                 </div>
                 <div class="case-section-grid-3-item">
-                  <strong>Uncertainty drives anxiety</strong>
-                  Not knowing what a space will feel like before arriving leads to stress and can deter people from visiting unfamiliar places altogether.
+                  <strong>Context is fragmented across sources</strong>
+                  Users cross-check reviews, photos, and maps to approximate reality. Consolidate signals into a single, decision-ready view.
                 </div>
               </div>
             </div>
@@ -357,26 +394,11 @@ See /ROUTING.md -->
 
           <section id="strategy" class="case-section">
             <p class="case-section-label">Defining the Opportunity</p>
-            <h2 class="case-section-title">Making Real-World Environments Visible Before Arrival</h2>
+            <h2 class="case-section-title">Scoping the Right Problem</h2>
             <div class="case-section-body">
               <p>
-                How might we make the real experience of a place visible before arrival?
-                I reframed accessibility as more than infrastructure—it's also atmosphere and predictability—so people can preview conditions and choose spaces with confidence.
+                The opportunity was to shift from static place listings to a system that reflects real, changing conditions. I prioritized accessibility context, atmosphere, and real-time updates because they directly determine whether a place works in the moment. I excluded reviews and long-form content due to inconsistency and lag. This reframes discovery as a situational decision system, not a search experience.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Make accessibility clear</strong>
-                  Surface detailed accessibility profiles instead of relying on a single generic indicator, so users can make informed decisions before they arrive.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Capture spatial atmosphere</strong>
-                  Represent how a space feels through signals like lighting, noise, and crowd density—so users know what to expect, not just whether access exists.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Enable real-time clarity</strong>
-                  Offer live updates so people can check conditions before leaving home and adjust their plans as the environment changes throughout the day.
-                </div>
-              </div>
             </div>
             <div class="case-carousel" data-carousel>
               <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
@@ -414,25 +436,11 @@ See /ROUTING.md -->
 
           <section id="design-exploration" class="case-section">
             <p class="case-section-label">Design Exploration</p>
-            <h2 class="case-section-title">Designing Flows That Reduce Uncertainty</h2>
+            <h2 class="case-section-title">What Early Concepts Got Wrong</h2>
             <div class="case-section-body">
               <p>
-                I designed an experience that reduces uncertainty through three core flows.
+                Early concepts separated accessibility and atmosphere into distinct screens, requiring users to navigate between views to build a complete picture of a space. This mirrored how existing tools work and reproduced the same fragmentation problem. I consolidated both into a unified view so users could evaluate a space holistically in a single pass. Reviews, ratings, and gamification were explored and removed because they introduced noise and didn't reliably reflect current conditions.
               </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Find the right environment</strong>
-                  Users filter spaces by accessibility features and atmosphere preferences to quickly find environments that match their comfort level and specific needs.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Check conditions in real time</strong>
-                  Live updates let people preview crowd levels, noise, and current activity at a location before deciding whether to make the trip.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Save comfortable spaces</strong>
-                  Users can bookmark locations that work well for them and contribute photos or audio to help others understand what a space is actually like.
-                </div>
-              </div>
             </div>
             <div class="case-image-natural-grid">
               <div class="case-image-natural-grid-row case-image-natural-grid-row--4col" style="grid-template-columns: repeat(4, 1fr);">
@@ -457,13 +465,22 @@ See /ROUTING.md -->
             <h2 class="case-section-title">Testing with People Navigating Access Needs</h2>
             <div class="case-section-body">
               <p>
-                I tested low-fidelity prototypes to validate navigation between discovery, accessibility information, and live updates.
-                Sessions focused on whether users could quickly understand a space, compare options, and feel prepared before visiting.
+                Testing surfaced three recurring issues that directly shaped the product direction.
               </p>
-              <p>
-                Feedback helped refine hierarchy, increase visibility of key features, and simplify how accessibility details were presented
-                so critical context was easier to scan.
-              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Atmosphere signals were overlooked</strong>
+                  Users defaulted to location and ratings, missing environmental data. I elevated atmosphere to primary filters and initial scan states, leading to faster evaluation and reduced reliance on secondary content.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Accessibility felt too generic</strong>
+                  Broad labels didn’t support real decisions. I introduced structured, multi-attribute profiles, which increased confidence and reduced cross-checking.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Real-time data lacked trust</strong>
+                  Users hesitated to act on live updates. I added timestamps and lightweight validation signals, which increased trust and willingness to act.
+                </div>
+              </div>
             </div>
             <div class="case-image-natural-grid">
               <div class="case-image-natural-grid-row" style="grid-template-columns: 1117fr 1361fr;">
@@ -482,12 +499,7 @@ See /ROUTING.md -->
             <h2 class="case-section-title">A Product That Builds Confidence Before Arrival</h2>
             <div class="case-section-body">
               <p>
-                The final product combines discovery, accessibility visibility, and community-driven updates into a single experience that helps people
-                evaluate spaces before visiting.
-              </p>
-              <p>
-                Key features include atmosphere-based filtering, accessibility profiles, live environmental updates, community contributions,
-                and personal comfort collections for saving and revisiting spaces that work well.
+                Axsphere translates real-world environments into structured, real-time signals users can act on. Users define what matters, evaluate spaces through a unified view, and decide based on current conditions. The system continuously updates through lightweight contributions, keeping information relevant at the moment of choice. This replaces fragmented research with a single decision layer.
               </p>
             </div>
             <div class="case-carousel" data-carousel>
@@ -547,15 +559,21 @@ See /ROUTING.md -->
 
           <section id="results" class="case-section">
             <p class="case-section-label">Impact</p>
-            <h2 class="case-section-title">Helping People Explore with More Confidence</h2>
+            <h2 class="case-section-title">Who It's Really For</h2>
             <div class="case-section-body">
               <p>
-                The solution makes accessibility and atmosphere more legible, helping people choose spaces with less uncertainty.
-                By previewing real-world conditions, users can plan ahead and feel more confident exploring new places.
+                Testing with people managing physical access needs, including an occupational therapist who directs clients to appropriate venues, revealed that fragmented, unreliable information is a professional problem, not just a personal inconvenience.
               </p>
+              <figure class="axsphere-quote">
+                <blockquote>
+                  <p>
+                    <strong>"This would actually change how I work - right now I'm directing clients based on whatever vague information I can find on Google."</strong>
+                  </p>
+                </blockquote>
+                <figcaption>Occupational Therapist, usability test</figcaption>
+              </figure>
               <p>
-                Bringing real-time transparency and community context into one flow reduces the anxiety of “arriving blind” and supports more inclusive
-                experiences for people with varying access needs.
+                Users reported reduced need to call ahead or cross-check sources before deciding. For people in caretaking or professional roles, the system's value extended beyond personal use to decisions made on behalf of others.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -581,37 +599,14 @@ See /ROUTING.md -->
             <h2 class="case-section-title">Designing for Predictability, Not Just Access</h2>
             <div class="case-section-body">
               <p>
-                Designing for accessibility really means designing for predictability. I started to realize that feeling comfortable in a space isn’t just about access—it’s about knowing what to expect, understanding the atmosphere, and being able to prepare ahead of time.
+                This project reframed accessibility as predictability, not compliance. I shifted from designing features to defining a system that supports decisions under uncertainty, prioritizing real-time, comparable signals over static or subjective content.
               </p>
               <p>
-                Talking to real people shaped this project in a big way and made me feel responsible for creating something that’s genuinely useful, not just something that looks good.
+                A key challenge was designing for needs that are often invisible to others. Feedback from users outside these contexts highlighted how easily this problem is underestimated, reinforcing the importance of grounding decisions in lived experience rather than general assumptions.
               </p>
               <p>
-                I explored a lot of different directions along the way, which taught me how important it is to narrow in and prioritize what actually matters. Not everything needs to be built, just the parts that create the most value.
+                If continued, I would focus on validating data reliability and coverage at scale, since the system depends on consistent, trusted inputs. I would also explore partnerships with businesses to maintain accuracy without relying entirely on user contribution.
               </p>
-              <p>
-                This project also pushed me to shift from thinking like a graphic designer to thinking more like a product designer, focusing less on visuals alone and more on usability, systems, and how something would work in the real world. That’s something I’m still actively working on.
-              </p>
-              <p>
-                Feedback was a huge part of shaping the final outcome and helped me move past my own assumptions to see better ways to approach the experience.
-              </p>
-              <p>
-                <strong>Future Directions</strong>
-              </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Environment testing</strong>
-                  Deepen research into how people plan around real-time conditions and test the feature set with a broader range of users and access needs.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Local business integration</strong>
-                  Partner with venues and local businesses to maintain accurate, up-to-date accessibility information across a much broader set of locations.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Expanded accessibility controls</strong>
-                  Introduce multilingual support, more granular accessibility filters, and personalized settings to serve a wider range of users and communities.
-                </div>
-              </div>
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
@@ -653,6 +648,12 @@ See /ROUTING.md -->
   </footer>
 
   <script src="../js/main.js"></script>
-  <script>window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();</script>
+  <script>
+    window.__caseStudyFlyProjectionStrength = 1;
+    window.__caseStudyFlyProjectionEase = 2.8;
+    window.__caseStudyRevealOnLand = true;
+    window.__caseStudyVerticalBias = 160;
+    window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();
+  </script>
 </body>
 </html>

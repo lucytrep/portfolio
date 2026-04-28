@@ -15,8 +15,10 @@
     .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
     .cs-launch-slot { border-radius: 0.75rem; }
     #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: #fff; }
-    #cs-fly-wrap.is-flying { position: fixed; inset: auto; z-index: 50; pointer-events: none; will-change: top, left, width, height; }
-    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; border: none; background: none; box-shadow: 0 0 0 0.25px #b0b0b0; }
+    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
+    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; border: none; background: none; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
     #page-header { z-index: 100; }
     #cs-hero-target { background: transparent; border: none; }
     .case-hero--init .case-hero-kicker,
@@ -199,12 +201,7 @@
             <h2 class="case-section-title">Helping People Recognize Early Cardiovascular Warning Signs Before a Crisis</h2>
             <div class="case-section-body">
               <p>
-                ACUITY is an AI-powered wearable health system designed to help people move from uncertainty to action.
-                The system continuously monitors biometric signals, learns each user's personal health baseline, and translates deviations into clear risk classifications.
-                The result is a product that removes the guesswork between feeling something is wrong and knowing what to do about it.
-              </p>
-              <p>
-                The concept was developed in 24 hours at the Designpreneurs Hackathon at Parsons School of Design, a competition challenging teams to design AI systems for a 2035 world. The team advanced from a human story to a system concept, functional prototype, product demo video, and final pitch presentation within a single day.
+                ACUITY is an AI-powered wearable system that detects early cardiovascular risk by comparing real-time biometric data against a user's personal baseline. It is designed for individuals experiencing ambiguous symptoms who lack clear guidance on when to act. The system translates physiological changes into clear risk states and a single recommended action. Developed in a 24-hour hackathon, the project focuses on decision-making clarity rather than data tracking.
               </p>
             </div>
             <div class="case-carousel" data-carousel>
@@ -246,33 +243,13 @@
             <h2 class="case-section-title">The Most Dangerous Moment in Healthcare Is the Uncertainty Before the Emergency</h2>
             <div class="case-section-body">
               <p>
-                People experiencing early cardiovascular symptoms frequently cannot determine whether what they are feeling is serious enough to warrant action.
-                The warning signals are present, but no translation layer exists between symptom and response.
+                A heart attack survivor delayed seeking care because they assumed their symptoms were stress. The signals were present, but there was no clear way to interpret them or act in time.
               </p>
               <p>
-                <strong>Research testimonials collected during discovery</strong>
-              </p>
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Heart Attack Survivor</strong>
-                  "I kept telling myself it was just stress. Turns out, it was my heart."
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Family of a Victim</strong>
-                  "It wasn't the cardiac arrest that killed him. It was his fear."
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Pre-Med Student</strong>
-                  "I still don't know if this is serious enough to trouble the doctor."
-                </div>
-              </div>
-              <p>
-                Existing wearables are highly capable at measuring health data.
-                However, measurement without interpretation leaves users in precisely the same state of uncertainty they began with.
-                Data collection is not the problem. Clarity is.
+                Early cardiovascular symptoms are often ambiguous, leaving people unsure whether to act or wait. Existing wearables measure health data, but do not translate what those changes mean in real time. As a result, users are left making high-stakes decisions without clear guidance, often delaying care when timing is critical.
               </p>
             </div>
-            <div style="margin-top: var(--space-5); border-radius: 0.8rem; overflow: hidden; aspect-ratio: 16/9;">
+            <div style="margin-top: var(--space-4); border-radius: 0.8rem; overflow: hidden; aspect-ratio: 16/9;">
               <video src="../../assets/images/acuity/problem.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
             </div>
           </section>
@@ -282,24 +259,22 @@
             <h2 class="case-section-title">Understanding How Uncertainty Prevents Action</h2>
             <div class="case-section-body">
               <p>
-                The project was grounded in existing cardiovascular research and primary user testimony to understand the conditions under which people delay or avoid care even when symptoms are present.
+                Three patterns shaped the direction:
               </p>
-              <p>
-                Symptoms do not follow textbook patterns. Many early warning signs—including dizziness, chest discomfort, and sudden fatigue—are subtle and inconsistent.
-                Users tend to rationalize these experiences as stress or tiredness rather than recognizing them as signals that warrant attention.
-              </p>
-              <p>
-                Health literacy gaps are systemic. Nine out of ten adults lack the health literacy to independently assess when to seek medical care.
-                This reflects a fundamental gap in how healthcare systems communicate urgency to general populations.
-              </p>
-              <p>
-                High-risk populations remain underserved. Communities with 31% higher cardiovascular risk are also least likely to have access to tools capable of detecting early warning signs before escalation.
-                The population most in need is the one most frequently missed by existing systems.
-              </p>
-              <p>
-                Fear delays action as much as a lack of information. Users may fear being incorrect, inconveniencing a clinician, or confronting a diagnosis.
-                Effective design must reduce friction at the moment of decision, not only at the point of data collection.
-              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Symptoms are ambiguous, not actionable</strong>
+                  Early signals are inconsistent and easily rationalized, leading users to delay action. This led to translating physiological changes into clear risk states.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Data without interpretation increases cognitive load</strong>
+                  Users cannot assess when biometric changes are serious, even when data is available. This shifted the focus from tracking metrics to guiding decisions.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Fear and uncertainty block intervention</strong>
+                  Users hesitate due to doubt and fear of being wrong. This drove the decision to pair risk classification with a single, explicit next step.
+                </div>
+              </div>
             </div>
             <div class="case-carousel" data-carousel>
               <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
@@ -340,22 +315,14 @@
             <h2 class="case-section-title">Making the Body's Signals Legible and Actionable Before Crisis</h2>
             <div class="case-section-body">
               <p>
-                The initial design direction targeted a broad health monitoring platform. General health tools, however, tend to produce shallow impact because their scope is too wide and their outputs too abstract to drive behavior change in high-stakes moments.
+                The direction shifted from broad health tracking to a focused decision-support system for the moment between symptom onset and action. Rather than expanding features, the system prioritizes interpreting personal biometric changes into clear risk states and one recommended next step.
               </p>
               <p>
-                The focus was narrowed to a specific and underserved window in the patient experience: the interval between “something feels off” and “I know what to do.”
-                The guiding design question became: how might people be helped to understand when something is wrong and take action before it is too late?
+                This required removing dashboards, historical metrics, and generalized wellness insights in favor of real-time guidance in high-risk scenarios. The opportunity became a shift from passive monitoring to active intervention at the point where decisions break down.
               </p>
-              <p><strong class="case-bullet-heading">Design principles</strong></p>
-              <ul>
-                <li>Translate rather than measure: Surface meaning from signals rather than presenting raw data</li>
-                <li>Reduce friction at the moment of decision: Deliver one clear next action rather than a dashboard</li>
-                <li>Build for the highest-risk users: Design for the population most likely to be missed by existing systems</li>
-                <li>Earn trust through personalization: Learn each user's baseline before classifying risk</li>
-              </ul>
             </div>
-            <div style="margin-top:var(--space-5);border-radius:0.8rem;overflow:hidden;">
-              <img src="../../assets/images/acuity/whiteboard2.jpg" alt="Research whiteboard" style="width:100%;height:auto;display:block;" />
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/8.5;">
+              <img src="../../assets/images/acuity/whiteboard2.jpg" alt="Research whiteboard" style="width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;" />
             </div>
           </section>
 
@@ -364,30 +331,19 @@
             <h2 class="case-section-title">Designing a System Rather Than an Interface</h2>
             <div class="case-section-body">
               <p>
-                ACUITY is constructed across three integrated layers: wearable sensing, AI interpretation, and app-guided action.
-                These layers connect into a single decision system oriented around one output.
+                The system was structured around a single output: what should the user do next. Early explorations included dashboards and multi-metric views, but these increased cognitive load and delayed decisions, so they were removed.
               </p>
-              <p><strong>System architecture</strong></p>
-              <p>Three layers, one decision.</p>
-              <ul>
-                <li>Stable: Signals remain within the user's personal baseline. No action is required.</li>
-                <li>Elevated: Meaningful deviation has been detected. A medical evaluation is recommended.</li>
-                <li>Emergent: Significant changes paired with reported symptoms require immediate attention.</li>
-              </ul>
+              <p>
+                The team also explored expanding into service layers, including an on-demand EMT transport model, but this introduced legal and operational complexity beyond the scope of the system and was cut.
+              </p>
+              <p>
+                A key constraint was defining the role of AI. Rather than allowing the system to make medical decisions, it was limited to identifying risk and prompting action, ensuring users remained in control while still receiving guidance.
+              </p>
             </div>
-            <div style="margin-top:var(--space-5);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;">
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;">
               <video src="../../assets/images/acuity/phone-overlay.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
             </div>
-            <div class="case-section-body">
-              <p><strong class="case-bullet-heading">What ACUITY detects</strong></p>
-              <ul>
-                <li>Blood pressure deviations from the user's established personal baseline</li>
-                <li>Heart rate variability patterns over time</li>
-                <li>Sleep quality and consistency metrics</li>
-                <li>User-logged symptoms (because physiological changes do not always appear in biometric data)</li>
-              </ul>
-            </div>
-            <div style="margin-top:var(--space-5);display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);margin-bottom:var(--space-3);">
+            <div style="margin-top:var(--space-2);display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-2);margin-bottom:var(--space-2);">
               <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;">
                 <video src="../../assets/images/acuity/onboarding.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
               </div>
@@ -398,18 +354,7 @@
                 <video src="../../assets/images/acuity/guided-action.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
               </div>
             </div>
-            <div class="case-section-body">
-              <p><strong class="case-bullet-heading">AI engine</strong></p>
-              <ul>
-                <li>Individual baseline modeling that learns what is physiologically normal for each specific user</li>
-                <li>A risk classification engine that interprets deviation across multiple signal types simultaneously</li>
-                <li>Time-series anomaly detection that identifies patterns before they reach critical thresholds</li>
-              </ul>
-              <p>
-                Strategic focus: the design narrows to patients experiencing early cardiovascular symptoms that do not follow classic textbook presentations—because this group is frequently underserved and most likely to benefit from early intervention.
-              </p>
-            </div>
-            <div class="case-section-media-row">
+            <div class="case-section-media-row" style="margin-top:var(--space-2);">
               <div class="case-image-block" style="overflow:hidden;box-shadow:0 0 0 1px #e0e0e0;">
                 <video src="../../assets/images/acuity/wearable.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
               </div>
@@ -423,23 +368,20 @@
             <p class="case-section-label">Test &amp; Iterate</p>
             <h2 class="case-section-title">Designing the Core Interaction Under Constraint</h2>
             <div class="case-section-body">
-              <p>
-                Within the 24-hour hackathon timeline, rapid prototyping and AI-assisted tools were used to develop and evaluate the core interaction model.
-                Figma Make enabled fast generation and iteration of the mobile app interface and interaction flows.
-                Midjourney supported visual concept development for the wearable hardware form factor.
-              </p>
-              <p><strong class="case-bullet-heading">Key interaction decisions</strong></p>
-              <ul>
-                <li>Two wrist vibrations signal the need for attention. The pattern is subtle enough not to alarm and distinct enough to prompt engagement.</li>
-                <li>A deliberate pinch gesture activates the care card on the paired device, requiring intentional input rather than accidental contact.</li>
-                <li>A wave gesture dismisses an alert. Holding the pinch keeps the system in active monitoring mode.</li>
-                <li>No dashboards or raw metrics are surfaced to the user. The interface delivers one recommended next action per alert.</li>
-              </ul>
-              <p>
-                The gesture-based interaction model and three-tier risk classification performed well during prototype evaluation sessions.
-                Users responded more effectively to being told what to do than to being shown data.
-                Clarity consistently outperformed completeness as a guiding design value.
-              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Unclear product direction &rarr; Narrowed to a specific user and moment &rarr; Stronger positioning</strong>
+                  Early feedback showed the system felt too broad and undefined. The product was refocused on users experiencing early cardiovascular symptoms and the specific moment of deciding whether to act.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Metrics-first framing caused confusion &rarr; Reframed around action &rarr; Improved clarity</strong>
+                  Initial concepts emphasized detection and data. Shifting the system to center on "what to do next" made the value immediately understandable.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Biometric-only detection felt incomplete &rarr; Integrated user-reported symptoms &rarr; More trusted output</strong>
+                  Relying only on sensor data created gaps. Adding user input improved context and made risk classification more credible.
+                </div>
+              </div>
             </div>
             <div class="case-section-media-row" style="grid-template-columns:3fr 2fr;">
               <div class="case-image-block" style="overflow:hidden;aspect-ratio:3/2;">
@@ -456,32 +398,21 @@
             <h2 class="case-section-title">A Personal Health Decision Layer: From Signal to Action</h2>
             <div class="case-section-body">
               <p>
-                ACUITY operates less like a traditional fitness tracker and more like a personal health decision layer.
-                The final product integrates continuous wearable sensing, AI-driven baseline modeling, and a minimal app interface into a unified experience designed around one central question:
-                What action, if any, should be taken next?
+                ACUITY operates as a real-time decision layer that interprets continuous biometric data against a personalized baseline. When a meaningful deviation is detected, the system classifies risk and delivers a single recommended action, removing the need for user interpretation.
               </p>
-              <p><strong class="case-bullet-heading">Core product features</strong></p>
-              <ul>
-                <li>A wearable ring continuously monitors blood pressure, heart rate variability, sleep quality, and cardiac patterns</li>
-                <li>A 14-day baseline calibration period personalizes risk thresholds to the individual user's physiology</li>
-                <li>Three-state risk classification delivers Stable, Elevated, or Emergent status at any given moment</li>
-                <li>Gesture-based interaction eliminates the need for complex interface navigation under conditions of stress or uncertainty</li>
-                <li>A care card surfaces one clear recommended action per alert, removing ambiguity from the response process</li>
-              </ul>
               <p>
-                Demo and pitch: a short product demo video was produced for the final presentation to illustrate how ACUITY supports a user experiencing early cardiovascular symptoms.
-                The pitch was structured around a single core insight: people do not lack health data. They lack clarity about what that data means and when to act on it. ACUITY closes that gap.
+                Interaction is designed for moments of uncertainty, allowing users to quickly acknowledge and respond without navigating complex interfaces. The system closes the gap between sensing something is wrong and knowing what to do next.
               </p>
             </div>
-            <div style="margin-top:var(--space-5);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);">
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);">
               <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3/4;box-shadow:0 0 0 1px #e0e0e0;">
                 <video src="../../assets/images/acuity/wearable.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
               </div>
               <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3/4;box-shadow:0 0 0 1px #e0e0e0;position:relative;">
-                <video src="../../assets/images/acuity/hand.mp4" autoplay muted loop playsinline style="position:absolute;top:18%;left:-16.65%;width:133.3%;height:75%;object-fit:cover;display:block;pointer-events:none;transform:rotate(270deg);transform-origin:center;"></video>
+                <video src="../../assets/images/acuity/hand.mp4" autoplay muted loop playsinline style="position:absolute;top:12.5%;left:-16.65%;width:133.3%;height:75%;object-fit:cover;display:block;pointer-events:none;transform:rotate(270deg);transform-origin:center;"></video>
               </div>
               <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:3/4;box-shadow:0 0 0 1px #e0e0e0;background:#D2D4D4;position:relative;">
-                <video src="../../assets/images/acuity/phone.mp4" autoplay muted loop playsinline style="width:80%;height:80%;object-fit:contain;display:block;pointer-events:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);"></video>
+                <video src="../../assets/images/acuity/phone.mp4" autoplay muted loop playsinline style="width:76%;height:76%;object-fit:contain;display:block;pointer-events:none;position:absolute;top:55%;left:50%;transform:translate(-50%,-50%);"></video>
               </div>
             </div>
             <div style="margin-top:var(--space-2);border-radius:0.75rem;overflow:hidden;aspect-ratio:16/9;box-shadow:0 0 0 1px #e0e0e0;">
@@ -501,16 +432,10 @@
             <h2 class="case-section-title">From Individual Clarity to Systemic Change</h2>
             <div class="case-section-body">
               <p>
-                User: clarity on when to act before a crisis occurs; reduced anxiety resulting from health uncertainty; personalized risk interpretation in place of raw data.
+                ACUITY reframes wearables from passive tracking to decision support, addressing the gap between detection and action. During the hackathon, feedback consistently focused on the clarity of the system and its emphasis on guiding users rather than overwhelming them with data.
               </p>
               <p>
-                Business (Insurers): $6M saved per 50,000 high-risk members; 2 to 5x ROI on PMPM investment; 100 or more hospital admissions prevented annually.
-              </p>
-              <p>
-                Healthcare System: earlier intervention at significantly lower cost; reduced emergency room burden from preventable events; scalable reach into underserved, high-risk populations.
-              </p>
-              <p>
-                Business model: ACUITY is structured for B2B scalability, funded by health insurers through a per-member-per-month (PMPM) model with zero cost to the end user—positioning ACUITY as an infrastructure investment for health systems targeting high-risk populations at scale.
+                The concept positions a scalable model for earlier intervention, particularly for users who fall outside clear diagnostic patterns and are most likely to delay care.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -528,10 +453,13 @@
             <h2 class="case-section-title">From Story to System in 24 Hours</h2>
             <div class="case-section-body">
               <p>
-                The most effective version of ACUITY wasn't the one with the most features — it was the one that did one thing precisely: tell you what to do next. That clarity only emerged under constraint.
+                This project shifted my focus from designing interfaces to defining decision systems. Early concepts prioritized breadth, but the strongest outcome came from narrowing the system to a single, high-stakes output: what action to take.
               </p>
               <p>
-                AI tools (Claude, Midjourney, Figma Make, Sora) enabled the pace, but the work still required clear design intent to direct them. The takeaway: as timelines compress, the value of design shifts toward judgment and systems thinking, not output volume.
+                AI tools like Claude, Midjourney, and Figma Make accelerated prototyping and helped visualize the wearable and product flow, allowing the team to produce a more complete system within a compressed timeline.
+              </p>
+              <p>
+                I learned that speed comes from reducing scope and applying judgment, not increasing output. If extended, I would validate the risk model against real user scenarios and test failure cases where the system over- or under-reacts.
               </p>
               <p>
                 Full reflection published on Medium by Sooim Kang and Lucy Trepanier.
@@ -590,6 +518,12 @@
   </footer>
 
   <script src="../../js/main.js"></script>
-  <script>window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();</script>
+  <script>
+    window.__caseStudyFlyProjectionStrength = 1;
+    window.__caseStudyFlyProjectionEase = 2.8;
+    window.__caseStudyRevealOnLand = true;
+    window.__caseStudyVerticalBias = 160;
+    window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();
+  </script>
 </body>
 </html>

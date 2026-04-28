@@ -173,6 +173,10 @@
     );
 
     autoplayVideos.forEach(function (video) {
+      // The fly-hero video is managed by initCaseStudyFlyHero; observing it
+      // causes a pause/play glitch when the launch zone scrolls off-screen
+      // during the fixed-position flight phase.
+      if (video.closest('#cs-fly-wrap')) return;
       mediaObserver.observe(video);
     });
   })();
@@ -386,11 +390,13 @@
     if (!sections.length) return;
 
     function setActive() {
-      var top = window.scrollY + 120;
+      // Use ~15% of viewport height as the activation threshold, clamped to
+      // the scroll-margin-top (96px) so anchor links always activate correctly.
+      var offset = Math.max(96, window.innerHeight * 0.15);
+      var top = window.scrollY + offset;
       var active = null;
       for (var i = sections.length - 1; i >= 0; i--) {
-        var r = sections[i].el.getBoundingClientRect();
-        var elTop = r.top + window.scrollY;
+        var elTop = sections[i].el.getBoundingClientRect().top + window.scrollY;
         if (elTop <= top) {
           active = sections[i];
           break;
@@ -402,15 +408,23 @@
       });
     }
 
-    var observer = new IntersectionObserver(
-      function () {
+    // Run on every scroll tick so the highlight is always in sync.
+    var scrollTicking = false;
+    window.addEventListener('scroll', function () {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(function () {
         setActive();
-      },
-      { root: null, rootMargin: '-20% 0px -70% 0px', threshold: 0 }
+        scrollTicking = false;
+      });
+    }, { passive: true });
+
+    // Also observe section boundaries so the first/last edge cases are caught.
+    var observer = new IntersectionObserver(
+      function () { setActive(); },
+      { root: null, rootMargin: '-10% 0px -60% 0px', threshold: 0 }
     );
-    sections.forEach(function (s) {
-      observer.observe(s.el);
-    });
+    sections.forEach(function (s) { observer.observe(s.el); });
     setActive();
   })();
 
@@ -716,19 +730,22 @@
       srcRect = getSourceRect();
       tgtRect = getProjectedTargetRect(1);
       var vh = window.innerHeight;
-      startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5;
-      endScroll = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5;
+      var bias = (typeof window.__caseStudyVerticalBias === 'number') ? window.__caseStudyVerticalBias : 0;
+      startScroll = srcRect.top + srcRect.height * 0.5 - vh * 0.5 - bias;
+      endScroll = tgtRect.top + tgtRect.height * 0.5 - vh * 0.5 - bias;
       if (endScroll <= startScroll) endScroll = startScroll + 1;
 
       // Short case-study heroes can collapse the animation into a tiny scroll
       // window. Keep a minimum flight distance so the scale-in always reads.
+      // Deflate startScroll (not inflate endScroll) to preserve landing position.
       var minFlightDistance = Math.min(vh * 0.45, 320);
       if (endScroll - startScroll < minFlightDistance) {
-        endScroll = startScroll + minFlightDistance;
+        startScroll = endScroll - minFlightDistance;
       }
     }
 
     function resetInlineStyles() {
+      flyWrap.style.transform = '';
       flyWrap.style.top = '';
       flyWrap.style.left = '';
       flyWrap.style.width = '';
@@ -758,22 +775,31 @@
         launchSlot.appendChild(flyWrap);
       }
       flyWrap.classList.remove('is-landed');
+      // Anchor at viewport origin; transform handles all positioning so top/left
+      // never change during flight (avoiding compositor layer invalidations).
+      flyWrap.style.top = '0';
+      flyWrap.style.left = '0';
       flyWrap.classList.add('is-flying');
       if (launchZone) launchZone.classList.remove('is-complete');
+      // Ensure the video is playing — the IntersectionObserver won't manage it
+      // during flight so we take responsibility here.
+      var vid = flyWrap.querySelector('video');
+      if (vid) { var pp = vid.play(); if (pp && pp.catch) pp.catch(function () {}); }
       state = 'flying';
     }
 
     function applyFlyRect(progress) {
       var p = Math.max(0, Math.min(1, progress));
       var sy = window.scrollY;
-      var top = lerp(srcRect.top - sy, tgtRect.top - sy, p);
-      var left = lerp(srcRect.left, tgtRect.left, p);
+      var x = lerp(srcRect.left, tgtRect.left, p);
+      var y = lerp(srcRect.top - sy, tgtRect.top - sy, p);
       var width = lerp(srcRect.width, tgtRect.width, p);
       var height = lerp(srcRect.height, tgtRect.height, p);
       var br = lerp(12, 24, p);
 
-      flyWrap.style.top = top + 'px';
-      flyWrap.style.left = left + 'px';
+      // Use transform for x/y (GPU-composited, no paint) and only touch
+      // width/height for size — top/left stay fixed at 0 the entire flight.
+      flyWrap.style.transform = 'translate(' + x + 'px,' + y + 'px)';
       flyWrap.style.width = width + 'px';
       flyWrap.style.height = height + 'px';
       flyWrap.style.borderRadius = br + 'px';
@@ -785,30 +811,43 @@
       var collapseHeight = launchZone ? launchZone.getBoundingClientRect().height : 0;
       tgtRect = getProjectedTargetRect(1);
       applyFlyRect(1);
+
+      var done = false;
+      function finalize() {
+        if (done) return;
+        done = true;
+        tgtRect = getTargetRect();
+        applyFlyRect(1);
+        requestAnimationFrame(function () {
+          heroTarget.appendChild(flyWrap);
+          flyWrap.classList.remove('is-flying');
+          flyWrap.classList.add('is-landed');
+          resetInlineStyles();
+          state = 'landed';
+          // If the page deferred text reveal until landing, trigger it now
+          // with a short pause so the video settles before text fades in.
+          if (window.__caseStudyRevealOnLand) {
+            var h = hero;
+            window.setTimeout(function () { h.classList.add('case-hero--revealed'); }, 120);
+          }
+        });
+      }
+
       requestAnimationFrame(function () {
         if (launchZone) {
           launchZone.style.height = collapseHeight + 'px';
           requestAnimationFrame(function () {
             launchZone.style.height = '0px';
             launchZone.classList.add('is-complete');
-          });
-        }
-        window.setTimeout(function () {
-          tgtRect = getTargetRect();
-          applyFlyRect(1);
-          requestAnimationFrame(function () {
-            heroTarget.appendChild(flyWrap);
-            requestAnimationFrame(function () {
-              flyWrap.classList.remove('is-flying');
-              flyWrap.classList.add('is-landed');
-              resetInlineStyles();
-              if (launchZone) {
-                launchZone.style.height = '0px';
-              }
-              state = 'landed';
+            launchZone.addEventListener('transitionend', function handler(e) {
+              if (e.propertyName !== 'height') return;
+              launchZone.removeEventListener('transitionend', handler);
+              finalize();
             });
           });
-        }, 220);
+        }
+        // Fallback in case transitionend never fires (e.g. reduced-motion, hidden element)
+        window.setTimeout(finalize, 280);
       });
     }
 
@@ -816,8 +855,13 @@
       ticking = false;
       if (!srcRect || !tgtRect) return;
 
+      var revealOnLand = !!window.__caseStudyRevealOnLand;
+
       if (state === 'landed' || state === 'landing') {
-        hero.classList.add('case-hero--revealed');
+        // When revealOnLand is set, finalize() is responsible for the reveal —
+        // don't fire it here during the collapse animation (landing) or on every
+        // subsequent scroll tick (landed), since it's already been triggered.
+        if (!revealOnLand) hero.classList.add('case-hero--revealed');
         return;
       }
 
@@ -831,14 +875,14 @@
 
       if (progress >= 1) {
         if (state !== 'landed' && state !== 'landing') land();
-        hero.classList.add('case-hero--revealed');
+        if (!revealOnLand) hero.classList.add('case-hero--revealed');
         return;
       }
 
       if (state !== 'flying') startFlight();
 
       applyFlyRect(progress);
-      hero.classList.toggle('case-hero--revealed', progress >= 0.85);
+      if (!revealOnLand) hero.classList.toggle('case-hero--revealed', progress >= 0.85);
     }
 
     function requestScrollUpdate() {

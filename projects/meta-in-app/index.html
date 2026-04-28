@@ -14,8 +14,10 @@
     .cs-launch-slot { position: relative; width: 100%; }
     .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
     #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; }
-    #cs-fly-wrap.is-flying { position: fixed; inset: auto; z-index: 50; pointer-events: none; will-change: top, left, width, height; }
-    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; border: none; background: none; }
+    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
+    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; border: none; background: none; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
     #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
     #page-header { z-index: 100; }
     #cs-hero-target { background: transparent; border: none; }
@@ -144,13 +146,10 @@
         <div class="case-body">
           <section id="overview" class="case-section">
             <p class="case-section-label">Overview</p>
-            <h2 class="case-section-title">Rethinking How Marketplace Conversations Work</h2>
+            <h2 class="case-section-title">From Open Chat to Structured Transactions</h2>
             <div class="case-section-body">
               <p>
-                This project restructures unstructured Marketplace conversations into guided transaction flows. AI summaries, buyer prioritization, scheduling, and payments work together as a connected system—not isolated features.
-              </p>
-              <p>
-                The goal is to improve transaction outcomes. Users move from first message to completed exchange with less confusion, fewer dropped threads, and clearer next steps at every stage.
+                This project redesigns the transaction layer of Facebook Marketplace by turning fragmented Messenger threads into structured transaction flows. Built for high-volume buyers and sellers, it addresses how intent and next steps get lost across parallel conversations. AI summaries, buyer prioritization, scheduling, and payments work as a single system to guide decisions. The result is faster deal completion with fewer dropped conversations.This was a solo project completed at The New School, covering the full design process from research through final prototype.
               </p>
             </div>
             <div class="case-carousel" data-carousel>
@@ -187,16 +186,10 @@
 
           <section id="problem" class="case-section">
             <p class="case-section-label">The Problem</p>
-            <h2 class="case-section-title">Conversations Without Structure Create Friction</h2>
+            <h2 class="case-section-title">Conversations Break Down at Scale</h2>
             <div class="case-section-body">
               <p>
-                Marketplace conversations break down at scale. Sellers receive many messages on a single listing with no way to identify serious buyers. Buyers cannot tell if an item is still available, when they might get a response, or what happens next.
-              </p>
-              <p>
-                As threads grow, intent gets buried. Users repeat the same questions. Coordination becomes manual. Many move off platform to texting—which reduces trust, removes visibility, and increases the chance that transactions never complete.
-              </p>
-              <p>
-                The core issue is not messaging itself. The system does not provide structure to help users make decisions or complete a transaction.
+                High-volume listings generate dozens of parallel conversations with no way to identify serious buyers or track deal progress. Sellers manually sort messages and repeat information, while buyers cannot tell if an item is available or when they will get a response. As threads grow, key details get buried and coordination breaks down. This leads to missed messages, off-platform workarounds, and incomplete transactions.
               </p>
             </div>
             <div class="case-carousel" data-carousel>
@@ -230,17 +223,28 @@
 
           <section id="research-insights" class="case-section">
             <p class="case-section-label">Research Insights</p>
-            <h2 class="case-section-title">What Breaks Down in Real Transactions</h2>
+            <h2 class="case-section-title">Intent Exists, But It’s Buried in Chat</h2>
             <div class="case-section-body">
               <p>
-                User interviews confirmed what I suspected: people struggled to track multiple chats, understand who was serious, and move from interest to action. As message volume increased, conversations became harder to follow and decisions were delayed.
+                I conducted user interviews with 6 participants, supplementary secondary research, and usability testing with 7 additional people including graduates and current classmates all with active buying and selling experience on Facebook Marketplace.
               </p>
               <p>
-                This led me to look beyond Marketplace. I studied platforms like Depop and eBay that handle high volumes of buyer-seller interaction. Across these systems, a few patterns stood out. Visibility drives action—users act when important information is clearly surfaced. Structure reduces cognitive load—structured interactions are easier to navigate than open conversations. Defaults shape behavior—simple, guided actions lead users toward outcomes more effectively than freeform choice.
+                Three patterns shaped the direction:
               </p>
-              <p>
-                The takeaway was clear. The issue is not messaging. It’s the lack of structure around it.
-              </p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Lost Momentum</strong>
+                  As message volume increases, sellers lose track of conversations and miss key moments such as confirmed pickup times buried in long threads. This led to prioritizing surfaced signals like pricing, timing, and buyer intent directly in the conversation.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Repeated Questions</strong>
+                  Users rely on repeated questions to confirm availability, location, and scheduling, which creates unnecessary back and forth and slows decisions. This informed the need for structured actions that replace repetitive messaging.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Buried Signals</strong>
+                  Signals of serious buyers exist but are buried in chat, such as offering a price or proposing a pickup time. This drove the decision to extract and surface these behaviors so users can act without manually interpreting every message.
+                </div>
+              </div>
             </div>
             <div class="case-carousel research-carousel" data-carousel>
               <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
@@ -281,16 +285,13 @@
 
           <section id="strategy" class="case-section">
             <p class="case-section-label">Defining the Opportunity</p>
-            <h2 class="case-section-title">Turning Messaging Into a Decision-Making Tool</h2>
+            <h2 class="case-section-title">Make Intent and Next Steps Visible</h2>
             <div class="case-section-body">
               <p>
-                If unstructured messaging fails at scale, the opportunity is to introduce structure directly into the conversation itself. Instead of expecting users to manage everything manually, the system can guide them through key steps: identifying intent, coordinating details, completing the transaction.
-              </p>
-              <p>
-                How might we structure Marketplace conversations so users move from first message to completed transaction?
+                The opportunity was to shift Marketplace conversations from open-ended chat to structured transaction flows that surface intent, status, and next steps. I focused on embedding this directly in the conversation rather than adding external tools. Features like bidding and expanded marketplace systems were intentionally excluded to stay within scope and avoid increasing complexity. The system reframes chat as a coordination layer that drives transactions forward.
               </p>
             </div>
-            <div style="margin-top: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2);">
+            <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
               <div class="case-image-block" style="aspect-ratio: 16 / 6;">
                 <img src="../../assets/images/meta-in-app/opportunity.jpg" alt="Opportunity mapping" class="no-dim" style="width:100%;height:100%;object-fit:contain;display:block;" />
               </div>
@@ -307,16 +308,13 @@
 
           <section id="design-exploration" class="case-section">
             <p class="case-section-label">Design Exploration</p>
-            <h2 class="case-section-title">Structuring Chat Around Action, Not Just Messages</h2>
+            <h2 class="case-section-title">Designing for Action, Not Conversation</h2>
             <div class="case-section-body">
               <p>
-                I approached this as system design, not feature ideation. The shift was from freeform chat to guided interactions—surfacing next steps, introducing prioritization logic, and reducing the decisions users had to make on their own.
+                I explored divergent concepts early including manual sorting, tagging, and a bidding system before narrowing to the core user pain points. Directions that felt too far from actual friction were cut: features that addressed surface level UI issues without solving coordination, and options that added steps without moving a transaction forward.
               </p>
               <p>
-                Early ideas included manual sorting and tagging tools. Those required too much effort from users and would not scale. The solution had to guide behavior within the chat itself, not add more work outside it.
-              </p>
-              <p>
-                I focused on system logic: what the interface should surface (key information, suggested actions), how buyers should be prioritized, and where users needed clarity on next steps. The result feels like a deliberate product strategy, not a collection of features.
+                The design evolved toward automated prioritization and structured actions inside the thread, reducing the need to scan long message histories to find key details. This required balancing automation with control so users could still manage conversations without losing flexibility.
               </p>
             </div>
             <div class="case-image-natural-grid">
@@ -339,19 +337,16 @@
 
           <section id="testing" class="case-section">
             <p class="case-section-label">Test &amp; Iterate</p>
-            <h2 class="case-section-title">Test &amp; Iterate</h2>
+            <h2 class="case-section-title">What Helped Users Act Faster</h2>
             <div class="case-section-body">
               <p>
-                I tested full conversation flows, not just individual UI pieces. The goal was to see if structured interactions could help users act more quickly—identifying serious buyers, scheduling within chat, moving from conversation to payment.
+                  When full conversation flows were tested, users identified serious buyers faster when offers and pickup times were surfaced instead of buried in chat. I prioritized extracting these signals into structured actions. This reduced missed messages and improved decision speed.
               </p>
               <p>
-                I tested these flows because they represent the critical path from first message to completed transaction. Isolated features would not tell me if the system held together.
+                  When features were explored in isolation, users did not understand how to use them within the transaction flow. I removed disconnected features and focused on integrated actions inside the conversation. This improved clarity and reduced drop-off between steps.
               </p>
               <p>
-                The results were clear. Users preferred guided actions over typing repeated messages. Visibility into intent reduced confusion. Full flows were more effective than isolated components.
-              </p>
-              <p>
-                This changed the design. I stopped layering features across surfaces and focused on connected experiences inside the conversation itself. The scope tightened, and the direction became more intentional.
+                  When too many actions were introduced, users hesitated and defaulted back to typing messages. I reduced options to key actions like scheduling and payment. This increased follow-through and kept transactions moving forward.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -366,79 +361,52 @@
 
           <section id="final-solution" class="case-section">
             <p class="case-section-label">Final Product</p>
-            <h2 class="case-section-title">A System That Moves Users From Message to Match</h2>
+            <h2 class="case-section-title">A Transaction Flow Inside the Conversation</h2>
             <div class="case-section-body">
               <p>
-                The final solution is a cohesive system. AI summaries reduce cognitive load so users do not need to scroll through long threads. A queue system helps sellers prioritize buyers and manage multiple conversations. Scheduling removes back-and-forth by letting users select and confirm times directly in chat. Payments complete the transaction loop without leaving the platform.
+                The final system turns each conversation into a structured transaction flow by extracting key signals such as price offers and proposed pickup times from messages. Buyers are prioritized based on these behaviors, allowing sellers to focus on the most actionable conversations instead of scanning entire threads.
               </p>
               <p>
-                The system also handles edge cases. Multiple buyers are managed through the queue. Users can choose cash or in-app payment depending on preference. Buyers and sellers each see clear next steps based on their role—so the experience adapts to who you are and where you are in the flow.
+                Users can move from interest to scheduling to payment directly within the conversation. Payment uses a handoff code model where the buyer sends funds, which are held until the in person exchange. At meetup, the buyer shares a 4 digit verification code that the seller enters to release the funds. Neither party discloses financial information, and the entire flow stays within the Facebook app. The pattern deliberately mirrors familiar authentication experiences like Uber ride confirmation and iOS AirDrop, so users can trust the process without learning something new.
               </p>
             </div>
             <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Final UI examples of Marketplace education hub and trays</div>
+              <div class="case-image-block" style="aspect-ratio:3/2;">
+                <img src="../../assets/images/meta-in-app/1.jpg" alt="Final product screen 1" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">System diagram connecting surfaces, rules, and owners</div>
+              <div class="case-image-block" style="aspect-ratio:3/2;">
+                <video preload="none" src="../../assets/images/meta-in-app/impact.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
               </div>
             </div>
           </section>
 
           <section id="results" class="case-section">
             <p class="case-section-label">Impact</p>
-            <h2 class="case-section-title">Faster Decisions, Fewer Drop-Offs</h2>
+            <h2 class="case-section-title">Less Chatter, More Completed Transactions</h2>
             <div class="case-section-body">
               <p>
-                Adding structure reduces message overload, speeds up transactions, and improves trust. Users understand intent more clearly and coordinate faster. Fewer conversations are abandoned mid-flow.
-              </p>
-              <p>
-                This ties back to the original problem. Conversations no longer break down at scale. Buyers and sellers stay on platform. Transaction outcomes improve because the system supports completion, not just communication.
+                Qualitative feedback from testing and critique confirmed that the payment system resolved a trust problem that earlier iterations left unsolved. Reviewers noted that the handoff code approach was a meaningful improvement where users felt safe completing payment without exposing financial information, while staying entirely within the platform. Sellers no longer need to scroll through long threads to find key details. Buyers can respond to structured options instead of repeating messages to coordinate logistics, keeping conversations moving from initial interest to confirmed transaction.
               </p>
             </div>
-            <div class="case-carousel impact-carousel" data-carousel>
-              <button class="case-carousel-btn case-carousel-prev" aria-label="Previous slide">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-              </button>
-              <div class="case-carousel-viewport">
-                <div class="case-carousel-track">
-                  <div class="case-carousel-slide">
-                    <div style="display:flex;flex-direction:column;gap:var(--space-2);">
-                      <div class="case-image-block" style="aspect-ratio:3/2;">
-                        <img src="../../assets/images/meta-in-app/1.jpg" alt="Impact 1" style="width:100%;height:100%;object-fit:cover;display:block;" />
-                      </div>
-                      <div class="case-image-block" style="aspect-ratio:3/2;">
-                        <video preload="none" src="../../assets/images/meta-in-app/impact.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="case-carousel-slide">
-                    <div style="display:flex;flex-direction:column;gap:var(--space-2);">
-                      <div class="case-image-block" style="aspect-ratio:3/2;outline:1px solid #e0e0e0;">
-                        <img src="../../assets/images/meta-in-app/2.jpg" alt="Impact 2" style="width:100%;height:100%;object-fit:cover;display:block;" />
-                      </div>
-                      <div class="case-image-block" style="aspect-ratio:3/2;outline:1px solid #e0e0e0;">
-                        <video preload="none" src="../../assets/images/meta-in-app/emojis.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div class="case-section-media-row">
+              <div class="case-image-block" style="aspect-ratio:3/2;outline:1px solid #e0e0e0;">
+                <img src="../../assets/images/meta-in-app/2.jpg" alt="Impact 2" style="width:100%;height:100%;object-fit:cover;display:block;" />
               </div>
-              <button class="case-carousel-btn case-carousel-next" aria-label="Next slide">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-              </button>
+              <div class="case-image-block" style="aspect-ratio:3/2;outline:1px solid #e0e0e0;">
+                <video preload="none" src="../../assets/images/meta-in-app/emojis.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+              </div>
             </div>
           </section>
 
           <section id="reflection" class="case-section">
             <p class="case-section-label">Reflection</p>
-            <h2 class="case-section-title">What Designing at Marketplace Scale Taught Me</h2>
+            <h2 class="case-section-title">Designing Systems, Not Features</h2>
             <div class="case-section-body">
               <p>
-                This project reinforced the importance of designing systems, not individual features. At scale, unstructured conversations create confusion. Structuring behavior through the interface—guiding users toward outcomes instead of leaving them to figure it out—makes the difference.
+                I initially explored adding more features such as bidding, but learned that increasing options made it harder for users to act. The key shift was focusing on reducing cognitive load by structuring decisions within the conversation itself.
               </p>
               <p>
-                Next, I would validate the full flows with more users, stress-test edge cases like high-volume sellers, and measure impact on transaction completion rates and trust. The system is designed to scale; the next step is proving it does.
+                This project clarified that the challenge is not messaging, but how critical information like offers and scheduling is surfaced at the right time. Next, I would test how this system performs under high-volume conditions and edge cases like low-intent buyers or spam.
               </p>
             </div>
             <div class="case-section-media-row">
@@ -488,6 +456,12 @@
   </footer>
 
   <script src="../../js/main.js"></script>
-  <script>window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();</script>
+  <script>
+    window.__caseStudyFlyProjectionStrength = 1;
+    window.__caseStudyFlyProjectionEase = 2.8;
+    window.__caseStudyRevealOnLand = true;
+    window.__caseStudyVerticalBias = 160;
+    window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();
+  </script>
 </body>
 </html>

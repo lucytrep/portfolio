@@ -15,23 +15,26 @@
     .cs-launch-slot { position: relative; width: 100%; }
     .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; background: transparent; }
     #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; box-shadow: 0 0 0 1px #d7d7d7; }
-    #cs-fly-wrap.is-flying { position: fixed; inset: auto; z-index: 50; pointer-events: none; will-change: top, left, width, height; }
+    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
     #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; background: transparent; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
     #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
     #page-header { z-index: 100; }
-    #cs-hero-target { background: transparent; border: none; }
-    @keyframes flyLand { from { opacity: 0; } to { opacity: 1; } }
+    #cs-hero-target { background: transparent; }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
+    /* Hide ALL hero text during flight — title, kicker, meta all reveal together after landing */
     .case-hero--init .case-hero-kicker,
-    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .case-hero--init .case-hero-title { opacity: 1; transform: none; }
+    .case-hero--init .case-hero-title,
+    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(10px); transition: opacity 0.55s ease, transform 0.55s ease; }
     .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
-    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: none; }
-    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
+    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.07s; }
+    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
     @media (prefers-reduced-motion: reduce) {
       .case-hero--init .case-hero-kicker,
+      .case-hero--init .case-hero-title,
       .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
-      .case-hero--init .case-hero-title { opacity: 1; transform: none; transition: none; }
     }
+
   </style>
 </head>
 <body>
@@ -154,59 +157,58 @@
             <h2 class="case-section-title">Building a ticketing experience worthy of the hype</h2>
             <div class="case-section-body">
               <p>
-                Fanatics Fest has grown into one of the most exciting sports and entertainment festivals in the country—where fans,
-                athletes, and genuine cultural moments collide. In 2025, it took over NYC's Javits Center and drew over 125,000
-                attendees, nearly double the year before.
+                Fanatics Fest is a large-scale sports and entertainment event attracting over 125,000 attendees at the Javits Center.
+                I redesigned the ticketing website, the primary entry point for fans deciding if, when, and what to buy.
               </p>
               <p>
-                My role was to redesign the ticketing website—the first place fans land when they start getting excited about going.
-                We had about a month to overhaul every page, with one goal: make the site feel as big and electric as the festival itself,
-                while actually making it easy to figure out what to buy and why.
+                The core problem was decision friction. Ticket types, pricing, and event value were unclear, making it hard for users
+                to commit. This project focused on restructuring information into a system that supports fast, confident purchase
+                decisions under high demand and a compressed one month timeline.
               </p>
             </div>
-          </section>
 
-          <!-- ─── Editorial photo grid ───────────────────────── -->
-          <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr;grid-template-rows:200px 200px 220px;gap:1rem;margin:var(--space-5) 0;">
-            <div style="grid-column:1;grid-row:1;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/interview.jpg" alt="Panel interview at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+            <!-- ─── Editorial photo grid ───────────────────────── -->
+            <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr;grid-template-rows:200px 200px 220px;gap:1rem;margin-top:var(--space-4);">
+              <div style="grid-column:1;grid-row:1;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/interview.jpg" alt="Panel interview at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="grid-column:2;grid-row:1;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/baseball.jpg" alt="Kid at bat, Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="grid-column:3;grid-row:1/3;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/tom.png" alt="Tom Brady at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;object-position:50% 20%;" />
+              </div>
+              <div style="grid-column:4;grid-row:1;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/kuz.jpg" alt="Basketball moment at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="grid-column:1/3;grid-row:2;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/people.jpg" alt="Crowd at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.3);transform-origin:center;" />
+              </div>
+              <div style="grid-column:4;grid-row:2;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/child.jpg" alt="Child on shoulders at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="grid-column:1/3;grid-row:3;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/walk.jpg" alt="WWE entrance walk at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
+              <div style="grid-column:3/5;grid-row:3;border-radius:10px;overflow:hidden;">
+                <img src="../../assets/images/fanatics/event-2.jpg" alt="Event venue floor at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+              </div>
             </div>
-            <div style="grid-column:2;grid-row:1;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/baseball.jpg" alt="Kid at bat, Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
-            </div>
-            <div style="grid-column:3;grid-row:1/3;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/tom.png" alt="Tom Brady at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;object-position:50% 20%;" />
-            </div>
-            <div style="grid-column:4;grid-row:1;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/kuz.jpg" alt="Basketball moment at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
-            </div>
-            <div style="grid-column:1/3;grid-row:2;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/people.jpg" alt="Crowd at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.3);transform-origin:center;" />
-            </div>
-            <div style="grid-column:4;grid-row:2;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/child.jpg" alt="Child on shoulders at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
-            </div>
-            <div style="grid-column:1/3;grid-row:3;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/walk.jpg" alt="WWE entrance walk at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
-            </div>
-            <div style="grid-column:3/5;grid-row:3;border-radius:10px;overflow:hidden;">
-              <img src="../../assets/images/fanatics/event-2.jpg" alt="Event venue floor at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
-            </div>
-          </div>
-          <p style="margin:0.5rem 0 0;font-size:0.75rem;color:var(--color-muted);letter-spacing:0.01em;">Event imagery provided by client (Fanatics Fest)</p>
+            <p style="margin:0.5rem 0 0;font-size:0.75rem;color:var(--color-muted);letter-spacing:0.01em;">Event imagery provided by client (Fanatics Fest)</p>
+          </section>
 
           <section id="problem" class="case-section">
             <p class="case-section-label">The Problem</p>
             <h2 class="case-section-title">A ticketing experience that felt flat</h2>
             <div class="case-section-body">
               <p>
-                The old site just didn't match the event. For something as high-energy as Fanatics Fest, the ticketing experience
-                felt flat. Navigation was confusing, the visual hierarchy was all over the place, and the moments that actually mattered
-                (like picking your tickets) got lost in the noise.
+                Fans arriving on the ticketing site struggled to understand what they were buying. Ticket types, pricing, and
+                included experiences were fragmented across pages, forcing users to piece together value on their own.
               </p>
               <p>
-                With the event growing fast and the clock ticking, the challenge was to build something that could actually convert—
-                but also feel worthy of what Fanatics Fest had become.
+                This created hesitation at the point of purchase. Users compared options manually, second guessed decisions, or
+                dropped off entirely. As attendance scaled, the system could not support fast, confident decision making during a
+                time sensitive sales window.
               </p>
             </div>
             <!-- ─── Problem images ───────────────────────── -->
@@ -228,15 +230,14 @@
             <h2 class="case-section-title">Making ticketing part of the event itself</h2>
             <div class="case-section-body">
               <p>
-                The question we kept coming back to was simple: what if buying a ticket felt like the first moment of the festival,
-                not just a checkout flow? That framing changed how we approached the whole site—we stopped optimizing a transaction,
-                and started designing a journey from first hearing about the event to actually committing and buying.
+                The shift was from a checkout flow to a decision system. Instead of optimizing a transaction, the site was
+                restructured to help users understand options, compare value, and commit in a single flow.
               </p>
-              <p><strong class="case-bullet-heading">Three things guided the work</strong></p>
+              <p><strong class="case-bullet-heading">Three principles guided the work</strong></p>
               <ul>
-                <li>High-traffic moments: make key content beats work hard to move fast</li>
-                <li>Immersion without confusion: feel big and alive, but stay understandable</li>
-                <li>Speed and handoff: tight systems and clean workflows for shipping possible</li>
+                <li><strong>Front-load decision clarity</strong> Ticket types, pricing, and included experiences were consolidated into one structured view to eliminate cross-referencing.</li>
+                <li><strong>Prioritize comparison over exploration</strong> Layouts were built for side-by-side evaluation so differences between ticket tiers are immediately clear at the point of selection.</li>
+                <li><strong>Design for speed under load</strong> Key paths were simplified and standardized to reduce steps and support fast navigation during high traffic spikes.</li>
               </ul>
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;margin-top:var(--space-4);">
@@ -253,20 +254,21 @@
             <p class="case-section-label">Design Exploration</p>
             <h2 class="case-section-title">Immersive, High-Energy, Iconic</h2>
             <div class="case-section-body">
-              <div class="case-section-grid-3">
-                <div class="case-section-grid-3-item">
-                  <strong>Immersive</strong>
-                  Full-screen imagery, video, and layered content create a sense of entering the event rather than browsing it from a distance.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>High-energy</strong>
-                  Bold typography, high contrast, and motion mirror the pacing and energy of live sports—never static, always in the moment.
-                </div>
-                <div class="case-section-grid-3-item">
-                  <strong>Iconic</strong>
-                  A cohesive visual system of consistent type, color, and structure establishes a strong, recognizable brand presence across every surface.
-                </div>
-              </div>
+              <p>
+                Early exploration worked within the existing Fanatics design system, but initial directions lacked the energy and
+                differentiation the event demanded. The first two rounds were too similar to each other; neither felt distinct
+                enough to match the scale of Fanatics Fest or create the hype the brand needed.
+              </p>
+              <p>
+                After several rounds of feedback, the focus shifted. Overlapping elements, heavy gradients, layered imagery, and
+                certain type treatments were pulled back because those choices were getting in the way of usability. Accessibility
+                and information architecture became the priority, ensuring users could navigate quickly without the visual layer
+                creating friction.
+              </p>
+              <p>
+                The final direction used the same system differently, leveraging it in ways that brought more energy while keeping
+                decision points clean and scannable. It took upwards of eight revisions to land there.
+              </p>
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;margin-top:var(--space-4);">
               <div style="border-radius:10px;overflow:hidden;">
@@ -283,23 +285,14 @@
             <h2 class="case-section-title">A platform that actually feels like the event</h2>
             <div class="case-section-body">
               <p>
-                In one month, we redesigned the entire Fanatics Fest website from top to bottom, every page, built into something cohesive and alive.
+                The final product is a structured decision flow that moves users from discovery to purchase without breaking context.
+                Event information, ticket options, and value are integrated into a single system, allowing users to understand,
+                compare, and select without navigating across disconnected pages.
               </p>
               <p>
-                <strong>Landing experience with real energy</strong><br />
-                Motion-driven layouts and video do the heavy lifting upfront, creating an emotional pull before anyone even scrolls.
-              </p>
-              <p>
-                <strong>Navigation that gets out of the way</strong><br />
-                Content and ticketing flow naturally, so users spend less time figuring out where to go and more time getting excited about going.
-              </p>
-              <p>
-                <strong>Smoother moments where it matters most</strong><br />
-                Ticket selection and other high-intent actions are clearer and easier to act on, which is ultimately what the whole thing was built around.
-              </p>
-              <p>
-                <strong>One consistent voice across every page</strong><br />
-                From the landing page to the FAQs, everything speaks the same design language. Nothing feels like it wandered in from a different site.
+                Users enter with high-level context, transition into a consolidated ticket view, and make a selection with a clear
+                understanding of what each option includes. Removing fragmentation reduces interpretation and enables faster
+                decisions at the point of purchase.
               </p>
             </div>
             <div style="border-radius:10px;overflow:hidden;height:520px;margin-top:var(--space-4);">
@@ -312,13 +305,12 @@
             <h2 class="case-section-title">Delivering for a record-setting event</h2>
             <div class="case-section-body">
               <p>
-                The redesigned site launched into one of the biggest years Fanatics Fest has had. Over 125,000 people attended, nearly double the previous year, Saturday sold out across the three-day run, and the event hosted more than 500 athletes and celebrities.
+                The redesign supported a high-volume sales cycle during a record-setting year, with over 125,000 attendees and a
+                full Saturday sellout. Reducing friction in ticket selection enabled faster decision making during peak demand.
               </p>
               <p>
-                It was also a high-visibility project internally. Fanatics CEO Michael Rubin was a touchpoint throughout the process and shared positive feedback on the work, which meant a lot given the pace and pressure of the timeline.
-              </p>
-              <p>
-                On the team side, the way I structured design files and workflows ended up making a real difference, keeping collaboration smooth and helping everyone move faster during a sprint that didn't have much margin for slowdowns.
+                Internally, the structured design system and file organization improved handoff speed and reduced iteration time
+                during a compressed build. This allowed the team to deliver a full-site overhaul without delays.
               </p>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:260px 260px;gap:1rem;margin-top:var(--space-4);">
@@ -343,15 +335,17 @@
             <h2 class="case-section-title">Designing systems under pressure</h2>
             <div class="case-section-body">
               <p>
-                This project was a good reminder that great design isn't just about individual screens. Especially when the stakes are high and the timeline is tight, what matters is thinking in systems.
+                This project changed how I approach design under pressure. Instead of focusing on individual screens, I prioritized
+                how the system supports decision making, what users need to understand, and in what order.
               </p>
               <p>
-                I came away with a sharper sense of how to prioritize the moments that move users forward, how to hold onto creative ambition without losing sight of what's actually buildable,
-                and how to set up systems that work for both the people using the product and the team shipping it.
+                The timeline forced clearer tradeoffs. I relied on simple, repeatable patterns and closer collaboration with
+                engineering to ensure the system could scale and ship quickly.
               </p>
               <p>
-                What made this one mean so much to me personally was the level of trust behind it. It was a small, intimate team, and I was given real ownership—working directly with the developer,
-                making decisions, and seeing them through. It pushed me to show up differently, and I think that's reflected in what we shipped.
+                If I revisited this work, I would validate key decision points earlier with real users or behavioral data. The
+                structure reduced friction, but earlier testing would have identified where hesitation still existed and where the
+                system could be stronger.
               </p>
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;margin-top:var(--space-4);">
@@ -400,6 +394,8 @@
   <script>
     window.__caseStudyFlyProjectionStrength = 1;
     window.__caseStudyFlyProjectionEase = 2.8;
+    window.__caseStudyRevealOnLand = true;
+    window.__caseStudyVerticalBias = 160;
     window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();
   </script>
 </body>
