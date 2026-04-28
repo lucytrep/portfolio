@@ -120,7 +120,7 @@
 
   <script src="../js/main.js"></script>
   <script>
-  // ── Journey cinematic scroll animation (first-visit only) ──
+  // ── Journey cinematic scroll animation ──
   (function () {
     'use strict';
 
@@ -131,9 +131,16 @@
     var journeySection = document.getElementById('about-journey');
     if (!journeySection) return;
 
+    // Replay animation on every reload
+    var navEntry = window.performance && performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+    if ((navEntry && navEntry.type === 'reload') ||
+        (window.performance && performance.navigation && performance.navigation.type === 1)) {
+      sessionStorage.removeItem(SEEN_KEY);
+    }
     if (sessionStorage.getItem(SEEN_KEY)) return;
 
     var base = '../assets/images/about/';
+    var SLIDE_MS = 5000; // ms per slide after animation completes
 
     var filmSrcs = [
       'nanaimo/whistler.JPG', 'toronto/research.jpg', 'nanaimo/surf.JPG',
@@ -143,16 +150,18 @@
     ];
 
     var heroData = [
-      { src: 'nanaimo/hammock.jpg', title: 'Nanaimo, Vancouver Island',
+      { srcs: ['nanaimo/hammock.jpg', 'nanaimo/whistler.JPG', 'nanaimo/surf.JPG', 'nanaimo/beach.JPG', 'nanaimo/swell.jpg'],
+        title: 'Nanaimo, Vancouver Island',
         body: 'Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.' },
-      { src: 'toronto/paris.jpg', title: 'Paris + Toronto',
+      { srcs: ['toronto/paris.jpg', 'toronto/research.jpg', 'toronto/raps.JPG', 'toronto/skyline.JPG'],
+        title: 'Paris + Toronto',
         body: 'At 17 I studied graphic design through Parsons in Paris — and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.' },
-      { src: 'ny/dumbo.jpg', title: 'New York',
+      { srcs: ['ny/dumbo.jpg', 'ny/runway-ai.jpg', 'ny/parsons.JPG', 'ny/sunset.jpg', 'ny/roseroom.jpg', 'ny/usopen.JPG'],
+        title: 'New York',
         body: 'Moved here this past August and plan to stay. I\'m at Parsons School of Design studying Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that\'s hard to replicate.' },
     ];
 
     // ── Spacer — provides scroll distance for the animation ──
-    // Inserted before the journey section (which stays in normal flow)
     var spacer = document.createElement('div');
     spacer.style.cssText = 'height:350vh;';
     journeySection.parentNode.insertBefore(spacer, journeySection);
@@ -160,7 +169,7 @@
     // Hide the static journey section — animation builds it live
     journeySection.style.visibility = 'hidden';
 
-    // ── Fixed overlay — plays on top, fades out at the end ───
+    // ── Fixed overlay ─────────────────────────────────────────
     var overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:var(--color-background);overflow:hidden;opacity:0;pointer-events:none;';
     document.body.appendChild(overlay);
@@ -181,17 +190,20 @@
       filmStrip.appendChild(item);
     });
 
-    // Hero images — high priority so they're decoded before they animate in
+    // Hero images — stacked so they can rotate after animation completes
     var heroEls = heroData.map(function (item) {
       var div = document.createElement('div');
       div.className = 'jc-hero-item';
-      var img = document.createElement('img');
-      img.src = base + item.src;
-      img.loading = 'eager';
-      img.setAttribute('fetchpriority', 'high');
-      img.decoding = 'async';
-      img.draggable = false;
-      div.appendChild(img);
+      item.srcs.forEach(function (src, idx) {
+        var img = document.createElement('img');
+        img.src = base + src;
+        img.loading = idx === 0 ? 'eager' : 'lazy';
+        if (idx === 0) img.setAttribute('fetchpriority', 'high');
+        img.decoding = 'async';
+        img.draggable = false;
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;pointer-events:none;opacity:' + (idx === 0 ? '1' : '0') + ';transition:opacity 900ms ease;';
+        div.appendChild(img);
+      });
       overlay.appendChild(div);
       return div;
     });
@@ -393,12 +405,28 @@
       journeySection.remove();
 
       // ─ Step 6: pixel-perfect correction ───────────────────────────────────
-      // Main's bottom padding (if any) may offset the overlay by a few px.
-      // getBoundingClientRect forces a layout; scrollTo corrects any delta.
       var delta = overlay.getBoundingClientRect().top;
       if (Math.abs(delta) > 0) {
         window.scrollTo(0, window.scrollY + delta);
       }
+
+      // ─ Step 7: start image rotation in each hero card ─────────────────────
+      startSlideshow();
+    }
+
+    function startSlideshow() {
+      heroEls.forEach(function (el, i) {
+        var imgs = Array.from(el.querySelectorAll('img'));
+        if (imgs.length <= 1) return;
+        var current = 0;
+        setTimeout(function () {
+          setInterval(function () {
+            imgs[current].style.opacity = '0';
+            current = (current + 1) % imgs.length;
+            imgs[current].style.opacity = '1';
+          }, SLIDE_MS);
+        }, i * 1500); // stagger columns slightly
+      });
     }
 
     // ── Listeners ─────────────────────────────────────────────

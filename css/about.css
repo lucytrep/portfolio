@@ -108,6 +108,7 @@
   font-size: var(--font-size-lg);
   color: var(--color-muted);
   line-height: var(--line-height-base);
+  max-width: 34rem;
 }
 
 .about-subtitle + .about-subtitle {
