@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nike — Lucille Trepanier</title>
+  <title>Unpacked — Lucille Trepanier</title>
   <link rel="icon" href="../../assets/cursor.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="../../css/common.css" />
   <link rel="stylesheet" href="../../css/work.css" />
@@ -13,19 +13,28 @@
     .cs-launch-zone { background: #fff; padding: 0.5rem; }
     .cs-launch-inner { width: 100%; }
     .cs-launch-slot { position: relative; width: 100%; }
-    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
-    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: #fff; }
+    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; background: transparent; }
+    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; box-shadow: 0 0 0 1px #d7d7d7; }
     #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
-    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; border: none; background: none; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
-    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
-    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
+    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; background: transparent; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
+    #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      box-shadow: inset 0 0 0 1px #d7d7d7;
+    }
     #page-header { z-index: 100; }
-    #cs-hero-target { background: transparent; border: none; }
+    #cs-hero-target { background: transparent; }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
     .case-hero--init .case-hero-kicker,
     .case-hero--init .case-hero-title,
-    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(10px); transition: opacity 0.55s ease, transform 0.55s ease; }
     .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
-    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.07s; }
     .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
     @media (prefers-reduced-motion: reduce) {
       .case-hero--init .case-hero-kicker,
@@ -37,7 +46,7 @@
 <body>
   <div id="work-lock-screen" class="work-lock-screen" aria-live="polite">
     <div class="work-lock-screen-inner">
-      <h1 class="work-lock-title">Nike</h1>
+      <h1 class="work-lock-title">Unpacked</h1>
       <p class="work-lock-label">Enter the password to view this case study.</p>
       <form id="work-lock-form" class="work-lock-form" action="#" method="post">
         <label for="work-lock-password" class="visually-hidden">Password</label>
@@ -72,12 +81,21 @@
 
   <div class="cs-ed">
     <div class="cs-ed-grid">
-      <div class="cs-ed-img cs-ed-img--full"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
-      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
-      <div class="cs-ed-img cs-ed-img--half"></div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <video src="../../assets/images/unpacked/up-close.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:0.75rem;transform:scale(1.5);transform-origin:center;"></video>
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../assets/images/unpacked/Brooks.jpg" alt="Brooks Koepka for Nike Unpacked" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
+        <img src="../../assets/images/unpacked/Slides.jpg" alt="Nike Unpacked slides" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../assets/images/unpacked/Chet.jpg" alt="Chet Holmgren for Nike Unpacked" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../assets/images/unpacked/Overview.jpg" alt="Nike Unpacked overview" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
+      </div>
     </div>
   </div>
 
@@ -85,7 +103,10 @@
     <div class="cs-launch-inner">
       <div class="cs-launch-slot">
         <div class="cs-launch-placeholder"></div>
-        <div id="cs-fly-wrap"></div>
+        <div id="cs-fly-wrap">
+          <video preload="none" src="../../assets/images/gallery/Chet.mp4" autoplay muted loop playsinline></video>
+          <img src="../../assets/images/gallery/Phones.png" alt="" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:115%;height:115%;object-fit:contain;pointer-events:none;" />
+        </div>
       </div>
     </div>
   </div>
@@ -98,9 +119,9 @@
         <nav class="case-toc" aria-label="Case study sections">
           <a href="#overview">Overview</a>
           <a href="#problem">The Problem</a>
-          <a href="#research-insights">Research Insights</a>
           <a href="#strategy">Defining the Opportunity</a>
-          <a href="#design-exploration">Design Exploration</a>
+          <a href="#design-exploration">Design Direction</a>
+          <a href="#exploration">Design Exploration</a>
           <a href="#final-solution">Final Product</a>
           <a href="#results">Impact</a>
           <a href="#reflection">Reflection</a>
@@ -109,31 +130,31 @@
 
       <article class="case-main">
         <header id="case-intro" class="case-hero">
-          <p class="case-hero-kicker">Nike • Member Experience • Shipped</p>
-          <h1 class="case-hero-title">Designing an AI training companion that turns intent into consistent action.</h1>
+          <p class="case-hero-kicker">Unpacked • Cross-Channel Commerce System • January 2025</p>
+          <h1 class="case-hero-title">Embedding product discovery into athlete storytelling</h1>
 
-          <div class="case-hero-image" id="cs-hero-target" role="img" aria-label="Nike training companion case study hero image"></div>
+          <div class="case-hero-image" id="cs-hero-target" role="img" aria-label="Unpacked hero"></div>
 
           <dl class="case-meta-grid">
             <div class="case-meta-item">
               <dt>Role</dt>
-              <dd>Product Designer</dd>
+              <dd>Lead Designer</dd>
             </div>
             <div class="case-meta-item">
               <dt>Timeline</dt>
-              <dd>Shipped</dd>
+              <dd>1 month (multiple athlete campaign rollouts)</dd>
             </div>
             <div class="case-meta-item case-meta-item--shipped">
               <dt>Date</dt>
-              <dd>2024</dd>
+              <dd>January 2025</dd>
             </div>
             <div class="case-meta-item">
               <dt>Context</dt>
-              <dd>Speculative concept focused on member retention + habit formation</dd>
+              <dd>Nike Unpacked — cross-channel commerce campaigns across Nike.com, App, email, and social</dd>
             </div>
             <div class="case-meta-item">
               <dt>Tools</dt>
-              <dd>Figma, Google Docs</dd>
+              <dd>Figma, Adobe Creative Suite</dd>
             </div>
           </dl>
         </header>
@@ -141,189 +162,146 @@
         <div class="case-body">
           <section id="overview" class="case-section">
             <p class="case-section-label">Overview</p>
-            <h2 class="case-section-title">From “I want to train” to a plan that adapts in real life</h2>
+            <h2 class="case-section-title">Turning athlete storytelling into a commerce system</h2>
             <div class="case-section-body">
               <p>
-                Nike members often start with a clear goal—run a 5K, lift consistently, return from an injury—but daily variability makes it hard
-                to sustain a plan.
+                When I first came onto Unpacked, my marketing instincts told me this wasn't a one-off. Athlete campaigns don't just launch, they recur, they build, they compound. I actually pitched a system like this to the company around the same time it was being developed. Whether or not that idea found its way in, I approached this from day one as something that needed to scale.
               </p>
               <p>
-                This concept explores an AI training companion inside the Nike ecosystem that personalizes plans, adjusts to recovery and schedule changes,
-                and reduces the decision fatigue that causes drop-off.
+                Nike Unpacked is a cross-channel commerce system that integrates athlete storytelling with product discovery, letting fans purchase the exact products athletes use without ever leaving the experience. The goal was simple: embed commerce into the moments that already have people's attention.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Ecosystem map: plan → workouts → recovery → retail loop</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">North star flow: goal intake → adaptive plan → day-of coaching</div>
-              </div>
+            <div style="margin-top:var(--space-4);">
+              <img src="../../assets/images/unpacked/Overview.jpg" alt="Nike Unpacked — three athletes on the Discover screen" style="width:100%;border-radius:0.75rem;display:block;" />
             </div>
           </section>
 
           <section id="problem" class="case-section">
             <p class="case-section-label">The Problem</p>
-            <h2 class="case-section-title">Consistency breaks when the plan can’t flex</h2>
+            <h2 class="case-section-title">Engagement without conversion at the point of interest</h2>
             <div class="case-section-body">
               <p>
-                Training plans are usually built for ideal conditions. In reality, people miss days, change schedules, feel soreness, travel, or lose motivation.
-                When plans don’t adapt, users either abandon the plan or overcorrect.
+                Athlete-driven launches were generating real engagement. But when a fan wanted to act on that interest, find a product, buy it, they had to leave the experience entirely. That gap killed momentum at exactly the wrong moment.
               </p>
               <p>
-                The challenge is to support progress without requiring perfect discipline.
+                Behind the scenes, the production problem was just as real. Every launch meant rebuilding assets from scratch across Nike.com, the App, and email. No shared structure, no reuse, no consistency. Each campaign started at zero.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Decision fatigue: “what should I do today?”</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Drop-off moments: missed day → guilt → abandonment</div>
-              </div>
-            </div>
-          </section>
-
-          <section id="research-insights" class="case-section">
-            <p class="case-section-label">Research Insights</p>
-            <h2 class="case-section-title">People want coaching, not more tracking</h2>
-            <div class="case-section-body">
-              <div class=”case-section-grid-3”>
-                <div class=”case-section-grid-3-item”>
-                  <strong>Plans need “make-up” logic</strong>
-                  Missing a day shouldn’t reset the whole journey—users need a safe, judgment-free way back in that protects their progress without demanding perfection.
-                </div>
-                <div class=”case-section-grid-3-item”>
-                  <strong>Recovery is the blind spot</strong>
-                  People struggle to understand their own soreness, sleep, and training load—so they either push too hard or stop entirely when things feel off.
-                </div>
-                <div class=”case-section-grid-3-item”>
-                  <strong>Motivation is contextual</strong>
-                  Small wins, streak protection, and real-time guidance on what to do today matter more to consistency than long-term dashboards or abstract goal tracking.
-                </div>
-              </div>
-            </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Insight synthesis board</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Behavior loop: cue → action → reward → identity</div>
-              </div>
+            <div style="margin-top:var(--space-4);">
+              <img src="../../assets/images/unpacked/problem.png" alt="Nike Unpacked — engagement without conversion" style="width:100%;border-radius:0.75rem;display:block;" />
             </div>
           </section>
 
           <section id="strategy" class="case-section">
             <p class="case-section-label">Defining the Opportunity</p>
-            <h2 class="case-section-title">A flexible plan with one clear next step</h2>
+            <h2 class="case-section-title">From one-off campaigns to a scalable cross-channel system</h2>
             <div class="case-section-body">
               <p>
-                The concept centers on reducing “what do I do today?” into a single adaptive recommendation that considers goal, time, recovery, and history.
+                The opportunity wasn't just a better campaign, it was a better system. One where each piece of content leads somewhere intentional, where the consumer is always being guided toward another decision or a deeper point of engagement. I wanted every asset to feel like part of a continuous thread, not a standalone drop.
               </p>
-              <p><strong class=”case-bullet-heading”>Design principles</strong></p>
-              <ul>
-                <li>Keep the user in control: suggestions, not prescriptions</li>
-                <li>Be explicit about trade-offs: speed vs recovery vs consistency</li>
-                <li>Make re-entry easy: protect streaks and offer “return” workouts</li>
-                <li>Reward consistency, not perfection</li>
-              </ul>
+              <p>
+                That meant moving from bespoke layouts to modular structures. Standardizing how assets behave across channels. And embedding product access directly into narrative moments rather than routing fans through separate shopping flows.
+              </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Opportunity framing + job stories</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Information architecture: Today, Plan, Insights, Gear</div>
-              </div>
+            <div style="margin-top:var(--space-6);margin-bottom:var(--space-5);display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;">
+              <img src="../../assets/images/unpacked/nike-app.png" alt="Nike App" style="width:148px;height:148px;border-radius:2rem;box-shadow:0 4px 24px rgba(0,0,0,0.12),0 1px 4px rgba(0,0,0,0.07),0 0 0 1px rgba(0,0,0,0.05);display:block;" />
+              <img src="../../assets/images/unpacked/nike-app-2.png" alt="Nike App 2" style="width:148px;height:148px;border-radius:2rem;box-shadow:0 4px 24px rgba(0,0,0,0.12),0 1px 4px rgba(0,0,0,0.07),0 0 0 1px rgba(0,0,0,0.05);display:block;" />
+              <img src="../../assets/images/unpacked/NTC.png" alt="Nike Training Club" style="width:148px;height:148px;border-radius:2rem;box-shadow:0 4px 24px rgba(0,0,0,0.12),0 1px 4px rgba(0,0,0,0.07),0 0 0 1px rgba(0,0,0,0.05);display:block;" />
+              <img src="../../assets/images/unpacked/NRC.png" alt="Nike Run Club" style="width:148px;height:148px;border-radius:2rem;box-shadow:0 4px 24px rgba(0,0,0,0.12),0 1px 4px rgba(0,0,0,0.07),0 0 0 1px rgba(0,0,0,0.05);display:block;" />
             </div>
           </section>
 
           <section id="design-exploration" class="case-section">
-            <p class="case-section-label">Design Exploration</p>
-            <h2 class="case-section-title">An AI companion embedded in the Nike ecosystem</h2>
+            <p class="case-section-label">Design Direction</p>
+            <h2 class="case-section-title">Embedding commerce directly into narrative flow</h2>
             <div class="case-section-body">
-              <div class=”case-section-grid-3”>
-                <div class=”case-section-grid-3-item”>
-                  <strong>Goal intake</strong>
-                  A short onboarding flow translates intent into real constraints: available time, training frequency, equipment, injury context, and personal preferences.
-                </div>
-                <div class=”case-section-grid-3-item”>
-                  <strong>Adaptive “Today” card</strong>
-                  One daily recommendation with a plain-language explanation and clear alternatives—shorter, easier, or more intense—so the decision is already made for you.
-                </div>
-                <div class=”case-section-grid-3-item”>
-                  <strong>Recovery-aware adjustments</strong>
-                  When users report soreness or low energy, the system adapts training load and surfaces active recovery options to keep the plan on track.
-                </div>
-              </div>
+              <p>
+                Three principles defined the direction:
+              </p>
+              <p>
+                Narrative-first commerce: Products appear at key moments within the athlete story, enabling immediate action without breaking the experience. The inspiration and the purchase live in the same breath.
+              </p>
+              <p>
+                Modular consistency: Asset structures are standardized across platforms so the system can scale across athletes and launches without rebuilding from zero each time.
+              </p>
+              <p>
+                Signal over saturation: I kept content density low on purpose. The goal was to surface the right product at the right moment, not overwhelm. Less competition between elements means more clarity at the point of decision.
+              </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Flow: setup → first week plan → day-of changes</div>
+            <div style="margin-top:var(--space-4);">
+              <img src="../../assets/images/unpacked/opportunity.jpg" alt="Nike Unpacked cross-channel opportunity" style="width:100%;border-radius:0.75rem;display:block;" />
+            </div>
+          </section>
+
+          <section id="exploration" class="case-section">
+            <p class="case-section-label">Design Exploration</p>
+            <h2 class="case-section-title">Structuring high-volume content without losing clarity</h2>
+            <div class="case-section-body">
+              <p>
+                Managing a high volume of assets without losing clarity was the core challenge. I restructured layouts to anchor key products within the narrative, and I was deliberate about placement. Certain elements were positioned close to one another so consumers could find small moments of connection and curiosity throughout. It wasn't random. It was a pattern, and it was designed to reward attention.
+              </p>
+              <p>
+                The polaroid frames were the detail I'm most proud of. The team was already shooting with them on set. I found out they were doing it behind the scenes and thought: we should lean into this. The original frames were plain white, which felt flat and generic. So I tracked down a digitized replica of the exact camera being used on set and brought those polaroids in as they actually were. It turned a decorative element into something authentic, a real artifact from the athlete's world that made the experience feel lived-in rather than produced.
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
+              <div style="aspect-ratio:16/9;overflow:hidden;border-radius:0.75rem;">
+                <img src="../../assets/images/unpacked/design-1.jpg" alt="Nike Unpacked — design exploration" style="width:100%;height:100%;display:block;object-fit:cover;" />
               </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Wireframes: Today card + alternatives + rationale</div>
+              <div style="aspect-ratio:16/9;overflow:hidden;border-radius:0.75rem;">
+                <img src="../../assets/images/unpacked/design-2.jpg" alt="Nike Unpacked — design exploration" style="width:100%;height:100%;display:block;object-fit:cover;" />
               </div>
             </div>
           </section>
 
-
           <section id="final-solution" class="case-section">
             <p class="case-section-label">Final Product</p>
-            <h2 class="case-section-title">Clarity first: one next step, with context</h2>
+            <h2 class="case-section-title">A continuous path from content to purchase</h2>
             <div class="case-section-body">
               <p>
-                The final concept emphasizes a lightweight daily flow: open the app, see one recommended next action, and start.
-                Users can swap the workout, shorten it, or convert to recovery with transparent impact on the plan.
-              </p>
-              <p>
-                The companion also supports “make-up logic” after missed days by reshaping the plan rather than restarting it.
+                Users enter through social, email, or Nike platforms and move into an athlete-led experience where product access is woven into the narrative. At moments of peak engagement, they can purchase featured products directly, no redirects, no lost context. The system behaves consistently across channels, so moving between platforms feels seamless rather than disjointed.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">High-fidelity mocks: Today card + workout detail</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Make-up logic: missed day → plan reshapes</div>
-              </div>
+            <div style="margin-top:var(--space-2);">
+              <img src="../../assets/images/gallery/Phones.png" alt="Nike Unpacked — Discover screens for Alex Morgan, Chet Holmgren, and Brooks Koepka" style="width:100%;display:block;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.10)) drop-shadow(0 1px 3px rgba(0,0,0,0.07));" />
+            </div>
+            <div style="margin-top:var(--space-3);width:100%;aspect-ratio:16/9;border-radius:0.75rem;overflow:hidden;">
+              <video src="../../assets/images/gallery/Chet.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
             </div>
           </section>
 
           <section id="results" class="case-section">
             <p class="case-section-label">Impact</p>
-            <h2 class="case-section-title">Supporting consistency through adaptability</h2>
+            <h2 class="case-section-title">Scaling production through consistency and reuse</h2>
             <div class="case-section-body">
               <p>
-                Intended outcomes: reduced decision fatigue, smoother re-entry after missed days, and clearer feedback loops that prioritize consistency.
+                The first campaign took the longest. There were revisions, internal direction shifts, and a steep learning curve. Nike's internal naming conventions alone took real time to absorb. But I put in that work early.
+              </p>
+              <p>
+                By the last campaign, it was natural. I spoke the language. As soon as assets came in, I could immediately see what image went where. It felt less like production and more like cooking. I knew the recipe, I knew my ingredients, and I could move fast because the thinking was already done.
+              </p>
+              <p>
+                That's what a system does. It converts early effort into lasting speed.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Success metrics (concept): weekly active training + plan adherence</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Qualitative outcomes: confidence + reduced guilt</div>
-              </div>
+            <div style="margin-top:var(--space-4);">
+              <img src="../../assets/images/unpacked/impact.png" alt="Nike Unpacked — campaign asset system" style="width:100%;display:block;" />
             </div>
           </section>
 
           <section id="reflection" class="case-section">
             <p class="case-section-label">Reflection</p>
-            <h2 class="case-section-title">Designing AI for trust requires legibility</h2>
+            <h2 class="case-section-title">Designing systems, not assets</h2>
             <div class="case-section-body">
               <p>
-                The key design challenge is not generating a plan—it’s communicating why a recommendation changed and what the user can do about it.
-                This concept prioritizes transparency and user control to build trust in adaptive coaching.
+                Looking back, I would have built my global rules earlier. The formula I was working from by the end, the one that made the final campaign feel effortless, I wish I'd had that documented from the start. With the time constraints on a project like this, everything moves fast and the structure you build in your head doesn't always make it onto the page.
+              </p>
+              <p>
+                Next time, I'd formalize that system for myself before the first asset ships. Not because the work suffered, it didn't, but because those rules would have made the early rounds faster and the handoffs cleaner.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block">
-                <div class="case-media-placeholder">What I’d test next: explanation UI + swap behavior</div>
-              </div>
-              <div class="case-image-block">
-                <div class="case-media-placeholder">Future: cross-sport planning and community accountability</div>
-              </div>
+            <div style="margin-top:var(--space-4);">
+              <img src="../../assets/images/unpacked/reflection.jpg" alt="Nike — There Is Always A Way" style="width:100%;display:block;border-radius:0.75rem;" />
             </div>
           </section>
         </div>
@@ -343,7 +321,6 @@
             <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
           </a>
           <a href="https://www.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          
         </div>
       </div>
     </div>
@@ -360,6 +337,5 @@
     window.__caseStudyVerticalBias = 160;
     window.initCaseStudyFlyHero && window.initCaseStudyFlyHero();
   </script>
-
 </body>
 </html>

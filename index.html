@@ -158,6 +158,7 @@
   <script>
     var video   = document.getElementById('hero-video');
     var overlay = document.getElementById('interaction-overlay');
+    var videoEnded = false;
 
     // Pick mobile or desktop video before loading
     video.src = window.matchMedia('(max-width: 768px)').matches
@@ -173,8 +174,34 @@
       video.loop = true;
       video.play().catch(function () {});
       // Fade in the explore overlay
+      videoEnded = true;
       overlay.classList.add('is-active');
     });
+
+    // Scroll-to-reveal / scroll-to-dismiss
+    function handleScrollIntent(deltaY) {
+      if (deltaY > 0) {
+        videoEnded = true;
+        overlay.classList.add('is-active');
+      } else if (deltaY < 0) {
+        overlay.classList.remove('is-active');
+      }
+    }
+
+    // Wheel (desktop + trackpad)
+    window.addEventListener('wheel', function (e) {
+      handleScrollIntent(e.deltaY);
+    }, { passive: true });
+
+    // Touch (mobile)
+    var touchStartY = 0;
+    window.addEventListener('touchstart', function (e) {
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', function (e) {
+      handleScrollIntent(touchStartY - e.touches[0].clientY);
+    }, { passive: true });
   </script>
 
   <script src="js/main.js"></script>

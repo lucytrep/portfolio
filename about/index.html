@@ -37,10 +37,9 @@
     <section class="about-hero">
       <div class="about-hero-text">
         <p class="about-kicker">About</p>
-        <h1 class="about-title">Classically trained across Paris, Toronto, and New York — with a craft-first foundation and a systems mind.</h1>
-        <p class="about-subtitle">
-          Dyslexic by nature: wired to see what others overlook. Completing a masters in Digital Product Design at Parsons, focused on clarity, accessibility, and building confident user experiences.
-        </p>
+        <h1 class="about-title">Classically trained across Paris, Toronto, and New York, with a foundation in craft and a systems-driven approach to design.</h1>
+        <p class="about-subtitle">Currently completing a Master's in Digital Product Design at Parsons, focused on accessibility, clarity, and building confident user experiences.</p>
+        <p class="about-subtitle">My perspective is shaped by ADHD and dyslexia, which sharpen how I process complexity, recognize patterns, and design for clarity at scale.</p>
         <a href="../desktop/" class="about-desktop-btn">Behind the scenes →</a>
       </div>
       <div class="about-hero-media">
@@ -55,7 +54,7 @@
     <section class="about-journey" id="about-journey">
       <div class="about-journey-header">
         <p class="about-kicker">The Journey</p>
-        <h2 class="about-journey-title">Told I'd never make it to university.<br>Now completing a master's in New York.</h2>
+        <h2 class="about-journey-title">Struggled through school. University wasn't a given.<br>Now completing a Master's in New York.</h2>
       </div>
 
       <div class="about-journey-grid">
@@ -69,7 +68,7 @@
             <img src="../assets/images/about/nanaimo/swell.jpg" alt="Surfers in the ocean swell" class="journey-slide" />
           </div>
           <h3 class="about-journey-item-title">Nanaimo, Vancouver Island</h3>
-          <p class="about-journey-item-body">Grew up staring at Vancouver across the strait, knowing I'd belong in a city one day. I was told post-secondary wasn't realistic for me because of my cognitive disabilities — so I learned to approach things differently. Technology became the language I think, create, and build in.</p>
+          <p class="about-journey-item-body">Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.</p>
         </div>
 
         <div class="about-journey-item">
@@ -86,6 +85,7 @@
         <div class="about-journey-item">
           <div class="about-journey-image" data-slideshow>
             <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" class="journey-slide journey-slide--active" />
+            <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" class="journey-slide" />
             <img src="../assets/images/about/ny/parsons.JPG" alt="Outside The New School, Parsons" class="journey-slide" />
             <img src="../assets/images/about/ny/sunset.jpg" alt="NYC skyline at sunset from Brooklyn" class="journey-slide" />
             <img src="../assets/images/about/ny/roseroom.jpg" alt="Working in the Rose Main Reading Room, NYPL" class="journey-slide" />
@@ -131,12 +131,6 @@
     var journeySection = document.getElementById('about-journey');
     if (!journeySection) return;
 
-    // Clear flag on reload so animation replays on refresh
-    var navEntry = window.performance && performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
-    if ((navEntry && navEntry.type === 'reload') ||
-        (window.performance && performance.navigation && performance.navigation.type === 1)) {
-      sessionStorage.removeItem(SEEN_KEY);
-    }
     if (sessionStorage.getItem(SEEN_KEY)) return;
 
     var base = '../assets/images/about/';
@@ -150,7 +144,7 @@
 
     var heroData = [
       { src: 'nanaimo/hammock.jpg', title: 'Nanaimo, Vancouver Island',
-        body: 'Grew up staring at Vancouver across the strait, knowing I\'d belong in a city one day. I was told post-secondary wasn\'t realistic for me because of my cognitive disabilities — so I learned to approach things differently. Technology became the language I think, create, and build in.' },
+        body: 'Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.' },
       { src: 'toronto/paris.jpg', title: 'Paris + Toronto',
         body: 'At 17 I studied graphic design through Parsons in Paris — and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.' },
       { src: 'ny/dumbo.jpg', title: 'New York',
@@ -211,7 +205,7 @@
     var kickerH2 = document.createElement('h2');
     kickerH2.className = 'about-journey-title';
     kickerH2.style.marginBottom = '0';
-    kickerH2.innerHTML = 'Told I\'d never make it to university.<br>Now completing a master\'s in New York.';
+    kickerH2.innerHTML = 'Struggled through school. University wasn\'t a given.<br>Now completing a Master\'s in New York.';
     kicker.appendChild(kickerP);
     kicker.appendChild(kickerH2);
     overlay.appendChild(kicker);
