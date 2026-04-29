@@ -42,6 +42,7 @@
       .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
     }
   </style>
+  <script>try{if(sessionStorage.getItem('work_unlocked')==='1'){var s=document.createElement('style');s.textContent='#work-lock-screen{display:none!important}#work-content{display:block!important}';document.head.appendChild(s);}}catch(e){}</script>
 </head>
 <body>
   <div id="work-lock-screen" class="work-lock-screen" aria-live="polite">
@@ -81,7 +82,7 @@
   <div class="cs-ed">
     <div class="cs-ed-grid">
       <div class="cs-ed-img cs-ed-img--half">
-        <video src="../../assets/images/unpacked/up-close.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:0.75rem;transform:scale(1.5);transform-origin:center;"></video>
+        <video preload="auto" src="../../assets/images/unpacked/up-close.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:0.75rem;transform:scale(1.5);transform-origin:center;"></video>
       </div>
       <div class="cs-ed-img cs-ed-img--half">
         <img src="../../assets/images/unpacked/Brooks.jpg" alt="Brooks Koepka for Nike Unpacked" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
@@ -93,7 +94,7 @@
         <img src="../../assets/images/unpacked/Chet.jpg" alt="Chet Holmgren for Nike Unpacked" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half">
-        <img src="../../assets/images/unpacked/Overview.jpg" alt="Nike Unpacked overview" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
+        <img src="../../assets/images/unpacked/bottom-right.jpg" alt="Nike Unpacked discover screens" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
       </div>
     </div>
   </div>
@@ -103,7 +104,7 @@
       <div class="cs-launch-slot">
         <div class="cs-launch-placeholder"></div>
         <div id="cs-fly-wrap">
-          <video preload="none" src="../../assets/images/gallery/Chet.mp4" autoplay muted loop playsinline></video>
+          <video preload="auto" src="../../assets/images/gallery/Chet.mp4" autoplay muted loop playsinline></video>
           <img src="../../assets/images/gallery/Phones.png" alt="" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:115%;height:115%;object-fit:contain;pointer-events:none;" />
         </div>
       </div>
@@ -265,7 +266,7 @@
               <img src="../../assets/images/gallery/Phones.png" alt="Nike Unpacked — Discover screens for Alex Morgan, Chet Holmgren, and Brooks Koepka" style="width:100%;display:block;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.10)) drop-shadow(0 1px 3px rgba(0,0,0,0.07));" />
             </div>
             <div style="margin-top:var(--space-4);width:100%;aspect-ratio:16/9;border-radius:0.75rem;overflow:hidden;">
-              <video src="../../assets/images/gallery/Chet.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+              <video preload="metadata" src="../../assets/images/gallery/Chet.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
             </div>
           </section>
 

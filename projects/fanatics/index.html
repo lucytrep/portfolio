@@ -44,6 +44,7 @@
     }
 
   </style>
+  <script>try{if(sessionStorage.getItem('work_unlocked')==='1'){var s=document.createElement('style');s.textContent='#work-lock-screen{display:none!important}#work-content{display:block!important}';document.head.appendChild(s);}}catch(e){}</script>
 </head>
 <body>
   <div id="work-lock-screen" class="work-lock-screen" aria-live="polite">
@@ -86,7 +87,7 @@
         <img src="../../assets/images/fanatics/phone.jpg" alt="Fanatics Fest phone UI" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half">
-        <video src="../../assets/images/fanatics/overview.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:0.75rem;"></video>
+        <video preload="auto" src="../../assets/images/fanatics/overview.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;border-radius:0.75rem;"></video>
       </div>
       <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
         <img src="../../assets/images/fanatics/slides.jpg" alt="Fanatics Fest presentation slides" style="width:100%;height:100%;object-fit:cover;display:block;border-radius:0.75rem;" />
@@ -105,7 +106,7 @@
       <div class="cs-launch-slot">
         <div class="cs-launch-placeholder"></div>
         <div id="cs-fly-wrap">
-          <video preload="none" src="../../assets/images/fanatics/fanatics.mp4" autoplay muted loop playsinline></video>
+          <video preload="auto" src="../../assets/images/fanatics/fanatics.mp4" autoplay muted loop playsinline></video>
         </div>
       </div>
     </div>
@@ -177,28 +178,28 @@
             <!-- ─── Editorial photo grid ───────────────────────── -->
             <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr 1fr;grid-template-rows:200px 200px 220px;gap:1rem;margin-top:var(--space-4);">
               <div style="grid-column:1;grid-row:1;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/interview.jpg" alt="Panel interview at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img src="../../assets/images/fanatics/interview.jpg" alt="Panel interview at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
               <div style="grid-column:2;grid-row:1;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/baseball.jpg" alt="Kid at bat, Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img src="../../assets/images/fanatics/baseball.jpg" alt="Kid at bat, Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
               <div style="grid-column:3;grid-row:1/3;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/tom.png" alt="Tom Brady at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;object-position:50% 20%;" />
+                <img src="../../assets/images/fanatics/tom.png" alt="Tom Brady at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;object-position:50% 20%;" / loading="lazy">
               </div>
               <div style="grid-column:4;grid-row:1;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/kuz.jpg" alt="Basketball moment at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img src="../../assets/images/fanatics/kuz.jpg" alt="Basketball moment at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
               <div style="grid-column:1/3;grid-row:2;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/people.jpg" alt="Crowd at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.3);transform-origin:center;" />
+                <img src="../../assets/images/fanatics/people.jpg" alt="Crowd at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.3);transform-origin:center;" / loading="lazy">
               </div>
               <div style="grid-column:4;grid-row:2;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/child.jpg" alt="Child on shoulders at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img src="../../assets/images/fanatics/child.jpg" alt="Child on shoulders at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
               <div style="grid-column:1/3;grid-row:3;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/walk.jpg" alt="WWE entrance walk at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img src="../../assets/images/fanatics/walk.jpg" alt="WWE entrance walk at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
               <div style="grid-column:3/5;grid-row:3;border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/event-2.jpg" alt="Event venue floor at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" />
+                <img src="../../assets/images/fanatics/event-2.jpg" alt="Event venue floor at Fanatics Fest" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
             </div>
             <p style="margin:0.5rem 0 0;font-size:0.75rem;color:var(--color-muted);letter-spacing:0.01em;">Event imagery provided by client (Fanatics Fest)</p>
@@ -221,13 +222,13 @@
             <!-- ─── Problem images ───────────────────────── -->
             <div style="display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:auto 380px;gap:1rem;margin-top:var(--space-4);">
               <div style="grid-column:1/3;grid-row:1;border-radius:10px;overflow:hidden;max-height:420px;">
-                <img src="../../assets/images/fanatics/prob.jpg" alt="Fanatics Fest old ticketing site" style="width:100%;height:100%;display:block;object-fit:cover;" />
+                <img src="../../assets/images/fanatics/prob.jpg" alt="Fanatics Fest old ticketing site" style="width:100%;height:100%;display:block;object-fit:cover;" / loading="lazy">
               </div>
               <div style="grid-column:1;grid-row:2;border-radius:10px;overflow:hidden;height:100%;">
-                <img src="../../assets/images/fanatics/prob-2.jpg" alt="Fanatics Fest ticketing problem" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 60%;" />
+                <img src="../../assets/images/fanatics/prob-2.jpg" alt="Fanatics Fest ticketing problem" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 60%;" / loading="lazy">
               </div>
               <div style="grid-column:2;grid-row:2;border-radius:10px;overflow:hidden;height:100%;">
-                <img src="../../assets/images/fanatics/prob-3.jpg" alt="Fanatics Fest ticketing problem" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center top;" />
+                <img src="../../assets/images/fanatics/prob-3.jpg" alt="Fanatics Fest ticketing problem" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center top;" / loading="lazy">
               </div>
             </div>
           </section>
@@ -249,10 +250,10 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;margin-top:var(--space-4);">
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/design-direction.png" alt="Design direction" style="width:100%;display:block;" />
+                <img src="../../assets/images/fanatics/design-direction.png" alt="Design direction" style="width:100%;display:block;" / loading="lazy">
               </div>
               <div style="border-radius:10px;overflow:hidden;border:1px solid #d7d7d7;">
-                <img src="../../assets/images/fanatics/design-direction-2.png" alt="Design direction 2" style="width:100%;display:block;" />
+                <img src="../../assets/images/fanatics/design-direction-2.png" alt="Design direction 2" style="width:100%;display:block;" / loading="lazy">
               </div>
             </div>
           </section>
@@ -279,10 +280,10 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;margin-top:var(--space-4);">
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/ex.jpg" alt="Design exploration" style="width:100%;display:block;" />
+                <img src="../../assets/images/fanatics/ex.jpg" alt="Design exploration" style="width:100%;display:block;" / loading="lazy">
               </div>
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/ex-2.jpg" alt="Design exploration 2" style="width:100%;display:block;" />
+                <img src="../../assets/images/fanatics/ex-2.jpg" alt="Design exploration 2" style="width:100%;display:block;" / loading="lazy">
               </div>
             </div>
           </section>
@@ -303,7 +304,7 @@
               </p>
             </div>
             <div style="border-radius:10px;overflow:hidden;height:520px;margin-top:var(--space-4);">
-              <video src="../../assets/images/fanatics/overview.mov" autoplay muted loop playsinline style="width:100%;height:100%;display:block;object-fit:cover;"></video>
+              <video preload="metadata" src="../../assets/images/fanatics/overview.mov" autoplay muted loop playsinline style="width:100%;height:100%;display:block;object-fit:cover;"></video>
             </div>
           </section>
 
@@ -322,16 +323,16 @@
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:260px 260px;gap:1rem;margin-top:var(--space-4);">
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/impact.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 5%;" />
+                <img src="../../assets/images/fanatics/impact.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 5%;" / loading="lazy">
               </div>
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/impact-2.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;" />
+                <img src="../../assets/images/fanatics/impact-2.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;" / loading="lazy">
               </div>
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/impact-3.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 15%;" />
+                <img src="../../assets/images/fanatics/impact-3.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 15%;" / loading="lazy">
               </div>
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/impact-4.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;" />
+                <img src="../../assets/images/fanatics/impact-4.jpg" alt="Fanatics Fest impact" style="width:100%;height:100%;display:block;object-fit:cover;" / loading="lazy">
               </div>
             </div>
             <p style="margin:0.5rem 0 0;font-size:0.75rem;color:var(--color-muted);letter-spacing:0.01em;">Event imagery provided by client (Fanatics Fest)</p>
@@ -357,10 +358,10 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:1rem;margin-top:var(--space-4);">
               <div style="border-radius:10px;overflow:hidden;">
-                <img src="../../assets/images/fanatics/ref-2.jpg" alt="Fanatics Fest live site on desktop and mobile" style="width:100%;display:block;" />
+                <img src="../../assets/images/fanatics/ref-2.jpg" alt="Fanatics Fest live site on desktop and mobile" style="width:100%;display:block;" / loading="lazy">
               </div>
               <div style="border-radius:10px;overflow:hidden;height:340px;">
-                <img src="../../assets/images/fanatics/ref.jpg" alt="Working at Victory agency" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 60%;" />
+                <img src="../../assets/images/fanatics/ref.jpg" alt="Working at Victory agency" style="width:100%;height:100%;display:block;object-fit:cover;object-position:center 60%;" / loading="lazy">
               </div>
             </div>
           </section>
