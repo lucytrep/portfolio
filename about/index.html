@@ -24,7 +24,6 @@
       <nav class="span-6" id="main-nav">
         <a href="../case-studies/">Work</a>
         <a href="../archive/">Archive</a>
-        <a href="https://lucytrep.github.io/" target="_blank" rel="noopener noreferrer">Code</a>
         <a href="../about/" aria-current="page">About</a>
         <a href="../assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
@@ -79,13 +78,13 @@
             <img src="../assets/images/about/toronto/skyline.JPG" alt="Toronto skyline" class="journey-slide" />
           </div>
           <h3 class="about-journey-item-title">Paris + Toronto</h3>
-          <p class="about-journey-item-body">At 17 I studied graphic design through Parsons in Paris — and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.</p>
+          <p class="about-journey-item-body">At 17 I studied graphic design through Parsons in Paris and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.</p>
         </div>
 
         <div class="about-journey-item">
           <div class="about-journey-image" data-slideshow>
-            <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" class="journey-slide journey-slide--active" />
-            <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" class="journey-slide" />
+            <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" class="journey-slide journey-slide--active" />
+            <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" class="journey-slide" />
             <img src="../assets/images/about/ny/parsons.JPG" alt="Outside The New School, Parsons" class="journey-slide" />
             <img src="../assets/images/about/ny/sunset.jpg" alt="NYC skyline at sunset from Brooklyn" class="journey-slide" />
             <img src="../assets/images/about/ny/roseroom.jpg" alt="Working in the Rose Main Reading Room, NYPL" class="journey-slide" />
@@ -155,19 +154,33 @@
         body: 'Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.' },
       { srcs: ['toronto/paris.jpg', 'toronto/research.jpg', 'toronto/raps.JPG', 'toronto/skyline.JPG'],
         title: 'Paris + Toronto',
-        body: 'At 17 I studied graphic design through Parsons in Paris — and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.' },
-      { srcs: ['ny/dumbo.jpg', 'ny/runway-ai.jpg', 'ny/parsons.JPG', 'ny/sunset.jpg', 'ny/roseroom.jpg', 'ny/usopen.JPG'],
+        body: 'At 17 I studied graphic design through Parsons in Paris and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.' },
+      { srcs: ['ny/runway-ai.jpg', 'ny/dumbo.jpg', 'ny/parsons.JPG', 'ny/sunset.jpg', 'ny/roseroom.jpg', 'ny/usopen.JPG'],
         title: 'New York',
         body: 'Moved here this past August and plan to stay. I\'m at Parsons School of Design studying Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that\'s hard to replicate.' },
     ];
 
     // ── Spacer — provides scroll distance for the animation ──
     var spacer = document.createElement('div');
-    spacer.style.cssText = 'height:350vh;';
+    spacer.style.cssText = 'height:140vh;';
     journeySection.parentNode.insertBefore(spacer, journeySection);
 
     // Hide the static journey section — animation builds it live
     journeySection.style.visibility = 'hidden';
+
+    // ── Scroll hint — visible when user reaches spacer, fades once animation starts ──
+    var hint = document.createElement('div');
+    hint.style.cssText = 'position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:201;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:0.4rem;opacity:0;transition:opacity 500ms ease;';
+    hint.innerHTML = '<span style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-muted);white-space:nowrap;">The Journey</span>'
+      + '<svg width="14" height="20" viewBox="0 0 14 20" fill="none" style="animation:hintBounce 1.4s ease-in-out infinite;"><path d="M7 2v14M1 11l6 6 6-6" stroke="var(--color-muted)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    document.head.insertAdjacentHTML('beforeend', '<style>@keyframes hintBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}</style>');
+    document.body.appendChild(hint);
+
+    // Show hint when spacer top enters bottom of viewport
+    var hintIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { hint.style.opacity = e.isIntersecting ? '1' : '0'; });
+    }, { rootMargin: '0px 0px -60px 0px' });
+    hintIO.observe(spacer);
 
     // ── Fixed overlay ─────────────────────────────────────────
     var overlay = document.createElement('div');
@@ -322,6 +335,7 @@
       var overlayAlpha = raw < 0.05 ? raw / 0.05 : 1;
       overlay.style.opacity       = overlayAlpha;
       overlay.style.pointerEvents = 'auto';
+      hint.style.opacity = '0';
 
       // — Film strip (0 → 0.65) —
       var filmP  = clamp(p / 0.65, 0, 1);
