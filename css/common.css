@@ -586,6 +586,10 @@ p,
     margin-top: 0;
   }
 
+  .page-header.nav-open {
+    background: var(--color-background) !important;
+  }
+
   .page-header.nav-open nav {
     display: flex;
   }

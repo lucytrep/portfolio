@@ -144,6 +144,10 @@
     padding-top: 7rem;
   }
 
+  #shipped-wrapper {
+    grid-template-columns: 1fr !important;
+  }
+
   section.section-hero > .grid-12,
   main.section-projects > .project-grid {
     display: flex;

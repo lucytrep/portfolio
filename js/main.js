@@ -181,6 +181,32 @@
     });
   })();
 
+  // Universal autoplay for non-case-study pages (work grid, about, etc.)
+  // iOS Safari ignores the autoplay HTML attribute — .play() must be called explicitly.
+  (function () {
+    if (isCaseStudyPage) return;
+    var videos = document.querySelectorAll('video[autoplay]');
+    if (!videos.length) return;
+    if (window.IntersectionObserver) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            var p = entry.target.play();
+            if (p && p.catch) p.catch(function () {});
+          } else {
+            entry.target.pause();
+          }
+        });
+      }, { rootMargin: '200px 0px', threshold: 0.1 });
+      videos.forEach(function (v) { obs.observe(v); });
+    } else {
+      videos.forEach(function (v) {
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      });
+    }
+  })();
+
   var header = document.getElementById('page-header');
   var hamburger = header && header.querySelector('.hamburger');
   if (header && hamburger) {
