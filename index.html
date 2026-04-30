@@ -124,28 +124,26 @@
       background: #000 !important;
     }
 
-    /* ── Mobile Safari: de-zoom video, white background + nav ── */
+    /* ── Mobile: full-viewport cover video, white background + nav ── */
     @media (max-width: 48rem) {
       html, body {
         background: #fff;
       }
 
       .hero-video {
-        /* Remove the min-dimension constraints that force extreme zoom */
+        /* Clean full-viewport cover — no over-zoom from min-constraint math */
+        top: 0;
+        left: 0;
+        transform: none;
+        width: 100vw;
+        height: 100dvh;
         min-width: 0;
         min-height: 0;
-        /* Fill viewport width at natural aspect ratio — no cropping, no upscaling */
-        width: 100vw;
-        height: auto;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        object-fit: contain;
-        /* Allow tap-to-play as fallback */
+        object-fit: cover;
         pointer-events: auto;
       }
 
-      /* White nav bar on mobile (overrides the transparent-on-homepage rule) */
+      /* White nav bar on mobile */
       #page-header {
         background: #fff !important;
         border-bottom-color: rgba(0, 0, 0, 0.08) !important;
