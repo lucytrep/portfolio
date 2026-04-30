@@ -210,6 +210,19 @@
     // Tap/click on the video itself triggers play (mobile fallback + desktop Safari)
     video.addEventListener('click', tryPlay);
 
+    // Skip first second of Mobile.mp4 on mobile only
+    if (window.matchMedia('(max-width: 768px)').matches) {
+      var mobileSkipped = false;
+      function skipIntro() {
+        if (mobileSkipped) return;
+        mobileSkipped = true;
+        video.currentTime = 1;
+      }
+      video.addEventListener('loadedmetadata', skipIntro, { once: true });
+      video.addEventListener('canplay', skipIntro, { once: true });
+      setTimeout(skipIntro, 200);
+    }
+
     video.addEventListener('ended', function () {
       // Loop the video silently behind the overlay
       video.loop = true;
