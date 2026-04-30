@@ -105,6 +105,10 @@
       border-bottom-color: transparent !important;
     }
 
+    #page-header.nav-open {
+      background: #fff !important;
+    }
+
     #page-header .site-name,
     #page-header .site-tagline,
     #page-header nav a {
@@ -165,7 +169,10 @@
       : 'assets/HeroVideo.mp4';
     video.load();
 
-    // iOS Safari sometimes needs an explicit play() call
+    // iOS Safari requires play() after canplay — calling it synchronously after load() fails
+    video.addEventListener('canplay', function () {
+      video.play().catch(function () {});
+    }, { once: true });
     video.play().catch(function () {});
 
     video.addEventListener('ended', function () {

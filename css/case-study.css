@@ -464,10 +464,20 @@
 
   .cs-ed-grid {
     grid-template-columns: 1fr;
+    padding: 0.5rem var(--container-padding);
   }
 
   .cs-ed-img--full {
     grid-column: 1;
+    aspect-ratio: 16 / 9;
+  }
+
+  .cs-ed-img--tall {
+    aspect-ratio: 4 / 3;
+  }
+
+  .case-section-body p {
+    text-wrap: pretty;
   }
 }
 

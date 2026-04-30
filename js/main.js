@@ -207,6 +207,25 @@
     }
   })();
 
+  // Vimeo background embeds: iOS Safari won't autoplay via URL params alone.
+  // Use the Vimeo Player SDK to force play after it loads.
+  (function () {
+    if (!isCaseStudyPage) return;
+    function tryVimeoPlay() {
+      if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
+      document.querySelectorAll('iframe[src*="vimeo"]').forEach(function (iframe) {
+        try {
+          var player = new Vimeo.Player(iframe);
+          player.setMuted(true).then(function () {
+            player.play().catch(function () {});
+          }).catch(function () {});
+        } catch (e) {}
+      });
+    }
+    setTimeout(tryVimeoPlay, 800);
+    setTimeout(tryVimeoPlay, 2000);
+  })();
+
   var header = document.getElementById('page-header');
   var hamburger = header && header.querySelector('.hamburger');
   if (header && hamburger) {
