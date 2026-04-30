@@ -450,6 +450,21 @@
   grid-template-columns: 3fr 5fr 4fr;
 }
 
+.case-image-natural-grid-row--1-4half {
+  grid-template-columns: 1fr 4.5fr;
+}
+
+.case-image-natural-grid-row--3equal {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.case-trio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
 .case-image-natural img {
   width: 100%;
   height: auto;
@@ -464,7 +479,6 @@
 
   .cs-ed-grid {
     grid-template-columns: 1fr;
-    padding: 0.5rem var(--container-padding);
   }
 
   .cs-ed-img--full {
@@ -746,5 +760,40 @@
 @media (max-width: 37.5rem) {
   .phone-card-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile overrides placed AFTER the desktop carousel CSS above so they win the cascade */
+@media (max-width: 37.5rem) {
+  .research-carousel .case-carousel-viewport {
+    aspect-ratio: unset;
+    height: auto;
+  }
+
+  .research-carousel .case-carousel-track {
+    height: auto;
+  }
+
+  .research-carousel .case-carousel-slide,
+  .research-carousel .case-image-natural-grid-row,
+  .research-carousel .case-image-natural {
+    height: auto;
+    overflow: visible;
+  }
+
+  .research-carousel .case-image-natural img {
+    height: auto;
+    object-fit: contain;
+  }
+
+  .case-image-natural-grid-row--1-4half,
+  .case-image-natural-grid-row--3equal,
+  .case-trio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Make Figma deck embeds taller on mobile so the black letterbox shrinks */
+  .case-figma-deck {
+    aspect-ratio: 4 / 5 !important;
   }
 }

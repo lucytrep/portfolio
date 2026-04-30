@@ -252,7 +252,7 @@
               <div class="case-carousel-viewport">
                 <div class="case-carousel-track">
                   <div class="case-carousel-slide">
-                    <div class="case-image-natural-grid-row" style="grid-template-columns: 1fr 4.5fr;">
+                    <div class="case-image-natural-grid-row case-image-natural-grid-row--1-4half">
                       <div class="case-image-natural" style="overflow:hidden;border-radius:0.8rem;">
                         <img src="../../assets/images/meta-in-app/participants.jpg" alt="Research participants" style="width:108%;display:block;object-fit:cover;object-position:top;" / loading="lazy">
                       </div>
@@ -262,7 +262,7 @@
                     </div>
                   </div>
                   <div class="case-carousel-slide">
-                    <div class="case-image-natural-grid-row" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <div class="case-image-natural-grid-row case-image-natural-grid-row--3equal">
                       <div class="case-image-natural">
                         <img src="../../assets/images/meta-in-app/organize.jpg" alt="Organize insights" style="width:100%;display:block;" / loading="lazy">
                       </div>
@@ -294,7 +294,7 @@
               <div class="case-image-block" style="aspect-ratio: 16 / 6;">
                 <img src="../../assets/images/meta-in-app/opportunity.jpg" alt="Opportunity mapping" class="no-dim" style="width:100%;height:100%;object-fit:contain;display:block;" / loading="lazy">
               </div>
-              <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2);">
+              <div class="case-section-media-row" style="margin-top: 0; margin-bottom: 0;">
                 <div class="case-image-block" style="aspect-ratio: 3 / 2;">
                   <img src="../../assets/images/meta-in-app/feedback2.jpg" alt="User feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" / loading="lazy">
                 </div>
@@ -316,7 +316,7 @@
                 The design evolved toward automated prioritization and structured actions inside the thread, reducing the need to scan long message histories to find key details. This required balancing automation with control so users could still manage conversations without losing flexibility.
               </p>
             </div>
-            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2);">
+            <div class="case-trio-grid">
               <div style="aspect-ratio:9/16;border-radius:0.75rem;overflow:hidden;background:#000;">
                 <video preload="metadata" src="../../assets/images/meta-in-app/inboc.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
               </div>
@@ -416,6 +416,7 @@
             <p class="case-section-label">Presentation</p>
             <h2 class="case-section-title">Full Slide Deck</h2>
             <div
+              class="case-figma-deck"
               style="width: 100%; border-radius: 0.75rem; overflow: hidden; aspect-ratio: 16 / 9; margin-top: var(--space-5);"
             >
               <iframe

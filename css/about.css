@@ -419,12 +419,16 @@
 
   .about-hero-media {
     margin-top: var(--space-4);
-    width: 60%;
+    width: 88%;
     align-self: center;
   }
 
   .about-hero-imageSwap {
-    min-height: min(42svh, 32rem);
+    min-height: min(55svh, 38rem);
+  }
+
+  .about-desktop-btn {
+    display: none;
   }
 
   .about-title {
