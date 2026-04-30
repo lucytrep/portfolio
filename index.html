@@ -123,6 +123,34 @@
     #page-header .hamburger-bar {
       background: #000 !important;
     }
+
+    /* ── Mobile Safari: de-zoom video, white background + nav ── */
+    @media (max-width: 48rem) {
+      html, body {
+        background: #fff;
+      }
+
+      .hero-video {
+        /* Remove the min-dimension constraints that force extreme zoom */
+        min-width: 0;
+        min-height: 0;
+        /* Fill viewport width at natural aspect ratio — no cropping, no upscaling */
+        width: 100vw;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        object-fit: contain;
+        /* Allow tap-to-play as fallback */
+        pointer-events: auto;
+      }
+
+      /* White nav bar on mobile (overrides the transparent-on-homepage rule) */
+      #page-header {
+        background: #fff !important;
+        border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -172,13 +200,17 @@
 
     function tryPlay() { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
 
-    // Attempt play immediately, on loadedmetadata, on canplay, and with fallback timeouts
-    // — iOS Safari needs at least one of these to fire for muted autoplay to work
+    // Multiple attempts — iOS Safari requires at least one of these to fire for muted autoplay
     tryPlay();
     video.addEventListener('loadedmetadata', tryPlay, { once: true });
-    video.addEventListener('canplay', tryPlay, { once: true });
+    video.addEventListener('canplay',        tryPlay, { once: true });
+    video.addEventListener('loadeddata',     tryPlay, { once: true });
     setTimeout(tryPlay, 100);
     setTimeout(tryPlay, 500);
+    setTimeout(tryPlay, 1500);
+
+    // Tap/click on the video itself triggers play (mobile fallback + desktop Safari)
+    video.addEventListener('click', tryPlay);
 
     video.addEventListener('ended', function () {
       // Loop the video silently behind the overlay
