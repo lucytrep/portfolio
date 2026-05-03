@@ -182,7 +182,7 @@
 
   <!-- Source elements let iOS Safari see the src at parse time, enabling autoplay without JS -->
   <video class="hero-video" id="hero-video" autoplay muted playsinline preload="auto">
-    <source src="assets/Mobile.mp4" media="(max-width: 768px)" type="video/mp4" />
+    <source src="assets/PhoneHero.mp4" media="(max-width: 800px)" type="video/mp4" />
     <source src="assets/HeroVideo.mp4" type="video/mp4" />
   </video>
 
@@ -211,7 +211,7 @@
     video.addEventListener('click', tryPlay);
 
     // Skip first second of Mobile.mp4 on mobile only
-    if (window.matchMedia('(max-width: 768px)').matches) {
+    if (window.matchMedia('(max-width: 800px)').matches) {
       var mobileSkipped = false;
       function skipIntro() {
         if (mobileSkipped) return;
