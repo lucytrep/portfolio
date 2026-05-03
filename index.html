@@ -210,8 +210,9 @@
     // Tap/click on the video itself triggers play (mobile fallback + desktop Safari)
     video.addEventListener('click', tryPlay);
 
-    // Skip first second of Mobile.mp4 on mobile only
+    // Mobile: loop immediately, muted, skip first second of intro
     if (window.matchMedia('(max-width: 800px)').matches) {
+      video.loop = true;
       var mobileSkipped = false;
       function skipIntro() {
         if (mobileSkipped) return;
