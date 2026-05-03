@@ -7,6 +7,7 @@
   var form = document.getElementById('work-lock-form');
   var input = document.getElementById('work-lock-password');
   var message = document.getElementById('work-lock-message');
+  var eyeBtn = document.getElementById('work-lock-eye');
 
   function unlock() {
     try {
@@ -131,23 +132,55 @@
     return;
   }
 
+  // Eye toggle
+  if (eyeBtn && input) {
+    eyeBtn.addEventListener('click', function () {
+      var isPassword = input.type === 'password';
+      input.type = isPassword ? 'text' : 'password';
+      var closed = eyeBtn.querySelector('.eye-icon--closed');
+      var open = eyeBtn.querySelector('.eye-icon--open');
+      if (closed) closed.style.display = isPassword ? 'none' : '';
+      if (open) open.style.display = isPassword ? '' : 'none';
+      eyeBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+    });
+  }
+
   if (form && input) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
+    var pending = false;
+
+    function doUnlock() {
+      if (pending) return;
+      pending = true;
       clearError();
       hashInput(input.value.trim())
         .then(function (hash) {
+          pending = false;
           if (hash === PASSWORD_HASH) {
             unlock();
           } else {
             showError('Incorrect password. Try again.');
             input.value = '';
-            input.focus();
           }
         })
         .catch(function () {
+          pending = false;
           showError('Unable to verify password in this browser context.');
         });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      doUnlock();
     });
+
+    // iOS Safari: tapping submit while keyboard is open can dismiss the keyboard
+    // without firing the submit event. Catch it on touchend directly.
+    var submitBtn = form.querySelector('[type="submit"]');
+    if (submitBtn) {
+      submitBtn.addEventListener('touchend', function (e) {
+        e.preventDefault();
+        doUnlock();
+      });
+    }
   }
 })();

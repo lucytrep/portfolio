@@ -50,9 +50,14 @@
   gap: 0.75rem;
 }
 
+.work-lock-input-wrap {
+  position: relative;
+  width: 100%;
+}
+
 .work-lock-input {
   width: 100%;
-  padding: 0.8rem 1rem;
+  padding: 0.8rem 2.75rem 0.8rem 1rem;
   font-family: var(--font-primary);
   font-size: 1rem;
   font-weight: 400;
@@ -61,12 +66,33 @@
   border-radius: 0.75rem;
   background: #fff;
   color: var(--color-text, #000);
-  text-align: center;
+  text-align: left;
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease,
     background 180ms ease;
   box-sizing: border-box;
+}
+
+.work-lock-eye {
+  position: absolute;
+  right: 0.625rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
+  color: #aaa;
+  transition: color 150ms ease;
+}
+
+.work-lock-eye:hover {
+  color: #000;
 }
 
 .work-lock-input:focus {
