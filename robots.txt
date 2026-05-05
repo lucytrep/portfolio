@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lucytrep.com/sitemap.xml
+Sitemap: https://lucytrep.labs/sitemap.xml
