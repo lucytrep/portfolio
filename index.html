@@ -195,8 +195,24 @@
     var video   = document.getElementById('hero-video');
     var overlay = document.getElementById('interaction-overlay');
     var videoEnded = false;
+    var overlayActivatedByUser = false;
 
     function tryPlay() { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+
+    function showOverlay() {
+      videoEnded = true;
+      overlay.classList.add('is-active');
+    }
+
+    function hideOverlay() {
+      overlay.classList.remove('is-active');
+    }
+
+    function activateOverlayFromInteraction() {
+      if (overlayActivatedByUser) return;
+      overlayActivatedByUser = true;
+      showOverlay();
+    }
 
     // Multiple attempts — iOS Safari requires at least one of these to fire for muted autoplay
     tryPlay();
@@ -229,19 +245,20 @@
       video.loop = true;
       video.play().catch(function () {});
       // Fade in the explore overlay
-      videoEnded = true;
-      overlay.classList.add('is-active');
+      showOverlay();
     });
 
     // Scroll-to-reveal / scroll-to-dismiss
     function handleScrollIntent(deltaY) {
       if (deltaY > 0) {
-        videoEnded = true;
-        overlay.classList.add('is-active');
+        showOverlay();
       } else if (deltaY < 0) {
-        overlay.classList.remove('is-active');
+        hideOverlay();
       }
     }
+
+    // First interaction on the homepage should also surface the overlay.
+    window.addEventListener('pointerdown', activateOverlayFromInteraction, { passive: true });
 
     // Wheel (desktop + trackpad)
     window.addEventListener('wheel', function (e) {
@@ -252,6 +269,7 @@
     var touchStartY = 0;
     window.addEventListener('touchstart', function (e) {
       touchStartY = e.touches[0].clientY;
+      activateOverlayFromInteraction();
     }, { passive: true });
 
     window.addEventListener('touchmove', function (e) {

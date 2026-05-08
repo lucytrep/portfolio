@@ -38,7 +38,7 @@
         <p class="about-kicker">About</p>
         <h1 class="about-title">Classically trained across Paris, Toronto, and New York, with a foundation in craft and a systems-driven approach to design.</h1>
         <p class="about-subtitle">Currently completing a Master's in Digital Product Design at Parsons, focused on accessibility, clarity, and building confident user experiences. My perspective is shaped by ADHD and dyslexia, which sharpen how I process complexity, recognize patterns, and design for clarity at scale.</p>
-        <a href="../desktop/" class="about-desktop-btn">Behind the scenes →</a>
+        <a href="../contact-test.html" class="about-desktop-btn">Contact me →</a>
       </div>
       <div class="about-hero-media">
         <div class="about-hero-imageSwap">
@@ -109,7 +109,7 @@
           <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
             <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
           </a>
-          <a href="https://www.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+          <a href="https://www.linkedin.com/in/lucytrep/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
           
         </div>
       </div>
@@ -159,9 +159,11 @@
         body: 'Moved here this past August and plan to stay. I\'m at Parsons School of Design studying Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that\'s hard to replicate.' },
     ];
 
-    // ── Spacer — provides scroll distance for the animation ──
+    // ── Spacer — provides scroll distance for the animation.
+    // Cap it so very large monitors don't create a confusing blank gulf
+    // between the hero and the journey sequence. ──
     var spacer = document.createElement('div');
-    spacer.style.cssText = 'height:140vh;';
+    spacer.style.cssText = 'height:clamp(40rem, 88vh, 58rem);';
     journeySection.parentNode.insertBefore(spacer, journeySection);
 
     // Hide the static journey section — animation builds it live

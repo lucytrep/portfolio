@@ -15,7 +15,7 @@
 
 .gallery {
   padding-inline: var(--container-padding);
-  padding-top: 6.5rem;
+  padding-top: 4.25rem;
   padding-bottom: calc(var(--space-6) + 3rem);
 }
 
@@ -212,6 +212,7 @@
   margin: 0.7rem 0 0 0;
   font-size: var(--font-size-sm);
   font-weight: 400;
+  line-height: 1.35;
   color: var(--color-text);
   letter-spacing: -0.01em;
   flex-shrink: 0;
@@ -222,6 +223,7 @@
 .arch-row {
   display: grid;
   gap: 2rem;
+  align-items: stretch;
 }
 
 .arch-row--2col           { grid-template-columns: 1fr 1fr; }
@@ -229,11 +231,12 @@
 .arch-row--3col-wide-last { grid-template-columns: 0.8fr 0.8fr 1.6fr; }
 .arch-row--1col           { grid-template-columns: 1fr; }
 
-/* Desktop row heights — all items in a row share the same height */
-.arch-row--landscape { height: 480px; }
-.arch-row--compact   { height: 260px; }
-.arch-row--portrait  { height: 600px; }
-.arch-row--tall      { height: 800px; }
+/* Desktop row heights scale with the viewport and keep growing on
+   larger monitors so cards never collide as the grid widens. */
+.arch-row--landscape { height: max(32rem, 31vw); }
+.arch-row--compact   { height: max(18rem, 17vw); }
+.arch-row--portrait  { height: max(40rem, 40vw); }
+.arch-row--tall      { height: max(54rem, 54vw); }
 
 .arch-row .gallery-item {
   display: flex;
@@ -306,7 +309,7 @@
 /* ── Tablet: scale row heights down (800px – 1000px) ── */
 @media (max-width: 62.5rem) {
   .gallery {
-    padding-top: 5.5rem;
+    padding-top: 4.5rem;
     padding-bottom: calc(var(--space-6) + 1.5rem);
   }
 
@@ -324,7 +327,7 @@
 /* ── Mobile: stack rows (≤ 800px) ── */
 @media (max-width: 50rem) {
   .gallery {
-    padding-top: 3.5rem;
+    padding-top: 2.75rem;
     padding-bottom: var(--space-5);
   }
 
