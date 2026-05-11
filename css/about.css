@@ -459,6 +459,10 @@
     gap: var(--space-5);
   }
 
+  .about-journey-item-body {
+    font-size: 1rem;
+  }
+
   .about-journey {
     padding-top: var(--space-5);
     padding-bottom: var(--space-5);
