@@ -8,6 +8,7 @@ This repo uses clean folder URLs as the canonical pages and keeps older `.html` 
   - Canonical landing page for `lucytrep.com`
   - On the GitHub Pages hostname, it redirects visitors to `/case-studies/`
 - `/about/index.html`
+- `/contact/index.html`
 - `/archive/index.html`
 - `/case-studies/index.html`
 - `/projects/acuity/index.html`
@@ -23,6 +24,7 @@ This repo uses clean folder URLs as the canonical pages and keeps older `.html` 
 
 These files exist only so older URLs keep working:
 
+- `/contact.html`
 - `/home.html`
 - `/about.html`
 - `/archive.html`

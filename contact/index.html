@@ -1,0 +1,364 @@
+<!-- Canonical page source for /contact/. Edit this file, not /contact.html. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact · Lucytrep</title>
+  <link rel="icon" href="../assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../css/common.css" />
+  <style>
+    body {
+      background: var(--color-background);
+      color: var(--color-text);
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-page {
+      padding: 0 var(--container-padding) var(--space-5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-shell {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      padding-top: 6.25rem;
+    }
+
+    .contact-main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: minmax(14rem, 1.15fr) minmax(0, 1fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: start;
+    }
+
+    .contact-title {
+      margin: 0;
+      font-size: clamp(2.8rem, 6vw, 5.6rem);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+      font-weight: 500;
+      max-width: 8ch;
+    }
+
+    .contact-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-4) var(--space-5);
+      align-self: start;
+      margin-top: var(--space-4);
+    }
+
+    .contact-meta-block p {
+      margin: 0;
+      font-size: var(--font-size-sm);
+      line-height: 1.55;
+      color: var(--color-muted);
+    }
+
+    .contact-meta-label {
+      margin-bottom: 0.45rem;
+      color: var(--color-text) !important;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: var(--font-size-xs);
+    }
+
+    .contact-meta-block a {
+      color: var(--color-muted);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+      text-decoration-color: var(--color-muted);
+    }
+
+    .contact-meta-block a:hover {
+      color: var(--color-text);
+      text-decoration-color: var(--color-text);
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      align-self: stretch;
+      padding-top: var(--space-3);
+    }
+
+    .contact-message-field {
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 0.65rem;
+    }
+
+    .contact-message-field textarea {
+      height: 100%;
+      min-height: 8rem;
+    }
+
+    .contact-form-section-title {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+
+    .contact-name-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .contact-field,
+    .contact-checkline {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .contact-field label,
+    .contact-checkline label {
+      font-size: var(--font-size-xs);
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .contact-field input,
+    .contact-field select,
+    .contact-field textarea {
+      width: 100%;
+      border: 1px solid transparent;
+      background: var(--color-bg-subtle);
+      padding: 0.95rem 1rem;
+      border-radius: 0.9rem;
+      font: inherit;
+      font-size: var(--font-size-base);
+      color: var(--color-text);
+      outline: none;
+      transition: border-color 160ms ease, background 160ms ease;
+      appearance: none;
+    }
+
+    .contact-field select {
+      background-image:
+        linear-gradient(45deg, transparent 50%, #111 50%),
+        linear-gradient(135deg, #111 50%, transparent 50%);
+      background-position:
+        calc(100% - 1.1rem) calc(50% - 0.1rem),
+        calc(100% - 0.75rem) calc(50% - 0.1rem);
+      background-size: 0.35rem 0.35rem, 0.35rem 0.35rem;
+      background-repeat: no-repeat;
+      padding-right: 2.6rem;
+    }
+
+    .contact-field textarea {
+      min-height: 8rem;
+      resize: vertical;
+    }
+
+    .contact-field input:focus,
+    .contact-field select:focus,
+    .contact-field textarea:focus {
+      border-color: rgba(0, 0, 0, 0.14);
+      background: #f1f1f1;
+    }
+
+    .contact-checkline {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .contact-checkline input {
+      margin: 0;
+      width: 0.9rem;
+      height: 0.9rem;
+      accent-color: #111;
+    }
+
+    .contact-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      justify-self: stretch;
+      width: 100%;
+      min-height: 3.25rem;
+      padding: 0.9rem 1.25rem;
+      border: 1px solid var(--color-text);
+      border-radius: 0.9rem;
+      background: var(--color-text);
+      color: var(--color-background);
+      font: inherit;
+      font-size: var(--font-size-sm);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: background 180ms ease, border-color 180ms ease, opacity 160ms ease;
+    }
+
+    .contact-submit:hover {
+      background: #222;
+      border-color: #222;
+      opacity: 1;
+    }
+
+    .page-header.header-scrolled {
+      background-color: var(--color-background);
+      border-bottom-color: var(--color-border);
+    }
+
+    @media (max-width: 62.5rem) {
+      .contact-main {
+        grid-template-columns: 1fr;
+        flex: unset;
+      }
+
+      .contact-meta {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-top: var(--space-5);
+      }
+
+      .contact-title {
+        max-width: 100%;
+      }
+
+      .contact-form {
+        padding-top: 0;
+        align-self: stretch;
+      }
+
+      .contact-message-field {
+        flex: unset;
+        grid-template-rows: auto auto;
+      }
+
+      .contact-message-field textarea {
+        height: auto;
+        min-height: 10rem;
+      }
+    }
+
+    @media (max-width: 43.75rem) {
+      .contact-shell {
+        gap: var(--space-5);
+        padding-top: 4.75rem;
+      }
+
+      .contact-meta {
+        grid-template-columns: 1fr;
+        margin-top: var(--space-5);
+      }
+
+      .contact-name-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="container page-header" id="page-header">
+    <div class="grid-12 header-grid">
+      <div class="span-6">
+        <a href="../" class="site-name">LUCILLE TREPANIER</a>
+        <span class="site-tagline">Product Designer</span>
+      </div>
+      <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="span-6" id="main-nav">
+        <a href="../case-studies/">Work</a>
+        <a href="../archive/">Archive</a>
+        <a href="../about/">About</a>
+        <a href="../assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container contact-page">
+    <div class="contact-shell">
+      <section class="contact-main" aria-labelledby="contact-title">
+        <div>
+          <h1 class="contact-title" id="contact-title">Let's collaborate</h1>
+
+          <aside class="contact-meta" aria-label="Contact details">
+            <div class="contact-meta-block">
+              <p class="contact-meta-label">Email</p>
+              <p><a href="mailto:lucytrep.labs@gmail.com">lucytrep.labs@gmail.com</a></p>
+            </div>
+            <div class="contact-meta-block">
+              <p class="contact-meta-label">LinkedIn</p>
+              <p><a href="https://ca.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer">lucytrep</a></p>
+            </div>
+            <div class="contact-meta-block">
+              <p class="contact-meta-label">Based in</p>
+              <p>New York City</p>
+            </div>
+          </aside>
+        </div>
+
+        <form class="contact-form" id="contact-form" action="mailto:lucytrep.labs@gmail.com" method="post" enctype="text/plain">
+          <p class="contact-form-section-title">Say hello</p>
+
+          <div class="contact-name-grid">
+            <div class="contact-field">
+              <label for="first-name">Name</label>
+              <input id="first-name" name="first_name" type="text" placeholder="Your name" />
+            </div>
+            <div class="contact-field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="Email address" />
+            </div>
+          </div>
+
+          <div class="contact-name-grid">
+            <div class="contact-field">
+              <label for="company">Company</label>
+              <input id="company" name="company" type="text" placeholder="Optional" />
+            </div>
+            <div class="contact-field">
+              <label for="project-type">Project type</label>
+              <input id="project-type" name="project_type" type="text" placeholder="Optional" />
+            </div>
+          </div>
+
+          <div class="contact-field contact-message-field">
+            <label for="project-description">Message</label>
+            <textarea id="project-description" name="project_description" placeholder="Share a bit about the project, team, or opportunity and I'll get back to you."></textarea>
+          </div>
+
+          <button class="contact-submit" type="submit">Submit</button>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="container page-footer">
+    <div class="grid-12">
+      <div class="span-6">
+        <span class="footer-credit">Designed + coded by</span><br />
+        <span class="footer-name">Lucille Trepanier</span>
+      </div>
+      <div class="span-6 footer-right">
+        <div class="footer-socials">
+          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+          </a>
+          <a href="https://ca.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>

@@ -431,7 +431,8 @@
   }
 
   .about-desktop-btn {
-    display: none;
+    padding: 0.8rem 1.5rem;
+    font-size: var(--font-size-base);
   }
 
   .about-title {
