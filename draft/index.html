@@ -300,8 +300,8 @@
       min-height: 0;
       /* No max-height on narrow viewports — a cap here left empty flex space above .hero-desc (read as a “band”). Tablet+ caps in the 768px block. */
       max-height: none;
-      overflow-x: hidden;
-      overflow-y: visible;
+      /* overflow-x:hidden + overflow-y:visible computes to overflow-y:auto (CSS overflow pairing), which makes iOS Safari scroll the hero “inside itself”. */
+      overflow: hidden;
       /* Above .hero-desc-section (z-index 10) so its ::before fade cannot paint over the phone on iOS Safari */
       z-index: 11;
     }
@@ -1077,9 +1077,7 @@
         height: min(80svh, 720px);
         min-height: min(80svh, 720px);
         max-height: min(80svh, 720px);
-        /* overflow-y: visible keeps ::before able to extend above the box (Safari); x clip only */
-        overflow-x: hidden;
-        overflow-y: visible;
+        overflow: hidden;
         /* Must stay above .hero-desc-section (z-index 12 in this block) or its gradient + ::before paint over the phone */
         z-index: 13;
       }
@@ -1230,9 +1228,7 @@
         height: 100svh;
         min-height: 100svh;
         max-height: 100svh;
-        /* Let hero ::before extend above the fold without clipping (Safari top bleed); clip horizontally only */
-        overflow-x: hidden;
-        overflow-y: visible;
+        overflow: hidden;
       }
 
       .hero-wrapper {
@@ -1240,8 +1236,7 @@
         height: min(78svh, 820px);
         min-height: min(78svh, 820px);
         max-height: min(78svh, 820px);
-        overflow-x: hidden;
-        overflow-y: visible;
+        overflow: hidden;
       }
 
       .hero-wrapper::before {
