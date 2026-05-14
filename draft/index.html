@@ -8,6 +8,12 @@
   <title>Draft | AI-powered creative brief tool</title>
   <link rel="icon" type="image/png" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preload" as="image" href="assets/gradient-bg.png" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/iphone-mock-half-1.png" fetchpriority="high">
+  <!-- Above-fold weights: 400 body, 500 eyebrow, 700 hero — Semibold (600) loads on demand for section titles -->
+  <link rel="preload" as="font" href="assets/fonts/SF-Pro-Rounded-Regular.otf" type="font/otf" crossorigin>
+  <link rel="preload" as="font" href="assets/fonts/SF-Pro-Rounded-Medium.otf" type="font/otf" crossorigin>
+  <link rel="preload" as="font" href="assets/fonts/SF-Pro-Rounded-Bold.otf" type="font/otf" crossorigin>
   <style>
     @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Regular.otf'); font-weight: 400; font-display: swap; }
     @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Medium.otf'); font-weight: 500; font-display: swap; }
@@ -38,20 +44,17 @@
     }
 
     p,
-    .section-heading__sub,
-    .hero-desc,
     .hero-sub,
     .feature p,
-    .accordion-content,
-    .about-bio,
     .about-contact-link,
     footer p {
       text-wrap: pretty;
+      widows: 2;
+      orphans: 2;
     }
 
     .section-heading__title,
     .problem-statement__quote,
-    .problem-statement__line,
     .about-name {
       text-wrap: balance;
     }
@@ -69,7 +72,14 @@
     }
 
     .nav-logo {
+      display: block;
       height: 30px;
+      width: auto;
+      max-height: 30px;
+      object-fit: contain;
+      object-position: center;
+      flex-shrink: 0;
+      align-self: center;
       filter: drop-shadow(0 0 10px rgba(0,0,0,0.7));
     }
 
@@ -135,6 +145,22 @@
     .nav-menu a:hover,
     .nav-menu a:active { color: #fff; }
 
+    .nav-menu a.nav-menu__foot {
+      position: absolute;
+      bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: clamp(14px, 3.4vw, 17px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .nav-menu a.nav-menu__foot:hover,
+    .nav-menu a.nav-menu__foot:active {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
     .nav-menu-close {
       position: absolute;
       top: calc(28px + env(safe-area-inset-top));
@@ -152,11 +178,12 @@
 
     /* ── Carousel ── */
     /* overflow-x: clip forces overflow-y → auto (CSS overflow pairing), which clips scaled cards */
+    /* margin-top must not pull the track under .above-fold (z-index: 2): carousel is z-index 0, so the fold paints on top and clips card tops. Close the gap via .hero-desc-section / .cta-btn spacing instead. */
     .carousel-section {
       position: relative;
       z-index: 0;
-      margin-top: clamp(-12px, -4vw, -4px);
-      padding: clamp(18px, 4vw, 32px) 0 44px;
+      margin-top: 0;
+      padding: clamp(8px, 2vw, 20px) 0 44px;
       overflow: visible;
     }
 
@@ -171,7 +198,7 @@
     .carousel-viewport {
       width: 100%;
       /* Room for .carousel-card.is-center transform:scale — layout height ignores transform */
-      padding: clamp(20px, 4.5vw, 40px) 0 clamp(28px, 5.5vw, 52px);
+      padding: clamp(18px, 4vw, 38px) 0 clamp(28px, 5.5vw, 52px);
     }
 
     .carousel-track {
@@ -215,6 +242,15 @@
       object-position: top left;
     }
 
+    .carousel-card img[src*="ui-skill-rate"] {
+      object-position: top left;
+    }
+
+    .carousel-card img[src*="open-court-4"] {
+      transform: scale(1.22);
+      transform-origin: center center;
+    }
+
     /* ── Above-fold: hero + intro copy; min-height (not fixed height) avoids iOS gap + flex dead-zone under hero ── */
     .above-fold {
       min-height: 100svh;
@@ -245,10 +281,10 @@
     .hero-wrapper::before {
       content: '';
       position: absolute;
-      inset: -5% 0;
+      inset: -8% -4% -4%;
       background-image: url('assets/gradient-bg.png');
       background-size: cover;
-      background-position: center 70%;
+      background-position: center 58%;
       transform: scaleY(-1);
       opacity: 0.72;
       pointer-events: none;
@@ -354,32 +390,6 @@
       display: block;
     }
 
-    /*
-      Hero seam gradient lives on .hero-wrapper::after at z-index 1, under the phone (z-index 2).
-      .hero-desc-section::before cannot paint over the phone because the whole wrapper stacks above it (z-index 11 vs 10).
-      This overlay sits inside the phone stack so it always blends the mockup into #000 — every viewport width / Safari.
-    */
-    .phone-hero::after {
-      content: '';
-      position: absolute;
-      left: -5%;
-      right: -5%;
-      top: 40%;
-      bottom: clamp(-12px, -3vw, -28px);
-      pointer-events: none;
-      z-index: 5;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.04) 12%,
-        rgba(0, 0, 0, 0.14) 26%,
-        rgba(0, 0, 0, 0.34) 44%,
-        rgba(0, 0, 0, 0.62) 64%,
-        rgba(0, 0, 0, 0.88) 84%,
-        var(--bg-base) 100%
-      );
-    }
-
     /* second screen layered on top — JS drives opacity; top matches .phone-hero padding so both PNGs share the same origin (inset:0 + height:100% misaligned vs first img) */
     .phone-img-2 {
       position: absolute;
@@ -420,8 +430,8 @@
       z-index: 10;
       flex-shrink: 0;
       width: 100%;
-      margin-top: clamp(-112px, -18vw, -68px);
-      padding: clamp(96px, 20vw, 144px) 40px 0;
+      margin-top: clamp(-120px, -19vw, -72px);
+      padding: clamp(80px, 16vw, 124px) 40px 0;
       background: linear-gradient(
         to bottom,
         rgba(0, 0, 0, 0) 0%,
@@ -445,22 +455,81 @@
       z-index: 1;
     }
 
-    .hero-desc {
+    /* Product Video–style title in hero gradient: reuse --reel title scale, no solid heading bar */
+    .section-heading.section-heading--reel.section-heading--hero-lede {
+      background: transparent;
+      padding: 0;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: min(34rem, calc(100vw - 32px));
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Hero lede + matching section subcopy / about bio (same type as “Draft is a voice…”) */
+    .hero-desc,
+    .section-heading__sub,
+    .about-bio {
       font-size: clamp(18px, 4.5vw, 32px);
       font-weight: 400;
       letter-spacing: -0.02em;
       line-height: 1.3;
-      color: rgba(255,255,255,0.85);
-      max-width: 540px;
-      margin: 0 auto;
-      padding: clamp(10px, 2.5vw, 20px) 0 0;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: inherit;
       text-align: center;
     }
 
-    .hero-desc strong {
+    .hero-desc,
+    .about-bio {
+      text-wrap: pretty;
+      widows: 2;
+      orphans: 2;
+    }
+
+    .hero-desc strong,
+    .section-heading__sub strong,
+    .about-bio strong {
       font-weight: 700;
       color: #fff;
     }
+
+    .hero-desc {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: clamp(10px, 2.5vw, 20px) 0 0;
+    }
+
+    .section-heading__sub {
+      margin: 0.55em auto 0;
+      max-width: min(34rem, calc(100vw - 48px));
+      text-wrap: balance;
+    }
+
+    .accordion-content {
+      padding: 20px;
+      text-align: left;
+      text-wrap: pretty;
+      widows: 2;
+      orphans: 2;
+      font-size: clamp(14px, 3.35vw, 16px);
+      font-weight: 400;
+      letter-spacing: -0.012em;
+      line-height: 1.5;
+      color: rgba(235, 235, 245, 0.72);
+      font-family: inherit;
+    }
+
+    .accordion-content strong {
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.95);
+    }
+
+    .about-bio {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 0;
+    }
+
     .hero-desc .char {
       opacity: 0.34;
     }
@@ -666,12 +735,19 @@
       background: var(--bg-base);
       padding: clamp(72px, 14vw, 120px) clamp(20px, 5vw, 48px) clamp(116px, 19vw, 180px);
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
     }
 
     .problem-statement__label {
       margin: 0 0 clamp(10px, 2.2vw, 14px);
+      width: 100%;
+      text-align: center;
       font-size: 13px;
       font-weight: 400;
       letter-spacing: 0.06em;
@@ -683,7 +759,8 @@
 
     .problem-statement__quote {
       margin: 0 auto;
-      max-width: min(38rem, calc(100vw - 40px));
+      width: 100%;
+      max-width: min(36rem, calc(100vw - 40px));
       font-size: clamp(28px, 4.6vw, 76px);
       font-weight: 600;
       letter-spacing: -0.022em;
@@ -692,24 +769,7 @@
       font-family: inherit;
       text-wrap: balance;
       font-feature-settings: 'kern' 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.08em;
       text-align: center;
-    }
-
-    .problem-statement__line {
-      display: block;
-      text-wrap: balance;
-      text-align: center;
-      align-self: center;
-      width: fit-content;
-      max-width: 100%;
-    }
-
-    .problem-statement__line + .problem-statement__line {
-      margin-top: 0;
     }
 
     /* ── Section headings (unified large titles — Product Video, What it does, etc.) ── */
@@ -729,27 +789,8 @@
       text-wrap: balance;
     }
 
-    .section-heading__sub {
-      margin: 0.55em 0 0;
-      font-size: clamp(15px, 3.5vw, 18px);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      line-height: 1.4;
-      color: rgba(255, 255, 255, 0.5);
-      max-width: 22em;
-      margin-left: auto;
-      margin-right: auto;
-      font-family: inherit;
-    }
-
-    .section-heading__sub strong {
-      font-weight: 700;
-      color: rgba(255, 255, 255, 0.96);
-    }
-
     .section-heading--reel,
     .section-heading--features,
-    .section-heading--accordion-head,
     .section-heading--built,
     .section-heading--about {
       padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 40px) clamp(36px, 5.5vw, 64px);
@@ -759,19 +800,11 @@
       box-sizing: border-box;
     }
 
+    .section-heading--reel .section-heading__title {
+      font-size: clamp(26px, 6vw, 40px);
+    }
+
     .section-heading--features {
-      opacity: 0;
-      transform: translateY(10px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .section-heading--features .section-heading__sub {
-      max-width: 24rem;
-      color: rgba(255, 255, 255, 0.62);
-      line-height: 1.42;
-    }
-
-    .section-heading--accordion-head {
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.5s ease, transform 0.5s ease;
@@ -928,57 +961,62 @@
 
       .hero-wrapper {
         flex: 0 0 auto;
-        height: min(66svh, 580px);
-        min-height: min(66svh, 580px);
-        max-height: min(66svh, 580px);
+        height: min(80svh, 720px);
+        min-height: min(80svh, 720px);
+        max-height: min(80svh, 720px);
         overflow: hidden;
+        /* Must stay above .hero-desc-section (z-index 12 in this block) or its gradient + ::before paint over the phone */
+        z-index: 13;
       }
 
       .hero-wrapper::before {
-        inset: -12% 0 6%;
-        background-position: center 18%;
-        opacity: 0.5;
+        inset: -22% -10% -12%;
+        background-size: cover;
+        background-position: center 24%;
+        opacity: 0.58;
       }
 
       .hero-wrapper::after {
         bottom: -1px;
-        height: min(82%, 460px);
+        height: min(102%, 620px);
         background: linear-gradient(
           to bottom,
-          rgba(18, 7, 10, 0) 0%,
-          rgba(20, 7, 10, 0.14) 18%,
-          rgba(12, 4, 6, 0.42) 42%,
-          rgba(4, 1, 2, 0.82) 68%,
-          var(--bg-base) 84%,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.06) 10%,
+          rgba(0, 0, 0, 0.18) 22%,
+          rgba(0, 0, 0, 0.42) 38%,
+          rgba(0, 0, 0, 0.68) 54%,
+          rgba(0, 0, 0, 0.9) 72%,
+          var(--bg-base) 88%,
           var(--bg-base) 100%
         );
       }
 
       .hero {
         justify-content: flex-start;
-        padding-top: 8px;
+        padding-top: clamp(40px, 11vw, 88px);
+        padding-bottom: clamp(4px, 1.5vw, 12px);
+      }
+
+      .eyebrow {
+        margin-top: clamp(4px, 2vw, 16px);
+        margin-bottom: clamp(22px, 6vw, 34px);
+      }
+
+      .hero-headline {
+        margin-bottom: clamp(12px, 3.5vw, 24px);
       }
 
       .phone-hero {
-        width: min(76vw, 372px);
-        margin-top: 8px;
+        width: min(72vw, 356px);
+        margin-top: clamp(24px, 7vw, 52px);
+        margin-bottom: clamp(4px, 1.5vw, 12px);
+        padding-top: 18px;
         filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.42));
       }
 
-      .phone-hero::after {
-        left: -4%;
-        right: -4%;
-        top: 54%;
-        bottom: clamp(-42px, -10vw, -20px);
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0) 0%,
-          rgba(0, 0, 0, 0.08) 10%,
-          rgba(0, 0, 0, 0.22) 24%,
-          rgba(0, 0, 0, 0.5) 42%,
-          rgba(0, 0, 0, 0.82) 66%,
-          var(--bg-base) 92%
-        );
+      .phone-img-2 {
+        top: 18px;
       }
 
       .hero-desc-spacer {
@@ -989,38 +1027,72 @@
       }
 
       .hero-desc-spacer--after-phone {
-        min-height: clamp(20px, 5vw, 36px);
+        min-height: clamp(8px, 2.2vw, 20px);
       }
 
       .hero-desc-spacer--before-cta {
-        min-height: clamp(16px, 4vw, 28px);
+        min-height: clamp(10px, 3vw, 22px);
       }
 
       .hero-desc-section {
-        margin-top: clamp(-156px, -24vw, -112px);
+        position: relative;
+        z-index: 12;
+        isolation: isolate;
+        pointer-events: none;
+        margin-top: clamp(-204px, -33vw, -148px);
         padding:
-          clamp(160px, 36vw, 220px)
+          clamp(128px, 30vw, 196px)
           clamp(24px, 7.5vw, 44px)
-          calc(clamp(88px, 15vw, 128px) + env(safe-area-inset-bottom, 0px));
+          calc(clamp(40px, 8vw, 72px) + env(safe-area-inset-bottom, 0px));
         background: linear-gradient(
           to bottom,
-          rgba(0, 0, 0, 0) 0%,
-          rgba(0, 0, 0, 0.18) 24%,
-          rgba(0, 0, 0, 0.52) 52%,
-          var(--bg-base) 82%
+          rgba(10, 8, 9, 0.45) 0%,
+          rgba(10, 8, 9, 0.82) 16%,
+          rgba(10, 8, 9, 0.95) 34%,
+          var(--bg-base) 68%,
+          var(--bg-base) 100%
         );
         gap: clamp(12px, 3vw, 20px);
       }
 
-      .hero-desc {
+      .hero-desc-section::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: min(340px, 62vw);
+        background: linear-gradient(
+          to bottom,
+          rgba(10, 8, 9, 0.78) 0%,
+          rgba(10, 8, 9, 0.92) 18%,
+          rgba(10, 8, 9, 0.65) 46%,
+          transparent 100%
+        );
+        z-index: 0;
+        pointer-events: none;
+      }
+
+      .hero-desc-section .section-heading.section-heading--hero-lede,
+      .hero-desc-section .hero-desc,
+      .hero-desc-section .cta-btn {
+        pointer-events: auto;
+      }
+
+      .hero-desc,
+      .section-heading__sub,
+      .about-bio {
         max-width: min(19rem, calc(100vw - 48px));
-        padding: 14px 0 8px;
         line-height: 1.45;
         letter-spacing: -0.018em;
       }
 
+      .hero-desc {
+        padding: 8px 0 6px;
+      }
+
       .cta-btn {
-        margin-bottom: clamp(40px, 10vw, 64px);
+        margin-bottom: clamp(12px, 3.5vw, 28px);
       }
     }
 
@@ -1033,27 +1105,37 @@
         overflow: hidden;
       }
 
-      .phone-hero::after {
-        top: 38%;
-        bottom: clamp(-18px, -3vw, -32px);
-      }
-
       .hero-wrapper {
         flex: 0 0 auto;
-        height: min(74svh, 760px);
-        min-height: min(74svh, 760px);
-        max-height: min(74svh, 760px);
+        height: min(78svh, 820px);
+        min-height: min(78svh, 820px);
+        max-height: min(78svh, 820px);
         overflow: hidden;
+      }
+
+      .hero-wrapper::before {
+        inset: -14% -6% -6%;
+        background-position: center 44%;
+        opacity: 0.66;
       }
 
       .hero {
         justify-content: flex-start;
-        padding-top: clamp(12px, 2vw, 20px);
+        padding-top: clamp(28px, 4.5vw, 52px);
+      }
+
+      .eyebrow {
+        margin-bottom: clamp(18px, 3vw, 28px);
+      }
+
+      .hero-headline {
+        margin-bottom: clamp(8px, 2vw, 18px);
       }
 
       .phone-hero {
-        width: clamp(360px, 34vw, 520px);
-        margin-top: clamp(10px, 2vw, 24px);
+        width: clamp(340px, 32vw, 500px);
+        margin-top: clamp(16px, 3vw, 36px);
+        padding-top: 20px;
       }
 
       .hero-wrapper::after {
@@ -1074,8 +1156,8 @@
       }
 
       .hero-desc-section {
-        margin-top: clamp(-128px, -14vw, -84px);
-        padding: clamp(144px, 17vw, 208px) max(32px, 5vw) clamp(56px, 6vw, 92px);
+        margin-top: clamp(-142px, -15.5vw, -96px);
+        padding: clamp(112px, 13.5vw, 172px) max(32px, 5vw) clamp(56px, 6vw, 92px);
         background: linear-gradient(
           to bottom,
           rgba(28, 10, 14, 0) 0%,
@@ -1088,14 +1170,21 @@
       }
 
       .carousel-section {
-        margin-top: clamp(8px, 2vw, 20px);
-        padding-top: clamp(12px, 2vw, 24px);
+        margin-top: 0;
+        padding-top: clamp(6px, 1.2vw, 16px);
       }
 
-      .hero-desc {
+      .hero-desc,
+      .section-heading__sub,
+      .about-bio {
         font-size: clamp(17px, 2.6vw, 26px);
         line-height: 1.26;
         max-width: 32rem;
+      }
+
+      .accordion-content {
+        font-size: clamp(15px, 1.55vw, 17px);
+        line-height: 1.52;
       }
 
       .cta-btn {
@@ -1149,11 +1238,12 @@
       }
 
       .built-icon img {
-        border-radius: clamp(20px, 2.4vw, 28px);
+        border-radius: clamp(16px, 2vw, 24px);
+        padding: clamp(10px, 11%, 16px);
       }
 
       .built-name {
-        font-size: clamp(12px, 1.25vw, 16px);
+        font-size: clamp(13px, 1.4vw, 17px);
         white-space: nowrap;
       }
 
@@ -1166,9 +1256,10 @@
         padding-top: calc(24px + env(safe-area-inset-top));
       }
 
-      .phone-hero::after {
-        top: 37%;
-        bottom: clamp(-20px, -3vw, -36px);
+      .hero-wrapper::before {
+        inset: -14% -6% -6%;
+        background-position: center 40%;
+        opacity: 0.7;
       }
 
       .hero-wrapper::after {
@@ -1177,8 +1268,8 @@
       }
 
       .hero-desc-section {
-        margin-top: clamp(-144px, -12vw, -96px);
-        padding: clamp(156px, 15vw, 228px) max(40px, 5vw, 72px) clamp(64px, 6vw, 104px);
+        margin-top: clamp(-158px, -13.5vw, -104px);
+        padding: clamp(124px, 12.5vw, 192px) max(40px, 5vw, 72px) clamp(64px, 6vw, 104px);
         background: linear-gradient(
           to bottom,
           rgba(26, 8, 12, 0) 0%,
@@ -1191,18 +1282,27 @@
       }
 
       .hero {
-        padding: 20px max(24px, 3vw) 0;
+        padding: clamp(28px, 3.5vw, 44px) max(24px, 3vw) 0;
+      }
+
+      .eyebrow {
+        margin-bottom: clamp(20px, 2.5vw, 32px);
       }
 
       .hero-headline {
+        margin-bottom: clamp(10px, 2vw, 22px);
         font-size: clamp(52px, 6.2vw, 108px);
         letter-spacing: -0.042em;
       }
 
       .features-float-scene {
-        min-height: 520px;
+        min-height: max(640px, min(78vh, 900px));
         padding-top: clamp(64px, 9vw, 104px);
         padding-bottom: clamp(24px, 4vw, 40px);
+      }
+
+      .features-float-scene .section-heading--features {
+        padding-top: clamp(56px, 8vw, 112px);
       }
 
       .problem-statement {
@@ -1240,8 +1340,12 @@
         padding-right: max(28px, env(safe-area-inset-right, 0px));
       }
 
-      .hero-desc {
+      .hero-desc,
+      .section-heading__sub {
         max-width: 34rem;
+      }
+
+      .hero-desc {
         padding-top: 0;
       }
 
@@ -1251,21 +1355,15 @@
       }
     }
 
-    @media (min-width: 1200px) {
-      .problem-statement__line {
-        white-space: nowrap;
-      }
-    }
-
     /* ── Large phones only ── */
     @media (min-width: 540px) and (max-width: 767px) {
-      .nav-logo { height: 26px; }
-      .phone-hero { width: min(58vw, 360px); }
+      .nav-logo { height: 26px; max-height: 26px; }
+      .phone-hero { width: min(64vw, 336px); }
       .hero-sub { font-size: 16px; max-width: 380px; }
       .hero-desc-section { gap: clamp(14px, 3.5vw, 22px); }
-      .carousel-section { margin-top: clamp(-52px, -11vw, -28px); padding: 0 0 52px; }
+      .carousel-section { margin-top: 0; padding: 0 0 52px; }
       .carousel-viewport {
-        padding: clamp(24px, 4vw, 44px) 0 clamp(32px, 5vw, 56px);
+        padding: clamp(18px, 3.5vw, 36px) 0 clamp(32px, 5vw, 56px);
       }
       .carousel-track { gap: 10px; }
       .carousel-card {
@@ -1284,7 +1382,7 @@
     }
 
     @media (min-width: 860px) {
-      .nav-logo { height: 28px; }
+      .nav-logo { height: 28px; max-height: 28px; }
       .phone-hero { width: min(40vw, 460px); }
       .hero-sub { font-size: 17px; max-width: 480px; }
       .carousel-track { gap: 14px; }
@@ -1301,13 +1399,14 @@
       max-width: none;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding: clamp(48px, 10vw, 96px) 0 clamp(56px, 8vw, 88px);
+      min-height: clamp(560px, 88vw, 780px);
+      padding: clamp(28px, 6vw, 56px) 0 clamp(56px, 8vw, 88px);
       overflow: visible;
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-start;
       gap: clamp(18px, 4vw, 30px);
-      min-height: clamp(380px, 72vw, 560px);
     }
 
     .features-float-row {
@@ -1328,12 +1427,10 @@
     }
 
     .float-anchor {
-      position: absolute;
+      position: relative;
       will-change: transform, opacity;
       z-index: 0;
       pointer-events: none;
-      opacity: 0;
-      transform: translate3d(0, 36px, 0);
     }
 
     .float-card-img {
@@ -1341,6 +1438,7 @@
       overflow: hidden;
       box-shadow: 0 6px 28px rgba(0,0,0,0.6);
       animation: bobFloat var(--bob-dur, 4s) ease-in-out var(--bob-delay, 0s) infinite;
+      transform-origin: center center;
     }
     .float-card-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
@@ -1353,11 +1451,12 @@
       animation-play-state: paused;
     }
 
-    .fc-1 .float-card-img { rotate: -4deg; }
-    .fc-3 .float-card-img { rotate: -5deg; }
-    .fc-4 .float-card-img { rotate: 4deg; }
-    .fc-5 .float-card-img { rotate: 3deg; }
-    .fc-6 .float-card-img { rotate: 5deg; }
+    /* Float card size: linear down each column (top = largest, bottom = smallest). Bob + rotate unchanged. */
+    .fc-1 .float-card-img { rotate: -4deg; scale: 1.1; }
+    .fc-3 .float-card-img { rotate: -5deg; scale: 0.78; }
+    .fc-4 .float-card-img { rotate: 4deg; scale: 1.1; }
+    .fc-5 .float-card-img { rotate: 3deg; scale: calc(1.1 - 0.32 * 28 / 66); }
+    .fc-6 .float-card-img { rotate: 5deg; scale: 0.78; }
 
     /* ── Built with ── */
     .built-section {
@@ -1396,41 +1495,41 @@
       border-radius: 18px;
       overflow: hidden;
       position: relative;
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 0.5px solid rgba(255,255,255,0.12);
-      box-shadow:
-        0 8px 32px rgba(0,0,0,0.5),
-        inset 0 1px 0 rgba(255,255,255,0.14),
-        inset 0 -1px 0 rgba(0,0,0,0.2);
+      background: linear-gradient(165deg, rgba(48, 44, 50, 0.55) 0%, rgba(14, 12, 15, 0.92) 100%);
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.42);
+      box-sizing: border-box;
     }
 
     .built-icon img {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center;
       display: block;
-      border-radius: 18px;
+      padding: clamp(9px, 11%, 13px);
+      box-sizing: border-box;
+      border-radius: 14px;
     }
 
-    /* Figma asset has extra inset canvas — scale so the logo fills the tile */
+    /* Figma mark has extra canvas in the asset — scale up so it reads closer to sibling tiles. */
     .built-icon--figma img {
-      transform: scale(1.28);
+      padding: clamp(4px, 6%, 9px);
+      transform: scale(1.36);
       transform-origin: center center;
     }
 
     .built-name {
-      font-size: 11px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.64);
-      letter-spacing: -0.01em;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: clamp(12px, 2.6vw, 14px);
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      letter-spacing: -0.02em;
+      font-family: inherit;
     }
 
     /* ── About the designer ── */
     .about-section {
-      padding: 72px 28px 80px;
+      padding: 88px max(24px, 5vw) 100px;
       background: var(--bg-base);
       display: flex;
       flex-direction: column;
@@ -1439,11 +1538,15 @@
       gap: 0;
     }
 
+    .about-section .section-heading--about {
+      padding-bottom: clamp(44px, 6.5vw, 80px);
+    }
+
     .about-columns {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 28px;
+      gap: 36px;
       width: 100%;
     }
 
@@ -1457,7 +1560,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
+      gap: 22px;
       width: 100%;
       max-width: min(34em, 520px);
     }
@@ -1628,32 +1731,14 @@
     }
 
     .about-name {
-      font-size: clamp(26px, 6.5vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.035em;
-      color: #fff;
-      line-height: 1;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-    }
-
-    .about-bio {
-      font-size: 15px;
-      line-height: 1.72;
-      font-weight: 400;
-      font-family: inherit;
-      color: rgba(255, 255, 255, 0.72);
-      max-width: 100%;
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      text-wrap: pretty;
-    }
-
-    .about-bio strong {
+      font-size: clamp(28px, 6.4vw, 44px);
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.96);
+      letter-spacing: -0.034em;
+      color: #fff;
+      line-height: 1.08;
+      margin: 0 0 -10px;
+      padding: 0;
+      text-align: center;
     }
 
     .about-contact {
@@ -1703,7 +1788,7 @@
     /* Wide About layout must follow base .about-columns (column); otherwise base wins and stays single-column. */
     @media (min-width: 800px) {
       .about-section {
-        padding: clamp(72px, 8vw, 104px) max(28px, 4vw) clamp(88px, 10vw, 120px);
+        padding: clamp(88px, 9vw, 118px) max(28px, 4vw) clamp(100px, 11vw, 132px);
         align-items: stretch;
       }
 
@@ -1719,7 +1804,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: clamp(40px, 6.5vw, 96px);
+        gap: clamp(44px, 7vw, 104px);
         width: 100%;
         max-width: 920px;
         margin-left: auto;
@@ -1769,7 +1854,7 @@
         justify-content: center;
         text-align: left;
         max-width: min(38em, 100%);
-        gap: 18px;
+        gap: 24px;
         padding: clamp(0px, 0.8vw, 6px) 0;
       }
 
@@ -1780,17 +1865,7 @@
 
       .about-bio {
         max-width: none;
-        font-size: clamp(18px, 1.75vw, 22px);
-        line-height: 1.72;
-        letter-spacing: -0.014em;
-        color: rgba(255, 255, 255, 0.82);
         text-align: left;
-        text-wrap: pretty;
-      }
-
-      .about-bio strong {
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.98);
       }
 
       .about-contact {
@@ -1819,21 +1894,23 @@
     .accordion-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       max-width: 540px;
       margin: 0 auto;
     }
     .accordion-item {
-      border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 0.5px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.055);
+      border: 0.5px solid rgba(255, 255, 255, 0.1);
       overflow: hidden;
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.28);
     }
     .accordion-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px;
+      padding: 16px 20px;
+      min-height: 52px;
       cursor: pointer;
       background: none;
       border: none;
@@ -1841,23 +1918,29 @@
       text-align: left;
       color: #fff;
       -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s ease;
     }
     .accordion-label-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-size: 15px;
-      font-weight: 500;
+      gap: 12px;
+      font-size: clamp(16px, 3.4vw, 19px);
+      font-weight: 400;
+      letter-spacing: -0.022em;
       font-family: inherit;
+      color: rgba(255, 255, 255, 0.92);
     }
     .acc-dot {
-      width: 10px;
-      height: 10px;
+      width: 11px;
+      height: 11px;
       border-radius: 50%;
       flex-shrink: 0;
+      box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.35);
     }
     .acc-chevron {
-      color: rgba(255,255,255,0.4);
+      width: 20px;
+      height: 20px;
+      color: rgba(235, 235, 245, 0.48);
       transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       flex-shrink: 0;
     }
@@ -1865,16 +1948,9 @@
     .accordion-body {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .accordion-item.open .accordion-body { max-height: 300px; }
-    .accordion-content {
-      padding: 0 18px 16px;
-      font-size: 13px;
-      line-height: 1.6;
-      color: rgba(255,255,255,0.45);
-      font-family: inherit;
-    }
+    .accordion-item.open .accordion-body { max-height: 520px; }
 
     /* ── Scroll-reveal: features + accordion ── */
 
@@ -1886,37 +1962,185 @@
 
     .features-float-scene .section-heading--features {
       position: relative;
-      z-index: 1;
-      padding: clamp(40px, 9vw, 96px) 24px 0;
+      z-index: 5;
+      background: transparent;
+      padding: clamp(36px, 7vw, 88px) clamp(20px, 5vw, 32px) clamp(4px, 1.2vw, 12px);
       max-width: 30rem;
+    }
+
+    .features-float-scene .section-heading--features .section-heading__title,
+    .features-float-scene .section-heading--features .section-heading__sub {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-heading--features .section-heading__sub {
+      color: #f5f5f7;
     }
 
     .accordion-section--framed {
       position: relative;
-      z-index: 1;
+      z-index: 0;
       background: transparent;
-      padding: clamp(4px, 1vw, 10px) 20px 0;
+      padding: 0 20px 0;
       width: min(100%, 420px);
+      overflow: visible;
     }
 
-    .accordion-section--framed .section-heading--accordion-head {
-      padding: 0 0 12px;
-      opacity: 1;
-      transform: none;
-      max-width: 100%;
+    /* Soft color blobs + thin ring — sit behind glass accordion */
+    .accordion-aura {
+      position: absolute;
+      z-index: 0;
+      pointer-events: none;
+      inset: -18% -32% -28% -32%;
+      overflow: visible;
     }
 
-    .accordion-section--framed .section-heading__title {
-      font-size: clamp(17px, 3.2vw, 22px);
-      font-weight: 500;
-      letter-spacing: -0.03em;
+    .accordion-aura__ellipse {
+      position: absolute;
+      border-radius: 50%;
+      /* Blur smears color inward — wide inner bg stops keep the “hole” reading as page background. */
+      filter: blur(32px);
+      opacity: 0.88;
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        0 0 0 0.5px rgba(0, 0, 0, 0.35),
+        0 0 52px 6px var(--aura-glow, transparent);
+    }
+
+    .accordion-aura__ellipse--1 {
+      width: 58%;
+      height: 46%;
+      top: -6%;
+      left: -14%;
+      transform: rotate(-14deg);
+      background: radial-gradient(
+        ellipse at 40% 42%,
+        var(--bg-base) 0%,
+        var(--bg-base) 40%,
+        rgba(110, 168, 152, 0.52) 56%,
+        rgba(42, 72, 64, 0.22) 70%,
+        transparent 84%
+      );
+      --aura-glow: rgba(90, 140, 128, 0.36);
+    }
+
+    .accordion-aura__ellipse--2 {
+      width: 52%;
+      height: 44%;
+      top: -4%;
+      right: -16%;
+      transform: rotate(10deg);
+      background: radial-gradient(
+        ellipse at 55% 45%,
+        var(--bg-base) 0%,
+        var(--bg-base) 42%,
+        rgba(200, 198, 206, 0.34) 58%,
+        rgba(88, 86, 94, 0.18) 72%,
+        transparent 86%
+      );
+      --aura-glow: rgba(160, 158, 168, 0.28);
+    }
+
+    .accordion-aura__ellipse--3 {
+      width: 56%;
+      height: 48%;
+      bottom: -12%;
+      right: -12%;
+      transform: rotate(-8deg);
+      background: radial-gradient(
+        ellipse at 48% 52%,
+        var(--bg-base) 0%,
+        var(--bg-base) 36%,
+        rgba(210, 150, 72, 0.46) 54%,
+        rgba(120, 72, 28, 0.22) 68%,
+        transparent 82%
+      );
+      --aura-glow: rgba(190, 120, 56, 0.32);
+    }
+
+    .accordion-aura__ellipse--4 {
+      width: 54%;
+      height: 46%;
+      bottom: -10%;
+      left: -12%;
+      transform: rotate(12deg);
+      background: radial-gradient(
+        ellipse at 38% 55%,
+        var(--bg-base) 0%,
+        var(--bg-base) 38%,
+        rgba(180, 72, 58, 0.48) 56%,
+        rgba(88, 32, 28, 0.22) 70%,
+        transparent 84%
+      );
+      --aura-glow: rgba(160, 58, 48, 0.34);
     }
 
     .accordion-section--framed .accordion-list {
+      position: relative;
+      z-index: 1;
+      isolation: isolate;
       max-width: 100%;
+      gap: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(10, 9, 12, 0.34);
+      backdrop-filter: blur(52px) saturate(185%);
+      -webkit-backdrop-filter: blur(52px) saturate(185%);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow:
+        0 20px 48px rgba(0, 0, 0, 0.42),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        inset 0 0 0 0.5px rgba(255, 255, 255, 0.04);
     }
 
-    .accordion-section.revealed .section-heading--accordion-head { opacity: 1; transform: none; }
+    .accordion-section--framed .accordion-item {
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      border-bottom: 0.33px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .accordion-section--framed .accordion-item:last-child {
+      border-bottom: none;
+    }
+
+    .accordion-section--framed .accordion-header {
+      padding: 18px 20px;
+      min-height: 56px;
+    }
+
+    @media (hover: hover) {
+      .accordion-section--framed .accordion-header:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    .accordion-section--framed .accordion-header:active {
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .accordion-section--framed .accordion-item.open .accordion-header {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .accordion-section--framed .accordion-label-row {
+      font-size: clamp(17px, 3.7vw, 20px);
+      font-weight: 400;
+      letter-spacing: -0.022em;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .accordion-section--framed .acc-dot {
+      width: 12px;
+      height: 12px;
+    }
+
+    .accordion-section--framed .accordion-content {
+      padding: 20px;
+    }
 
     .accordion-item {
       opacity: 0;
@@ -1938,13 +2162,14 @@
     <a href="https://lucytrep.com/about/">About</a>
     <a href="https://lucytrep.com/archive/">Archive</a>
     <a href="https://lucytrep.com/contact/">Contact</a>
+    <a href="https://lucytrep.com/" class="nav-menu__foot">lucytrep.com</a>
   </div>
 
   <div class="above-fold">
 
     <div class="hero-wrapper">
       <nav>
-        <img src="assets/logo.png" alt="Draft" class="nav-logo">
+        <img src="assets/logo.png" alt="Draft" class="nav-logo" width="180" height="199" decoding="async" fetchpriority="high">
         <button class="hamburger" id="menuOpen" aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
@@ -1955,8 +2180,8 @@
         <h1 class="hero-headline"><span class="hl-line">Think it. Say it.</span><span class="hl-line">Draft it.</span></h1>
 
         <div class="phone-hero" id="phoneHero">
-          <img src="assets/iphone-mock-half-1.png" alt="Draft — All items view">
-          <img src="assets/iphone-mock-half-2.png" alt="Draft — Drafts view" class="phone-img-2" id="phoneMock2">
+          <img src="assets/iphone-mock-half-1.png" alt="Draft — All items view" width="606" height="671" decoding="async" fetchpriority="high">
+          <img src="assets/iphone-mock-half-2.png" alt="Draft — Drafts view" class="phone-img-2" id="phoneMock2" width="606" height="671" loading="lazy" decoding="async" fetchpriority="low">
           <div class="phone-tabs" aria-hidden="true">
             <button class="phone-tab-btn" id="tabDrafts"></button>
             <button class="phone-tab-btn" id="tabAllItems"></button>
@@ -1965,16 +2190,19 @@
       </section>
     </div>
 
-    <section class="hero-desc-section">
+    <section class="hero-desc-section" aria-labelledby="heroIntroLabel">
       <div class="hero-desc-spacer hero-desc-spacer--after-phone" aria-hidden="true"></div>
-      <p class="hero-desc">Draft is a voice-first tool for designers who <strong>think out loud.</strong> Say the feeling, the vibe, get <strong>three directions</strong> back instantly. <strong>Thought starters,</strong> not finished files.</p>
+      <header class="section-heading section-heading--reel section-heading--hero-lede">
+        <h2 class="section-heading__title" id="heroIntroLabel">Built for early ideas</h2>
+      </header>
+      <p class="hero-desc">Draft is a native iOS app that turns spoken ideas into visual&nbsp;creative directions.<br><br>Talk through a feeling, reference, or rough concept and get color, imagery, UI, and mood back&nbsp;instantly.</p>
       <div class="hero-desc-spacer hero-desc-spacer--before-cta" aria-hidden="true"></div>
-      <button type="button" class="cta-btn" id="scrollToReel">Watch the demo <span class="cta-arrow">→</span></button>
+      <button type="button" class="cta-btn" id="scrollToReel" aria-controls="reelSection">Watch the demo <span class="cta-arrow">→</span></button>
     </section>
 
   </div>
 
-  <section class="carousel-section">
+  <section class="carousel-section" id="carouselSection">
     <div class="carousel-viewport">
       <div class="carousel-track" id="carouselTrack"></div>
     </div>
@@ -1988,19 +2216,54 @@
     </header>
 
     <section class="reel-section" id="reelSection">
-      <video id="reelInlineVideo" autoplay muted loop playsinline preload="metadata" tabindex="0" aria-label="Open demo video larger">
+      <video id="reelInlineVideo" muted loop playsinline preload="none" tabindex="0" aria-label="Open demo video larger" poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect fill='%230a0809' width='16' height='9'/%3E%3C/svg%3E">
         <source src="assets/LucyTrepanier_VideoDemo.mp4" type="video/mp4">
       </video>
       <div class="reel-edge reel-edge--top" aria-hidden="true"></div>
       <div class="reel-edge reel-edge--bottom" aria-hidden="true"></div>
     </section>
 
+    <script>
+      (function () {
+        const video = document.getElementById('reelInlineVideo');
+        const section = document.getElementById('reelSection');
+        if (!video || !section) return;
+
+        let primed = false;
+
+        function primeAndPlay() {
+          if (!primed) {
+            primed = true;
+            video.preload = 'auto';
+            video.load();
+          }
+          video.play().catch(function () {});
+        }
+
+        function pauseReel() {
+          video.pause();
+        }
+
+        if ('IntersectionObserver' in window) {
+          const io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) primeAndPlay();
+                else pauseReel();
+              });
+            },
+            { rootMargin: '140px 0px', threshold: 0.05 }
+          );
+          io.observe(section);
+        } else {
+          primeAndPlay();
+        }
+      })();
+    </script>
+
     <section class="problem-statement" aria-labelledby="problem-label">
       <p class="problem-statement__label" id="problem-label">The problem</p>
-      <p class="problem-statement__quote">
-        <span class="problem-statement__line">Most design tools wait for you to know what you want.</span>
-        <span class="problem-statement__line">Draft works before that moment.</span>
-      </p>
+      <p class="problem-statement__quote">Some ideas make sense before they&nbsp;become words. Draft gives them a place to&nbsp;start.</p>
     </section>
 
     <div class="features-float-scene" id="featuresScene">
@@ -2008,41 +2271,44 @@
       <!-- Left floating cards — arranged in an ellipse around the center copy -->
       <div class="float-anchor fl-left fc-1" style="top:8%;left:-28px;--bob-dur:4.2s;--enter-delay:0.1s;--bob-delay:0s;">
         <div class="float-card-img" style="width:100px;height:100px;">
-          <img src="assets/float/image_aura_blue_014.jpg" alt="" loading="lazy">
+          <img src="assets/float/image_aura_blue_014.jpg" alt="" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="float-anchor fl-left fc-3" style="top:76%;left:-24px;--bob-dur:4.6s;--enter-delay:0.38s;--bob-delay:1s;">
         <div class="float-card-img" style="width:92px;height:118px;">
-          <img src="assets/float/image_athlete_red_015.jpg" alt="" loading="lazy">
+          <img src="assets/float/image_athlete_red_015.jpg" alt="" loading="lazy" decoding="async">
         </div>
       </div>
 
       <!-- Right floating cards — arranged in an ellipse around the center copy -->
       <div class="float-anchor fl-right fc-4" style="top:10%;right:-28px;--bob-dur:3.9s;--enter-delay:0.08s;--bob-delay:0.3s;">
         <div class="float-card-img" style="width:104px;height:80px;">
-          <img src="assets/float/image_aura_orange_013.jpg" alt="" loading="lazy">
+          <img src="assets/float/image_aura_orange_013.jpg" alt="" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="float-anchor fl-right fc-5" style="top:38%;right:-64px;--bob-dur:4.3s;--enter-delay:0.28s;--bob-delay:0.8s;">
         <div class="float-card-img" style="width:118px;height:84px;">
-          <img src="assets/float/image_nike_rhythm_003.jpg" alt="" loading="lazy">
+          <img src="assets/float/image_nike_rhythm_003.jpg" alt="" loading="lazy" decoding="async">
         </div>
       </div>
       <div class="float-anchor fl-right fc-6" style="top:76%;right:-24px;--bob-dur:3.6s;--enter-delay:0.44s;--bob-delay:1.2s;">
         <div class="float-card-img" style="width:96px;height:120px;">
-          <img src="assets/float/image_silhouettes_001.jpg" alt="" loading="lazy">
+          <img src="assets/float/image_silhouettes_001.jpg" alt="" loading="lazy" decoding="async">
         </div>
       </div>
 
       <header class="section-heading section-heading--features">
         <h2 class="section-heading__title">What Draft does</h2>
-        <p class="section-heading__sub">Four ways Draft turns a spoken idea into something you can actually use.</p>
+        <p class="section-heading__sub">Four ways Draft turns a spoken idea<br>into something you can actually&nbsp;use.</p>
       </header>
 
-      <section class="accordion-section accordion-section--framed" aria-labelledby="creates-label">
-        <header class="section-heading section-heading--accordion-head">
-          <h2 class="section-heading__title" id="creates-label">What Draft creates</h2>
-        </header>
+      <section class="accordion-section accordion-section--framed" aria-label="What Draft creates">
+        <div class="accordion-aura" aria-hidden="true">
+          <span class="accordion-aura__ellipse accordion-aura__ellipse--1"></span>
+          <span class="accordion-aura__ellipse accordion-aura__ellipse--2"></span>
+          <span class="accordion-aura__ellipse accordion-aura__ellipse--3"></span>
+          <span class="accordion-aura__ellipse accordion-aura__ellipse--4"></span>
+        </div>
         <div class="accordion-list">
 
           <div class="accordion-item" data-acc>
@@ -2051,7 +2317,7 @@
                 <span class="acc-dot" style="background:#C2E8C0;"></span>
                 Color
               </span>
-              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg class="acc-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
@@ -2066,7 +2332,7 @@
                 <span class="acc-dot" style="background:#A9A9FF;"></span>
                 UI
               </span>
-              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg class="acc-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
@@ -2081,7 +2347,7 @@
                 <span class="acc-dot" style="background:#FF8C6B;"></span>
                 Images
               </span>
-              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg class="acc-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
@@ -2096,7 +2362,7 @@
                 <span class="acc-dot" style="background:#D4945A;"></span>
                 Moodboard
               </span>
-              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <svg class="acc-chevron" width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                 <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </button>
@@ -2118,35 +2384,35 @@
     </header>
     <div class="built-grid">
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/swift.png" alt="Swift"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/swift.png" alt="Swift"></div>
         <span class="built-name">Swift</span>
       </div>
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/xcode.png" alt="Xcode"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/xcode.png" alt="Xcode"></div>
         <span class="built-name">Xcode</span>
       </div>
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/codex.png" alt="Claude Code"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/codex.png" alt="Claude Code"></div>
         <span class="built-name">Claude Code</span>
       </div>
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/claude-ai.png" alt="Claude"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/claude-ai.png" alt="Claude"></div>
         <span class="built-name">Claude</span>
       </div>
       <div class="built-card">
-        <div class="built-icon built-icon--figma"><img src="assets/tools/figma.webp" alt="Figma"></div>
+        <div class="built-icon built-icon--figma"><img loading="lazy" decoding="async" src="assets/tools/figma.webp" alt="Figma"></div>
         <span class="built-name">Figma</span>
       </div>
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/cursor.webp" alt="Cursor"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/cursor.webp" alt="Cursor"></div>
         <span class="built-name">Cursor</span>
       </div>
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/unsplash.png" alt="Unsplash"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/unsplash.png" alt="Unsplash"></div>
         <span class="built-name">Unsplash</span>
       </div>
       <div class="built-card">
-        <div class="built-icon"><img src="assets/tools/pexels.png" alt="Pexels"></div>
+        <div class="built-icon"><img loading="lazy" decoding="async" src="assets/tools/pexels.png" alt="Pexels"></div>
         <span class="built-name">Pexels</span>
       </div>
     </div>
@@ -2160,7 +2426,7 @@
       <div class="about-visual">
         <div class="about-photo-scene">
           <div class="about-photo-ring">
-            <img src="assets/about-photo.jpg" alt="Lucy Trepanier">
+            <img src="assets/about-photo.jpg" alt="Lucy Trepanier" width="208" height="314" loading="lazy" decoding="async">
           </div>
           <img src="assets/about-star-top.svg" class="about-sticker about-sticker-blob" alt="" loading="lazy" decoding="async">
           <img src="assets/about-star-bottom.svg" class="about-sticker about-sticker-star" alt="" loading="lazy" decoding="async">
@@ -2170,10 +2436,11 @@
       </div>
       <div class="about-copy">
         <p class="about-name">Lucy Trepanier</p>
-        <p class="about-bio">Lucy Trepanier is a Communication Design student at Parsons School of Design in NYC. Dyslexic by nature, she's always thought in images and feelings before words. <strong>Draft</strong> is the tool she wished had existed all along.</p>
+        <p class="about-bio">Lucy Trepanier is a graduate student in the MPS Communication Design program at Parsons School of Design in NYC. Dyslexic by nature, she's always thought in images and visuals before&nbsp;words. <strong>Draft</strong> is the tool she wished had existed all&nbsp;along.</p>
         <div class="about-contact" aria-label="Designer contact information">
           <a class="about-contact-link" href="mailto:lucytrep.labs@gmail.com">lucytrep.labs@gmail.com</a>
-          <a class="about-contact-link" href="https://ca.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer">LinkedIn / lucytrep</a>
+          <a class="about-contact-link" href="https://ca.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a class="about-contact-link" href="https://lucytrep.com/" target="_blank" rel="noopener noreferrer">Portfolio</a>
         </div>
       </div>
     </div>
@@ -2184,98 +2451,113 @@
   </footer>
 
   <script>
-    // ── Go-stop carousel — triple-set seamless infinite loop ──
+    // ── Go-stop carousel — starts only when near viewport (saves ~60 image requests on first paint) ──
     (function () {
-      /* Bump when replacing any file under assets/library/ so browsers pick up new art (same filename). */
-      const LIBRARY_ASSET_VERSION = '20260514b';
-      const PNGS = new Set(['soft-spatial-ui-2', 'soft-spatial-ui-3', 'soft-spatial-ui-4']);
-      const images = [
-        'desert-dreams-1','desert-dreams-2','desert-dreams-3',
-        'desert-dreams-4','color-coral','desert-dreams-5','home-orange-car',
-        /* Slide uses assets/library/ui-viriability.jpg — replace that file (or rename your export to match) */
-        'ui-viriability','home-jumping','home-neon-rays','home-desert-art',
-        'color-black-cherry','home-athlete-red','open-court-1','open-court-2',
-        'color-pistachio','ui-skill-rate','open-court-3','open-court-4','open-court-5',
-        'color-osage','open-court-6','open-court-7','dir3-athletic','dir3-track','home-stadium'
-      ];
-
       const track = document.getElementById('carouselTrack');
-      const SLIDE_MS = 520;
-      const PAUSE_MS = 1900;
-      const N = images.length;
+      const section = document.getElementById('carouselSection');
+      if (!track || !section) return;
 
-      function makeCard(name) {
-        const ext = PNGS.has(name) ? 'png' : 'jpg';
-        const div = document.createElement('div');
-        div.className = 'carousel-card';
-        const img = document.createElement('img');
-        img.src = 'assets/library/' + encodeURIComponent(name) + '.' + ext + '?v=' + LIBRARY_ASSET_VERSION;
-        img.alt = name;
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        div.appendChild(img);
-        return div;
-      }
+      let started = false;
 
-      // Triple the cards: [A, B, C] — always stay in the middle set B
-      [...images, ...images, ...images].forEach(n => track.appendChild(makeCard(n)));
+      function initCarousel() {
+        if (started) return;
+        started = true;
 
-      const allCards = [...track.querySelectorAll('.carousel-card')];
+        const LIBRARY_ASSET_VERSION = '20260514b';
+        const PNGS = new Set(['soft-spatial-ui-2', 'soft-spatial-ui-3', 'soft-spatial-ui-4']);
+        const images = [
+          'desert-dreams-1','desert-dreams-2','desert-dreams-3',
+          'desert-dreams-4','color-coral','desert-dreams-5','home-orange-car',
+          'ui-viriability','home-jumping','home-neon-rays','home-desert-art',
+          'color-black-cherry','home-athlete-red','open-court-1','open-court-2',
+          'color-pistachio','ui-skill-rate','open-court-3','open-court-4','open-court-5',
+          'color-osage','open-court-6','open-court-7','dir3-athletic','dir3-track','home-stadium'
+        ];
 
-      // idx always lives in the middle set: N .. 2N-1
-      let idx = N;
+        const SLIDE_MS = 520;
+        const PAUSE_MS = 1900;
+        const N = images.length;
 
-      function cw() {
-        const gap = parseFloat(getComputedStyle(track).gap) || 10;
-        return allCards[0].getBoundingClientRect().width + gap;
-      }
+        function makeCard(name) {
+          const ext = PNGS.has(name) ? 'png' : 'jpg';
+          const div = document.createElement('div');
+          div.className = 'carousel-card';
+          const img = document.createElement('img');
+          img.src = 'assets/library/' + encodeURIComponent(name) + '.' + ext + '?v=' + LIBRARY_ASSET_VERSION;
+          img.alt = name;
+          img.loading = 'lazy';
+          img.decoding = 'async';
+          if ('fetchPriority' in img) img.fetchPriority = 'low';
+          div.appendChild(img);
+          return div;
+        }
 
-      function offsetFor(i) {
-        const vw = track.parentElement.offsetWidth;
-        const cardW = allCards[0].getBoundingClientRect().width;
-        return (vw / 2 - cardW / 2) - i * cw();
-      }
+        [...images, ...images, ...images].forEach(function (n) {
+          track.appendChild(makeCard(n));
+        });
 
-      function setPos(i, animated) {
-        track.style.transition = animated
-          ? `transform ${SLIDE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`
-          : 'none';
-        track.style.transform = `translateX(${offsetFor(i)}px)`;
-      }
+        const allCards = [...track.querySelectorAll('.carousel-card')];
+        let idx = N;
 
-      function highlight(i) {
-        allCards.forEach(c => c.classList.remove('is-center'));
-        if (allCards[i]) allCards[i].classList.add('is-center');
-      }
+        function cw() {
+          const gap = parseFloat(getComputedStyle(track).gap) || 10;
+          return allCards[0].getBoundingClientRect().width + gap;
+        }
 
-      // Init: sit at first card of middle set, highlight it
-      setPos(idx, false);
-      setTimeout(() => {
-        highlight(idx);
-        setTimeout(step, PAUSE_MS);
-      }, 100);
+        function offsetFor(i) {
+          const vw = track.parentElement.offsetWidth;
+          const cardW = allCards[0].getBoundingClientRect().width;
+          return (vw / 2 - cardW / 2) - i * cw();
+        }
 
-      function step() {
-        allCards[idx].classList.remove('is-center');
-        idx++;
+        function setPos(i, animated) {
+          track.style.transition = animated
+            ? `transform ${SLIDE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`
+            : 'none';
+          track.style.transform = `translateX(${offsetFor(i)}px)`;
+        }
 
-        // Always animate forward — even into the third set
-        setPos(idx, true);
+        function highlight(i) {
+          allCards.forEach(function (c) { c.classList.remove('is-center'); });
+          if (allCards[i]) allCards[i].classList.add('is-center');
+        }
 
-        setTimeout(() => {
-          // After the slide lands: if we entered the third set,
-          // silently snap back to the equivalent card in the middle set.
-          // Both positions show the same image so the jump is invisible.
-          if (idx >= 2 * N) {
-            track.style.transition = 'none';
-            idx -= N;
-            track.style.transform = `translateX(${offsetFor(idx)}px)`;
-            track.offsetHeight; // force reflow
-          }
-
+        setPos(idx, false);
+        setTimeout(function () {
           highlight(idx);
           setTimeout(step, PAUSE_MS);
-        }, SLIDE_MS + 16);
+        }, 100);
+
+        function step() {
+          allCards[idx].classList.remove('is-center');
+          idx++;
+          setPos(idx, true);
+          setTimeout(function () {
+            if (idx >= 2 * N) {
+              track.style.transition = 'none';
+              idx -= N;
+              track.style.transform = `translateX(${offsetFor(idx)}px)`;
+              track.offsetHeight;
+            }
+            highlight(idx);
+            setTimeout(step, PAUSE_MS);
+          }, SLIDE_MS + 16);
+        }
+      }
+
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver(
+          function (entries) {
+            if (entries[0].isIntersecting) {
+              initCarousel();
+              io.disconnect();
+            }
+          },
+          { rootMargin: '240px 0px 240px 0px', threshold: 0 }
+        );
+        io.observe(section);
+      } else {
+        initCarousel();
       }
     })();
   </script>
@@ -2306,7 +2588,11 @@
           }, 5000);
         }, 3000);
       }
-      scheduleAuto();
+      if (window.requestIdleCallback) {
+        requestIdleCallback(() => { scheduleAuto(); }, { timeout: 2800 });
+      } else {
+        setTimeout(scheduleAuto, 1600);
+      }
 
       // tap Drafts tab → mock2 (Drafts active); tap All items → mock1
       document.getElementById('tabDrafts').addEventListener('click', () => {
@@ -2427,7 +2713,10 @@
 
       if (cta) {
         cta.addEventListener('click', function () {
-          openModal({});
+          const reel = document.getElementById('reelSection');
+          if (!reel) return;
+          const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          reel.scrollIntoView({ behavior: reduce ? 'instant' : 'smooth', block: 'center' });
         });
       }
 
@@ -2530,7 +2819,7 @@
   </script>
 
   <script>
-    // ── Float cards: scroll-linked enter / hold / exit (halftone fc-2 removed) ──
+    // ── Float cards: scroll-linked enter / hold / exit ──
     (function () {
       const scene = document.getElementById('featuresScene');
       if (!scene) return;
