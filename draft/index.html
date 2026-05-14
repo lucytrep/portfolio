@@ -634,7 +634,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      height: clamp(88px, 22vw, 160px);
+      height: clamp(72px, 18vw, 132px);
       pointer-events: none;
       z-index: 2;
     }
@@ -643,9 +643,9 @@
       top: 0;
       background: linear-gradient(
         to bottom,
-        rgba(0, 0, 0, 0.88) 0%,
-        rgba(0, 0, 0, 0.55) 28%,
-        rgba(0, 0, 0, 0.22) 58%,
+        rgba(10, 8, 9, 0.82) 0%,
+        rgba(10, 8, 9, 0.46) 24%,
+        rgba(10, 8, 9, 0.18) 56%,
         rgba(0, 0, 0, 0) 100%
       );
     }
@@ -654,9 +654,9 @@
       bottom: 0;
       background: linear-gradient(
         to top,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0.52) 30%,
-        rgba(0, 0, 0, 0.18) 62%,
+        rgba(10, 8, 9, 0.86) 0%,
+        rgba(10, 8, 9, 0.48) 24%,
+        rgba(10, 8, 9, 0.16) 58%,
         rgba(0, 0, 0, 0) 100%
       );
     }
@@ -971,7 +971,7 @@
 
       .hero-desc-section {
         margin-top: clamp(-156px, -24vw, -112px);
-        padding: clamp(124px, 28vw, 180px) 24px 0;
+        padding: clamp(132px, 30vw, 188px) 28px clamp(36px, 7vw, 56px);
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0) 0%,
@@ -979,12 +979,13 @@
           rgba(0, 0, 0, 0.74) 36%,
           var(--bg-base) 60%
         );
-        gap: 24px;
+        gap: 30px;
       }
 
       .hero-desc {
-        max-width: 21rem;
+        max-width: 19rem;
         padding-top: 0;
+        line-height: 1.34;
       }
     }
 
@@ -1039,13 +1040,14 @@
 
       .hero-desc-section {
         margin-top: clamp(-128px, -14vw, -84px);
-        padding: clamp(120px, 15vw, 168px) max(32px, 5vw) clamp(28px, 4vw, 48px);
+        padding: clamp(144px, 17vw, 208px) max(32px, 5vw) clamp(56px, 6vw, 92px);
         background: linear-gradient(
           to bottom,
-          rgba(20, 5, 9, 0) 0%,
-          rgba(18, 6, 10, 0.24) 18%,
-          rgba(10, 3, 6, 0.66) 42%,
-          var(--bg-base) 78%
+          rgba(28, 10, 14, 0) 0%,
+          rgba(44, 18, 24, 0.18) 12%,
+          rgba(34, 12, 18, 0.44) 28%,
+          rgba(18, 7, 11, 0.76) 52%,
+          var(--bg-base) 82%
         );
         gap: clamp(24px, 3vw, 36px);
       }
@@ -1053,6 +1055,17 @@
       .carousel-section {
         margin-top: clamp(8px, 2vw, 20px);
         padding-top: clamp(12px, 2vw, 24px);
+      }
+
+      .hero-desc {
+        font-size: clamp(17px, 2.6vw, 26px);
+        line-height: 1.26;
+        max-width: 32rem;
+      }
+
+      .cta-btn {
+        font-size: clamp(16px, 2.2vw, 24px);
+        padding: 0.58em 1.35em;
       }
     }
 
@@ -1130,15 +1143,16 @@
 
       .hero-desc-section {
         margin-top: clamp(-144px, -12vw, -96px);
-        padding: clamp(132px, 14vw, 188px) max(40px, 5vw, 72px) clamp(36px, 4vw, 56px);
+        padding: clamp(156px, 15vw, 228px) max(40px, 5vw, 72px) clamp(64px, 6vw, 104px);
         background: linear-gradient(
           to bottom,
-          rgba(18, 4, 7, 0) 0%,
-          rgba(12, 2, 4, 0.22) 18%,
-          rgba(8, 2, 4, 0.62) 40%,
-          var(--bg-base) 76%
+          rgba(26, 8, 12, 0) 0%,
+          rgba(40, 14, 20, 0.16) 12%,
+          rgba(30, 10, 16, 0.42) 28%,
+          rgba(16, 6, 10, 0.72) 50%,
+          var(--bg-base) 80%
         );
-        gap: clamp(28px, 3vw, 40px);
+        gap: clamp(36px, 4vw, 52px);
       }
 
       .hero {
@@ -1193,7 +1207,7 @@
       }
 
       .hero-desc {
-        max-width: 620px;
+        max-width: 34rem;
         padding-top: 0;
       }
 
@@ -1393,8 +1407,8 @@
 
     .about-photo-scene {
       position: relative;
-      width: 192px;
-      height: 192px;
+      width: 224px;
+      height: 224px;
       overflow: visible;
       isolation: isolate;
     }
@@ -1523,14 +1537,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 42px;
-      padding: 11px 16px;
+      min-height: 48px;
+      padding: 13px 18px;
       border-radius: 999px;
       border: 0.5px solid rgba(255, 255, 255, 0.12);
       background: rgba(255, 255, 255, 0.05);
       color: rgba(255, 255, 255, 0.82);
       text-decoration: none;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 500;
       letter-spacing: -0.01em;
       line-height: 1.2;
@@ -1560,13 +1574,13 @@
         align-items: stretch;
       }
 
-      .section-heading--about {
-        align-self: stretch;
-        width: 100%;
-        max-width: 100%;
-        margin: 0 auto;
-        text-align: center;
-      }
+    .section-heading--about {
+      align-self: stretch;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      text-align: center;
+    }
 
       .about-columns {
         flex-direction: row;
