@@ -149,6 +149,19 @@
         border-bottom-color: rgba(0, 0, 0, 0.08) !important;
       }
     }
+
+    /* Force overlay visible on mobile regardless of JS timing */
+    @media (max-width: 800px) {
+      #interaction-overlay {
+        background: rgba(255, 255, 255, 0.9) !important;
+        pointer-events: auto !important;
+      }
+      #interaction-overlay .overlay-headline,
+      #interaction-overlay #explore-btn {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -249,16 +262,16 @@
       showOverlay();
     });
 
-    // Scroll-to-reveal / scroll-to-dismiss
+    // Scroll-to-reveal / scroll-to-dismiss (dismiss disabled on mobile)
     function handleScrollIntent(deltaY) {
       if (deltaY > 0) {
         showOverlay();
-      } else if (deltaY < 0) {
+      } else if (deltaY < 0 && !window.matchMedia('(max-width: 800px)').matches) {
         hideOverlay();
       }
     }
 
-    // First interaction on the homepage should also surface the overlay.
+    // First interaction surfaces the overlay on desktop (mobile is always-on via CSS)
     window.addEventListener('pointerdown', activateOverlayFromInteraction, { passive: true });
 
     // Wheel (desktop + trackpad)
