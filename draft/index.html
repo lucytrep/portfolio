@@ -1153,7 +1153,8 @@
       }
 
       .hero-desc-spacer--after-phone {
-        min-height: clamp(48px, 12vw, 96px);
+        /* px floor + vw so narrow phones get air; cap keeps Pro Max / wide mobile from a huge black band */
+        min-height: clamp(26px, calc(14px + 4.2vw), 48px);
       }
 
       .hero-desc-spacer--before-cta {
@@ -1165,10 +1166,9 @@
         z-index: 12;
         isolation: isolate;
         pointer-events: none;
-        /* Less pull-up than default mobile so the lede sits farther below the phone */
-        margin-top: clamp(-168px, -26vw, -112px);
+        margin-top: clamp(-204px, -33vw, -136px);
         padding:
-          clamp(140px, 32vw, 212px)
+          clamp(128px, 27vw, 188px)
           clamp(24px, 7.5vw, 44px)
           calc(clamp(40px, 8vw, 72px) + env(safe-area-inset-bottom, 0px));
         background: linear-gradient(
