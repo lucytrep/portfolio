@@ -765,6 +765,12 @@
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
+    .section-heading--features .section-heading__sub {
+      max-width: 24rem;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.42;
+    }
+
     .section-heading--accordion-head {
       opacity: 0;
       transform: translateY(10px);
@@ -971,7 +977,7 @@
 
       .hero-desc-section {
         margin-top: clamp(-156px, -24vw, -112px);
-        padding: clamp(132px, 30vw, 188px) 28px clamp(36px, 7vw, 56px);
+        padding: clamp(140px, 32vw, 196px) 34px clamp(64px, 11vw, 96px);
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0) 0%,
@@ -979,13 +985,18 @@
           rgba(0, 0, 0, 0.74) 36%,
           var(--bg-base) 60%
         );
-        gap: 30px;
+        gap: 38px;
       }
 
       .hero-desc {
-        max-width: 19rem;
+        max-width: 17rem;
         padding-top: 0;
-        line-height: 1.34;
+        line-height: 1.4;
+        letter-spacing: -0.018em;
+      }
+
+      .cta-btn {
+        margin-bottom: clamp(28px, 6vw, 44px);
       }
     }
 
@@ -1164,11 +1175,10 @@
         letter-spacing: -0.042em;
       }
 
-      .features {
-        max-width: 960px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 0 64px;
+      .features-float-scene {
+        min-height: 520px;
+        padding-top: clamp(48px, 7vw, 84px);
+        padding-bottom: clamp(24px, 4vw, 40px);
       }
 
       .problem-statement {
@@ -1263,12 +1273,40 @@
     /* ── Floating cards around features section ── */
     .features-float-scene {
       position: relative;
-      min-height: 480px;
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      padding: clamp(28px, 6vw, 56px) 0 clamp(56px, 8vw, 88px);
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(18px, 4vw, 30px);
+    }
+
+    .features-float-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(18px, 5vw, 44px);
+      pointer-events: none;
+    }
+
+    .features-float-row--top {
+      margin-bottom: clamp(8px, 1vw, 12px);
+    }
+
+    .features-float-row--bottom {
+      margin-top: clamp(16px, 3vw, 28px);
     }
 
     .float-anchor {
-      position: absolute;
+      position: relative;
       will-change: transform;
+      z-index: 0;
+      pointer-events: none;
     }
 
     .float-card-img {
@@ -1755,16 +1793,37 @@
       transform: none;
     }
 
-    /* Feature cards */
-    .feature {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    .features-float-scene .section-heading--features {
+      position: relative;
+      z-index: 1;
+      padding: 0 24px;
+      max-width: 30rem;
     }
-    .features-float-scene.revealed .feature:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
-    .features-float-scene.revealed .feature:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.24s; }
-    .features-float-scene.revealed .feature:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.38s; }
+
+    .accordion-section--framed {
+      position: relative;
+      z-index: 1;
+      background: transparent;
+      padding: clamp(4px, 1vw, 10px) 20px 0;
+      width: min(100%, 560px);
+    }
+
+    .accordion-section--framed .section-heading--accordion-head {
+      padding: 0 0 16px;
+      opacity: 1;
+      transform: none;
+      max-width: 100%;
+    }
+
+    .accordion-section--framed .section-heading__title {
+      font-size: clamp(22px, 4vw, 28px);
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+
+    .accordion-section--framed .accordion-list {
+      max-width: 100%;
+    }
 
     .accordion-section.revealed .section-heading--accordion-head { opacity: 1; transform: none; }
 
@@ -1853,130 +1912,117 @@
 
     <div class="features-float-scene" id="featuresScene">
 
-      <!-- Left floating cards — bleed off left edge -->
-      <div class="float-anchor fl-left fc-1" style="top:4%;left:-28px;--bob-dur:4.2s;--enter-delay:0.1s;--bob-delay:0s;">
-        <div class="float-card-img" style="width:96px;height:96px;">
+      <!-- Left floating cards — arranged in an ellipse around the center copy -->
+      <div class="float-anchor fl-left fc-1" style="top:8%;left:-28px;--bob-dur:4.2s;--enter-delay:0.1s;--bob-delay:0s;">
+        <div class="float-card-img" style="width:100px;height:100px;">
           <img src="assets/float/image_aura_blue_014.jpg" alt="" loading="lazy">
         </div>
       </div>
-      <div class="float-anchor fl-left fc-2" style="top:37%;left:-22px;--bob-dur:3.7s;--enter-delay:0.22s;--bob-delay:0.5s;">
-        <div class="float-card-img" style="width:108px;height:80px;">
+      <div class="float-anchor fl-left fc-2" style="top:38%;left:-64px;--bob-dur:3.7s;--enter-delay:0.22s;--bob-delay:0.5s;">
+        <div class="float-card-img" style="width:118px;height:88px;">
           <img src="assets/float/image_halftone_004.jpg" alt="" loading="lazy">
         </div>
       </div>
-      <div class="float-anchor fl-left fc-3" style="top:64%;left:-26px;--bob-dur:4.6s;--enter-delay:0.38s;--bob-delay:1s;">
-        <div class="float-card-img" style="width:88px;height:112px;">
+      <div class="float-anchor fl-left fc-3" style="top:76%;left:-24px;--bob-dur:4.6s;--enter-delay:0.38s;--bob-delay:1s;">
+        <div class="float-card-img" style="width:92px;height:118px;">
           <img src="assets/float/image_athlete_red_015.jpg" alt="" loading="lazy">
         </div>
       </div>
 
-      <!-- Right floating cards — bleed off right edge -->
-      <div class="float-anchor fl-right fc-4" style="top:6%;right:-28px;--bob-dur:3.9s;--enter-delay:0.08s;--bob-delay:0.3s;">
-        <div class="float-card-img" style="width:100px;height:76px;">
+      <!-- Right floating cards — arranged in an ellipse around the center copy -->
+      <div class="float-anchor fl-right fc-4" style="top:10%;right:-28px;--bob-dur:3.9s;--enter-delay:0.08s;--bob-delay:0.3s;">
+        <div class="float-card-img" style="width:104px;height:80px;">
           <img src="assets/float/image_aura_orange_013.jpg" alt="" loading="lazy">
         </div>
       </div>
-      <div class="float-anchor fl-right fc-5" style="top:39%;right:-24px;--bob-dur:4.3s;--enter-delay:0.28s;--bob-delay:0.8s;">
-        <div class="float-card-img" style="width:112px;height:80px;">
+      <div class="float-anchor fl-right fc-5" style="top:38%;right:-64px;--bob-dur:4.3s;--enter-delay:0.28s;--bob-delay:0.8s;">
+        <div class="float-card-img" style="width:118px;height:84px;">
           <img src="assets/float/image_nike_rhythm_003.jpg" alt="" loading="lazy">
         </div>
       </div>
-      <div class="float-anchor fl-right fc-6" style="top:66%;right:-26px;--bob-dur:3.6s;--enter-delay:0.44s;--bob-delay:1.2s;">
-        <div class="float-card-img" style="width:90px;height:116px;">
+      <div class="float-anchor fl-right fc-6" style="top:76%;right:-24px;--bob-dur:3.6s;--enter-delay:0.44s;--bob-delay:1.2s;">
+        <div class="float-card-img" style="width:96px;height:120px;">
           <img src="assets/float/image_silhouettes_001.jpg" alt="" loading="lazy">
         </div>
       </div>
 
       <header class="section-heading section-heading--features">
-        <h2 class="section-heading__title">What it does</h2>
+        <h2 class="section-heading__title">What Draft does</h2>
+        <p class="section-heading__sub">Four ways Draft turns a spoken idea into something you can actually use.</p>
       </header>
-      <section class="features">
-        <div class="feature">
-          <h3>Say the idea out loud</h3>
-          <p>Draft is listening. Speak the feeling, the reference, the half-thought — and it turns into something real.</p>
-        </div>
-        <div class="feature">
-          <h3>Three directions, instantly</h3>
-          <p>Every prompt comes back as three distinct creative directions. Pick one, combine them, or start over.</p>
-        </div>
-        <div class="feature">
-          <h3>Built for how designers actually think</h3>
-          <p>Not a blank canvas. Not a prompt box. A native iOS tool that works the way your brain does.</p>
+
+      <section class="accordion-section accordion-section--framed" aria-labelledby="creates-label">
+        <header class="section-heading section-heading--accordion-head">
+          <h2 class="section-heading__title" id="creates-label">What Draft creates</h2>
+        </header>
+        <div class="accordion-list">
+
+          <div class="accordion-item" data-acc>
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-label-row">
+                <span class="acc-dot" style="background:#C2E8C0;"></span>
+                Color
+              </span>
+              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-content">Palette suggestions pulled from your brief — earthy, electric, muted, or bold. Always tied back to the mood you described.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-acc>
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-label-row">
+                <span class="acc-dot" style="background:#A9A9FF;"></span>
+                UI
+              </span>
+              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-content">Interface references that match your direction — typography, layout, and interaction patterns from real apps that feel like what you're building.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-acc>
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-label-row">
+                <span class="acc-dot" style="background:#FF8C6B;"></span>
+                Images
+              </span>
+              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-content">Photography, illustration, and texture pulled to match the feeling — not just keywords. Draft finds images that capture the vibe, not just the subject.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item" data-acc>
+            <button class="accordion-header" aria-expanded="false">
+              <span class="accordion-label-row">
+                <span class="acc-dot" style="background:#D4945A;"></span>
+                Moodboard
+              </span>
+              <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <div class="accordion-body">
+              <p class="accordion-content">Everything pulled together into one shareable board. Color, UI, imagery — formatted and ready to present to a client or kick off a design sprint.</p>
+            </div>
+          </div>
+
         </div>
       </section>
 
     </div><!-- /features-float-scene -->
 
   </main>
-
-  <section class="accordion-section">
-    <header class="section-heading section-heading--accordion-head">
-      <h2 class="section-heading__title">What Draft creates</h2>
-    </header>
-    <div class="accordion-list">
-
-      <div class="accordion-item" data-acc>
-        <button class="accordion-header" aria-expanded="false">
-          <span class="accordion-label-row">
-            <span class="acc-dot" style="background:#C2E8C0;"></span>
-            Color
-          </span>
-          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="accordion-body">
-          <p class="accordion-content">Palette suggestions pulled from your brief — earthy, electric, muted, or bold. Always tied back to the mood you described.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item" data-acc>
-        <button class="accordion-header" aria-expanded="false">
-          <span class="accordion-label-row">
-            <span class="acc-dot" style="background:#A9A9FF;"></span>
-            UI
-          </span>
-          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="accordion-body">
-          <p class="accordion-content">Interface references that match your direction — typography, layout, and interaction patterns from real apps that feel like what you're building.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item" data-acc>
-        <button class="accordion-header" aria-expanded="false">
-          <span class="accordion-label-row">
-            <span class="acc-dot" style="background:#FF8C6B;"></span>
-            Images
-          </span>
-          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="accordion-body">
-          <p class="accordion-content">Photography, illustration, and texture pulled to match the feeling — not just keywords. Draft finds images that capture the vibe, not just the subject.</p>
-        </div>
-      </div>
-
-      <div class="accordion-item" data-acc>
-        <button class="accordion-header" aria-expanded="false">
-          <span class="accordion-label-row">
-            <span class="acc-dot" style="background:#D4945A;"></span>
-            Moodboard
-          </span>
-          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-        <div class="accordion-body">
-          <p class="accordion-content">Everything pulled together into one shareable board. Color, UI, imagery — formatted and ready to present to a client or kick off a design sprint.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
 
   <section class="built-section" id="builtSection">
     <header class="section-heading section-heading--built">
