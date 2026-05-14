@@ -5,52 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Draft — AI-powered creative brief tool for iOS">
   <title>Draft — AI-powered creative brief tool</title>
+  <link rel="icon" type="image/png" href="assets/favicon-64.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <style>
-    *, *::before, *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Regular.otf'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Medium.otf'); font-weight: 500; font-display: swap; }
+    @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Semibold.otf'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Bold.otf'); font-weight: 700; font-display: swap; }
+    @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Heavy.otf'); font-weight: 800; font-display: swap; }
+    @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Black.otf'); font-weight: 900; font-display: swap; }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
     body {
       background: #000;
       color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Hero wrapper ── */
-    .hero-wrapper {
-      position: relative;
-      background-image: url('assets/gradient-bg.png');
-      background-size: 180%;
-      background-position: center center;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .hero-wrapper::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.28);
-      pointer-events: none;
-    }
-
-    .hero-wrapper::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 200px;
-      background: linear-gradient(to bottom, transparent, #000);
-      pointer-events: none;
     }
 
     /* ── Nav ── */
@@ -60,274 +32,1552 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 28px 24px;
-      padding-top: calc(28px + env(safe-area-inset-top));
+      padding: 20px 24px;
+      padding-top: calc(40px + env(safe-area-inset-top));
     }
 
     .nav-logo {
-      height: 22px;
-      filter: drop-shadow(0 0 12px rgba(0,0,0,0.7));
+      height: 30px;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.7));
+    }
+
+    .hamburger {
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #fff;
+      border-radius: 2px;
+      transition: opacity 0.2s, transform 0.2s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── Full-screen menu ── */
+    .nav-menu {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .nav-menu.open { opacity: 1; pointer-events: all; }
+
+    .nav-menu a {
+      font-size: clamp(32px, 8vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+      transition: color 0.15s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a:active { color: #fff; }
+
+    .nav-menu-close {
+      position: absolute;
+      top: calc(28px + env(safe-area-inset-top));
+      right: 24px;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 8px;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Carousel ── */
+    .carousel-section {
+      position: relative;
+      padding: 40px 0 52px;
+      overflow-x: clip;
+      overflow-y: visible;
+    }
+
+    .carousel-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .carousel-viewport {
+      width: 100%;
+      padding: 24px 0; /* vertical breathing room for pop */
+    }
+
+    .carousel-track {
+      display: flex;
+      gap: 10px;
+      will-change: transform;
+    }
+
+    .carousel-card {
+      flex: none;
+      height: min(38svh, 260px);
+      aspect-ratio: 3 / 4;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+      transition: transform 0.5s cubic-bezier(0.34, 1.4, 0.64, 1),
+                  box-shadow 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
+      z-index: 0;
+    }
+
+    /* scale expands symmetrically from center — no margin shift */
+    .carousel-card.is-center {
+      transform: scale(1.12);
+      box-shadow: 0 16px 56px rgba(0,0,0,0.7),
+                  0 0 0 1px rgba(255,255,255,0.12),
+                  0 0 48px rgba(255,255,255,0.07);
+      z-index: 2;
+    }
+
+    .carousel-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top left;
+      display: block;
+    }
+
+    /* ── Above-fold: everything that fits on one screen ── */
+    .above-fold {
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Hero wrapper ── */
+    .hero-wrapper {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      max-height: 60svh;
+      overflow: hidden;
+    }
+
+    /* Background image — flipped vertically, dimmed */
+    .hero-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: -5% 0;
+      background-image: url('assets/gradient-bg.png');
+      background-size: cover;
+      background-position: center 70%;
+      transform: scaleY(-1);
+      opacity: 0.72;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* sits ABOVE the phone — fades bottom into black */
+    .hero-wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 65%;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.6) 32%, #000 65%);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 24px;
+      padding-top: calc(28px + env(safe-area-inset-top));
     }
 
     /* ── Hero ── */
     .hero {
       position: relative;
-      z-index: 10;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      padding: 20px 28px 96px;
+      padding: 12px 16px 0;
     }
 
     .eyebrow {
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 800;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      margin-bottom: 22px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 5;
     }
 
-    h1 {
-      font-size: clamp(36px, 9vw, 92px);
+    .hero-headline {
+      font-size: clamp(40px, 11.5vw, 160px);
       font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.0;
+      letter-spacing: -0.045em;
+      line-height: 1;
       color: #fff;
-      text-shadow: 0 2px 40px rgba(0,0,0,0.45);
-      margin-bottom: 18px;
+      margin: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hl-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    @keyframes phoneRise {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Phone hero (real PNG mockup) ── */
+    .phone-hero {
+      position: relative;
+      z-index: 2;
+      width: min(64vw, 280px);
+      margin: 22px auto 0;
+      display: block;
+      filter: drop-shadow(0px -4px 10px rgba(0,0,0,0.28));
+      animation: phoneRise 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+    }
+
+    .phone-hero img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* second screen layered on top — JS drives opacity */
+    .phone-img-2 {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    /* invisible tap zones over the Drafts / All items tab bar */
+    .phone-tabs {
+      position: absolute;
+      top: 16%;
+      left: 8%;
+      right: 8%;
+      height: 7%;
+      display: flex;
+      z-index: 10;
+      cursor: pointer;
+    }
+
+    .phone-tab-btn {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ── Hero description (below phone, above carousel) ── */
+    .hero-desc-section {
+      position: relative;
+      z-index: 10;
+      flex-shrink: 0;
+      padding: 20px 40px 28px;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .hero-desc {
+      font-size: clamp(18px, 4.5vw, 32px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      max-width: 540px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-desc strong {
+      font-weight: 700;
+      color: #fff;
+    }
+    .hero-desc .char {
+      opacity: 0.15;
+    }
+
+    /* ── Tagline section (below carousel) ── */
+    .tagline-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 64px 28px 72px;
+    }
+
+    .phone-hero-frame {
+      width: 100%;
+      aspect-ratio: 393 / 852;
+      background: #111;
+      border-radius: 13.5% / 6.2%;
+      border: 1.5px solid rgba(255,255,255,0.18);
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 5px #1e1e1e,
+        0 0 0 6.5px rgba(255,255,255,0.08);
+    }
+
+    /* dynamic island */
+    .phone-hero-frame::before {
+      content: '';
+      position: absolute;
+      top: 3.2%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 28%;
+      height: 3.8%;
+      background: #000;
+      border-radius: 20px;
+      z-index: 5;
+    }
+
+    .phone-hero-screen {
+      position: absolute;
+      inset: 1.5%;
+      border-radius: 12% / 5.5%;
+      background: #050505;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+    }
+
+    .phone-hero-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* top-left cell spans both rows for the large card */
+    .phone-hero-screen img:first-child {
+      grid-row: span 2;
+    }
+
+    /* status bar overlay */
+    .phone-hero-screen::before {
+      content: '9:41';
+      position: absolute;
+      top: 7%;
+      left: 6%;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      z-index: 4;
+      letter-spacing: -0.02em;
     }
 
     .hero-sub {
       font-size: 15px;
       line-height: 1.65;
-      color: rgba(255,255,255,0.72);
-      text-shadow: 0 1px 12px rgba(0,0,0,0.5);
+      color: rgba(255,255,255,0.65);
       max-width: 320px;
-      margin-bottom: 40px;
+      margin-bottom: 28px;
     }
 
     .cta-btn {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 16px 32px;
-      min-height: 52px;
-      border: 1.5px solid rgba(255,255,255,0.5);
+      justify-content: center;
+      gap: 8px;
+      padding: 0.55em 1.4em;
+      height: auto;
+      border: 0.5px solid rgba(255,255,255,0.55);
       border-radius: 100px;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
+      font-size: clamp(18px, 4.5vw, 32px);
+      font-weight: 400;
+      font-family: inherit;
       color: #fff;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       text-decoration: none;
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      background: rgba(255,255,255,0.1);
       -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.2s, background 0.2s;
+      cursor: pointer;
+      letter-spacing: -0.01em;
     }
 
-    .cta-btn:active {
-      background: rgba(255,255,255,0.2);
-      border-color: rgba(255,255,255,0.8);
-    }
+    .cta-btn:active { opacity: 0.7; }
 
-    .cta-arrow {
-      display: inline-block;
-      transition: transform 0.2s ease;
-    }
+    .cta-arrow { display: inline-block; font-size: 15px; }
 
     @media (hover: hover) {
-      .cta-btn:hover {
-        border-color: rgba(255,255,255,0.85);
-        background: rgba(255,255,255,0.16);
-      }
-      .cta-btn:hover .cta-arrow {
-        transform: translateX(4px);
-      }
+      .cta-btn:hover { opacity: 0.88; }
     }
 
     /* ── Reel video ── */
-    .reel-section {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-    }
+    .reel-section { position: relative; width: 100%; overflow: hidden; }
 
     .reel-section video {
-      display: block;
-      width: 100%;
+      display: block; width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
     }
 
-    /* fade top and bottom edges into black */
     .reel-section::before,
     .reel-section::after {
       content: '';
       position: absolute;
-      left: 0;
-      right: 0;
+      left: 0; right: 0;
       height: 80px;
       pointer-events: none;
       z-index: 1;
     }
 
-    .reel-section::before {
-      top: 0;
-      background: linear-gradient(to bottom, #000, transparent);
+    .reel-section::before { top: 0; background: linear-gradient(to bottom, #000 0%, rgba(0,0,0,0.3) 60%, transparent); }
+    .reel-section::after  { bottom: 0; background: linear-gradient(to top, #000, transparent); }
+
+    .reel-label {
+      padding: 12px 40px 36px;
+      background: #000;
+      font-size: clamp(18px, 4.5vw, 32px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      color: rgba(255,255,255,0.85);
+      text-align: center;
     }
 
-    .reel-section::after {
-      bottom: 0;
-      background: linear-gradient(to top, #000, transparent);
+    /* ── Section label (iOS-style grouped header) ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      padding: 0 20px 10px;
     }
 
-    /* ── Features ── */
+    /* ── Features — iOS grouped cards ── */
     .features {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1px;
-      background: rgba(255,255,255,0.07);
-      border-top: 1px solid rgba(255,255,255,0.07);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 0 16px 64px;
+      background: #000;
     }
 
     .feature {
-      background: #000;
-      padding: 40px 28px;
-    }
-
-    .feature-num {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.2);
-      margin-bottom: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 0.5px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 18px 20px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
 
     .feature h3 {
-      font-size: 17px;
+      font-size: 15px;
       font-weight: 600;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       line-height: 1.3;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+      color: #fff;
     }
 
     .feature p {
-      font-size: 14px;
-      line-height: 1.75;
-      color: rgba(255,255,255,0.42);
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.45);
+      font-weight: 400;
+    }
+
+    /* ── Tagline ── */
+    .tagline-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 56px 28px 60px;
+      gap: 20px;
+    }
+
+    .tagline-section .hero-sub {
+      font-size: 15px;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.5);
+      font-weight: 400;
+      max-width: 300px;
+      margin: 0;
+    }
+
+    /* ── Demo modal ── */
+    .demo-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      padding-bottom: calc(24px + env(safe-area-inset-bottom));
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .demo-modal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .demo-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .demo-modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      transform: translateY(24px);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .demo-modal.open .demo-modal-content {
+      transform: translateY(0);
+    }
+
+    .demo-modal-content video {
+      width: 100%;
+      border-radius: 16px;
+      display: block;
+      background: #000;
+    }
+
+    .demo-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.15s;
+    }
+
+    .demo-close:active { background: rgba(255,255,255,0.3); }
+
+    @media (hover: hover) {
+      .demo-close:hover { background: rgba(255,255,255,0.25); }
     }
 
     /* ── Footer ── */
     footer {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       text-align: center;
-      padding: 36px 24px;
-      padding-bottom: calc(36px + env(safe-area-inset-bottom));
-      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 28px 24px;
+      padding-bottom: calc(28px + env(safe-area-inset-bottom));
     }
 
-    footer p {
-      font-size: 12px;
-      color: rgba(255,255,255,0.18);
-      letter-spacing: 0.03em;
-    }
+    footer p { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.02em; font-weight: 400; }
 
-    /* ── Tablet ── */
+    /* ── Tablet+ ── */
     @media (min-width: 540px) {
       .nav-logo { height: 26px; }
-
-      h1 { margin-bottom: 22px; }
-
-      .hero-sub {
-        font-size: 16px;
-        max-width: 400px;
-        margin-bottom: 48px;
-      }
-
+      .phone-hero { width: min(58vw, 360px); }
+      .hero-sub { font-size: 16px; max-width: 380px; }
       .feature { padding: 48px 36px; }
       .feature h3 { font-size: 18px; }
     }
 
-    /* ── Desktop ── */
     @media (min-width: 860px) {
-      nav { padding: 40px 48px; }
       .nav-logo { height: 28px; }
-
-      .hero { padding: 20px 24px 100px; }
-      .eyebrow { font-size: 11px; margin-bottom: 32px; }
-
-      .hero-sub {
-        font-size: 17px;
-        max-width: 460px;
-        margin-bottom: 56px;
-      }
-
+      .phone-hero { width: min(40vw, 460px); }
+      .hero-sub { font-size: 17px; max-width: 480px; }
+      .carousel-track { gap: 14px; }
       .features { grid-template-columns: repeat(3, 1fr); }
-
       .feature { padding: 60px 44px; }
       .feature h3 { font-size: 19px; }
       .feature-num { font-size: 11px; margin-bottom: 28px; }
     }
+
+    /* ── Floating cards around features section ── */
+    .features-float-scene {
+      position: relative;
+      min-height: 480px;
+    }
+
+    .float-anchor {
+      position: absolute;
+      will-change: transform;
+    }
+
+    .float-card-img {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 28px rgba(0,0,0,0.6);
+      animation: bobFloat var(--bob-dur, 4s) ease-in-out var(--bob-delay, 0s) infinite;
+    }
+    .float-card-img img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+    @keyframes bobFloat {
+      0%, 100% { translate: 0 0px; }
+      50% { translate: 0 -11px; }
+    }
+    @keyframes floatIn {
+      from { opacity: 0; translate: -24px 0; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+    @keyframes floatInRight {
+      from { opacity: 0; translate: 24px 0; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+
+    .float-anchor.fl-left  { animation: floatIn 0.9s cubic-bezier(0.22,1,0.36,1) var(--enter-delay,0s) both; }
+    .float-anchor.fl-right { animation: floatInRight 0.9s cubic-bezier(0.22,1,0.36,1) var(--enter-delay,0s) both; }
+
+    .fc-1 .float-card-img { rotate: -4deg; }
+    .fc-2 .float-card-img { rotate: -3deg; }
+    .fc-3 .float-card-img { rotate: -5deg; }
+    .fc-4 .float-card-img { rotate: 4deg; }
+    .fc-5 .float-card-img { rotate: 3deg; }
+    .fc-6 .float-card-img { rotate: 5deg; }
+
+    /* ── Built with ── */
+    .built-section {
+      padding: 64px 28px 72px;
+      background: #000;
+      text-align: center;
+    }
+
+    .built-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 36px;
+    }
+
+    .built-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px 12px;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    .built-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      opacity: 0;
+      transform: translateY(20px) scale(0.92);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .built-card.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .built-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 0.5px solid rgba(255,255,255,0.12);
+      box-shadow:
+        0 8px 32px rgba(0,0,0,0.5),
+        inset 0 1px 0 rgba(255,255,255,0.14),
+        inset 0 -1px 0 rgba(0,0,0,0.2);
+    }
+
+    .built-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 18px;
+    }
+
+    .built-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: -0.01em;
+      font-family: inherit;
+    }
+
+    /* ── About the designer ── */
+    .about-section {
+      padding: 72px 28px 80px;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 28px;
+    }
+
+    .about-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+    }
+
+    .about-photo-scene {
+      position: relative;
+      width: 148px;
+      height: 148px;
+      overflow: visible;
+    }
+
+    .about-photo-ring {
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+      padding: 3px;
+      background: conic-gradient(from 0deg, #FF8C6B, #D4945A, #C2E8C0, #A9A9FF, #C3B1A0, #FF8C6B);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-photo-ring img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 18%;
+      display: block;
+    }
+
+    .about-sticker {
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 3;
+    }
+
+    .about-sticker-blob {
+      width: 58px;
+      top: -22px;
+      left: -52px;
+    }
+
+    .about-sticker-star {
+      width: 54px;
+      bottom: -22px;
+      right: -50px;
+    }
+
+    .about-tag {
+      position: absolute;
+      font-size: 13px;
+      font-weight: 500;
+      font-family: inherit;
+      padding: 7px 16px;
+      border-radius: 100px;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .about-tag-amber {
+      background: linear-gradient(135deg, #E8A050 0%, #A85F10 100%);
+      color: #fff;
+      top: 14px;
+      right: -48px;
+      transform: rotate(-5deg);
+      box-shadow: 0 2px 12px rgba(168, 95, 16, 0.4);
+    }
+
+    .about-tag-glass {
+      background: linear-gradient(135deg, #3E6B4E 0%, #1A3828 100%);
+      border: 0.5px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.9);
+      bottom: 22px;
+      left: -68px;
+      transform: rotate(3deg);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    }
+
+    .about-name {
+      font-size: clamp(26px, 6.5vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .about-bio {
+      font-size: clamp(16px, 4vw, 26px);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.5);
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    /* ── Accordion section ── */
+    .accordion-section {
+      padding: 0 20px 72px;
+      background: #000;
+    }
+    .accordion-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      padding-bottom: 14px;
+    }
+    .accordion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .accordion-item {
+      border-radius: 14px;
+      background: rgba(255,255,255,0.06);
+      border: 0.5px solid rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+    .accordion-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      color: #fff;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .accordion-label-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: inherit;
+    }
+    .acc-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .acc-chevron {
+      color: rgba(255,255,255,0.4);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      flex-shrink: 0;
+    }
+    .accordion-item.open .acc-chevron { transform: rotate(180deg); }
+    .accordion-body {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .accordion-item.open .accordion-body { max-height: 220px; }
+    .accordion-content {
+      padding: 0 18px 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.45);
+      font-family: inherit;
+    }
+
+    /* ── Scroll-reveal: features + accordion ── */
+
+    /* Float cards: paused until scene is revealed */
+    .float-anchor.fl-left  { animation-play-state: paused; }
+    .float-anchor.fl-right { animation-play-state: paused; }
+    .features-float-scene.revealed .float-anchor { animation-play-state: running; }
+
+    /* Section label */
+    .section-label {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .features-float-scene.revealed .section-label {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* Feature cards */
+    .feature {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .features-float-scene.revealed .feature:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.1s; }
+    .features-float-scene.revealed .feature:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.24s; }
+    .features-float-scene.revealed .feature:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.38s; }
+
+    /* Accordion eyebrow + items */
+    .accordion-eyebrow {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .accordion-section.revealed .accordion-eyebrow { opacity: 1; transform: none; }
+
+    .accordion-item {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .accordion-section.revealed .accordion-item:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.06s; }
+    .accordion-section.revealed .accordion-item:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.16s; }
+    .accordion-section.revealed .accordion-item:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.26s; }
+    .accordion-section.revealed .accordion-item:nth-child(4) { opacity: 1; transform: none; transition-delay: 0.36s; }
   </style>
 </head>
 <body>
 
-  <div class="hero-wrapper">
-    <nav>
-      <img src="assets/logo.png" alt="Draft" class="nav-logo">
-    </nav>
-
-    <section class="hero">
-      <p class="eyebrow">Now in development</p>
-      <h1>The AI&#8209;powered creative brief tool</h1>
-      <p class="hero-sub">
-        Draft helps designers move from raw inspiration to a structured creative brief — faster than ever before.
-      </p>
-      <!-- Update href with your demo video link -->
-      <a href="#" class="cta-btn">
-        Watch the demo <span class="cta-arrow">→</span>
-      </a>
-    </section>
+  <div class="nav-menu" id="navMenu">
+    <button class="nav-menu-close" id="menuClose" aria-label="Close menu">✕</button>
+    <a href="https://lucytrep.com/case-studies/">Work</a>
+    <a href="https://lucytrep.com/about/">About</a>
+    <a href="https://lucytrep.com/archive/">Archive</a>
+    <a href="https://lucytrep.com/contact/">Contact</a>
   </div>
+
+  <div class="above-fold">
+
+    <div class="hero-wrapper">
+      <nav>
+        <img src="assets/logo.png" alt="Draft" class="nav-logo">
+        <button class="hamburger" id="menuOpen" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+
+      <section class="hero">
+        <p class="eyebrow">Native iOS App · Voice-First Design Tool</p>
+        <h1 class="hero-headline"><span class="hl-line">Think it. Say it.</span><span class="hl-line">Draft it.</span></h1>
+
+        <div class="phone-hero" id="phoneHero">
+          <img src="assets/phone-mock.png" alt="Draft — All items view">
+          <img src="assets/phone-mock-2.png" alt="Draft — Drafts view" class="phone-img-2" id="phoneMock2">
+          <div class="phone-tabs" aria-hidden="true">
+            <button class="phone-tab-btn" id="tabDrafts"></button>
+            <button class="phone-tab-btn" id="tabAllItems"></button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="hero-desc-section">
+      <p class="hero-desc">Draft is a voice-first tool for designers who <strong>think out loud.</strong> Say the feeling, the vibe, get <strong>three directions</strong> back instantly. <strong>Thought starters,</strong> not finished files.</p>
+      <button class="cta-btn" id="scrollToReel">Watch the demo <span class="cta-arrow">→</span></button>
+    </section>
+
+  </div>
+
+  <section class="carousel-section">
+    <div class="carousel-viewport">
+      <div class="carousel-track" id="carouselTrack"></div>
+    </div>
+  </section>
 
   <main>
 
-    <section class="reel-section">
+    <p class="reel-label">Product Video</p>
+
+    <section class="reel-section" id="reelSection">
       <video autoplay muted loop playsinline preload="metadata">
         <source src="assets/reel.mp4" type="video/mp4">
       </video>
     </section>
 
-    <section class="features">
-      <!-- update copy to match your actual feature set -->
-      <div class="feature">
-        <p class="feature-num">01</p>
-        <h3>Briefs that write themselves</h3>
-        <p>Describe your vision, Draft does the rest. AI generates structured creative briefs from your inputs in seconds.</p>
+    <div class="features-float-scene" id="featuresScene">
+
+      <!-- Left floating cards — bleed off left edge -->
+      <div class="float-anchor fl-left fc-1" style="top:4%;left:-28px;--bob-dur:4.2s;--enter-delay:0.1s;--bob-delay:0s;">
+        <div class="float-card-img" style="width:96px;height:96px;">
+          <img src="assets/float/image_aura_blue_014.jpg" alt="" loading="lazy">
+        </div>
       </div>
-      <div class="feature">
-        <p class="feature-num">02</p>
-        <h3>From inspiration to direction</h3>
-        <p>Pull references, set the tone, define the audience. Everything a brief needs — nothing it doesn't.</p>
+      <div class="float-anchor fl-left fc-2" style="top:37%;left:-22px;--bob-dur:3.7s;--enter-delay:0.22s;--bob-delay:0.5s;">
+        <div class="float-card-img" style="width:108px;height:80px;">
+          <img src="assets/float/image_halftone_004.jpg" alt="" loading="lazy">
+        </div>
       </div>
-      <div class="feature">
-        <p class="feature-num">03</p>
-        <h3>Built for iOS</h3>
-        <p>Designed for the way designers actually work. Native, fast, and always in your pocket.</p>
+      <div class="float-anchor fl-left fc-3" style="top:64%;left:-26px;--bob-dur:4.6s;--enter-delay:0.38s;--bob-delay:1s;">
+        <div class="float-card-img" style="width:88px;height:112px;">
+          <img src="assets/float/image_athlete_red_015.jpg" alt="" loading="lazy">
+        </div>
       </div>
-    </section>
+
+      <!-- Right floating cards — bleed off right edge -->
+      <div class="float-anchor fl-right fc-4" style="top:6%;right:-28px;--bob-dur:3.9s;--enter-delay:0.08s;--bob-delay:0.3s;">
+        <div class="float-card-img" style="width:100px;height:76px;">
+          <img src="assets/float/image_aura_orange_013.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+      <div class="float-anchor fl-right fc-5" style="top:39%;right:-24px;--bob-dur:4.3s;--enter-delay:0.28s;--bob-delay:0.8s;">
+        <div class="float-card-img" style="width:112px;height:80px;">
+          <img src="assets/float/image_nike_rhythm_003.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+      <div class="float-anchor fl-right fc-6" style="top:66%;right:-26px;--bob-dur:3.6s;--enter-delay:0.44s;--bob-delay:1.2s;">
+        <div class="float-card-img" style="width:90px;height:116px;">
+          <img src="assets/float/image_silhouettes_001.jpg" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <p class="section-label">What it does</p>
+      <section class="features">
+        <div class="feature">
+          <h3>Voice-to-brief in seconds</h3>
+          <p>Speak your idea out loud. Draft turns it into a structured creative brief instantly.</p>
+        </div>
+        <div class="feature">
+          <h3>References, pulled automatically</h3>
+          <p>Drop in images or let Draft find them. Every brief comes with visuals that match the mood.</p>
+        </div>
+        <div class="feature">
+          <h3>Built for how designers think</h3>
+          <p>Native iOS. Works offline. Fits in your pocket between client calls.</p>
+        </div>
+      </section>
+
+    </div><!-- /features-float-scene -->
 
   </main>
+
+  <section class="accordion-section">
+    <p class="accordion-eyebrow">What Draft creates</p>
+    <div class="accordion-list">
+
+      <div class="accordion-item" data-acc>
+        <button class="accordion-header" aria-expanded="false">
+          <span class="accordion-label-row">
+            <span class="acc-dot" style="background:#C2E8C0;"></span>
+            Color
+          </span>
+          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-body">
+          <p class="accordion-content">Palette suggestions pulled from your brief — earthy, electric, muted, or bold. Always tied back to the mood you described.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-acc>
+        <button class="accordion-header" aria-expanded="false">
+          <span class="accordion-label-row">
+            <span class="acc-dot" style="background:#A9A9FF;"></span>
+            UI
+          </span>
+          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-body">
+          <p class="accordion-content">Interface references that match your direction — typography, layout, and interaction patterns from real apps that feel like what you're building.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-acc>
+        <button class="accordion-header" aria-expanded="false">
+          <span class="accordion-label-row">
+            <span class="acc-dot" style="background:#FF8C6B;"></span>
+            Images
+          </span>
+          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-body">
+          <p class="accordion-content">Photography, illustration, and texture pulled to match the feeling — not just keywords. Draft finds images that capture the vibe, not just the subject.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-acc>
+        <button class="accordion-header" aria-expanded="false">
+          <span class="accordion-label-row">
+            <span class="acc-dot" style="background:#D4945A;"></span>
+            Moodboard
+          </span>
+          <svg class="acc-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="accordion-body">
+          <p class="accordion-content">Everything pulled together into one shareable board. Color, UI, imagery — formatted and ready to present to a client or kick off a design sprint.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="built-section" id="builtSection">
+    <p class="built-eyebrow">Built with</p>
+    <div class="built-grid">
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/swift.png" alt="Swift"></div>
+        <span class="built-name">Swift</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/xcode.png" alt="Xcode"></div>
+        <span class="built-name">Xcode</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/codex.png" alt="Claude Code"></div>
+        <span class="built-name">Claude Code</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/claude-ai.png" alt="Claude"></div>
+        <span class="built-name">Claude</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/figma.webp" alt="Figma"></div>
+        <span class="built-name">Figma</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/cursor.webp" alt="Cursor"></div>
+        <span class="built-name">Cursor</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/unsplash.png" alt="Unsplash"></div>
+        <span class="built-name">Unsplash</span>
+      </div>
+      <div class="built-card">
+        <div class="built-icon"><img src="assets/tools/pexels.png" alt="Pexels"></div>
+        <span class="built-name">Pexels</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <p class="about-eyebrow">About the designer</p>
+    <div class="about-photo-scene">
+      <img src="assets/sticker-blob.png" class="about-sticker about-sticker-blob" alt="">
+      <img src="assets/sticker-star.png" class="about-sticker about-sticker-star" alt="">
+      <div class="about-photo-ring">
+        <img src="assets/about-photo.jpg" alt="Lucy Trepanier">
+      </div>
+      <span class="about-tag about-tag-amber">MPS '26</span>
+      <span class="about-tag about-tag-glass">Product Designer</span>
+    </div>
+    <p class="about-name">Lucy Trepanier</p>
+    <p class="about-bio">Lucy Trepanier is a Communication Design student at Parsons School of Design in NYC. Dyslexic by nature, she's always thought in images and feelings before words. Draft is the tool she wished had existed all along.</p>
+  </section>
 
   <footer>
     <p>© 2026 Draft &nbsp;·&nbsp; A capstone project by Lucy Trepanier</p>
   </footer>
+
+  <script>
+    // ── Go-stop carousel — triple-set seamless infinite loop ──
+    (function () {
+      const PNGS = new Set(['soft-spatial-ui-2', 'soft-spatial-ui-3', 'soft-spatial-ui-4']);
+      const images = [
+        'desert-dreams-1','desert-dreams-2','desert-dreams-3',
+        'desert-dreams-4','color-coral','desert-dreams-5','home-orange-car',
+        'ui-viriability','home-jumping','color-taupe','home-neon-rays','home-desert-art',
+        'color-black-cherry','home-athlete-red','open-court-1','open-court-2',
+        'color-pistachio','ui-skill-rate','open-court-3','open-court-4','open-court-5',
+        'color-osage','open-court-6','open-court-7','dir3-athletic','dir3-track','home-stadium'
+      ];
+
+      const track = document.getElementById('carouselTrack');
+      const SLIDE_MS = 520;
+      const PAUSE_MS = 1900;
+      const N = images.length; // 20
+
+      function makeCard(name) {
+        const ext = PNGS.has(name) ? 'png' : 'jpg';
+        const div = document.createElement('div');
+        div.className = 'carousel-card';
+        const img = document.createElement('img');
+        img.src = `assets/library/${name}.${ext}`;
+        img.alt = name;
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        div.appendChild(img);
+        return div;
+      }
+
+      // Triple the cards: [A, B, C] — always stay in the middle set B
+      [...images, ...images, ...images].forEach(n => track.appendChild(makeCard(n)));
+
+      const allCards = [...track.querySelectorAll('.carousel-card')];
+
+      // idx always lives in the middle set: N .. 2N-1
+      let idx = N;
+
+      function cw() {
+        const gap = parseFloat(getComputedStyle(track).gap) || 10;
+        return allCards[0].getBoundingClientRect().width + gap;
+      }
+
+      function offsetFor(i) {
+        const vw = track.parentElement.offsetWidth;
+        const cardW = allCards[0].getBoundingClientRect().width;
+        return (vw / 2 - cardW / 2) - i * cw();
+      }
+
+      function setPos(i, animated) {
+        track.style.transition = animated
+          ? `transform ${SLIDE_MS}ms cubic-bezier(0.4, 0, 0.2, 1)`
+          : 'none';
+        track.style.transform = `translateX(${offsetFor(i)}px)`;
+      }
+
+      function highlight(i) {
+        allCards.forEach(c => c.classList.remove('is-center'));
+        if (allCards[i]) allCards[i].classList.add('is-center');
+      }
+
+      // Init: sit at first card of middle set, highlight it
+      setPos(idx, false);
+      setTimeout(() => {
+        highlight(idx);
+        setTimeout(step, PAUSE_MS);
+      }, 100);
+
+      function step() {
+        allCards[idx].classList.remove('is-center');
+        idx++;
+
+        // Always animate forward — even into the third set
+        setPos(idx, true);
+
+        setTimeout(() => {
+          // After the slide lands: if we entered the third set,
+          // silently snap back to the equivalent card in the middle set.
+          // Both positions show the same image so the jump is invisible.
+          if (idx >= 2 * N) {
+            track.style.transition = 'none';
+            idx -= N;
+            track.style.transform = `translateX(${offsetFor(idx)}px)`;
+            track.offsetHeight; // force reflow
+          }
+
+          highlight(idx);
+          setTimeout(step, PAUSE_MS);
+        }, SLIDE_MS + 16);
+      }
+    })();
+  </script>
+
+  <script>
+    // ── Phone mock crossfade ──
+    (function () {
+      const mock2 = document.getElementById('phoneMock2');
+      let showing2 = false;
+      let autoTimer = null;
+
+      function showMock2() {
+        mock2.style.opacity = '1';
+        showing2 = true;
+      }
+      function showMock1() {
+        mock2.style.opacity = '0';
+        showing2 = false;
+      }
+
+      // auto: show mock2 at 3s, back to mock1 at 8s, then repeat
+      function scheduleAuto() {
+        autoTimer = setTimeout(() => {
+          showMock2();
+          autoTimer = setTimeout(() => {
+            showMock1();
+            scheduleAuto();
+          }, 5000);
+        }, 3000);
+      }
+      scheduleAuto();
+
+      // tap Drafts tab → mock2 (Drafts active); tap All items → mock1
+      document.getElementById('tabDrafts').addEventListener('click', () => {
+        clearTimeout(autoTimer);
+        showMock2();
+        autoTimer = setTimeout(() => { showMock1(); scheduleAuto(); }, 5000);
+      });
+      document.getElementById('tabAllItems').addEventListener('click', () => {
+        clearTimeout(autoTimer);
+        showMock1();
+        scheduleAuto();
+      });
+    })();
+  </script>
+
+  <script>
+    // ── Nav scroll blur ──
+    const navEl = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        navEl.style.background = 'rgba(0,0,0,0.6)';
+        navEl.style.backdropFilter = 'blur(20px)';
+        navEl.style.webkitBackdropFilter = 'blur(20px)';
+        navEl.style.borderBottom = '0.5px solid rgba(255,255,255,0.08)';
+      } else {
+        navEl.style.background = '';
+        navEl.style.backdropFilter = '';
+        navEl.style.webkitBackdropFilter = '';
+        navEl.style.borderBottom = '';
+      }
+    }, { passive: true });
+  </script>
+
+  <script>
+    // ── Hamburger menu ──
+    const menu    = document.getElementById('navMenu');
+    const openBtn = document.getElementById('menuOpen');
+    const closeBtn = document.getElementById('menuClose');
+
+    openBtn.addEventListener('click', () => {
+      menu.classList.add('open');
+      openBtn.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+
+    [closeBtn, ...menu.querySelectorAll('a')].forEach(el => {
+      el.addEventListener('click', () => {
+        menu.classList.remove('open');
+        openBtn.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+  <!-- ── Demo video modal ── -->
+  <div class="demo-modal" id="demoModal" aria-modal="true" role="dialog" aria-label="Demo video">
+    <div class="demo-modal-backdrop" id="demoBackdrop"></div>
+    <div class="demo-modal-content">
+      <button class="demo-close" id="demoClose" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 2L14 14M14 2L2 14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+      <video id="demoVideo" src="assets/reel.mp4" controls playsinline preload="none"></video>
+    </div>
+  </div>
+
+  <script>
+    // ── Scroll-to-reel button ──
+    document.getElementById('scrollToReel').addEventListener('click', () => {
+      document.getElementById('reelSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  </script>
+
+  <script>
+    (function () {
+      const modal    = document.getElementById('demoModal');
+      const video    = document.getElementById('demoVideo');
+      const closeBtn = document.getElementById('demoClose');
+      const backdrop = document.getElementById('demoBackdrop');
+
+      function openModal() {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        video.play();
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+        video.pause();
+        video.currentTime = 0;
+      }
+
+      closeBtn.addEventListener('click', closeModal);
+      backdrop.addEventListener('click', closeModal);
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    })();
+  </script>
+
+  <script>
+    // ── Accordion ──
+    document.querySelectorAll('[data-acc]').forEach(item => {
+      item.querySelector('.accordion-header').addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('[data-acc].open').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          item.querySelector('.accordion-header').setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+  <script>
+    // ── Scroll-linked typewriter reveal for .hero-desc ──
+    (function () {
+      const para = document.querySelector('.hero-desc');
+      if (!para) return;
+
+      const chars = [];
+
+      function wrapTextNode(node) {
+        const frag = document.createDocumentFragment();
+        for (const ch of node.textContent) {
+          const span = document.createElement('span');
+          span.className = 'char';
+          span.textContent = ch;
+          chars.push(span);
+          frag.appendChild(span);
+        }
+        node.parentNode.replaceChild(frag, node);
+      }
+
+      function processNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          wrapTextNode(node);
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          [...node.childNodes].forEach(processNode);
+        }
+      }
+
+      processNode(para);
+
+      const total = chars.length;
+      let lastReveal = 0;
+      let ticking = false;
+
+      function update() {
+        const rect = para.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const progress = Math.max(0, Math.min(1, (vh * 0.9 - rect.top) / (vh * 0.7)));
+        const revealTo = Math.floor(progress * total);
+
+        if (revealTo === lastReveal) return;
+
+        if (revealTo > lastReveal) {
+          for (let i = lastReveal; i < revealTo; i++) chars[i].style.opacity = '1';
+        } else {
+          for (let i = revealTo; i < lastReveal; i++) chars[i].style.opacity = '0.15';
+        }
+        lastReveal = revealTo;
+      }
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => { update(); ticking = false; });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      update();
+    })();
+  </script>
+
+  <script>
+    // ── Features + accordion scroll reveal ──
+    (function () {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      const featuresScene = document.getElementById('featuresScene');
+      const accordionSection = document.querySelector('.accordion-section');
+      if (featuresScene) io.observe(featuresScene);
+      if (accordionSection) io.observe(accordionSection);
+    })();
+  </script>
+
+  <script>
+    // ── Built with — staggered scroll reveal ──
+    (function () {
+      const cards = document.querySelectorAll('.built-card');
+      const section = document.getElementById('builtSection');
+      if (!section || !cards.length) return;
+
+      const io = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          cards.forEach((card, i) => {
+            setTimeout(() => card.classList.add('visible'), i * 90);
+          });
+          io.disconnect();
+        }
+      }, { threshold: 0.15 });
+
+      io.observe(section);
+    })();
+  </script>
 
 </body>
 </html>
