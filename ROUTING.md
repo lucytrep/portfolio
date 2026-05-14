@@ -11,8 +11,6 @@ This repo uses clean folder URLs as the canonical pages and keeps older `.html` 
 - `/contact/index.html`
 - `/archive/index.html`
 - `/case-studies/index.html`
-- `/draft/index.html`
-  - Public URL: **`https://lucytrep.com/draft`** (folder route; do not link to `index.html`)
 - `/projects/acuity/index.html`
 - `/axsphere/index.html`
   - Canonical Axsphere page for normal site navigation

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://lucytrep.com/draft">
-  <meta name="description" content="Draft — AI-powered creative brief tool for iOS">
-  <title>Draft — AI-powered creative brief tool</title>
+  <meta name="description" content="Draft: AI-powered creative brief tool for iOS">
+  <title>Draft | AI-powered creative brief tool</title>
   <link rel="icon" type="image/png" href="assets/favicon-64.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <style>
@@ -16,14 +16,44 @@
     @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Heavy.otf'); font-weight: 800; font-display: swap; }
     @font-face { font-family: 'SF Pro Rounded'; src: url('assets/fonts/SF-Pro-Rounded-Black.otf'); font-weight: 900; font-display: swap; }
 
+    :root {
+      --bg-base: #0a0809;
+      --bg-elevated: #110d0f;
+      --bg-overlay: #151013;
+      --bg-panel: #171316;
+      --bg-panel-deep: #0f0c0e;
+    }
+
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; overflow-x: hidden; }
+    @media (max-width: 767px) {
+      html { scroll-behavior: auto; }
+    }
     body {
-      background: #000;
+      background: var(--bg-base);
       color: #fff;
       font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    p,
+    .section-heading__sub,
+    .hero-desc,
+    .hero-sub,
+    .feature p,
+    .accordion-content,
+    .about-bio,
+    .about-contact-link,
+    footer p {
+      text-wrap: pretty;
+    }
+
+    .section-heading__title,
+    .problem-statement__quote,
+    .problem-statement__line,
+    .about-name {
+      text-wrap: balance;
     }
 
     main {
@@ -76,7 +106,7 @@
     .nav-menu {
       position: fixed;
       inset: 0;
-      background: #000;
+      background: var(--bg-base);
       z-index: 100;
       display: flex;
       flex-direction: column;
@@ -125,8 +155,8 @@
     .carousel-section {
       position: relative;
       z-index: 0;
-      margin-top: clamp(-44px, -12vw, -22px);
-      padding: 0 0 44px;
+      margin-top: clamp(-12px, -4vw, -4px);
+      padding: clamp(18px, 4vw, 32px) 0 44px;
       overflow: visible;
     }
 
@@ -185,14 +215,13 @@
       object-position: top left;
     }
 
-    /* ── Above-fold: everything that fits on one screen ── */
-    /* Whole fold stacks above .carousel-section so pulled-up cards don’t paint over the CTA */
+    /* ── Above-fold: hero + intro copy; min-height (not fixed height) avoids iOS gap + flex dead-zone under hero ── */
     .above-fold {
-      height: 100svh;
+      min-height: 100svh;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      overflow: hidden;
+      overflow: visible;
       position: relative;
       z-index: 2;
     }
@@ -204,8 +233,10 @@
       flex-direction: column;
       flex: 1;
       min-height: 0;
-      max-height: 60svh;
-      overflow: hidden;
+      /* No max-height on narrow viewports — a cap here left empty flex space above .hero-desc (read as a “band”). Tablet+ caps in the 768px block. */
+      max-height: none;
+      overflow-x: hidden;
+      overflow-y: visible;
       /* Above .hero-desc-section (z-index 10) so its ::before fade cannot paint over the phone on iOS Safari */
       z-index: 11;
     }
@@ -239,7 +270,7 @@
         rgba(0, 0, 0, 0.48) 64%,
         rgba(0, 0, 0, 0.72) 78%,
         rgba(0, 0, 0, 0.9) 90%,
-        #000 100%
+        var(--bg-base) 100%
       );
       pointer-events: none;
       z-index: 1;
@@ -323,6 +354,32 @@
       display: block;
     }
 
+    /*
+      Hero seam gradient lives on .hero-wrapper::after at z-index 1, under the phone (z-index 2).
+      .hero-desc-section::before cannot paint over the phone because the whole wrapper stacks above it (z-index 11 vs 10).
+      This overlay sits inside the phone stack so it always blends the mockup into #000 — every viewport width / Safari.
+    */
+    .phone-hero::after {
+      content: '';
+      position: absolute;
+      left: -5%;
+      right: -5%;
+      top: 40%;
+      bottom: clamp(-12px, -3vw, -28px);
+      pointer-events: none;
+      z-index: 5;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.04) 12%,
+        rgba(0, 0, 0, 0.14) 26%,
+        rgba(0, 0, 0, 0.34) 44%,
+        rgba(0, 0, 0, 0.62) 64%,
+        rgba(0, 0, 0, 0.88) 84%,
+        var(--bg-base) 100%
+      );
+    }
+
     /* second screen layered on top — JS drives opacity; top matches .phone-hero padding so both PNGs share the same origin (inset:0 + height:100% misaligned vs first img) */
     .phone-img-2 {
       position: absolute;
@@ -362,37 +419,25 @@
       position: relative;
       z-index: 10;
       flex-shrink: 0;
-      /* Tight bottom padding — carousel has margin-top pull + scaled card uses overflow-y: visible on section */
-      padding: calc(24px + 1rem) 40px 0;
-      background: #000;
+      width: 100%;
+      margin-top: clamp(-112px, -18vw, -68px);
+      padding: clamp(96px, 20vw, 144px) 40px 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.1) 18%,
+        rgba(0, 0, 0, 0.34) 38%,
+        rgba(0, 0, 0, 0.72) 62%,
+        var(--bg-base) 86%
+      );
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 28px;
     }
 
-    /* Softens the cut between the hero (clipped phone + bg) and solid black */
     .hero-desc-section::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 100%;
-      height: clamp(180px, 52svh, 380px);
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0) 26%,
-        rgba(0, 0, 0, 0.03) 40%,
-        rgba(0, 0, 0, 0.1) 54%,
-        rgba(0, 0, 0, 0.22) 68%,
-        rgba(0, 0, 0, 0.42) 80%,
-        rgba(0, 0, 0, 0.65) 90%,
-        rgba(0, 0, 0, 0.88) 97%,
-        #000 100%
-      );
-      pointer-events: none;
-      z-index: 0;
+      content: none;
     }
 
     .hero-desc-section > * {
@@ -423,13 +468,13 @@
     .phone-hero-frame {
       width: 100%;
       aspect-ratio: 393 / 852;
-      background: #111;
+      background: var(--bg-panel);
       border-radius: 13.5% / 6.2%;
       border: 1.5px solid rgba(255,255,255,0.18);
       position: relative;
       overflow: hidden;
       box-shadow:
-        0 0 0 5px #1e1e1e,
+        0 0 0 5px #211b1f,
         0 0 0 6.5px rgba(255,255,255,0.08);
     }
 
@@ -442,7 +487,7 @@
       transform: translateX(-50%);
       width: 28%;
       height: 3.8%;
-      background: #000;
+      background: var(--bg-base);
       border-radius: 20px;
       z-index: 5;
     }
@@ -451,7 +496,7 @@
       position: absolute;
       inset: 1.5%;
       border-radius: 12% / 5.5%;
-      background: #050505;
+      background: var(--bg-panel-deep);
       overflow: hidden;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -510,7 +555,7 @@
       overflow: hidden;
       isolation: isolate;
       /* Near-black glass: dark body + tight specular (crisp iOS-style) */
-      background-color: rgba(10, 10, 12, 0.82);
+      background-color: rgba(20, 16, 19, 0.88);
       background-image: linear-gradient(
         168deg,
         rgba(255, 255, 255, 0.62) -8%,
@@ -557,10 +602,13 @@
       }
     }
 
-    /* ── Reel video ── */
+    /* ── Reel video (full-bleed: break out of main max-width + padding at every breakpoint) ── */
     .reel-section {
       position: relative;
-      width: 100%;
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
       overflow: hidden;
       margin-bottom: clamp(40px, 7vw, 88px);
     }
@@ -615,8 +663,8 @@
 
     /* ── Problem statement (pull quote) — SF Pro, iOS headline hierarchy ── */
     .problem-statement {
-      background: #000;
-      padding: clamp(72px, 14vw, 120px) clamp(20px, 5vw, 48px);
+      background: var(--bg-base);
+      padding: clamp(72px, 14vw, 120px) clamp(20px, 5vw, 48px) clamp(116px, 19vw, 180px);
       text-align: center;
       font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       -webkit-font-smoothing: antialiased;
@@ -666,7 +714,7 @@
 
     /* ── Section headings (unified large titles — Product Video, What it does, etc.) ── */
     .section-heading {
-      background: #000;
+      background: var(--bg-base);
       text-align: center;
     }
 
@@ -699,37 +747,28 @@
       color: rgba(255, 255, 255, 0.96);
     }
 
-    .section-heading--reel {
+    .section-heading--reel,
+    .section-heading--features,
+    .section-heading--accordion-head,
+    .section-heading--built,
+    .section-heading--about {
       padding: clamp(28px, 5vw, 56px) clamp(20px, 5vw, 40px) clamp(36px, 5.5vw, 64px);
       max-width: 680px;
       margin: 0 auto;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .section-heading--features {
-      padding: clamp(20px, 4vw, 40px) 16px 12px;
-      max-width: 560px;
-      margin: 0 auto;
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
     .section-heading--accordion-head {
-      padding: 0 0 14px;
-      max-width: 540px;
-      margin-left: auto;
-      margin-right: auto;
       opacity: 0;
       transform: translateY(10px);
       transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .section-heading--about {
-      margin: 0 auto;
-      padding: 0 0 clamp(20px, 4vw, 28px);
-      max-width: 540px;
-      width: 100%;
-      box-sizing: border-box;
     }
 
     /* ── Features — iOS grouped cards ── */
@@ -738,7 +777,7 @@
       flex-direction: column;
       gap: 10px;
       padding: 0 16px 64px;
-      background: #000;
+      background: var(--bg-base);
     }
 
     .feature {
@@ -809,6 +848,7 @@
       position: absolute;
       inset: 0;
       background: rgba(0,0,0,0.88);
+      background: rgba(16, 12, 15, 0.9);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
@@ -829,7 +869,7 @@
       width: 100%;
       border-radius: 16px;
       display: block;
-      background: #000;
+      background: var(--bg-base);
     }
 
     .demo-close {
@@ -865,22 +905,240 @@
 
     footer p { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.02em; font-weight: 400; }
 
-    /* ── Desktop (900px+): calmer headline scale, aligned rails, hero breathes ── */
-    @media (min-width: 900px) {
-      /* Let hero + copy exceed 100svh without clipping; mobile keeps locked first screen */
+    /* ── Mobile hero lock: keep phone + copy in one dark continuous fade ── */
+    @media (max-width: 767px) {
       .above-fold {
-        height: auto;
+        height: 100svh;
         min-height: 100svh;
-        overflow: visible;
+        max-height: 100svh;
+        overflow: hidden;
       }
 
+      .hero-wrapper {
+        flex: 0 0 auto;
+        height: min(72svh, 640px);
+        min-height: min(72svh, 640px);
+        max-height: min(72svh, 640px);
+        overflow: hidden;
+      }
+
+      .hero-wrapper::before {
+        inset: -12% 0 6%;
+        background-position: center 18%;
+        opacity: 0.5;
+      }
+
+      .hero-wrapper::after {
+        bottom: -1px;
+        height: min(82%, 460px);
+        background: linear-gradient(
+          to bottom,
+          rgba(18, 7, 10, 0) 0%,
+          rgba(20, 7, 10, 0.14) 18%,
+          rgba(12, 4, 6, 0.42) 42%,
+          rgba(4, 1, 2, 0.82) 68%,
+          var(--bg-base) 84%,
+          var(--bg-base) 100%
+        );
+      }
+
+      .hero {
+        justify-content: flex-start;
+        padding-top: 8px;
+      }
+
+      .phone-hero {
+        width: min(76vw, 372px);
+        margin-top: 8px;
+        filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.42));
+      }
+
+      .phone-hero::after {
+        left: -4%;
+        right: -4%;
+        top: 54%;
+        bottom: clamp(-42px, -10vw, -20px);
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.08) 10%,
+          rgba(0, 0, 0, 0.22) 24%,
+          rgba(0, 0, 0, 0.5) 42%,
+          rgba(0, 0, 0, 0.82) 66%,
+          var(--bg-base) 92%
+        );
+      }
+
+      .hero-desc-section {
+        margin-top: clamp(-156px, -24vw, -112px);
+        padding: clamp(124px, 28vw, 180px) 24px 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0) 0%,
+          rgba(0, 0, 0, 0.3) 14%,
+          rgba(0, 0, 0, 0.74) 36%,
+          var(--bg-base) 60%
+        );
+        gap: 24px;
+      }
+
+      .hero-desc {
+        max-width: 21rem;
+        padding-top: 0;
+      }
+    }
+
+    /* ── Tablet / small desktop (768px+): release fold clip + blend hero → copy (no harsh seam) ── */
+    @media (min-width: 768px) {
+      .above-fold {
+        height: 100svh;
+        min-height: 100svh;
+        max-height: 100svh;
+        overflow: hidden;
+      }
+
+      .phone-hero::after {
+        top: 38%;
+        bottom: clamp(-18px, -3vw, -32px);
+      }
+
+      .hero-wrapper {
+        flex: 0 0 auto;
+        height: min(74svh, 760px);
+        min-height: min(74svh, 760px);
+        max-height: min(74svh, 760px);
+        overflow: hidden;
+      }
+
+      .hero {
+        justify-content: flex-start;
+        padding-top: clamp(12px, 2vw, 20px);
+      }
+
+      .phone-hero {
+        width: clamp(360px, 34vw, 520px);
+        margin-top: clamp(10px, 2vw, 24px);
+      }
+
+      .hero-wrapper::after {
+        bottom: clamp(-28px, -5vw, -12px);
+        height: clamp(300px, 50vh, 620px);
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          transparent 6%,
+          rgba(8, 1, 3, 0.06) 14%,
+          rgba(22, 8, 12, 0.22) 30%,
+          rgba(14, 4, 8, 0.5) 44%,
+          rgba(8, 2, 4, 0.72) 58%,
+          rgba(3, 0, 1, 0.9) 74%,
+          rgba(0, 0, 0, 0.98) 88%,
+          var(--bg-base) 100%
+        );
+      }
+
+      .hero-desc-section {
+        margin-top: clamp(-128px, -14vw, -84px);
+        padding: clamp(120px, 15vw, 168px) max(32px, 5vw) clamp(28px, 4vw, 48px);
+        background: linear-gradient(
+          to bottom,
+          rgba(20, 5, 9, 0) 0%,
+          rgba(18, 6, 10, 0.24) 18%,
+          rgba(10, 3, 6, 0.66) 42%,
+          var(--bg-base) 78%
+        );
+        gap: clamp(24px, 3vw, 36px);
+      }
+
+      .carousel-section {
+        margin-top: clamp(8px, 2vw, 20px);
+        padding-top: clamp(12px, 2vw, 24px);
+      }
+    }
+
+    /* ── 800px+: built-with one row (desktop) + about two columns (photo left, name + bio right) ── */
+    @media (min-width: 800px) {
+      .accordion-section,
+      .built-section,
+      .about-section {
+        max-width: 1080px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: max(28px, env(safe-area-inset-left, 0px));
+        padding-right: max(28px, env(safe-area-inset-right, 0px));
+        box-sizing: border-box;
+      }
+
+      .accordion-section {
+        padding-bottom: 80px;
+      }
+
+      .built-section {
+        padding: 72px max(28px, 4vw) 80px;
+      }
+
+      .built-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+        gap: clamp(22px, 2.8vw, 36px);
+        max-width: min(1440px, 100%);
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        align-items: start;
+      }
+
+      .built-card {
+        flex: 0 0 auto;
+        gap: clamp(12px, 1.4vw, 18px);
+      }
+
+      .built-icon {
+        width: clamp(84px, 10vw, 132px);
+        height: clamp(84px, 10vw, 132px);
+        border-radius: clamp(20px, 2.4vw, 28px);
+      }
+
+      .built-icon img {
+        border-radius: clamp(20px, 2.4vw, 28px);
+      }
+
+      .built-name {
+        font-size: clamp(12px, 1.25vw, 16px);
+        white-space: nowrap;
+      }
+
+    }
+
+    /* ── Desktop (900px+): calmer headline scale, aligned rails, hero breathes ── */
+    @media (min-width: 900px) {
       nav {
         padding: 20px max(24px, 4vw);
         padding-top: calc(24px + env(safe-area-inset-top));
       }
 
-      .hero-wrapper {
-        max-height: min(72svh, 720px);
+      .phone-hero::after {
+        top: 37%;
+        bottom: clamp(-20px, -3vw, -36px);
+      }
+
+      .hero-wrapper::after {
+        bottom: clamp(-40px, -6vw, -16px);
+        height: clamp(360px, 54vh, 720px);
+      }
+
+      .hero-desc-section {
+        margin-top: clamp(-144px, -12vw, -96px);
+        padding: clamp(132px, 14vw, 188px) max(40px, 5vw, 72px) clamp(36px, 4vw, 56px);
+        background: linear-gradient(
+          to bottom,
+          rgba(18, 4, 7, 0) 0%,
+          rgba(12, 2, 4, 0.22) 18%,
+          rgba(8, 2, 4, 0.62) 40%,
+          var(--bg-base) 76%
+        );
+        gap: clamp(28px, 3vw, 40px);
       }
 
       .hero {
@@ -892,29 +1150,11 @@
         letter-spacing: -0.042em;
       }
 
-      .hero-desc-section {
-        padding: calc(28px + 1rem) max(32px, 4vw) 0;
-      }
-
       .features {
         max-width: 960px;
         margin-left: auto;
         margin-right: auto;
         padding: 0 0 64px;
-      }
-
-      .section-heading--features {
-        padding-left: 0;
-        padding-right: 0;
-      }
-
-      .reel-section {
-        border-radius: 12px;
-      }
-
-      .section-heading--reel .section-heading__title {
-        font-size: clamp(36px, 3.6vw, 52px);
-        letter-spacing: -0.035em;
       }
 
       .problem-statement {
@@ -935,100 +1175,8 @@
         max-width: min(42rem, calc(100% - 8px));
       }
 
-      .accordion-section,
-      .built-section,
-      .about-section {
-        max-width: 1080px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: max(28px, env(safe-area-inset-left, 0px));
-        padding-right: max(28px, env(safe-area-inset-right, 0px));
-        box-sizing: border-box;
-      }
-
-      .accordion-section {
-        padding-bottom: 80px;
-      }
-
-      .built-section {
-        padding: 72px max(28px, 4vw) 80px;
-      }
-
-      .about-section {
-        padding: 80px max(28px, 4vw) 96px;
-        align-items: stretch;
-      }
-
-      .section-heading--about {
-        max-width: 100%;
-        padding: 0 0 clamp(28px, 3.5vw, 44px);
-      }
-
-      .about-columns {
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: clamp(32px, 5vw, 72px);
-        max-width: 100%;
-      }
-
-      .about-visual {
-        justify-content: flex-start;
-        min-width: clamp(200px, 22vw, 260px);
-      }
-
-      .about-copy {
-        flex: 1;
-        min-width: 0;
-        align-items: flex-start;
-        text-align: left;
-        max-width: none;
-      }
-
-      .about-name {
-        text-align: left;
-      }
-
-      .about-bio {
-        text-align: left;
-        max-width: 42em;
-      }
-
       .accordion-list {
         max-width: 640px;
-      }
-
-      .built-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: flex-start;
-        gap: clamp(12px, 1.8vw, 28px);
-        max-width: 100%;
-        width: 100%;
-      }
-
-      .built-card {
-        flex: 0 0 auto;
-        gap: clamp(10px, 1.2vw, 14px);
-      }
-
-      .built-icon {
-        width: clamp(68px, 8.2vw, 100px);
-        height: clamp(68px, 8.2vw, 100px);
-        border-radius: clamp(16px, 2.1vw, 24px);
-      }
-
-      .built-icon img {
-        border-radius: clamp(16px, 2.1vw, 24px);
-      }
-
-      .built-name {
-        font-size: clamp(11px, 1.1vw, 14px);
-      }
-
-      .built-eyebrow {
-        margin-bottom: clamp(36px, 4vw, 48px);
       }
 
       footer {
@@ -1046,6 +1194,7 @@
 
       .hero-desc {
         max-width: 620px;
+        padding-top: 0;
       }
 
       .tagline-section {
@@ -1060,12 +1209,12 @@
       }
     }
 
-    /* ── Tablet+ ── */
-    @media (min-width: 540px) {
+    /* ── Large phones only ── */
+    @media (min-width: 540px) and (max-width: 767px) {
       .nav-logo { height: 26px; }
       .phone-hero { width: min(58vw, 360px); }
       .hero-sub { font-size: 16px; max-width: 380px; }
-      .hero-desc-section { padding: calc(28px + 1rem) 40px 0; gap: 32px; }
+      .hero-desc-section { gap: 32px; }
       .carousel-section { margin-top: clamp(-52px, -11vw, -28px); padding: 0 0 52px; }
       .carousel-viewport {
         padding: clamp(24px, 4vw, 44px) 0 clamp(32px, 5vw, 56px);
@@ -1142,17 +1291,8 @@
     /* ── Built with ── */
     .built-section {
       padding: 64px 28px 72px;
-      background: #000;
+      background: var(--bg-base);
       text-align: center;
-    }
-
-    .built-eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 36px;
     }
 
     .built-grid {
@@ -1212,15 +1352,15 @@
     .built-name {
       font-size: 11px;
       font-weight: 500;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.64);
       letter-spacing: -0.01em;
-      font-family: inherit;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
 
     /* ── About the designer ── */
     .about-section {
       padding: 72px 28px 80px;
-      background: #000;
+      background: var(--bg-base);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1253,19 +1393,21 @@
 
     .about-photo-scene {
       position: relative;
-      width: 148px;
-      height: 148px;
+      width: 192px;
+      height: 192px;
       overflow: visible;
+      isolation: isolate;
     }
 
+    /* Portrait sits on the bottom of the stack; stars + pills follow in DOM and use higher z-index. */
     .about-photo-ring {
-      width: 148px;
-      height: 148px;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       padding: 3px;
       background: conic-gradient(from 0deg, #FF8C6B, #D4945A, #C2E8C0, #A9A9FF, #C3B1A0, #FF8C6B);
       position: relative;
-      z-index: 1;
+      z-index: 0;
     }
 
     .about-photo-ring img {
@@ -1275,25 +1417,36 @@
       object-fit: cover;
       object-position: center 18%;
       display: block;
+      position: relative;
+      z-index: 0;
     }
 
     .about-sticker {
       position: absolute;
+      display: block;
+      height: auto;
+      aspect-ratio: 1;
+      object-fit: contain;
       pointer-events: none;
       user-select: none;
-      z-index: 3;
+      z-index: 2;
     }
 
+    /* Percent of .about-photo-scene so stars stay on the rim at every breakpoint (no “floating” vs scaled photo). */
     .about-sticker-blob {
-      width: 50px;
-      top: -8px;
-      left: -16px;
+      width: 36%;
+      top: -6%;
+      left: -10%;
+      transform: rotate(-11deg);
+      transform-origin: 82% 86%;
     }
 
     .about-sticker-star {
-      width: 48px;
-      bottom: -8px;
-      right: -14px;
+      width: 40%;
+      bottom: -7%;
+      right: -9%;
+      transform: rotate(7deg);
+      transform-origin: 18% 24%;
     }
 
     .about-tag {
@@ -1305,15 +1458,15 @@
       border-radius: 100px;
       letter-spacing: -0.01em;
       white-space: nowrap;
-      z-index: 2;
+      z-index: 3;
     }
 
     .about-tag-amber {
       background: linear-gradient(135deg, #E8A050 0%, #A85F10 100%);
       color: #fff;
-      top: 14px;
-      right: -48px;
-      transform: rotate(-5deg);
+      top: 4px;
+      right: -22px;
+      transform: rotate(-6deg);
       box-shadow: 0 2px 12px rgba(168, 95, 16, 0.4);
     }
 
@@ -1321,9 +1474,9 @@
       background: linear-gradient(135deg, #3E6B4E 0%, #1A3828 100%);
       border: 0.5px solid rgba(255, 255, 255, 0.15);
       color: rgba(255, 255, 255, 0.9);
-      bottom: 22px;
-      left: -68px;
-      transform: rotate(3deg);
+      bottom: 10px;
+      left: -34px;
+      transform: rotate(4deg);
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
     }
 
@@ -1339,11 +1492,11 @@
     }
 
     .about-bio {
-      font-size: 13px;
-      line-height: 1.6;
+      font-size: 15px;
+      line-height: 1.72;
       font-weight: 400;
       font-family: inherit;
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(255, 255, 255, 0.72);
       max-width: 100%;
       margin: 0;
       padding: 0;
@@ -1353,13 +1506,167 @@
 
     .about-bio strong {
       font-weight: 600;
-      color: rgba(255, 255, 255, 0.85);
+      color: rgba(255, 255, 255, 0.96);
+    }
+
+    .about-contact {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 100%;
+      margin-top: 2px;
+    }
+
+    .about-contact-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 11px 16px;
+      border-radius: 999px;
+      border: 0.5px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.82);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+      word-break: break-word;
+      text-align: center;
+    }
+
+    .about-contact-link:active {
+      transform: translateY(1px);
+    }
+
+    @media (hover: hover) {
+      .about-contact-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.18);
+        color: #fff;
+      }
+    }
+
+    /* Wide About layout must follow base .about-columns (column); otherwise base wins and stays single-column. */
+    @media (min-width: 800px) {
+      .about-section {
+        padding: clamp(72px, 8vw, 104px) max(28px, 4vw) clamp(88px, 10vw, 120px);
+        align-items: stretch;
+      }
+
+      .section-heading--about {
+        align-self: stretch;
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .about-columns {
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: clamp(40px, 6.5vw, 96px);
+        width: 100%;
+        max-width: 920px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .about-visual {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: clamp(220px, 30vw, 300px);
+        min-width: 0;
+      }
+
+      .about-photo-scene {
+        width: clamp(176px, 23vw, 220px);
+        height: clamp(176px, 23vw, 220px);
+        margin: 0 clamp(8px, 1.5vw, 20px);
+      }
+
+      .about-photo-ring {
+        padding: 3.5px;
+      }
+
+      .about-tag {
+        font-size: clamp(13px, 1.15vw, 15px);
+        padding: 8px 18px;
+      }
+
+      .about-tag-amber {
+        top: clamp(8px, 1.2vw, 14px);
+        right: clamp(-8px, -0.8vw, 4px);
+        transform: rotate(-5deg);
+      }
+
+      .about-tag-glass {
+        bottom: clamp(14px, 2vw, 24px);
+        left: clamp(-28px, -2.5vw, -12px);
+        transform: rotate(3.5deg);
+      }
+
+      .about-copy {
+        flex: 1;
+        min-width: 0;
+        align-items: flex-start;
+        justify-content: center;
+        text-align: left;
+        max-width: min(38em, 100%);
+        gap: 18px;
+        padding: clamp(0px, 0.8vw, 6px) 0;
+      }
+
+      /* Bio already opens with full name — desktop matches comp (single refined column of copy). */
+      .about-name {
+        display: none;
+      }
+
+      .about-bio {
+        max-width: none;
+        font-size: clamp(18px, 1.75vw, 22px);
+        line-height: 1.72;
+        letter-spacing: -0.014em;
+        color: rgba(255, 255, 255, 0.82);
+        text-align: left;
+        text-wrap: pretty;
+      }
+
+      .about-bio strong {
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.98);
+      }
+
+      .about-contact {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+        margin-top: 0;
+      }
+
+      .about-contact-link {
+        justify-content: flex-start;
+        font-size: 14px;
+        padding: 12px 18px;
+        text-align: left;
+      }
     }
 
     /* ── Accordion section ── */
     .accordion-section {
       padding: 0 20px 72px;
-      background: #000;
+      background: var(--bg-base);
     }
 
     .accordion-list {
@@ -1484,8 +1791,8 @@
         <h1 class="hero-headline"><span class="hl-line">Think it. Say it.</span><span class="hl-line">Draft it.</span></h1>
 
         <div class="phone-hero" id="phoneHero">
-          <img src="assets/phone-mock.png" alt="Draft — All items view">
-          <img src="assets/phone-mock-2.png" alt="Draft — Drafts view" class="phone-img-2" id="phoneMock2">
+          <img src="assets/iphone-mock-half-1.png" alt="Draft — All items view">
+          <img src="assets/iphone-mock-half-2.png" alt="Draft — Drafts view" class="phone-img-2" id="phoneMock2">
           <div class="phone-tabs" aria-hidden="true">
             <button class="phone-tab-btn" id="tabDrafts"></button>
             <button class="phone-tab-btn" id="tabAllItems"></button>
@@ -1658,7 +1965,9 @@
   </section>
 
   <section class="built-section" id="builtSection">
-    <p class="built-eyebrow">Built with</p>
+    <header class="section-heading section-heading--built">
+      <h2 class="section-heading__title">Built with</h2>
+    </header>
     <div class="built-grid">
       <div class="built-card">
         <div class="built-icon"><img src="assets/tools/swift.png" alt="Swift"></div>
@@ -1702,11 +2011,11 @@
     <div class="about-columns">
       <div class="about-visual">
         <div class="about-photo-scene">
-          <img src="assets/sticker-blob.png" class="about-sticker about-sticker-blob" alt="">
-          <img src="assets/sticker-star.png" class="about-sticker about-sticker-star" alt="">
           <div class="about-photo-ring">
             <img src="assets/about-photo.jpg" alt="Lucy Trepanier">
           </div>
+          <img src="assets/about-star-top.svg" class="about-sticker about-sticker-blob" alt="" loading="lazy" decoding="async">
+          <img src="assets/about-star-bottom.svg" class="about-sticker about-sticker-star" alt="" loading="lazy" decoding="async">
           <span class="about-tag about-tag-amber">MPS '26</span>
           <span class="about-tag about-tag-glass">Product Designer</span>
         </div>
@@ -1714,6 +2023,10 @@
       <div class="about-copy">
         <p class="about-name">Lucy Trepanier</p>
         <p class="about-bio">Lucy Trepanier is a Communication Design student at Parsons School of Design in NYC. Dyslexic by nature, she's always thought in images and feelings before words. <strong>Draft</strong> is the tool she wished had existed all along.</p>
+        <div class="about-contact" aria-label="Designer contact information">
+          <a class="about-contact-link" href="mailto:lucytrep.labs@gmail.com">lucytrep.labs@gmail.com</a>
+          <a class="about-contact-link" href="https://ca.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer">LinkedIn / lucytrep</a>
+        </div>
       </div>
     </div>
   </section>
@@ -1862,9 +2175,19 @@
   </script>
 
   <script>
-    // ── Nav scroll blur ──
+    // ── Nav scroll blur (tablet/desktop only — on phones it reads like a “scroll moment” on tiny deltas) ──
     const navEl = document.querySelector('nav');
-    window.addEventListener('scroll', () => {
+    const navBlurMq = window.matchMedia('(min-width: 768px)');
+    function navScrollBlur() {
+      if (!navEl || !navBlurMq.matches) {
+        if (navEl) {
+          navEl.style.background = '';
+          navEl.style.backdropFilter = '';
+          navEl.style.webkitBackdropFilter = '';
+          navEl.style.borderBottom = '';
+        }
+        return;
+      }
       if (window.scrollY > 10) {
         navEl.style.background = 'rgba(0,0,0,0.6)';
         navEl.style.backdropFilter = 'blur(20px)';
@@ -1876,7 +2199,14 @@
         navEl.style.webkitBackdropFilter = '';
         navEl.style.borderBottom = '';
       }
-    }, { passive: true });
+    }
+    window.addEventListener('scroll', navScrollBlur, { passive: true });
+    if (typeof navBlurMq.addEventListener === 'function') {
+      navBlurMq.addEventListener('change', navScrollBlur);
+    } else if (typeof navBlurMq.addListener === 'function') {
+      navBlurMq.addListener(navScrollBlur);
+    }
+    navScrollBlur();
   </script>
 
   <script>
