@@ -302,7 +302,7 @@
     }
 
     .eyebrow {
-      font-size: 12px;
+      font-size: clamp(14px, 3.6vw, 17px);
       font-weight: 500;
       letter-spacing: 0.02em;
       text-transform: none;
@@ -911,20 +911,26 @@
 
     footer p { font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.02em; font-weight: 400; }
 
-    /* ── Mobile hero lock: keep phone + copy in one dark continuous fade ── */
+    /* Spacers: desktop hidden; mobile adds rhythm between phone, copy, and CTA */
+    .hero-desc-spacer {
+      display: none;
+    }
+
+    /* ── Mobile hero: min-height fills first screen; content can grow so CTA is never clipped ── */
     @media (max-width: 767px) {
       .above-fold {
-        height: 100svh;
         min-height: 100svh;
-        max-height: 100svh;
-        overflow: hidden;
+        min-height: 100dvh;
+        height: auto;
+        max-height: none;
+        overflow: visible;
       }
 
       .hero-wrapper {
         flex: 0 0 auto;
-        height: min(72svh, 640px);
-        min-height: min(72svh, 640px);
-        max-height: min(72svh, 640px);
+        height: min(66svh, 580px);
+        min-height: min(66svh, 580px);
+        max-height: min(66svh, 580px);
         overflow: hidden;
       }
 
@@ -975,28 +981,46 @@
         );
       }
 
+      .hero-desc-spacer {
+        display: block;
+        flex-shrink: 0;
+        width: 100%;
+        pointer-events: none;
+      }
+
+      .hero-desc-spacer--after-phone {
+        min-height: clamp(20px, 5vw, 36px);
+      }
+
+      .hero-desc-spacer--before-cta {
+        min-height: clamp(16px, 4vw, 28px);
+      }
+
       .hero-desc-section {
         margin-top: clamp(-156px, -24vw, -112px);
-        padding: clamp(140px, 32vw, 196px) 34px clamp(64px, 11vw, 96px);
+        padding:
+          clamp(160px, 36vw, 220px)
+          clamp(24px, 7.5vw, 44px)
+          calc(clamp(88px, 15vw, 128px) + env(safe-area-inset-bottom, 0px));
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0) 0%,
-          rgba(0, 0, 0, 0.3) 14%,
-          rgba(0, 0, 0, 0.74) 36%,
-          var(--bg-base) 60%
+          rgba(0, 0, 0, 0.18) 24%,
+          rgba(0, 0, 0, 0.52) 52%,
+          var(--bg-base) 82%
         );
-        gap: 38px;
+        gap: clamp(12px, 3vw, 20px);
       }
 
       .hero-desc {
-        max-width: 17rem;
-        padding-top: 0;
-        line-height: 1.4;
+        max-width: min(19rem, calc(100vw - 48px));
+        padding: 14px 0 8px;
+        line-height: 1.45;
         letter-spacing: -0.018em;
       }
 
       .cta-btn {
-        margin-bottom: clamp(28px, 6vw, 44px);
+        margin-bottom: clamp(40px, 10vw, 64px);
       }
     }
 
@@ -1177,7 +1201,7 @@
 
       .features-float-scene {
         min-height: 520px;
-        padding-top: clamp(48px, 7vw, 84px);
+        padding-top: clamp(64px, 9vw, 104px);
         padding-bottom: clamp(24px, 4vw, 40px);
       }
 
@@ -1238,7 +1262,7 @@
       .nav-logo { height: 26px; }
       .phone-hero { width: min(58vw, 360px); }
       .hero-sub { font-size: 16px; max-width: 380px; }
-      .hero-desc-section { gap: 32px; }
+      .hero-desc-section { gap: clamp(14px, 3.5vw, 22px); }
       .carousel-section { margin-top: clamp(-52px, -11vw, -28px); padding: 0 0 52px; }
       .carousel-viewport {
         padding: clamp(24px, 4vw, 44px) 0 clamp(32px, 5vw, 56px);
@@ -1277,12 +1301,13 @@
       max-width: none;
       margin-left: calc(50% - 50vw);
       margin-right: calc(50% - 50vw);
-      padding: clamp(28px, 6vw, 56px) 0 clamp(56px, 8vw, 88px);
+      padding: clamp(48px, 10vw, 96px) 0 clamp(56px, 8vw, 88px);
       overflow: visible;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: clamp(18px, 4vw, 30px);
+      min-height: clamp(380px, 72vw, 560px);
     }
 
     .features-float-row {
@@ -1303,10 +1328,12 @@
     }
 
     .float-anchor {
-      position: relative;
-      will-change: transform;
+      position: absolute;
+      will-change: transform, opacity;
       z-index: 0;
       pointer-events: none;
+      opacity: 0;
+      transform: translate3d(0, 36px, 0);
     }
 
     .float-card-img {
@@ -1321,20 +1348,12 @@
       0%, 100% { translate: 0 0px; }
       50% { translate: 0 -11px; }
     }
-    @keyframes floatIn {
-      from { opacity: 0; translate: -24px 0; }
-      to   { opacity: 1; translate: 0 0; }
-    }
-    @keyframes floatInRight {
-      from { opacity: 0; translate: 24px 0; }
-      to   { opacity: 1; translate: 0 0; }
-    }
 
-    .float-anchor.fl-left  { animation: floatIn 0.9s cubic-bezier(0.22,1,0.36,1) var(--enter-delay,0s) both; }
-    .float-anchor.fl-right { animation: floatInRight 0.9s cubic-bezier(0.22,1,0.36,1) var(--enter-delay,0s) both; }
+    .float-anchor:not(.scroll-float--active) .float-card-img {
+      animation-play-state: paused;
+    }
 
     .fc-1 .float-card-img { rotate: -4deg; }
-    .fc-2 .float-card-img { rotate: -3deg; }
     .fc-3 .float-card-img { rotate: -5deg; }
     .fc-4 .float-card-img { rotate: 4deg; }
     .fc-5 .float-card-img { rotate: 3deg; }
@@ -1489,16 +1508,90 @@
       width: 36%;
       top: -6%;
       left: -10%;
-      transform: rotate(-11deg);
+      rotate: -11deg;
       transform-origin: 82% 86%;
+      animation: none;
     }
 
     .about-sticker-star {
       width: 40%;
       bottom: -7%;
       right: -9%;
-      transform: rotate(7deg);
+      rotate: 7deg;
       transform-origin: 18% 24%;
+      animation: none;
+    }
+
+    @keyframes aboutStickerDriftTL {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 2px -3px; }
+    }
+
+    @keyframes aboutStickerDriftBR {
+      0%, 100% { translate: 0 0; }
+      50% { translate: -2px 2.5px; }
+    }
+
+    @keyframes aboutTagDriftAmber {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 1.5px 2px; }
+    }
+
+    @keyframes aboutTagDriftGlass {
+      0%, 100% { translate: 0 0; }
+      50% { translate: -2px -1.5px; }
+    }
+
+    .about-section.about-revealed .about-sticker-blob {
+      animation: aboutStickerDriftTL 4.2s ease-in-out 0s infinite;
+    }
+
+    .about-section.about-revealed .about-sticker-star {
+      animation: aboutStickerDriftBR 3.7s ease-in-out 0.35s infinite;
+    }
+
+    .about-section.about-revealed .about-tag-amber {
+      animation: aboutTagDriftAmber 4s ease-in-out 0.1s infinite;
+    }
+
+    .about-section.about-revealed .about-tag-glass {
+      animation: aboutTagDriftGlass 3.5s ease-in-out 0.45s infinite;
+    }
+
+    .about-section .section-heading--about,
+    .about-section .about-columns {
+      opacity: 0;
+      transform: translateY(22px);
+      transition:
+        opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .about-section.about-revealed .section-heading--about {
+      opacity: 1;
+      transform: none;
+    }
+
+    .about-section.about-revealed .about-columns {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0.14s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-section .section-heading--about,
+      .about-section .about-columns {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .about-section.about-revealed .about-sticker-blob,
+      .about-section.about-revealed .about-sticker-star,
+      .about-section.about-revealed .about-tag-amber,
+      .about-section.about-revealed .about-tag-glass {
+        animation: none;
+      }
     }
 
     .about-tag {
@@ -1518,8 +1611,9 @@
       color: #fff;
       top: 4px;
       right: -22px;
-      transform: rotate(-6deg);
+      rotate: -6deg;
       box-shadow: 0 2px 12px rgba(168, 95, 16, 0.4);
+      animation: none;
     }
 
     .about-tag-glass {
@@ -1528,8 +1622,9 @@
       color: rgba(255, 255, 255, 0.9);
       bottom: 10px;
       left: -34px;
-      transform: rotate(4deg);
+      rotate: 4deg;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+      animation: none;
     }
 
     .about-name {
@@ -1658,13 +1753,13 @@
       .about-tag-amber {
         top: clamp(8px, 1.2vw, 14px);
         right: clamp(-8px, -0.8vw, 4px);
-        transform: rotate(-5deg);
+        rotate: -5deg;
       }
 
       .about-tag-glass {
         bottom: clamp(14px, 2vw, 24px);
         left: clamp(-28px, -2.5vw, -12px);
-        transform: rotate(3.5deg);
+        rotate: 3.5deg;
       }
 
       .about-copy {
@@ -1772,7 +1867,7 @@
       overflow: hidden;
       transition: max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .accordion-item.open .accordion-body { max-height: 220px; }
+    .accordion-item.open .accordion-body { max-height: 300px; }
     .accordion-content {
       padding: 0 18px 16px;
       font-size: 13px;
@@ -1783,11 +1878,7 @@
 
     /* ── Scroll-reveal: features + accordion ── */
 
-    /* Float cards: paused until scene is revealed */
-    .float-anchor.fl-left  { animation-play-state: paused; }
-    .float-anchor.fl-right { animation-play-state: paused; }
-    .features-float-scene.revealed .float-anchor { animation-play-state: running; }
-
+    /* Float cards: scroll-driven in / out (see float-cards-scroll script) */
     .features-float-scene.revealed .section-heading--features {
       opacity: 1;
       transform: none;
@@ -1796,7 +1887,7 @@
     .features-float-scene .section-heading--features {
       position: relative;
       z-index: 1;
-      padding: 0 24px;
+      padding: clamp(40px, 9vw, 96px) 24px 0;
       max-width: 30rem;
     }
 
@@ -1805,18 +1896,18 @@
       z-index: 1;
       background: transparent;
       padding: clamp(4px, 1vw, 10px) 20px 0;
-      width: min(100%, 560px);
+      width: min(100%, 420px);
     }
 
     .accordion-section--framed .section-heading--accordion-head {
-      padding: 0 0 16px;
+      padding: 0 0 12px;
       opacity: 1;
       transform: none;
       max-width: 100%;
     }
 
     .accordion-section--framed .section-heading__title {
-      font-size: clamp(22px, 4vw, 28px);
+      font-size: clamp(17px, 3.2vw, 22px);
       font-weight: 500;
       letter-spacing: -0.03em;
     }
@@ -1875,7 +1966,9 @@
     </div>
 
     <section class="hero-desc-section">
+      <div class="hero-desc-spacer hero-desc-spacer--after-phone" aria-hidden="true"></div>
       <p class="hero-desc">Draft is a voice-first tool for designers who <strong>think out loud.</strong> Say the feeling, the vibe, get <strong>three directions</strong> back instantly. <strong>Thought starters,</strong> not finished files.</p>
+      <div class="hero-desc-spacer hero-desc-spacer--before-cta" aria-hidden="true"></div>
       <button type="button" class="cta-btn" id="scrollToReel">Watch the demo <span class="cta-arrow">→</span></button>
     </section>
 
@@ -1916,11 +2009,6 @@
       <div class="float-anchor fl-left fc-1" style="top:8%;left:-28px;--bob-dur:4.2s;--enter-delay:0.1s;--bob-delay:0s;">
         <div class="float-card-img" style="width:100px;height:100px;">
           <img src="assets/float/image_aura_blue_014.jpg" alt="" loading="lazy">
-        </div>
-      </div>
-      <div class="float-anchor fl-left fc-2" style="top:38%;left:-64px;--bob-dur:3.7s;--enter-delay:0.22s;--bob-delay:0.5s;">
-        <div class="float-card-img" style="width:118px;height:88px;">
-          <img src="assets/float/image_halftone_004.jpg" alt="" loading="lazy">
         </div>
       </div>
       <div class="float-anchor fl-left fc-3" style="top:76%;left:-24px;--bob-dur:4.6s;--enter-delay:0.38s;--bob-delay:1s;">
@@ -1968,7 +2056,7 @@
               </svg>
             </button>
             <div class="accordion-body">
-              <p class="accordion-content">Palette suggestions pulled from your brief — earthy, electric, muted, or bold. Always tied back to the mood you described.</p>
+              <p class="accordion-content">Palette suggestions pulled from your brief. Soft, bold, muted, electric, earthy. Built to match the feeling and direction of the project, not just random color combinations.</p>
             </div>
           </div>
 
@@ -1983,7 +2071,7 @@
               </svg>
             </button>
             <div class="accordion-body">
-              <p class="accordion-content">Interface references that match your direction — typography, layout, and interaction patterns from real apps that feel like what you're building.</p>
+              <p class="accordion-content">Interface references that reflect the type of product you're building. Layouts, typography, interactions, and flows pulled from real products with a similar energy and structure.</p>
             </div>
           </div>
 
@@ -1998,7 +2086,7 @@
               </svg>
             </button>
             <div class="accordion-body">
-              <p class="accordion-content">Photography, illustration, and texture pulled to match the feeling — not just keywords. Draft finds images that capture the vibe, not just the subject.</p>
+              <p class="accordion-content">Photography, textures, illustrations, and visual references chosen for mood and atmosphere. Less about matching keywords, more about capturing the right feeling.</p>
             </div>
           </div>
 
@@ -2013,7 +2101,7 @@
               </svg>
             </button>
             <div class="accordion-body">
-              <p class="accordion-content">Everything pulled together into one shareable board. Color, UI, imagery — formatted and ready to present to a client or kick off a design sprint.</p>
+              <p class="accordion-content">Everything brought together into one visual direction. Color, interface inspiration, imagery, and overall tone organized into a board you can actually build from or present to a team.</p>
             </div>
           </div>
 
@@ -2064,7 +2152,7 @@
     </div>
   </section>
 
-  <section class="about-section">
+  <section class="about-section" id="aboutSection">
     <header class="section-heading section-heading--about">
       <h2 class="section-heading__title">About the designer</h2>
     </header>
@@ -2380,10 +2468,11 @@
   </script>
 
   <script>
-    // ── Scroll-linked typewriter reveal for .hero-desc ──
+    // ── Scroll-linked typewriter reveal for .hero-desc (desktop/tablet only — on phones it read as a broken fade and fought the fixed fold) ──
     (function () {
       const para = document.querySelector('.hero-desc');
       if (!para) return;
+      if (window.matchMedia('(max-width: 767px)').matches) return;
 
       const chars = [];
 
@@ -2441,6 +2530,82 @@
   </script>
 
   <script>
+    // ── Float cards: scroll-linked enter / hold / exit (halftone fc-2 removed) ──
+    (function () {
+      const scene = document.getElementById('featuresScene');
+      if (!scene) return;
+      const anchors = [...scene.querySelectorAll('.float-anchor')];
+      if (!anchors.length) return;
+
+      function dir(el) {
+        return el.classList.contains('fl-left') ? -1 : 1;
+      }
+
+      function update() {
+        const rect = scene.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (rect.bottom < -120 || rect.top > vh + 160) {
+          anchors.forEach((el) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translate3d(' + String(dir(el) * 64) + 'px,44px,0)';
+            el.classList.remove('scroll-float--active');
+          });
+          return;
+        }
+
+        const range = vh + rect.height * 0.9;
+        let p = (vh * 0.88 - rect.top) / range;
+        p = Math.max(0, Math.min(1, p));
+
+        anchors.forEach((el, i) => {
+          const stagger = i * 0.058;
+          let pp = (p - stagger) / (1 - stagger * 0.92);
+          pp = Math.max(0, Math.min(1, pp));
+
+          const dx = dir(el);
+          let op = 1;
+          let tx = 0;
+          let ty = 0;
+
+          if (pp < 0.33) {
+            const t = pp / 0.33;
+            const e = 1 - (1 - t) * (1 - t);
+            op = e;
+            tx = (1 - e) * dx * 68;
+            ty = (1 - e) * 34;
+          } else if (pp > 0.67) {
+            const t2 = (pp - 0.67) / 0.33;
+            const e2 = t2 * t2;
+            op = 1 - e2;
+            tx = e2 * dx * 84;
+            ty = -e2 * 52;
+          }
+
+          el.style.opacity = String(Math.max(0, Math.min(1, op)));
+          el.style.transform = 'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px,0)';
+          if (op > 0.12) el.classList.add('scroll-float--active');
+          else el.classList.remove('scroll-float--active');
+        });
+      }
+
+      let ticking = false;
+      function onScrollOrResize() {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(() => {
+            update();
+            ticking = false;
+          });
+        }
+      }
+
+      window.addEventListener('scroll', onScrollOrResize, { passive: true });
+      window.addEventListener('resize', onScrollOrResize);
+      update();
+    })();
+  </script>
+
+  <script>
     // ── Features + accordion scroll reveal ──
     (function () {
       const io = new IntersectionObserver((entries) => {
@@ -2476,6 +2641,48 @@
       }, { threshold: 0.15 });
 
       io.observe(section);
+    })();
+  </script>
+
+  <script>
+    // ── About the designer: scroll reveal + gentle drift on stickers / pills ──
+    (function () {
+      const section = document.getElementById('aboutSection');
+      if (!section) return;
+
+      const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      function applyReveal() {
+        section.classList.add('about-revealed');
+      }
+
+      if (mqReduce.matches) {
+        applyReveal();
+        return;
+      }
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              applyReveal();
+              io.disconnect();
+            }
+          });
+        },
+        { threshold: 0.14, rootMargin: '0px 0px -6% 0px' }
+      );
+
+      io.observe(section);
+
+      if (typeof mqReduce.addEventListener === 'function') {
+        mqReduce.addEventListener('change', () => {
+          if (mqReduce.matches) applyReveal();
+        });
+      } else if (typeof mqReduce.addListener === 'function') {
+        mqReduce.addListener(() => {
+          if (mqReduce.matches) applyReveal();
+        });
+      }
     })();
   </script>
 
