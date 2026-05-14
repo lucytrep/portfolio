@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#12090c">
   <!-- Root-relative base so /draft and /draft/ both resolve assets under /draft/ on the live host. -->
   <base id="draft-doc-base" href="/draft/">
   <script>
@@ -51,6 +52,24 @@
       font-family: 'SF Pro Rounded', ui-rounded, -apple-system, BlinkMacSystemFont, sans-serif;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* iOS Safari: soften the band above the hero (status bar + rubber-band) so flat --bg-base does not meet the photo gradient in a hard line */
+    @supports (-webkit-touch-callout: none) {
+      body {
+        background:
+          linear-gradient(
+            180deg,
+            rgba(52, 18, 32, 0.55) 0%,
+            rgba(28, 12, 18, 0.32) calc(56px + env(safe-area-inset-top, 0px)),
+            rgba(14, 9, 11, 0.12) calc(120px + env(safe-area-inset-top, 0px)),
+            var(--bg-base) min(38vh, 320px)
+          ),
+          var(--bg-base);
+        background-repeat: no-repeat, repeat;
+        background-size: 100% min(100vh, 560px), auto;
+        background-position: top center, 0 0;
+      }
     }
 
     p,
@@ -291,7 +310,8 @@
     .hero-wrapper::before {
       content: '';
       position: absolute;
-      inset: -8% -4% -4%;
+      /* Pull past safe area + status bar so the image gradient bleeds to the physical top on Safari */
+      inset: calc(-8% - env(safe-area-inset-top, 0px) - 48px) -4% -4% -4%;
       background-image: url('assets/gradient-bg.png');
       background-size: cover;
       background-position: center 58%;
@@ -1057,13 +1077,15 @@
         height: min(80svh, 720px);
         min-height: min(80svh, 720px);
         max-height: min(80svh, 720px);
-        overflow: hidden;
+        /* overflow-y: visible keeps ::before able to extend above the box (Safari); x clip only */
+        overflow-x: hidden;
+        overflow-y: visible;
         /* Must stay above .hero-desc-section (z-index 12 in this block) or its gradient + ::before paint over the phone */
         z-index: 13;
       }
 
       .hero-wrapper::before {
-        inset: -22% -10% -12%;
+        inset: calc(-22% - env(safe-area-inset-top, 0px) - 64px) -10% -12%;
         background-size: cover;
         background-position: center 24%;
         opacity: 0.58;
@@ -1087,23 +1109,23 @@
 
       .hero {
         justify-content: flex-start;
-        padding-top: clamp(40px, 11vw, 88px);
-        padding-bottom: clamp(4px, 1.5vw, 12px);
+        padding-top: clamp(36px, 10vw, 80px);
+        padding-bottom: clamp(12px, 3vw, 24px);
       }
 
       .eyebrow {
         margin-top: clamp(4px, 2vw, 16px);
-        margin-bottom: clamp(22px, 6vw, 34px);
+        margin-bottom: clamp(16px, 5vw, 28px);
       }
 
       .hero-headline {
-        margin-bottom: clamp(12px, 3.5vw, 24px);
+        margin-bottom: clamp(8px, 2.5vw, 18px);
       }
 
       .phone-hero {
         width: min(72vw, 356px);
-        margin-top: clamp(24px, 7vw, 52px);
-        margin-bottom: clamp(4px, 1.5vw, 12px);
+        margin-top: clamp(16px, 5vw, 40px);
+        margin-bottom: clamp(8px, 2vw, 16px);
         padding-top: 18px;
         filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.42));
       }
@@ -1113,15 +1135,16 @@
       }
 
       .phone-hero::after {
-        height: min(58%, 240px);
-        bottom: -6px;
+        height: min(72%, 300px);
+        bottom: -8px;
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0) 0%,
-          rgba(0, 0, 0, 0.12) 14%,
-          rgba(0, 0, 0, 0.42) 40%,
-          rgba(0, 0, 0, 0.78) 68%,
-          rgba(10, 8, 9, 0.98) 100%
+          rgba(0, 0, 0, 0.2) 12%,
+          rgba(0, 0, 0, 0.5) 36%,
+          rgba(0, 0, 0, 0.82) 64%,
+          rgba(0, 0, 0, 0.96) 88%,
+          #000 100%
         );
       }
 
@@ -1133,7 +1156,7 @@
       }
 
       .hero-desc-spacer--after-phone {
-        min-height: clamp(20px, 5.5vw, 44px);
+        min-height: clamp(56px, 14vw, 104px);
       }
 
       .hero-desc-spacer--before-cta {
@@ -1145,17 +1168,19 @@
         z-index: 12;
         isolation: isolate;
         pointer-events: none;
-        margin-top: clamp(-204px, -33vw, -148px);
+        /* Less overlap with the phone — keeps “Built for early ideas” off the mockup */
+        margin-top: clamp(-72px, -11vw, -28px);
         padding:
-          clamp(128px, 30vw, 196px)
+          clamp(112px, 26vw, 180px)
           clamp(24px, 7.5vw, 44px)
           calc(clamp(40px, 8vw, 72px) + env(safe-area-inset-bottom, 0px));
         background: linear-gradient(
           to bottom,
-          rgba(10, 8, 9, 0.45) 0%,
-          rgba(10, 8, 9, 0.82) 16%,
-          rgba(10, 8, 9, 0.95) 34%,
-          var(--bg-base) 68%,
+          rgba(0, 0, 0, 0.94) 0%,
+          rgba(0, 0, 0, 0.88) 8%,
+          rgba(10, 8, 9, 0.92) 22%,
+          rgba(10, 8, 9, 0.97) 38%,
+          var(--bg-base) 70%,
           var(--bg-base) 100%
         );
         gap: clamp(12px, 3vw, 20px);
@@ -1167,12 +1192,13 @@
         left: 0;
         right: 0;
         top: 0;
-        height: min(340px, 62vw);
+        height: min(380px, 72vw);
         background: linear-gradient(
           to bottom,
-          rgba(10, 8, 9, 0.78) 0%,
-          rgba(10, 8, 9, 0.92) 18%,
-          rgba(10, 8, 9, 0.65) 46%,
+          rgba(0, 0, 0, 0.98) 0%,
+          rgba(0, 0, 0, 0.85) 14%,
+          rgba(10, 8, 9, 0.72) 32%,
+          rgba(10, 8, 9, 0.35) 58%,
           transparent 100%
         );
         z-index: 0;
@@ -1208,7 +1234,9 @@
         height: 100svh;
         min-height: 100svh;
         max-height: 100svh;
-        overflow: hidden;
+        /* Let hero ::before extend above the fold without clipping (Safari top bleed); clip horizontally only */
+        overflow-x: hidden;
+        overflow-y: visible;
       }
 
       .hero-wrapper {
@@ -1216,11 +1244,12 @@
         height: min(78svh, 820px);
         min-height: min(78svh, 820px);
         max-height: min(78svh, 820px);
-        overflow: hidden;
+        overflow-x: hidden;
+        overflow-y: visible;
       }
 
       .hero-wrapper::before {
-        inset: -14% -6% -6%;
+        inset: calc(-14% - env(safe-area-inset-top, 0px) - 56px) -6% -6%;
         background-position: center 44%;
         opacity: 0.66;
       }
