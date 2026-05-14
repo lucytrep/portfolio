@@ -226,9 +226,10 @@
     // Tap/click on the video itself triggers play (mobile fallback + desktop Safari)
     video.addEventListener('click', tryPlay);
 
-    // Mobile: loop immediately, muted, skip first second of intro
+    // Mobile: loop immediately, muted, skip first second of intro, show overlay from load
     if (window.matchMedia('(max-width: 800px)').matches) {
       video.loop = true;
+      showOverlay();
       var mobileSkipped = false;
       function skipIntro() {
         if (mobileSkipped) return;
