@@ -19,6 +19,8 @@ This repo uses clean folder URLs as the canonical pages and keeps older `.html` 
 - `/projects/forage/index.html`
 - `/projects/meta-in-app/index.html`
 - `/projects/nike/index.html`
+- `/draft/index.html`
+  - Draft marketing / capstone page — canonical URLs: `https://lucytrep.com/draft/` and `https://lucytrep.com/draft` (both load this file on GitHub Pages)
 
 ## Redirect wrappers: do not edit for content
 
@@ -41,6 +43,8 @@ These files exist only so older URLs keep working:
 - `/projects/forage.html`
 - `/projects/meta-in-app.html`
 - `/projects/nike.html`
+- `/draft.html`
+  - Redirects to `/draft/` (compatibility if someone bookmarks the old `.html` entry point)
 
 They should only contain redirect logic.
 
