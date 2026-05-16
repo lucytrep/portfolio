@@ -1,0 +1,527 @@
+<!-- Canonical page source for /projects/draft/. Not linked from navigation — direct URL only. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Draft · Lucytrep</title>
+  <link rel="icon" href="../../assets/cursor.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="../../css/common.css" />
+  <link rel="stylesheet" href="../../css/case-study.css" />
+  <style>
+    .cs-launch-zone { background: #fff; padding: 0.5rem; }
+    .cs-launch-inner { width: 100%; }
+    .cs-launch-slot { position: relative; width: 100%; }
+    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
+    .cs-launch-slot { border-radius: 0.75rem; }
+    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: #0a0809; }
+    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
+    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; border: none; background: none; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
+    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
+    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
+    #page-header { z-index: 100; }
+    #cs-hero-target { background: transparent; border: none; }
+    .case-hero--init .case-hero-kicker,
+    .case-hero--init .case-hero-title,
+    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
+    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
+    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
+
+    /* Tool icon grid */
+    .draft-tools-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      align-items: center;
+    }
+    .draft-tool-chip {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.875rem;
+      border: 1px solid var(--color-border);
+      border-radius: 2rem;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      background: var(--color-surface);
+    }
+    .draft-tool-chip img {
+      width: 16px;
+      height: 16px;
+      object-fit: contain;
+    }
+
+    /* Comparison panel (Replit / Lovable / Draft) */
+    .draft-compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .draft-compare-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .draft-compare-label {
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-secondary);
+    }
+    .draft-compare-frame {
+      border-radius: 0.8rem;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: #f0eeeb;
+    }
+    .draft-compare-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 2-up split for RN vs Swift comparison */
+    .draft-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .draft-split-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .draft-split-label {
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-secondary);
+    }
+    .draft-split-frame {
+      border-radius: 0.8rem;
+      overflow: hidden;
+      aspect-ratio: 9 / 16;
+      background: #f0eeeb;
+    }
+    .draft-split-frame img, .draft-split-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Showcase photos */
+    .draft-showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .draft-showcase-frame {
+      border-radius: 0.8rem;
+      overflow: hidden;
+      aspect-ratio: 4 / 5;
+      background: #f0eeeb;
+    }
+    .draft-showcase-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    @media (max-width: 52rem) {
+      .draft-compare-grid { grid-template-columns: 1fr; }
+      .draft-split-grid { grid-template-columns: 1fr; }
+      .draft-showcase-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .case-hero--init .case-hero-kicker,
+      .case-hero--init .case-hero-title,
+      .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="container page-header" id="page-header">
+    <div class="grid-12 header-grid">
+      <div class="span-6">
+        <a href="../../" class="site-name">LUCILLE TREPANIER</a>
+        <span class="site-tagline">Product Designer</span>
+      </div>
+      <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </button>
+      <nav class="span-6" id="main-nav">
+        <a href="../../case-studies/">Work</a>
+        <a href="../../archive/">Archive</a>
+        <a href="../../about/">About</a>
+        <a href="../../assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+      </nav>
+    </div>
+  </header>
+
+
+
+  <main class="container case-study">
+    <div class="case-layout">
+      <aside class="case-sidebar">
+        <a href="../../case-studies/" class="case-back">Back</a>
+        <nav class="case-toc" aria-label="Case study sections">
+          <a href="#overview">Overview</a>
+          <a href="#problem">The Problem</a>
+          <a href="#research-insights">Research Insights</a>
+          <a href="#strategy">Defining the Opportunity</a>
+          <a href="#design-exploration">Design Exploration</a>
+          <a href="#testing">Test &amp; Iterate</a>
+          <a href="#final-solution">Final Product</a>
+          <a href="#results">Impact</a>
+          <a href="#reflection">Reflection</a>
+          <a href="#presentation">Presentation</a>
+        </nav>
+      </aside>
+
+      <article class="case-main">
+        <header id="case-intro" class="case-hero">
+          <p class="case-hero-kicker">DRAFT • iOS • PARSONS CAPSTONE • 2025</p>
+          <h1 class="case-hero-title">Built for the moment before the work starts.</h1>
+          <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;background:#0a0809;">
+            <video preload="auto" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+          </div>
+
+          <dl class="case-meta-grid">
+            <div class="case-meta-item">
+              <dt>Role</dt>
+              <dd>Product Designer + Developer</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Timeline</dt>
+              <dd>5–8 weeks</dd>
+            </div>
+            <div class="case-meta-item case-meta-item--shipped">
+              <dt>Date</dt>
+              <dd>Spring 2025</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Context</dt>
+              <dd>MPS Communication Design, Digital Product Design — The New School</dd>
+            </div>
+            <div class="case-meta-item">
+              <dt>Tools</dt>
+              <dd>Swift, Xcode, React Native, Figma, Claude API, Pexels API, Unsplash, After Effects, ChatGPT</dd>
+            </div>
+          </dl>
+        </header>
+
+        <div class="case-body">
+
+          <!-- OVERVIEW -->
+          <section id="overview" class="case-section">
+            <p class="case-section-label">Overview</p>
+            <h2 class="case-section-title">Speak an idea. See three directions.</h2>
+            <div class="case-section-body">
+              <p>
+                Draft is a native iOS app that turns a spoken idea into visual creative directions. You speak a prompt and it generates three directions across four output types: color palettes, UI layouts, image collections, and moodboards.
+              </p>
+              <p>
+                Built for the moment between having an idea and sitting down to start. Not at your desk, not with your laptop open, but on your phone when the thought is still there.
+              </p>
+              <p>
+                <a href="https://lucytrep.com/draft" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.4rem;background:#111;color:#fff;padding:0.45rem 1rem;border-radius:2rem;font-size:var(--font-size-sm);text-decoration:none;vertical-align:middle;font-weight:500;">lucytrep.com/draft <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M9.5 1.5H3.5M9.5 1.5V7.5" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/10;">
+              <img src="../../draft/assets/showcase-setup.jpg" alt="Draft — showcase table setup" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+            </div>
+          </section>
+
+          <!-- THE PROBLEM -->
+          <section id="problem" class="case-section">
+            <p class="case-section-label">The Problem</p>
+            <h2 class="case-section-title">The Tools That Exist Are Not Built for This Moment</h2>
+            <div class="case-section-body">
+              <p>
+                I have always thought in images before I think in words. When a creative direction comes to me, I need to get it out and see it immediately, wherever I am.
+              </p>
+              <p>
+                The tools that exist right now are not built for that. Replit and Lovable are too technical and too restrictive. You have to write out exactly what you want and you end up stuck iterating inside them. Draft is intentionally a first pass. It is not meant to be continued inside the app. None of the existing tools are built that way.
+              </p>
+              <p>
+                There was also a more practical problem. When you are working with developers across time zones and need to communicate a creative direction quickly, there is no fast way to send something visual. A voice memo is just more words. A Pinterest screenshot needs explaining. I needed to speak a direction and hand someone something they could actually look at.
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-2);">
+              <div>
+                <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#111;">
+                  <img src="../../draft/assets/cs-replit.png" alt="Replit mobile app" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                </div>
+                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Replit</p>
+              </div>
+              <div>
+                <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#111;">
+                  <img src="../../draft/assets/cs-lovable.png" alt="Lovable mobile app" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                </div>
+                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Lovable</p>
+              </div>
+              <div>
+                <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#0a0809;">
+                  <img src="../../draft/assets/cs-voice.png" alt="Draft — voice listening screen" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                </div>
+                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Draft — Voice</p>
+              </div>
+              <div>
+                <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#0a0809;">
+                  <img src="../../draft/assets/cs-artifact-moodboard.png" alt="Draft — moodboard artifact" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                </div>
+                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Draft — Artifact</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- RESEARCH INSIGHTS -->
+          <section id="research-insights" class="case-section">
+            <p class="case-section-label">Research Insights</p>
+            <h2 class="case-section-title">Every Tool in This Category Makes the Same Assumption</h2>
+            <div class="case-section-body">
+              <p>
+                I audited the major AI creative tools, Replit, Lovable, and a few others, and looked at two things: how they take input and what they give back.
+              </p>
+              <p>
+                The pattern was the same across all of them. Input is text, usually detailed and technical. Output is code. The whole thing assumes you already know what you want precisely enough to write it down, and that what you want at the end is something buildable.
+              </p>
+              <p>Three things kept coming up:</p>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Wrong output type</strong>
+                  A designer in the first five minutes of an idea does not need working code. They need something visual they can react to, save, send, or throw away in thirty seconds.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Wrong device</strong>
+                  Every tool in this category is desktop-first. The phone is either unsupported or a stripped-down version of the real experience. Creative ideas do not only happen at desks.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Wrong input model</strong>
+                  Typing requires you to have already translated the idea into language precise enough to write. Voice is faster, looser, and closer to how a direction actually arrives.
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- DEFINING THE OPPORTUNITY -->
+          <section id="strategy" class="case-section">
+            <p class="case-section-label">Defining the Opportunity</p>
+            <h2 class="case-section-title">The Thing That Comes Before the Work</h2>
+            <div class="case-section-body">
+              <p>
+                Draft was never meant to replace the tools designers use for finished work. It is the thing that comes before. The first draft of a direction, captured before it disappears, is visual enough to be useful.
+              </p>
+              <p>
+                I scoped it around four artifact types that map to the earliest stage of creative thinking: color, UI, imagery, and moodboard. Three directions per prompt was a deliberate constraint. Enough range to react to, not so many that choosing becomes its own problem.
+              </p>
+              <p>
+                The bar I kept coming back to: whatever Draft produces should be something a designer would screenshot and drop into a Slack message. Not hand off to an engineer. Not present in a meeting. Just send, so a conversation can start.
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;background:#C8E000;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-start;">
+                <span style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Rounded',sans-serif;font-size:1.15rem;font-weight:700;color:#000;letter-spacing:-0.01em;line-height:1.2;">Court Yellow</span>
+                <span style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Rounded',sans-serif;font-size:0.95rem;font-weight:400;color:rgba(0,0,0,0.6);margin-top:0.2rem;">#C8E000</span>
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;">
+                <img src="../../draft/assets/library/open-court-4.jpg" alt="Draft image collection output" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+              </div>
+            </div>
+          </section>
+
+          <!-- DESIGN EXPLORATION -->
+          <section id="design-exploration" class="case-section">
+            <p class="case-section-label">Design Exploration</p>
+            <h2 class="case-section-title">Switching to Swift Was a Design Decision</h2>
+            <div class="case-section-body">
+              <p>
+                The first build was in React Native. It worked, but it felt wrong. Everything moved like a web app wrapped in a phone shell, interactions were sticky, and nothing about it communicated the warmth or fluidity the app needed. It looked like a utility. Draft needed to feel more like a sketchbook.
+              </p>
+              <p>
+                Switching to Swift was a design decision as much as a technical one. Native iOS rendering changed how the whole app felt to hold and actually use. The difference between the two builds is visible immediately when you put them next to each other.
+              </p>
+              <p>
+                The home feed presented its own problem. The APIs could generate content but could not consistently produce imagery that held together aesthetically. So I curated some of it with locally sourced images, renamed to match keyword triggers, so the first thing a user sees feels considered and intentional. Live API content takes over for everything generated after that.
+              </p>
+            </div>
+            <div class="draft-split-grid">
+              <div class="draft-split-cell">
+                <span class="draft-split-label">React Native</span>
+                <div class="draft-split-frame" style="background:#0a0809;">
+                  <img src="../../draft/assets/cs-react-native.png" alt="React Native build" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                </div>
+              </div>
+              <div class="draft-split-cell">
+                <span class="draft-split-label">Swift</span>
+                <div class="draft-split-frame" style="background:#0a0809;">
+                  <img src="../../draft/assets/cs-swift.png" alt="Swift build" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- TEST & ITERATE -->
+          <section id="testing" class="case-section">
+            <p class="case-section-label">Test &amp; Iterate</p>
+            <h2 class="case-section-title">Build, Look at It, Ask If It Feels Right</h2>
+            <div class="case-section-body">
+              <p>
+                I did not run formal user testing sessions. What I did instead was build, look at it, and ask whether it felt like the product I had set out to make.
+              </p>
+              <p>
+                The React Native to Swift rebuild was the biggest iteration of the project. It was not a small call to make mid-timeline, but the version I had did not feel right and I could not ship something that looked wrong.
+              </p>
+              <p>
+                The home feed went through several rounds of curation. Early API generations were inconsistent and broke the aesthetic of the experience, so I built a hybrid system where curated local assets anchor the feed and live API content handles everything generated. That balance took time to get right.
+              </p>
+              <p>
+                The three-direction model stayed fixed throughout. Every time I questioned whether to change it, keeping it felt more right than adjusting it.
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-2);">
+              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
+                <img src="../../draft/assets/cs-voice.png" alt="Draft — listening" style="width:100%;height:auto;display:block;" loading="lazy">
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
+                <img src="../../draft/assets/cs-press-hold.png" alt="Draft — press and hold to dictate" style="width:100%;height:auto;display:block;" loading="lazy">
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
+                <img src="../../draft/assets/cs-desert-dreams.png" alt="Draft — Desert Dreams moodboard" style="width:100%;height:auto;display:block;" loading="lazy">
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
+                <img src="../../draft/assets/cs-press-hold-2.png" alt="Draft — press and hold" style="width:100%;height:auto;display:block;" loading="lazy">
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
+                <img src="../../draft/assets/cs-generating.png" alt="Draft — generating" style="width:100%;height:auto;display:block;" loading="lazy">
+              </div>
+            </div>
+          </section>
+
+          <!-- FINAL PRODUCT -->
+          <section id="final-solution" class="case-section">
+            <p class="case-section-label">Final Product</p>
+            <h2 class="case-section-title">Speak a Direction. See Three Versions. Send the One That Fits.</h2>
+            <div class="case-section-body">
+              <p>
+                Draft is live at <a href="https://lucytrep.com/draft" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.4rem;background:#111;color:#fff;padding:0.45rem 1rem;border-radius:2rem;font-size:var(--font-size-sm);text-decoration:none;vertical-align:middle;font-weight:500;">lucytrep.com/draft <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1.5 9.5L9.5 1.5M9.5 1.5H3.5M9.5 1.5V7.5" stroke="#fff" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a> (way cleaner on mobile).
+              </p>
+              <p>
+                The app opens to a home feed of generated artifacts. You tap the microphone, speak a direction, and three creative outputs appear across four types: color palettes, UI layouts, image collections, moodboards. Everything in the feed is saveable. The session is disposable. Draft is not where you finish things. It is where you start.
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;background:#0a0809;">
+              <video preload="metadata" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+            </div>
+          </section>
+
+          <!-- IMPACT -->
+          <section id="results" class="case-section">
+            <p class="case-section-label">Impact</p>
+            <h2 class="case-section-title">"Voice to moodboard."</h2>
+            <div class="case-section-body">
+              <p>
+                Someone who attended the showcase posted about the night on X. They listed the projects in the room. Draft made the list as "voice to moodboard."
+              </p>
+              <p>
+                That description, written by someone who had just used it for thirty seconds, was a good sign that the core idea was landing.
+              </p>
+              <p>
+                The NFC tags were tapped throughout the night. People pulled up the marketing site on their own phones and a few people tested the app and spoke prompts they came up with themselves.
+              </p>
+              <p>
+                <a href="https://x.com/taydotfun/status/2055690604542108056" target="_blank" rel="noopener noreferrer" class="case-link-button">Read on X
+                  <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+                    <path d="M1.5 9.5L9.5 1.5M9.5 1.5H3.5M9.5 1.5V7.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </a>
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:3/2;">
+              <img src="../../draft/assets/showcase-demo-1.jpg" alt="Draft — demoing at showcase" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+            </div>
+            <div style="margin-top:var(--space-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;">
+                <img src="../../draft/assets/cs-tweet-cropped.png" alt="Tweet from @taydotfun — voice to moodboard" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
+              </div>
+              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;">
+                <img src="../../draft/assets/showcase-demo-2.jpg" alt="Draft — demoing the app" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+              </div>
+            </div>
+          </section>
+
+          <!-- REFLECTION -->
+          <section id="reflection" class="case-section">
+            <p class="case-section-label">Reflection</p>
+            <h2 class="case-section-title">I Wanted to Build a Tool I Needed</h2>
+            <div class="case-section-body">
+              <p>
+                I have always processed ideas visually before I can put them into words. Draft came directly from that frustration: having a direction and no fast way to hand it to someone from my phone without switching into a completely different mode.
+              </p>
+              <p>
+                The thing I am most proud of is that voice is genuinely the entry point. Not a toggle, not a feature buried in settings. The whole interaction model is built around it, and that decision came from something real.
+              </p>
+              <p>
+                If I could go back, I would make the Swift decision earlier. The rebuild was the right call and I would make it again, but doing it sooner would have bought more time to develop the artifact system further.
+              </p>
+            </div>
+          </section>
+
+          <!-- PRESENTATION -->
+          <section id="presentation" class="case-section">
+            <p class="case-section-label">Presentation</p>
+            <h2 class="case-section-title">Index Design Studios, Chinatown, New York</h2>
+            <div class="case-section-body">
+              <p>
+                Draft was presented at Index Design Studios in Chinatown, New York as part of the New School MPS capstone showcase. The format was gallery-style. People moved through the space at their own pace and stopped where something caught them.
+              </p>
+              <p>
+                I set up with a looping product video on an iPad, NFC cards you could tap to open the marketing site or save my contact directly to your phone, stickers, and a live device anyone could pick up and try.
+              </p>
+              <p>
+                Draft is something you have to touch to understand. Reading about voice-first generation does not land the same way as speaking a prompt and watching three directions appear. The gallery format made that possible.
+              </p>
+            </div>
+            <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;">
+              <img src="../../draft/assets/showcase-setup.jpg" alt="Draft — showcase table setup with iPad and NFC cards" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+            </div>
+          </section>
+
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="container page-footer">
+    <div class="grid-12">
+      <div class="span-6">
+        <span class="footer-credit">Designed + coded by</span><br />
+        <span class="footer-name">Lucille Trepanier</span>
+      </div>
+      <div class="span-6 footer-right">
+        <div class="footer-socials">
+          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../js/main.js"></script>
+</body>
+</html>
