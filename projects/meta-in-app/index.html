@@ -57,7 +57,7 @@
 
   <div class="cs-ed">
     <div class="cs-ed-grid">
-      <div class="cs-ed-img cs-ed-img--full" style="position:relative;">
+      <div class="cs-ed-img cs-ed-img--full" style="position:relative;min-height:84vh;aspect-ratio:unset;">
         <iframe src="https://player.vimeo.com/video/1182137743?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&controls=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:130%;height:130%;transform:translate(-50%,-50%);border-radius:inherit;" title="LucyTrepanier_MotionProject2_Final"></iframe>
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
@@ -364,11 +364,16 @@
                 Users can move from interest to scheduling to payment directly within the conversation. Payment uses a handoff code model where the buyer sends funds, which are held until the in person exchange. At meetup, the buyer shares a 4 digit verification code that the seller enters to release the funds. Neither party discloses financial information, and the entire flow stays within the Facebook app. The pattern deliberately mirrors familiar authentication experiences like Uber ride confirmation and iOS AirDrop, so users can trust the process without learning something new.
               </p>
             </div>
-            <div class="case-section-media-row">
-              <div class="case-image-block" style="aspect-ratio:3/2;">
+            <div style="margin-top:var(--space-4);border-radius:0.75rem;overflow:hidden;aspect-ratio:16/9;position:relative;box-shadow:0 0 0 1px #e0e0e0;">
+              <div style="position:absolute;inset:0;overflow:hidden;">
+                <video preload="metadata" src="../../assets/images/meta-in-app/logo.mp4" autoplay muted loop playsinline style="position:absolute;top:50%;left:50%;width:170%;height:170%;transform:translate3d(-50%,-50%,0);object-fit:cover;backface-visibility:hidden;" data-timebar></video>
+              </div>
+            </div>
+            <div class="case-section-media-row" style="margin-top:var(--space-2);">
+              <div class="case-image-block" style="aspect-ratio:3/2;box-shadow:0 0 0 1px #e0e0e0;">
                 <img src="../../assets/images/meta-in-app/1.jpg" alt="Final product screen 1" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
               </div>
-              <div class="case-image-block" style="aspect-ratio:3/2;">
+              <div class="case-image-block" style="aspect-ratio:3/2;box-shadow:0 0 0 1px #e0e0e0;">
                 <video preload="metadata" src="../../assets/images/meta-in-app/impact.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
               </div>
             </div>

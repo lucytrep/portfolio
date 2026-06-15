@@ -596,14 +596,17 @@
       lbVideo.removeAttribute('src');
     }
 
-    // Mark elements and attach click listeners
+    // Mark elements and attach click listeners.
+    // Videos with pointer-events:none pass clicks to the parent, so attach there instead.
     mediaEls.forEach(function (el, i) {
-      el.classList.add('lightbox-target');
-      el.addEventListener('click', function (e) {
+      var cs = window.getComputedStyle(el);
+      var clickTarget = (cs.pointerEvents === 'none' && el.parentElement) ? el.parentElement : el;
+      clickTarget.classList.add('lightbox-target');
+      clickTarget.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
         open(i);
-      }, true); // capture phase so it fires before any parent link navigation
+      }, true);
     });
 
     closeBtn.addEventListener('click', function (e) { e.stopPropagation(); close(); });
@@ -1023,7 +1026,6 @@
       window.requestAnimationFrame(onScroll);
     }
 
-    initMediaProgress();
     hero.classList.add('case-hero--init');
 
     function refresh() {
@@ -1056,5 +1058,54 @@
       resizeTimer = setTimeout(refresh, 150);
     });
   };
+
+  // Progress bar on elements explicitly marked with data-timebar
+  (function () {
+    var section = document.getElementById('final-solution');
+    if (!section) return;
+
+    section.querySelectorAll('[data-timebar]').forEach(function (el) {
+      var container = el.parentElement;
+      if (!container) return;
+
+      if (getComputedStyle(container).position === 'static') {
+        container.style.position = 'relative';
+      }
+
+      var bar = document.createElement('div');
+      bar.className = 'case-hero-progress';
+      var fill = document.createElement('div');
+      fill.className = 'case-hero-progress__fill';
+      bar.appendChild(fill);
+      container.appendChild(bar);
+
+      if (el.tagName === 'VIDEO') {
+        var frame = null;
+        var syncVideo = function () {
+          if (!el.duration || !isFinite(el.duration)) return;
+          fill.style.transform = 'scaleX(' + (el.currentTime % el.duration) / el.duration + ')';
+        };
+        var loopVideo = function () { syncVideo(); frame = window.requestAnimationFrame(loopVideo); };
+        var showVideo = function () { bar.classList.add('is-visible'); if (!frame) loopVideo(); };
+        var hideVideo = function () { bar.classList.remove('is-visible'); window.cancelAnimationFrame(frame); frame = null; };
+        el.addEventListener('play', showVideo);
+        el.addEventListener('pause', hideVideo);
+        el.addEventListener('loadedmetadata', syncVideo);
+        if (el.readyState >= 1 && !el.paused) showVideo();
+      } else if (el.tagName === 'IFRAME' && el.src.indexOf('vimeo') !== -1) {
+        if (typeof Vimeo === 'undefined' || !Vimeo.Player) return;
+        try {
+          var player = new Vimeo.Player(el);
+          player.on('timeupdate', function (data) {
+            if (!data || !data.duration) return;
+            bar.classList.add('is-visible');
+            fill.style.transform = 'scaleX(' + (data.seconds % data.duration) / data.duration + ')';
+          });
+          player.on('play', function () { bar.classList.add('is-visible'); });
+          player.on('pause', function () { bar.classList.remove('is-visible'); });
+        } catch (e) {}
+      }
+    });
+  })();
 
 })();
