@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#D8CDB9">
+  <link rel="canonical" href="https://lucytrep.com/athlena/">
+  <link rel="icon" type="image/svg+xml" href="./assets/athlena/favicon.svg">
+  <link rel="alternate icon" type="image/png" href="./assets/athlena/favicon-dark-transparent.png">
+  <meta name="description" content="Athlena is a women’s fitness race experience built around endurance, atmosphere, and community.">
+  <title>Athlena</title>
+  <style>
+    @font-face {
+      font-family: "Nyght Serif";
+      src: url("./assets/fonts/NyghtSerif-Light.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Nyght Serif";
+      src: url("./assets/fonts/NyghtSerif-Regular.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Nyght Serif";
+      src: url("./assets/fonts/NyghtSerif-RegularItalic.woff2") format("woff2");
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Nyght Serif";
+      src: url("./assets/fonts/NyghtSerif-MediumItalic.woff2") format("woff2");
+      font-style: italic;
+      font-weight: 500;
+      font-display: swap;
+    }
+
+    :root {
+      --ink: #0F0E0B;
+      --ink-soft: #322C24;
+      --olive: #494132;
+      --taupe: #AD977B;
+      --sand: #B8A48A;
+      --cream: #D8CDB9;
+      --cream-soft: #E4DCCD;
+      --paper: #F1EBE3;
+      --white: #ffffff;
+      --shell: min(100% - 64px, 1810px);
+      --section-shell: min(100% - 64px, 1320px);
+      --nav-height: 72px;
+      --hero-title: clamp(5.3rem, 6.7vw, 8rem);
+      --meta-size: clamp(1.15rem, 1.35vw, 1.65rem);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--cream-soft);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    video {
+      display: block;
+      max-width: 100%;
+    }
+
+    .serif {
+      font-family: "Nyght Serif", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    .site-nav {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      z-index: 1000;
+      width: var(--shell);
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: var(--nav-height);
+      padding: 10px 0;
+      border: 0;
+      box-shadow: none;
+      transition: transform 220ms ease;
+    }
+
+    .site-nav::before {
+      content: "";
+      position: absolute;
+      top: -18px;
+      left: calc(50% - 50vw);
+      width: 100vw;
+      height: 116px;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(15, 14, 11, 0.54), rgba(15, 14, 11, 0.2) 62%, rgba(15, 14, 11, 0));
+    }
+
+    .brand {
+      color: var(--white);
+      font-size: clamp(1.6rem, 2vw, 2.4rem);
+      line-height: 0.88;
+      white-space: nowrap;
+      padding-left: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(16px, 1.6vw, 28px);
+      margin-left: auto;
+    }
+
+    .nav-links a,
+    .nav-cta,
+    .section-cta {
+      font-size: clamp(0.82rem, 0.84vw, 0.98rem);
+      line-height: 0.92;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.96);
+      transition: color 180ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--white);
+    }
+
+    .nav-cta,
+    .section-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 15px;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--ink);
+      box-shadow: 0 12px 28px rgba(15, 14, 11, 0.12);
+    }
+
+    .nav-cta,
+    .section-cta--dark {
+      background: var(--ink);
+      color: var(--paper);
+      box-shadow: 0 14px 30px rgba(15, 14, 11, 0.2);
+    }
+
+    .intro-stage {
+      position: relative;
+      z-index: 2;
+      background: var(--ink);
+    }
+
+    .intro-backdrop {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      z-index: 0;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.08)),
+        url("./assets/athlena/home-hero-cropped.png") center center / cover no-repeat,
+        linear-gradient(180deg, var(--cream-soft), var(--cream));
+    }
+
+    .intro-backdrop::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--ink);
+      opacity: var(--overview-blackout, 0);
+      transition: opacity 360ms ease-out;
+      pointer-events: none;
+    }
+
+    .intro-backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.32), rgba(0,0,0,0.48) 34%, rgba(0,0,0,0.66)),
+        linear-gradient(90deg, rgba(0,0,0,0.22), rgba(0,0,0,0.08) 18%, rgba(0,0,0,0.08) 82%, rgba(0,0,0,0.22));
+      opacity: var(--overview-dim, 0);
+      transition: opacity 320ms ease-out;
+      pointer-events: none;
+    }
+
+    .hero {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      margin-top: -100vh;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: var(--section-shell);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: calc(var(--nav-height) + 42px) 0 34px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      color: var(--white);
+      opacity: var(--hero-opacity, 1);
+      transform: translateY(var(--hero-shift, 0));
+      transition: opacity 180ms linear, transform 180ms linear;
+    }
+
+    .hero-copy {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 36px;
+    }
+
+    .hero-left,
+    .hero-right {
+      align-self: center;
+    }
+
+    .hero-overline {
+      margin: 0 0 18px;
+      font-size: clamp(0.8rem, 0.92vw, 1rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .hero-title {
+      margin: 0;
+      color: var(--white);
+      font-size: var(--hero-title);
+      line-height: 0.88;
+      white-space: nowrap;
+    }
+
+    .hero-right {
+      padding-top: clamp(30px, 3vw, 70px);
+      text-align: right;
+    }
+
+    .hero-meta {
+      margin: 20px 0 0;
+      color: var(--white);
+      font-size: var(--meta-size);
+      line-height: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .hero-bottom {
+      position: fixed;
+      left: 50%;
+      bottom: max(20px, 3vh);
+      z-index: 40;
+      display: flex;
+      justify-content: center;
+      transform: translateX(-50%) translateY(var(--hero-cta-shift, 0));
+      opacity: var(--hero-cta-opacity, 1);
+      transition: opacity 220ms ease, transform 220ms ease;
+      pointer-events: var(--hero-cta-events, auto);
+    }
+
+    .hero-bottom .section-cta {
+      font-size: clamp(0.98rem, 1.04vw, 1.18rem);
+      min-height: 54px;
+      padding: 0 28px;
+    }
+
+    .overview-pin {
+      position: relative;
+      z-index: 3;
+      color: var(--paper);
+      min-height: 220vh;
+    }
+
+    .overview-sticky {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      overflow: clip;
+      display: block;
+    }
+
+    .overview-copy {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      top: 50%;
+      width: min(100% - 96px, 1320px);
+      display: grid;
+      gap: 34px;
+      text-align: center;
+      justify-items: center;
+      align-content: center;
+      opacity: 0;
+      transform: translate(-50%, calc(-50% + 56px));
+      transition: opacity 320ms ease, transform 320ms ease;
+    }
+
+    .overview-copy h2 {
+      margin: 0;
+      color: var(--sand);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: 70px;
+      font-style: normal;
+      font-weight: 300;
+      line-height: 85px;
+      letter-spacing: 1px;
+      text-align: center;
+      width: fit-content;
+      max-width: 100%;
+      margin-inline: auto;
+    }
+
+    .overview-text {
+      display: grid;
+      justify-items: center;
+      color: var(--sand);
+    }
+
+    .overview-line {
+      display: block;
+      white-space: nowrap;
+      text-align: center;
+    }
+
+    .overview-copy p {
+      width: min(100%, 40rem);
+      margin: 0 auto;
+      color: rgba(241, 235, 227, 0.88);
+      font-size: clamp(1rem, 1.3vw, 1.35rem);
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .overview-copy .section-cta {
+      display: none;
+    }
+
+    .overview-cta {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + 190px);
+      z-index: 3;
+      opacity: 0;
+      transform: translateX(-50%) translateY(14px);
+      transition: opacity 240ms ease, transform 240ms ease;
+      font-size: clamp(0.74rem, 0.78vw, 0.88rem);
+      line-height: 0.88;
+      letter-spacing: 0.07em;
+    }
+
+    .overview-marquee {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 34px;
+      z-index: 2;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 240ms ease;
+      mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+    }
+
+    .overview-marquee-track {
+      display: flex;
+      width: max-content;
+      gap: 84px;
+      animation: marqueeScroll 32s linear infinite;
+      will-change: transform;
+    }
+
+    .overview-marquee-track img {
+      height: 58px;
+      width: auto;
+      max-width: none;
+      flex: none;
+      filter: brightness(1.02);
+    }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-50% - 42px)); }
+    }
+
+    .overview-stage[data-progress="0"] .overview-copy { opacity: 0; transform: translate(-50%, calc(-50% + 58px)); }
+    .overview-stage[data-progress="1"] .overview-copy { opacity: 0.7; transform: translate(-50%, calc(-50% + 24px)); }
+    .overview-stage[data-progress="2"] .overview-copy { opacity: 1; transform: translate(-50%, -50%); }
+    .overview-stage[data-progress="2"] .overview-cta { opacity: 0.76; transform: translateX(-50%) translateY(0); }
+    .overview-stage[data-progress="2"] .overview-marquee { opacity: 0.72; }
+    .overview-stage[data-progress="3"] .overview-copy { opacity: 1; transform: translate(-50%, -50%); }
+    .overview-stage[data-progress="3"] .overview-cta { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .overview-stage[data-progress="3"] .overview-marquee { opacity: 1; }
+
+    .intro-stage[data-progress="1"] .hero-inner {
+      opacity: 0.56;
+      transform: translateY(-18px);
+    }
+
+    .intro-stage[data-progress="2"] .hero-inner,
+    .intro-stage[data-progress="3"] .hero-inner {
+      opacity: 0.06;
+      transform: translateY(-48px);
+      pointer-events: none;
+    }
+
+    .section {
+      position: relative;
+      z-index: 4;
+      padding: 112px 0;
+    }
+
+    .section-shell {
+      width: var(--section-shell);
+      margin: 0 auto;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1fr);
+      gap: 42px;
+      align-items: stretch;
+    }
+
+    .section-copy {
+      display: grid;
+      align-content: center;
+      gap: 22px;
+      padding: clamp(26px, 3vw, 42px);
+    }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--taupe);
+      font-size: 0.86rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: clamp(3rem, 5vw, 5.4rem);
+      line-height: 0.96;
+      color: inherit;
+      text-wrap: balance;
+    }
+
+    .section-copy p {
+      margin: 0;
+      color: inherit;
+      font-size: clamp(1rem, 1.2vw, 1.22rem);
+      line-height: 1.7;
+      text-wrap: pretty;
+      opacity: 0.88;
+    }
+
+    .section-panel {
+      overflow: hidden;
+      border-radius: 32px;
+      box-shadow: 0 30px 72px rgba(15, 14, 11, 0.14);
+      min-height: 680px;
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .section-panel img,
+    .section-panel video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .section--about {
+      background: var(--cream-soft);
+      color: var(--ink-soft);
+    }
+
+    .about-stage {
+      position: relative;
+      z-index: 3;
+      min-height: 1160px;
+      padding: 0;
+      background: transparent;
+      color: var(--paper);
+      overflow: visible;
+    }
+
+    .about-shell {
+      position: relative;
+      z-index: 2;
+      width: var(--section-shell);
+      min-height: 1160px;
+      margin: 0 auto;
+      padding: calc(var(--nav-height) + 58px) 0 58px;
+      display: grid;
+      grid-template-columns: minmax(360px, 0.98fr) minmax(420px, 1.02fr);
+      gap: clamp(36px, 4.5vw, 72px);
+      align-items: stretch;
+    }
+
+    .about-intro {
+      display: grid;
+      align-content: start;
+      gap: 42px;
+      padding-top: 56px;
+      opacity: 1;
+      transform: none;
+      max-width: 660px;
+    }
+
+    .about-intro .eyebrow {
+      color: var(--white);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    .about-title {
+      margin: 0;
+      max-width: 520px;
+      color: var(--sand);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(3.2rem, 3.7vw, 4.3rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      text-wrap: balance;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 44px 44px;
+      max-width: 430px;
+    }
+
+    .about-stat {
+      display: grid;
+      gap: 12px;
+    }
+
+    .about-stat-value {
+      color: var(--sand);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(4.3rem, 5.4vw, 6.3rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.88;
+      letter-spacing: 0.01em;
+    }
+
+    .about-stat-label {
+      color: var(--white);
+      font-size: clamp(1rem, 1.18vw, 1.28rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .about-intro .section-cta {
+      justify-self: start;
+      margin-top: 2px;
+      min-height: 50px;
+      padding-inline: 22px;
+    }
+
+    .about-intro .section-cta:hover,
+    .about-intro .section-cta:focus-visible {
+      background: var(--taupe);
+      color: var(--ink);
+    }
+
+    .about-canvas {
+      position: relative;
+      min-height: 920px;
+      padding-top: 98px;
+      opacity: 1;
+      transform: none;
+      overflow: visible;
+      justify-self: start;
+      width: min(100%, 860px);
+      min-width: 760px;
+    }
+
+    .about-pair,
+    .about-word,
+    .about-card {
+      opacity: 1;
+      transition: opacity 520ms ease, transform 620ms cubic-bezier(0.2, 0.9, 0.18, 1);
+      will-change: transform, opacity;
+    }
+
+    .about-pair {
+      position: absolute;
+      left: 0;
+      display: grid;
+      grid-template-columns: max-content auto;
+      align-items: start;
+      justify-items: start;
+      column-gap: 28px;
+      width: max-content;
+      z-index: 2;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .about-pair--1 {
+      top: 56px;
+      --about-pair-offset-y: 38px;
+    }
+
+    .about-pair--2 {
+      top: 302px;
+      left: 0;
+      --about-pair-offset-y: 54px;
+    }
+
+    .about-pair--3 {
+      top: 560px;
+      left: 0;
+      --about-pair-offset-y: 70px;
+    }
+
+    .about-word {
+      position: relative;
+      color: var(--paper);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(6rem, 8.4vw, 8.7rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      z-index: 2;
+      transform: none;
+      white-space: nowrap;
+    }
+
+    .about-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+      box-shadow: 0 22px 56px rgba(0, 0, 0, 0.22);
+      transform: translate3d(0, 0, 0);
+      isolation: isolate;
+      z-index: 1;
+    }
+
+    .about-card img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: aboutFlash 3s steps(1, end) infinite;
+    }
+
+    .about-card img:nth-child(1) { animation-delay: 0s; }
+    .about-card img:nth-child(2) { animation-delay: 1s; }
+    .about-card img:nth-child(3) { animation-delay: 2s; }
+
+    @keyframes aboutFlash {
+      0%, 32% { opacity: 1; }
+      33%, 100% { opacity: 0; }
+    }
+
+    .about-card--1 {
+      margin-top: 6px;
+      margin-left: 0;
+      width: 252px;
+      aspect-ratio: 255 / 188;
+    }
+
+    .about-card--2 {
+      margin-top: 8px;
+      margin-left: 0;
+      width: 188px;
+      aspect-ratio: 195 / 188;
+    }
+
+    .about-card--3 {
+      margin-top: 10px;
+      margin-left: 0;
+      width: 228px;
+      aspect-ratio: 255 / 188;
+    }
+
+    .section--speakers {
+      background: var(--ink);
+      color: var(--paper);
+      overflow: clip;
+    }
+
+    .speakers-shell {
+      width: var(--section-shell);
+      margin: 0 auto;
+      display: grid;
+      gap: 34px;
+    }
+
+    .speakers-header {
+      display: grid;
+      grid-template-columns: minmax(320px, 1.15fr) minmax(320px, 0.85fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .speakers-heading {
+      display: grid;
+      gap: 12px;
+      max-width: 820px;
+    }
+
+    .speakers-heading .eyebrow {
+      color: var(--paper);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    .speakers-title {
+      margin: 0;
+      color: var(--sand);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(2.9rem, 3.9vw, 4.35rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.96;
+      letter-spacing: -0.02em;
+      max-width: 15.5ch;
+    }
+
+    .speakers-title .serif {
+      color: var(--paper);
+    }
+
+    .speakers-action {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: clamp(18px, 2vw, 34px);
+      padding-bottom: 8px;
+      min-height: 60px;
+    }
+
+    .speakers-line {
+      flex: 1;
+      max-width: 276px;
+      height: 1px;
+      background: rgba(241, 235, 227, 0.76);
+      position: relative;
+    }
+
+    .speakers-line::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid rgba(241, 235, 227, 0.76);
+      border-right: 1px solid rgba(241, 235, 227, 0.76);
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .speakers-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 20px;
+      border: 1px solid rgba(241, 235, 227, 0.7);
+      border-radius: 999px;
+      color: var(--paper);
+      font-size: 0.88rem;
+      line-height: 0.92;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      background: transparent;
+      transition: color 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .speakers-cta:hover,
+    .speakers-cta:focus-visible {
+      color: var(--taupe);
+      border-color: var(--taupe);
+    }
+
+    .section--community {
+      background: var(--ink);
+      color: var(--paper);
+      overflow: clip;
+      padding-bottom: 0;
+    }
+
+    .community-shell {
+      width: 100%;
+      margin: 0 auto;
+      display: grid;
+      gap: 0;
+    }
+
+    .community-row {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .community-row--statement {
+      min-height: 30vh;
+      background:
+        linear-gradient(180deg, rgba(15, 14, 11, 0.74), rgba(15, 14, 11, 0.78)),
+        url("./assets/athlena/community-row-1.jpg") center 18% / cover no-repeat;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      padding: 108px 24px 28px;
+      text-align: center;
+    }
+
+    .community-row--feature {
+      min-height: 34vh;
+      background:
+        linear-gradient(180deg, rgba(74, 84, 88, 0.66), rgba(74, 84, 88, 0.66)),
+        url("./assets/athlena/community-row-3.png") center 54% / cover no-repeat;
+      padding: 32px 0 24px;
+    }
+
+    .community-row--cities {
+      min-height: 36vh;
+      background:
+        linear-gradient(180deg, rgba(15, 14, 11, 0.52), rgba(15, 14, 11, 0.62)),
+        url("./assets/athlena/community-row-2.png") center bottom / cover no-repeat;
+      padding: 24px 0 34px;
+    }
+
+    .community-statement {
+      width: min(100% - 40px, 920px);
+      margin: 0 auto;
+      color: var(--sand);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(4rem, 6.4vw, 6.6rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+
+    .community-statement .serif {
+      color: var(--paper);
+    }
+
+    .community-feature {
+      width: var(--shell);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(420px, 1.2fr) minmax(260px, 0.8fr);
+      align-items: center;
+      gap: 42px;
+      padding: 42px 48px 34px;
+      background: rgba(15, 14, 11, 0.94);
+    }
+
+    .community-feature-copy {
+      display: grid;
+      gap: 28px;
+    }
+
+    .community-feature .eyebrow {
+      color: var(--white);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+
+    .community-feature-title {
+      margin: 0;
+      color: var(--sand);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(3.1rem, 4.4vw, 5rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+    }
+
+    .community-feature-title .serif {
+      color: var(--paper);
+    }
+
+    .community-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, max-content));
+      gap: clamp(28px, 4vw, 68px);
+      align-items: start;
+    }
+
+    .community-meta-item {
+      display: grid;
+      gap: 8px;
+    }
+
+    .community-meta-label {
+      color: var(--taupe);
+      font-size: 0.98rem;
+      line-height: 1;
+    }
+
+    .community-meta-value {
+      color: var(--white);
+      font-size: clamp(1.1rem, 1.38vw, 1.55rem);
+      line-height: 1.28;
+      text-wrap: balance;
+    }
+
+    .community-feature-action {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .community-feature-action .section-cta {
+      min-height: 48px;
+      padding-inline: 22px;
+      font-size: 0.88rem;
+    }
+
+    .community-feature-action .section-cta:hover,
+    .community-feature-action .section-cta:focus-visible {
+      background: var(--taupe);
+      color: var(--ink);
+    }
+
+    .community-cities {
+      width: var(--shell);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(28px, 4vw, 86px);
+      padding: 0 clamp(24px, 3vw, 64px);
+    }
+
+    .community-city-card {
+      display: grid;
+      gap: 20px;
+      align-content: start;
+      min-height: 0;
+      padding: 34px 40px 30px;
+      background: rgba(15, 14, 11, 0.94);
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.26);
+    }
+
+    .community-city-name {
+      margin: 0;
+      color: var(--white);
+      font-size: 0.98rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .community-city-code {
+      margin: 0;
+      color: var(--paper);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(4.2rem, 5.3vw, 5.9rem);
+      font-style: normal;
+      font-weight: 300;
+      line-height: 0.86;
+      letter-spacing: -0.04em;
+    }
+
+    .community-city-details {
+      display: grid;
+      gap: 8px;
+    }
+
+    .community-city-details .community-meta-label {
+      font-size: 0.96rem;
+    }
+
+    .community-city-details .community-meta-value {
+      font-size: clamp(1.05rem, 1.28vw, 1.4rem);
+    }
+
+    .community-city-pill {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border: 1px solid rgba(173, 151, 123, 0.92);
+      border-radius: 999px;
+      color: var(--taupe);
+      font-size: 0.88rem;
+      line-height: 0.92;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .speakers-stack {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: end;
+    }
+
+    .speaker-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 0;
+      background: var(--olive);
+      aspect-ratio: 0.76;
+      opacity: 0;
+      transform: translateY(var(--speaker-rise-offset, 132px));
+      transition: opacity 560ms ease, transform 820ms cubic-bezier(0.18, 0.9, 0.16, 1);
+      will-change: transform, opacity;
+    }
+
+    .speaker-card--1 {
+      --speaker-rise-offset: 138px;
+    }
+
+    .speaker-card--2 {
+      --speaker-rise-offset: 156px;
+    }
+
+    .speaker-card--3 {
+      --speaker-rise-offset: 174px;
+    }
+
+    .section--speakers[data-stage="1"] .speaker-card--1,
+    .section--speakers[data-stage="2"] .speaker-card--1,
+    .section--speakers[data-stage="3"] .speaker-card--1,
+    .section--speakers[data-stage="2"] .speaker-card--2,
+    .section--speakers[data-stage="3"] .speaker-card--2,
+    .section--speakers[data-stage="3"] .speaker-card--3 {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .speaker-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--speaker-focus-x, 50%) top;
+    }
+
+    .speaker-image--leana {
+      --speaker-focus-x: 50%;
+    }
+
+    .speaker-image--kayla {
+      --speaker-focus-x: 52%;
+    }
+
+    .speaker-image--babeth {
+      --speaker-focus-x: 54%;
+    }
+
+    .speaker-card::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 40%;
+      background: linear-gradient(180deg, rgba(15,14,11,0), rgba(15,14,11,0.14) 18%, rgba(15,14,11,0.82) 82%, rgba(15,14,11,0.96));
+      pointer-events: none;
+    }
+
+    .speaker-copy {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 2;
+      padding: 24px 22px 20px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .speaker-label {
+      margin: 0;
+      color: var(--white);
+      font-size: 0.86rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .speaker-name {
+      margin: 0;
+      color: var(--cream);
+      font-family: "Nyght Serif", Georgia, serif;
+      font-size: clamp(1.9rem, 2.35vw, 3rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+    }
+
+    .speaker-role {
+      margin: 8px 0 0;
+      color: rgba(241, 235, 227, 0.92);
+      font-size: 0.98rem;
+      line-height: 1.45;
+      text-wrap: balance;
+    }
+
+    .tickets-section {
+      background: linear-gradient(180deg, var(--cream-soft), var(--paper));
+      color: var(--ink-soft);
+    }
+
+    .tickets-shell {
+      width: var(--section-shell);
+      margin: 0 auto;
+      display: grid;
+      gap: 28px;
+    }
+
+    .tickets-top {
+      display: grid;
+      grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .tickets-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .ticket-card {
+      padding: 26px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.46);
+      border: 1px solid rgba(73, 65, 50, 0.12);
+      box-shadow: 0 18px 40px rgba(15, 14, 11, 0.08);
+      display: grid;
+      gap: 18px;
+    }
+
+    .ticket-card h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(1.55rem, 1.7vw, 2rem);
+      line-height: 1;
+    }
+
+    .ticket-card p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    .ticket-card a {
+      justify-self: start;
+    }
+
+    .footer {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 68px 0 44px;
+      position: relative;
+      z-index: 6;
+      isolation: isolate;
+    }
+
+    .footer-shell {
+      width: var(--section-shell);
+      margin: 0 auto;
+      display: grid;
+      gap: 34px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: minmax(240px, 1.2fr) minmax(140px, 0.8fr) minmax(140px, 0.8fr) minmax(260px, 1fr);
+      gap: clamp(28px, 3vw, 64px);
+      align-items: start;
+    }
+
+    .footer-column {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+      justify-items: start;
+    }
+
+    .footer-brand {
+      display: inline-block;
+      font-size: clamp(2rem, 2.4vw, 3rem);
+      color: #fff;
+      line-height: 0.88;
+    }
+
+    .footer-description {
+      max-width: 18ch;
+      margin: 0;
+      color: var(--cream-soft);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .footer-socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-social {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(173, 151, 123, 0.2);
+      background: var(--taupe);
+      color: var(--ink);
+      font-size: 0.98rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+    }
+
+    .footer-social:hover {
+      background: var(--paper);
+      color: var(--ink);
+      transform: translateY(-1px);
+    }
+
+    .footer-heading {
+      margin: 0;
+      color: #fff;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: var(--cream-soft);
+      font-size: 1rem;
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .footer-links a:hover {
+      color: var(--taupe);
+    }
+
+    .footer-news-copy {
+      max-width: 23ch;
+      margin: 0;
+      color: var(--cream-soft);
+      font-size: 1rem;
+      line-height: 1.55;
+    }
+
+    .footer-newsletter {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-newsletter input {
+      min-width: 0;
+      flex: 1 1 auto;
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 18px;
+      background: var(--taupe);
+      color: var(--ink);
+      font: inherit;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .footer-newsletter input::placeholder {
+      color: rgba(15, 14, 11, 0.86);
+    }
+
+    .footer-newsletter button {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--taupe);
+      color: var(--ink);
+      font: inherit;
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: background 180ms ease, transform 180ms ease;
+    }
+
+    .footer-newsletter button:hover {
+      background: var(--paper);
+      transform: translateX(1px);
+    }
+
+    .footer-divider {
+      height: 1px;
+      background: rgba(73, 65, 50, 0.42);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      color: var(--taupe);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .footer-legal {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 28px;
+    }
+
+    .footer-legal a {
+      color: var(--taupe);
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .footer-legal a:hover {
+      color: var(--paper);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 520ms ease, transform 520ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1280px) {
+      :root {
+        --hero-title: clamp(4.4rem, 6vw, 6.5rem);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      :root {
+        --shell: min(100% - 40px, 1810px);
+        --section-shell: min(100% - 40px, 1320px);
+      }
+
+      .hero-copy,
+      .section-grid,
+      .tickets-top,
+      .tickets-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy {
+        gap: 28px;
+      }
+
+      .hero-right {
+        text-align: left;
+        padding-top: 0;
+      }
+
+      .overview-copy {
+        width: min(100% - 40px, 920px);
+      }
+
+      .about-shell {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        min-height: auto;
+      }
+
+      .about-intro {
+        padding-top: 116px;
+      }
+
+      .about-canvas {
+        min-height: 760px;
+        padding-top: 40px;
+      }
+
+      .about-pair--1 {
+        --about-pair-offset-x: 72px;
+        --about-pair-offset-y: 18px;
+      }
+
+      .about-pair--2 {
+        --about-pair-offset-x: 98px;
+        --about-pair-offset-y: 28px;
+      }
+
+      .about-pair--3 {
+        --about-pair-offset-x: 124px;
+        --about-pair-offset-y: 38px;
+      }
+
+      .about-word {
+        font-size: clamp(6.1rem, 12vw, 8.8rem);
+      }
+
+      .speakers-header,
+      .speakers-stack {
+        grid-template-columns: 1fr;
+      }
+
+      .community-feature,
+      .community-cities {
+        grid-template-columns: 1fr;
+      }
+
+      .community-shell {
+        gap: 36px;
+      }
+
+      .community-row--statement,
+      .community-row--feature,
+      .community-row--cities {
+        min-height: 0;
+      }
+
+      .community-row--statement {
+        padding: 138px 18px 34px;
+      }
+
+      .community-row--feature {
+        padding: 24px 0 22px;
+      }
+
+      .community-row--cities {
+        padding: 18px 0 40px;
+      }
+
+      .community-feature {
+        padding: 36px 28px 30px;
+      }
+
+      .community-statement {
+        width: min(100% - 24px, 12ch);
+        font-size: clamp(3rem, 10vw, 4.6rem);
+        line-height: 0.94;
+      }
+
+      .community-feature-action {
+        justify-content: flex-start;
+      }
+
+      .community-meta {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .community-cities {
+        padding: 0;
+      }
+
+      .community-city-card {
+        min-height: 0;
+        padding: 34px 28px 30px;
+      }
+
+      .speakers-action {
+        justify-content: flex-start;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-legal {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 900px) {
+      :root {
+        --shell: min(100% - 28px, 1810px);
+        --section-shell: min(100% - 28px, 1320px);
+        --nav-height: auto;
+      }
+
+      .site-nav {
+        top: 12px;
+        padding: 12px 0;
+        min-height: 0;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+      }
+
+      .site-nav::before {
+        top: -12px;
+        height: 104px;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .brand {
+        padding-left: 4px;
+      }
+
+      .nav-links a,
+      .nav-cta,
+      .section-cta {
+        font-size: 0.76rem;
+      }
+
+      .nav-cta,
+      .section-cta {
+        min-height: 36px;
+        padding: 0 12px;
+      }
+
+      .intro-backdrop {
+        background:
+          linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0.1)),
+          url("./assets/athlena/home-figure.png") 62% 100% / cover no-repeat,
+          linear-gradient(180deg, var(--cream-soft), var(--cream));
+      }
+
+      .hero-inner {
+        padding-top: 142px;
+      }
+
+      .hero-copy {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        white-space: normal;
+      }
+
+      .hero-bottom {
+        left: 20px;
+        right: 20px;
+        bottom: 18px;
+        justify-content: flex-start;
+        z-index: 40;
+        transform: translateX(0) translateY(var(--hero-cta-shift, 0));
+      }
+
+      .overview-pin { min-height: 190vh; }
+
+      .overview-sticky {
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .overview-copy h2 {
+        font-size: clamp(2.3rem, 9vw, 4.375rem);
+        line-height: 1.14;
+        width: min(100%, 10.2ch);
+        max-width: 10.2ch;
+      }
+
+      .overview-cta {
+        top: calc(50% + 156px);
+      }
+
+      .overview-line {
+        white-space: normal;
+      }
+
+      .overview-marquee {
+        bottom: 22px;
+      }
+
+      .overview-marquee-track {
+        gap: 40px;
+      }
+
+      .overview-marquee-track img {
+        height: 30px;
+      }
+
+      .about-stage {
+        padding: 0;
+      }
+
+      .about-shell {
+        padding-top: 128px;
+        padding-bottom: 40px;
+      }
+
+      .about-intro {
+        gap: 28px;
+        padding-top: 0;
+        max-width: 100%;
+      }
+
+      .about-title {
+        max-width: 9.2ch;
+        font-size: clamp(2.75rem, 8vw, 3.75rem);
+        line-height: 0.96;
+      }
+
+      .about-stats {
+        gap: 30px 24px;
+      }
+
+      .about-stat-value {
+        font-size: clamp(3.5rem, 11vw, 5rem);
+      }
+
+      .about-stat-label {
+        font-size: 0.84rem;
+      }
+
+      .about-canvas {
+        min-height: auto;
+        min-width: 0;
+        width: 100%;
+        display: grid;
+        gap: 18px;
+        padding-top: 8px;
+      }
+
+      .about-pair,
+      .about-word,
+      .about-card {
+        position: relative;
+        left: auto;
+        top: auto;
+        right: auto;
+        bottom: auto;
+      }
+
+      .about-pair {
+        display: grid;
+        gap: 12px;
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+      }
+
+      .about-word {
+        font-size: clamp(4.4rem, 16vw, 6.6rem);
+        transform: none;
+      }
+
+      .about-card--1,
+      .about-card--2,
+      .about-card--3 {
+        margin-top: 0;
+        margin-left: 0;
+      }
+
+      .about-card {
+        width: min(100%, 280px);
+        justify-self: start;
+      }
+
+      .about-card--2 {
+        justify-self: start;
+      }
+
+      .about-card--3 {
+        width: min(100%, 256px);
+      }
+
+      .speakers-shell {
+        gap: 26px;
+      }
+
+      .speakers-title {
+        font-size: clamp(3rem, 10vw, 4.6rem);
+        max-width: 8.8ch;
+      }
+
+      .speakers-action {
+        gap: 16px;
+        padding-bottom: 0;
+      }
+
+      .speakers-line {
+        max-width: 140px;
+      }
+
+      .speaker-card {
+        aspect-ratio: 0.88;
+      }
+
+      .speaker-copy {
+        padding: 20px 18px 18px;
+      }
+
+      .speaker-name {
+        font-size: clamp(1.95rem, 8vw, 3rem);
+      }
+
+      .speaker-role {
+        font-size: 0.92rem;
+      }
+
+      .footer {
+        padding: 56px 0 34px;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-newsletter {
+        flex-wrap: wrap;
+      }
+
+      .footer-newsletter input {
+        flex-basis: 100%;
+      }
+
+      .footer-legal {
+        gap: 16px 24px;
+      }
+
+      .section {
+        padding: 76px 0;
+      }
+
+      .section-panel,
+      .speaker-card {
+        min-height: 420px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .nav-links {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+
+      .intro-backdrop { background-position: 67% 100%; }
+
+      .hero-inner {
+        padding-top: 156px;
+      }
+
+      .hero-title {
+        font-size: clamp(3.6rem, 16vw, 5.6rem);
+      }
+
+      .hero-meta {
+        font-size: 1rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .overview-layer,
+      .overview-copy,
+      .reveal,
+      .site-nav {
+        transition: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-nav" id="siteNav">
+    <a class="brand serif" href="/athlena/">Athlena</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#speakers">Speakers</a>
+      <a href="#community">Community</a>
+      <a class="nav-cta" href="/athlena/tickets/">Get Tickets</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro-stage" id="introStage" data-progress="0">
+      <div class="intro-backdrop" aria-hidden="true"></div>
+
+      <section class="hero" id="home">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <div class="hero-left">
+              <p class="hero-overline">Women’s Fitness Race · New York</p>
+              <h1 class="hero-title serif">Who run</h1>
+              <p class="hero-meta">06.05.26</p>
+            </div>
+            <div class="hero-right">
+              <h2 class="hero-title serif">the world</h2>
+              <p class="hero-meta">408 12th Ave West</p>
+            </div>
+          </div>
+          <div class="hero-bottom">
+            <a class="section-cta section-cta--dark" href="#overview">Learn More</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="overview-pin" id="overview">
+        <div class="overview-sticky overview-stage" id="overviewStage" data-progress="0">
+          <div class="overview-copy">
+            <h2 class="serif overview-text" id="overviewText" aria-label="One course. One standard. One day in New York City where thousands of women race, connect, and prove that the finish line belongs to them too.">
+              <span class="overview-line">One course. One standard. One day</span>
+              <span class="overview-line">in New York City where thousands of</span>
+              <span class="overview-line">women race, connect, and prove that</span>
+              <span class="overview-line">the finish line belongs to them too.</span>
+            </h2>
+          </div>
+          <a class="section-cta overview-cta" href="#about">Our Story</a>
+          <div class="overview-marquee" aria-hidden="true">
+            <div class="overview-marquee-track">
+              <img src="./assets/athlena/overview-logos.png" alt="">
+              <img src="./assets/athlena/overview-logos.png" alt="">
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="about-stage" id="about" data-stage="0">
+        <div class="about-shell">
+          <div class="about-intro">
+            <p class="eyebrow">What Is Athlena?</p>
+            <h2 class="about-title">Born from the spirit of Athena. Built for every athlete.</h2>
+            <div class="about-stats" aria-label="Athlena event highlights">
+              <div class="about-stat">
+                <span class="about-stat-value">3</span>
+                <span class="about-stat-label">Hours</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-value">40</span>
+                <span class="about-stat-label">Stations</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-value">5K+</span>
+                <span class="about-stat-label">Woman</span>
+              </div>
+              <div class="about-stat">
+                <span class="about-stat-value">2</span>
+                <span class="about-stat-label">Days</span>
+              </div>
+            </div>
+            <a class="section-cta" href="/athlena/tickets/">Get Tickets</a>
+        </div>
+
+        <div class="about-canvas" aria-hidden="true">
+          <div class="about-pair about-pair--1">
+            <div class="about-word about-word--1">Endure</div>
+            <figure class="about-card about-card--1">
+              <img src="./assets/athlena/about-flash-1.png" alt="">
+              <img src="./assets/athlena/about-seq2-1.png" alt="">
+              <img src="./assets/athlena/about-seq3-1.png" alt="">
+            </figure>
+          </div>
+
+          <div class="about-pair about-pair--2">
+            <div class="about-word about-word--2">Rise</div>
+            <figure class="about-card about-card--2">
+              <img src="./assets/athlena/about-flash-2.png" alt="">
+              <img src="./assets/athlena/about-seq2-2.jpg" alt="">
+              <img src="./assets/athlena/about-seq3-2.png" alt="">
+            </figure>
+          </div>
+
+          <div class="about-pair about-pair--3">
+            <div class="about-word about-word--3">Together</div>
+            <figure class="about-card about-card--3">
+              <img src="./assets/athlena/about-flash-3.jpg" alt="">
+              <img src="./assets/athlena/about-seq2-3.png" alt="">
+              <img src="./assets/athlena/about-seq3-3.png" alt="">
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--speakers" id="speakers" data-stage="0">
+      <div class="speakers-shell">
+        <div class="speakers-header">
+          <div class="speakers-heading">
+            <h2 class="speakers-title">The women taking the<br><span class="serif">Athlena</span> stage.</h2>
+          </div>
+          <div class="speakers-action">
+            <span class="speakers-line" aria-hidden="true"></span>
+            <a class="speakers-cta" href="/athlena/tickets/">Reserve Your Spot</a>
+          </div>
+        </div>
+
+        <div class="speakers-stack" aria-label="Featured speakers">
+          <article class="speaker-card speaker-card--1">
+            <img class="speaker-image--leana" src="./assets/athlena/speaker-leana.jpg" alt="Leana Deeb portrait">
+            <div class="speaker-copy">
+              <p class="speaker-label">Featured Speaker</p>
+              <h3 class="speaker-name">Leana Deeb</h3>
+              <p class="speaker-role">Certified Trainer · Gymshark Athlete · 12M+ Followers</p>
+            </div>
+          </article>
+
+          <article class="speaker-card speaker-card--2">
+            <img class="speaker-image--kayla" src="./assets/athlena/speaker-kayla.jpg" alt="Kayla Itsines portrait">
+            <div class="speaker-copy">
+              <p class="speaker-label">Featured Speaker</p>
+              <h3 class="speaker-name">Kayla Itsines</h3>
+              <p class="speaker-role">Co-Founder, SWEAT · Women's Fitness Pioneer</p>
+            </div>
+          </article>
+
+          <article class="speaker-card speaker-card--3">
+            <img class="speaker-image--babeth" src="./assets/athlena/speaker-babeth.png" alt="Babeth Lando portrait">
+            <div class="speaker-copy">
+              <p class="speaker-label">Featured Speaker</p>
+              <h3 class="speaker-name">Babeth Lando</h3>
+              <p class="speaker-role">Fitness Trainer · Creator · @yafitbod</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--community" id="community">
+      <div class="community-shell">
+        <div class="community-row community-row--statement">
+          <h2 class="community-statement reveal">New York is just <span class="serif">the beginning.</span></h2>
+        </div>
+
+        <div class="community-row community-row--feature">
+          <div class="community-feature reveal">
+            <div class="community-feature-copy">
+              <p class="eyebrow">The Flagship Event</p>
+              <h2 class="community-feature-title"><span class="serif">Athlena</span> New York</h2>
+              <div class="community-meta" aria-label="Athlena New York event details">
+                <div class="community-meta-item">
+                  <span class="community-meta-label">Date</span>
+                  <span class="community-meta-value">June 5th, 2026</span>
+                </div>
+                <div class="community-meta-item">
+                  <span class="community-meta-label">Venue</span>
+                  <span class="community-meta-value">Javits Convention Center</span>
+                </div>
+                <div class="community-meta-item">
+                  <span class="community-meta-label">Doors</span>
+                  <span class="community-meta-value">7:00 AM</span>
+                </div>
+              </div>
+            </div>
+            <div class="community-feature-action">
+              <a class="section-cta" href="/athlena/tickets/">Reserve Your Spot</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="community-row community-row--cities">
+          <div class="community-cities">
+            <article class="community-city-card reveal">
+              <p class="community-city-name">London</p>
+              <h3 class="community-city-code">LDN</h3>
+              <div class="community-city-details">
+                <span class="community-meta-label">Date</span>
+                <span class="community-meta-value">September 2026</span>
+              </div>
+              <span class="community-city-pill">Coming Soon</span>
+            </article>
+
+            <article class="community-city-card reveal">
+              <p class="community-city-name">Sydney</p>
+              <h3 class="community-city-code">SYD</h3>
+              <div class="community-city-details">
+                <span class="community-meta-label">Date</span>
+                <span class="community-meta-value">November 2026</span>
+              </div>
+              <span class="community-city-pill">Coming Soon</span>
+            </article>
+
+            <article class="community-city-card reveal">
+              <p class="community-city-name">Tokyo</p>
+              <h3 class="community-city-code">TYO</h3>
+              <div class="community-city-details">
+                <span class="community-meta-label">Date</span>
+                <span class="community-meta-value">February 2026</span>
+              </div>
+              <span class="community-city-pill">Coming Soon</span>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="section tickets-section" id="tickets">
+      <div class="tickets-shell">
+        <div class="tickets-top">
+          <div class="section-copy reveal" style="padding-left:0; padding-right:0;">
+            <p class="eyebrow">Tickets</p>
+            <h2 class="section-title serif">Ticketing should feel polished before checkout even begins.</h2>
+            <p>The homepage tickets section introduces the purchase flow and hands off to the dedicated tickets route. It should communicate ease, confidence, and a premium event system.</p>
+          </div>
+          <div class="section-panel reveal" style="min-height:540px;">
+            <img src="./assets/athlena/tickets.jpg" alt="Athlena tickets section reference">
+          </div>
+        </div>
+        <div class="tickets-cards">
+          <article class="ticket-card reveal">
+            <h3 class="serif">Phone Tickets</h3>
+            <p>Mobile ticket presentation and confirmation should feel crisp, legible, and aligned with the Athlena palette rather than like a generic booking widget.</p>
+            <a class="section-cta section-cta--dark" href="/athlena/tickets/">Open Tickets</a>
+          </article>
+          <article class="ticket-card reveal">
+            <h3 class="serif">Ticket Flow</h3>
+            <p>The purchase path should be direct and editorial: choose, confirm, and move through the experience without losing the site’s visual identity.</p>
+            <a class="section-cta section-cta--dark" href="/athlena/tickets/">View Flow</a>
+          </article>
+          <article class="ticket-card reveal">
+            <h3 class="serif">Race Access</h3>
+            <p>Keep the CTA future-proofed from day one by routing to the internal tickets page even before the full purchase experience is finished.</p>
+            <a class="section-cta section-cta--dark" href="/athlena/tickets/">Get Tickets</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="footer-shell">
+        <div class="footer-top">
+          <div class="footer-column">
+            <a class="footer-brand serif" href="/athlena/">Athlena</a>
+            <p class="footer-description">Empowering women through fitness, community, and competition.</p>
+            <div class="footer-socials" aria-label="Athlena social links">
+              <a class="footer-social" href="#footer-facebook" aria-label="Facebook">f</a>
+              <a class="footer-social" href="#footer-instagram" aria-label="Instagram">ig</a>
+              <a class="footer-social" href="#footer-twitter" aria-label="Twitter">x</a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h3 class="footer-heading">Programs</h3>
+            <div class="footer-links">
+              <a href="#footer-training">Training</a>
+              <a href="#footer-events">Events</a>
+              <a href="#footer-membership">Membership</a>
+              <a href="#footer-coaching">Coaching</a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h3 class="footer-heading">Community</h3>
+            <div class="footer-links">
+              <a href="#footer-stories">Stories</a>
+              <a href="#footer-blog">Blog</a>
+              <a href="#footer-support">Support</a>
+              <a href="#footer-contact">Contact</a>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <h3 class="footer-heading">Newsletter</h3>
+            <p class="footer-news-copy">Stay updated with events and community news.</p>
+            <form class="footer-newsletter">
+              <input type="email" placeholder="Your email" aria-label="Your email">
+              <button type="submit" aria-label="Submit newsletter email">→</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="footer-divider" aria-hidden="true"></div>
+
+        <div class="footer-bottom">
+          <span>© 2026 ATHLENA. All rights reserved.</span>
+          <div class="footer-legal">
+            <a href="#footer-privacy">Privacy Policy</a>
+            <a href="#footer-terms">Terms of Service</a>
+            <a href="#footer-accessibility">Accessibility</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    (function () {
+      var nav = document.getElementById('siteNav');
+      var introStage = document.getElementById('introStage');
+      var overviewStage = document.getElementById('overviewStage');
+      var overviewText = document.getElementById('overviewText');
+      var aboutStage = document.getElementById('about');
+      var speakersStage = document.getElementById('speakers');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function setNavState() {
+        if (!nav) return;
+        nav.dataset.solid = window.scrollY > 32 ? 'true' : 'false';
+      }
+
+      function setOverviewState() {
+        if (!overviewStage) return;
+        var rect = overviewStage.parentElement.getBoundingClientRect();
+        var viewport = window.innerHeight || 1;
+        var progress = Math.min(Math.max((viewport * 0.18 - rect.top) / (viewport * 0.82), 0), 1);
+        if (introStage) {
+          var easedOverview = 1 - Math.pow(1 - progress, 1.7);
+          var dim = Math.min(easedOverview * 0.52, 0.52);
+          var heroCtaOpacity = Math.max(1 - progress * 5.2, 0);
+          introStage.style.setProperty('--overview-dim', dim.toFixed(3));
+          introStage.style.setProperty('--overview-blackout', '0');
+          introStage.style.setProperty('--hero-opacity', Math.max(1 - progress * 1.35, 0.02).toFixed(3));
+          introStage.style.setProperty('--hero-shift', (-progress * 54).toFixed(1) + 'px');
+          introStage.style.setProperty('--hero-cta-opacity', heroCtaOpacity.toFixed(3));
+          introStage.style.setProperty('--hero-cta-shift', (-progress * 12).toFixed(1) + 'px');
+          introStage.style.setProperty('--hero-cta-events', heroCtaOpacity < 0.08 ? 'none' : 'auto');
+        }
+        var step = 0;
+        if (progress > 0.08) step = 1;
+        if (progress > 0.24) step = 2;
+        if (progress > 0.46) step = 3;
+        overviewStage.dataset.progress = String(step);
+        if (introStage) introStage.dataset.progress = String(step);
+      }
+
+      function setAboutState() {
+        if (!aboutStage) return;
+        var rect = aboutStage.getBoundingClientRect();
+        var viewport = window.innerHeight || 1;
+        var progress = Math.min(Math.max((viewport * 1.08 - rect.top) / (viewport * 1.18), 0), 1);
+        var easedAbout = 1 - Math.pow(1 - progress, 1.45);
+        aboutStage.style.setProperty('--about-progress', progress.toFixed(3));
+        if (introStage) {
+          var currentDim = parseFloat(getComputedStyle(introStage).getPropertyValue('--overview-dim')) || 0;
+          var currentBlackout = parseFloat(getComputedStyle(introStage).getPropertyValue('--overview-blackout')) || 0;
+          var aboutDim = 0.58 + (easedAbout * 0.34);
+          var aboutBlackout = Math.min(Math.max((easedAbout - 0.04) / 0.52, 0), 1);
+          introStage.style.setProperty('--overview-dim', Math.max(currentDim, aboutDim).toFixed(3));
+          introStage.style.setProperty('--overview-blackout', Math.max(currentBlackout, aboutBlackout).toFixed(3));
+        }
+
+        var step = 0;
+        if (progress > 0.001) step = 1;
+        if (progress > 0.055) step = 2;
+        if (progress > 0.14) step = 3;
+        aboutStage.dataset.stage = String(step);
+      }
+
+      function setSpeakersState() {
+        if (!speakersStage) return;
+        var rect = speakersStage.getBoundingClientRect();
+        var viewport = window.innerHeight || 1;
+        var progress = Math.min(Math.max((viewport * 0.96 - rect.top) / (viewport * 0.92), 0), 1);
+        var step = 0;
+        if (progress > 0.09) step = 1;
+        if (progress > 0.34) step = 2;
+        if (progress > 0.58) step = 3;
+        speakersStage.dataset.stage = String(step);
+      }
+
+      function revealOnScroll() {
+        var nodes = document.querySelectorAll('.reveal');
+        nodes.forEach(function (node) {
+          var rect = node.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.9) {
+            node.classList.add('is-visible');
+          }
+        });
+      }
+
+      if (reduce) {
+        if (overviewStage) overviewStage.dataset.progress = '3';
+        if (introStage) introStage.dataset.progress = '3';
+        if (introStage) {
+          introStage.style.setProperty('--overview-dim', '0.92');
+          introStage.style.setProperty('--overview-blackout', '1');
+          introStage.style.setProperty('--hero-opacity', '0.02');
+          introStage.style.setProperty('--hero-shift', '-54px');
+          introStage.style.setProperty('--hero-cta-opacity', '0');
+          introStage.style.setProperty('--hero-cta-shift', '-12px');
+          introStage.style.setProperty('--hero-cta-events', 'none');
+        }
+        if (aboutStage) {
+          aboutStage.dataset.stage = '3';
+          aboutStage.style.setProperty('--about-progress', '1');
+        }
+        if (speakersStage) {
+          speakersStage.dataset.stage = '3';
+        }
+        document.querySelectorAll('.reveal').forEach(function (node) {
+          node.classList.add('is-visible');
+        });
+      } else {
+        revealOnScroll();
+      }
+
+      setNavState();
+      setOverviewState();
+      setAboutState();
+      setSpeakersState();
+
+      window.addEventListener('scroll', function () {
+        setNavState();
+        setOverviewState();
+        setAboutState();
+        setSpeakersState();
+        if (!reduce) revealOnScroll();
+      }, { passive: true });
+
+      window.addEventListener('resize', function () {
+        setOverviewState();
+        setAboutState();
+        setSpeakersState();
+        if (!reduce) revealOnScroll();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -92,7 +92,7 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1080px;
+      max-width: 1400px;
       margin-left: auto;
       margin-right: auto;
       padding-left: max(16px, env(safe-area-inset-left, 0px));
@@ -822,6 +822,11 @@
       text-align: center;
     }
 
+    /* Forces the quote to exactly two lines on desktop; hidden (no break) below 900px so mobile wraps naturally as before. */
+    .pq-break {
+      display: none;
+    }
+
     /* ── Section headings (unified large titles — Product Video, What it does, etc.) ── */
     .section-heading {
       background: var(--bg-base);
@@ -1236,18 +1241,21 @@
 
     /* ── Tablet / small desktop (768px+): release fold clip + blend hero → copy (no harsh seam) ── */
     @media (min-width: 768px) {
+      /* ROOT CAUSE of the repeated "cut off" / "section missing" bugs this session: this
+         and .hero-wrapper below both had a *hard* max-height + overflow:hidden. That's fine
+         for content sized to fit exactly — but every increase to headline/phone/padding
+         size this session pushed the actual content taller than these fixed caps, and the
+         excess was silently clipped rather than growing the box. No more guessing pixel
+         values to try to match content that keeps changing — min-height only (a floor, for
+         the "fills at least one screen" hero feel), no max-height, so these containers
+         always grow to fit whatever they actually contain instead of clipping it. */
       .above-fold {
-        height: 100svh;
         min-height: 100svh;
-        max-height: 100svh;
-        overflow: hidden;
       }
 
       .hero-wrapper {
         flex: 0 0 auto;
-        height: min(78svh, 820px);
-        min-height: min(78svh, 820px);
-        max-height: min(78svh, 820px);
+        min-height: min(70svh, 720px);
         overflow: hidden;
       }
 
@@ -1271,14 +1279,30 @@
       }
 
       .phone-hero {
-        width: clamp(340px, 32vw, 500px);
-        margin-top: clamp(16px, 3vw, 36px);
+        width: clamp(320px, 24vw, 440px);
+        margin-top: clamp(-12px, -1vw, 0px);
         padding-top: 20px;
       }
 
       .phone-hero::after {
-        height: min(46%, 280px);
-        bottom: -8px;
+        /* Was fading the bottom of the phone to black — fine when only a small sliver was
+           visible, but now that much more of the phone shows on desktop, it was darkening
+           a large chunk of the product screenshot. Removed for desktop only. */
+        content: none;
+      }
+
+      /* Headline no longer overlaps the phone, so the top scrim that protected its
+         legibility isn't needed — removed for desktop (mobile never had it). */
+      .phone-hero::before {
+        content: none;
+      }
+
+      /* A gradient confined to just the phone's own small box was the wrong shape for this —
+         the site already has a FULL-WIDTH gradient for blending the hero into the page
+         (.hero-wrapper::after, edited below). Removed here so there's only one, correct,
+         viewport-wide fade instead of a second small one layered on top of it. */
+      .phone-hero::after {
+        content: none;
       }
 
       .hero-wrapper::after {
@@ -1300,7 +1324,7 @@
 
       .hero-desc-section {
         margin-top: clamp(-142px, -15.5vw, -96px);
-        padding: clamp(112px, 13.5vw, 172px) max(32px, 5vw) clamp(56px, 6vw, 92px);
+        padding: clamp(128px, 15vw, 200px) max(32px, 5vw) clamp(64px, 7vw, 108px);
         background: linear-gradient(
           to bottom,
           rgba(28, 10, 14, 0) 0%,
@@ -1309,30 +1333,33 @@
           rgba(18, 7, 11, 0.76) 52%,
           var(--bg-base) 82%
         );
-        gap: clamp(24px, 3vw, 36px);
+        gap: clamp(30px, 3.6vw, 44px);
       }
 
       .carousel-section {
+        /* Same background as .hero-desc-section above it (var(--bg-base)), with minimal
+           gap — reads as one continuous section (heading/copy + carousel) rather than two
+           separate blocks. */
         margin-top: 0;
-        padding-top: clamp(6px, 1.2vw, 16px);
+        padding-top: clamp(0px, 1vw, 12px);
       }
 
       .hero-desc,
       .section-heading__sub,
       .about-bio {
-        font-size: clamp(17px, 2.6vw, 26px);
+        font-size: clamp(19px, 2.9vw, 30px);
         line-height: 1.26;
         max-width: 32rem;
       }
 
       .accordion-content {
-        font-size: clamp(15px, 1.55vw, 17px);
+        font-size: clamp(16px, 1.7vw, 19px);
         line-height: 1.52;
       }
 
       .cta-btn {
-        font-size: clamp(16px, 2.2vw, 24px);
-        padding: 0.58em 1.35em;
+        font-size: clamp(18px, 2.5vw, 28px);
+        padding: 0.62em 1.5em;
       }
     }
 
@@ -1341,7 +1368,7 @@
       .accordion-section,
       .built-section,
       .about-section {
-        max-width: 1080px;
+        max-width: min(90vw, 1600px);
         margin-left: auto;
         margin-right: auto;
         padding-left: max(28px, env(safe-area-inset-left, 0px));
@@ -1350,19 +1377,19 @@
       }
 
       .accordion-section {
-        padding-bottom: 80px;
+        padding-bottom: 96px;
       }
 
       .built-section {
-        padding: 72px max(28px, 4vw) 80px;
+        padding: 88px max(28px, 4vw) 96px;
       }
 
       .built-grid {
         display: flex;
         flex-wrap: nowrap;
         justify-content: center;
-        gap: clamp(22px, 2.8vw, 36px);
-        max-width: min(1440px, 100%);
+        gap: clamp(26px, 3.2vw, 44px);
+        max-width: min(1600px, 100%);
         width: 100%;
         margin-left: auto;
         margin-right: auto;
@@ -1375,8 +1402,8 @@
       }
 
       .built-icon {
-        width: clamp(84px, 10vw, 132px);
-        height: clamp(84px, 10vw, 132px);
+        width: clamp(96px, 11.5vw, 156px);
+        height: clamp(96px, 11.5vw, 156px);
         border-radius: clamp(20px, 2.4vw, 28px);
       }
 
@@ -1394,9 +1421,45 @@
 
     /* ── Desktop (900px+): calmer headline scale, aligned rails, hero breathes ── */
     @media (min-width: 900px) {
+      /* Permanent desktop nav: fixed to the viewport (not the hero) so it stays visible the
+         whole time you scroll, with a black bar that fades to transparent so it reads as an
+         overlay on whatever section is under it rather than a hard-edged box. Taking nav out
+         of .hero-wrapper's flex flow means .hero needs extra top padding to compensate (see
+         below) so the eyebrow/headline sit where they used to instead of jumping up. */
       nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 90;
         padding: 20px max(24px, 4vw);
         padding-top: calc(24px + env(safe-area-inset-top));
+        padding-bottom: 64px;
+        background: linear-gradient(
+          to bottom,
+          rgba(10, 8, 9, 0.94) 0%,
+          rgba(10, 8, 9, 0.68) 38%,
+          rgba(10, 8, 9, 0.24) 70%,
+          rgba(10, 8, 9, 0) 100%
+        );
+        /* backdrop-filter has a hard edge at the box boundary no matter how the background
+           gradient fades — that's what read as the nav "cutting into" the page. A mask
+           fades the blur itself (not just the background color) so the whole bar, blur
+           included, softens away to nothing by the bottom instead of stopping abruptly. */
+        backdrop-filter: blur(18px) saturate(1.15);
+        -webkit-backdrop-filter: blur(18px) saturate(1.15);
+        mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to bottom, black 0%, black 30%, transparent 100%);
+        pointer-events: none;
+      }
+
+      nav .hamburger {
+        pointer-events: auto;
+        /* Base .hamburger uses top:50% to center within nav's box — fine when nav is just
+           padding + logo height, but nav now has extra padding-bottom for the gradient
+           tail, which pulls that 50% point well below the logo. Anchor to the logo's
+           actual vertical center (nav's top padding + half the logo height) instead. */
+        top: calc(24px + env(safe-area-inset-top, 0px) + 15px);
       }
 
       .hero-wrapper::before {
@@ -1407,63 +1470,89 @@
 
       .hero-wrapper::after {
         bottom: clamp(-40px, -6vw, -16px);
-        height: clamp(360px, 54vh, 720px);
+        height: clamp(420px, 62vh, 760px);
+        /* Matches .hero-desc-section's own gradient tone (warm dark red/brown, not flat
+           black) so the fade and the section it fades into feel like the same material —
+           and more prominent: color kicks in earlier and reaches full strength sooner. */
+        background: linear-gradient(
+          to bottom,
+          transparent 0%,
+          rgba(40, 16, 22, 0.04) 15%,
+          rgba(40, 16, 22, 0.14) 28%,
+          rgba(40, 16, 22, 0.32) 42%,
+          rgba(34, 13, 18, 0.56) 56%,
+          rgba(28, 11, 16, 0.8) 70%,
+          rgba(18, 7, 11, 0.95) 85%,
+          var(--bg-base) 100%
+        );
+        /* Deliberately above the phone (base rule keeps this at z-index:1, under the phone's
+           z-index:2) so its bottom visibly fades even at full viewport height — a scroll cue
+           that there's more below, rather than only showing once the phone is scrolled past. */
+        z-index: 3;
       }
 
       .hero-desc-section {
-        margin-top: clamp(-158px, -13.5vw, -104px);
-        padding: clamp(124px, 12.5vw, 192px) max(40px, 5vw, 72px) clamp(64px, 6vw, 104px);
-        background: linear-gradient(
-          to bottom,
-          rgba(26, 8, 12, 0) 0%,
-          rgba(40, 14, 20, 0.16) 12%,
-          rgba(30, 10, 16, 0.42) 28%,
-          rgba(16, 6, 10, 0.72) 50%,
-          var(--bg-base) 80%
-        );
-        gap: clamp(36px, 4vw, 52px);
+        /* No more negative margin pulling this up to overlap .hero-wrapper — that overlap
+           (plus .hero-wrapper growing taller earlier in this session) is what hid this
+           section's heading entirely. Sits cleanly below the hero now: a real boundary
+           between the phone/headline moment and this section + the carousel after it,
+           which are one continuous block together (see .carousel-section padding-top).
+           Flat background, not its own gradient — .hero-wrapper::after already fades all
+           the way down to this exact color, so a second independent fade starting right at
+           the seam just bounced back to warm-tinted right after resolving to flat, which
+           read as a seam/disconnect rather than a continuous blend. One fade, not two. */
+        margin-top: 0;
+        padding: clamp(64px, 7vw, 96px) max(40px, 5vw, 72px) clamp(48px, 5vw, 72px);
+        background: var(--bg-base);
+        gap: clamp(44px, 5vw, 64px);
       }
 
       .hero {
-        padding: clamp(28px, 3.5vw, 44px) max(24px, 3vw) 0;
+        padding: clamp(100px, 10vw, 140px) max(24px, 3vw) 0;
       }
 
       .eyebrow {
-        margin-bottom: clamp(20px, 2.5vw, 32px);
+        margin-bottom: clamp(10px, 1.5vw, 16px);
       }
 
       .hero-headline {
-        margin-bottom: clamp(10px, 2vw, 22px);
-        font-size: clamp(52px, 6.2vw, 108px);
+        margin-bottom: clamp(12px, 1.5vw, 20px);
+        font-size: clamp(64px, 7vw, 100px);
         letter-spacing: -0.042em;
       }
 
       .features-float-scene {
-        min-height: max(640px, min(78vh, 900px));
-        padding-top: clamp(64px, 9vw, 104px);
-        padding-bottom: clamp(24px, 4vw, 40px);
+        min-height: max(720px, min(84vh, 1000px));
+        padding-top: clamp(72px, 10vw, 120px);
+        padding-bottom: clamp(32px, 5vw, 52px);
+        gap: clamp(28px, 3vw, 44px);
       }
 
       .features-float-scene .section-heading--features {
-        padding-top: clamp(56px, 8vw, 112px);
+        padding-top: clamp(64px, 9vw, 128px);
       }
 
       .problem-statement {
-        padding-top: clamp(88px, 11vw, 120px);
-        padding-bottom: clamp(88px, 11vw, 120px);
+        padding-top: clamp(80px, 8.5vw, 124px);
+        padding-bottom: clamp(80px, 8.5vw, 124px);
         padding-left: 0;
         padding-right: 0;
         text-align: center;
       }
 
       .problem-statement__label {
-        font-size: clamp(15px, 1.35vw, 18px);
+        font-size: clamp(16px, 1.4vw, 19px);
         letter-spacing: 0.08em;
-        margin-bottom: clamp(14px, 1.6vw, 20px);
+        margin-bottom: clamp(16px, 1.8vw, 22px);
       }
 
       .problem-statement__quote {
-        max-width: min(42rem, calc(100% - 8px));
+        max-width: min(94vw, 1600px);
+        font-size: clamp(29px, 3.1vw, 47px);
+      }
+
+      .pq-break {
+        display: block;
       }
 
       .accordion-list {
@@ -1471,7 +1560,7 @@
       }
 
       footer {
-        max-width: 1080px;
+        max-width: min(90vw, 1600px);
         margin-left: auto;
         margin-right: auto;
         padding-left: max(28px, env(safe-area-inset-left, 0px));
@@ -1479,14 +1568,48 @@
       }
 
       main {
+        max-width: min(90vw, 1600px);
         padding-left: max(28px, env(safe-area-inset-left, 0px));
         padding-right: max(28px, env(safe-area-inset-right, 0px));
       }
 
       .hero-desc,
       .section-heading__sub {
-        max-width: 34rem;
+        max-width: 46rem;
       }
+
+      .accordion-section--framed {
+        width: min(74vw, 860px);
+      }
+
+      .carousel-card {
+        height: min(46vh, 460px);
+      }
+
+      /* Float cards: real 300x300 boxes (not a visual `scale` transform, which doesn't
+         reserve extra space in the flex column and is why they were overlapping — the
+         card next to it had no idea it had grown). Setting the actual box size makes the
+         flex layout reserve the correct space so they can't overlap. scale reset to 1 so
+         the base per-card scale (tuned for the old ~100px boxes) doesn't also apply here.
+         !important beats both the inline width/height on each card and the later base
+         rules for the same selectors; none of this touches anything below 900px. */
+      .features-float-scene .float-card-img {
+        width: 300px !important;
+        height: 300px !important;
+        scale: 1 !important;
+        border-radius: 36px;
+      }
+
+      /* Alternating left/right swoop (a proper S-curve down the section) — each card
+         overrides the SAME property its inline style already uses (left for fc-1/fc-3,
+         right for fc-4/fc-5/fc-6), just with a bigger magnitude and alternating sign, so
+         no need to fight `left`/`right: auto`. !important beats the inline offsets; none
+         of this touches anything below 900px. */
+      .fc-1 { left: clamp(-170px, -11vw, -110px) !important; }
+      .fc-3 { left: clamp(90px, 8vw, 150px) !important; }
+      .fc-4 { right: clamp(90px, 8vw, 150px) !important; }
+      .fc-5 { right: clamp(-190px, -12vw, -130px) !important; }
+      .fc-6 { right: clamp(80px, 7vw, 130px) !important; }
 
       .hero-desc {
         padding-top: 0;
@@ -1495,6 +1618,44 @@
       .tagline-section {
         padding-left: 0;
         padding-right: 0;
+      }
+    }
+
+    /* ── Large desktop (1200px+): hero keeps pace with the wider content below it ── */
+    @media (min-width: 1200px) {
+      .hero-headline {
+        font-size: clamp(96px, 7vw, 132px);
+      }
+
+      .phone-hero {
+        width: clamp(400px, 26vw, 520px);
+      }
+
+      .eyebrow {
+        font-size: clamp(17px, 1.5vw, 21px);
+      }
+    }
+
+    /* ── Extra-large desktop (1600px+): keeps growing instead of plateauing on big monitors ── */
+    @media (min-width: 1600px) {
+      .hero-headline {
+        font-size: clamp(126px, 7.5vw, 164px);
+      }
+
+      .phone-hero {
+        width: clamp(460px, 28vw, 580px);
+      }
+
+      .problem-statement__quote {
+        font-size: clamp(47px, 3vw, 54px);
+      }
+
+      .accordion-section--framed {
+        width: min(60vw, 940px);
+      }
+
+      .carousel-card {
+        height: min(48vh, 520px);
       }
     }
 
@@ -1528,7 +1689,7 @@
       .nav-logo { height: 28px; max-height: 28px; }
       .phone-hero { width: min(40vw, 460px); }
       .hero-sub { font-size: 17px; max-width: 480px; }
-      .carousel-track { gap: 14px; }
+      .carousel-track { gap: 16px; }
       .features { grid-template-columns: repeat(3, 1fr); }
       .feature { padding: 60px 44px; }
       .feature h3 { font-size: 19px; }
@@ -1931,7 +2092,7 @@
     /* Wide About layout must follow base .about-columns (column); otherwise base wins and stays single-column. */
     @media (min-width: 800px) {
       .about-section {
-        padding: clamp(88px, 9vw, 118px) max(28px, 4vw) clamp(100px, 11vw, 132px);
+        padding: clamp(104px, 11vw, 140px) max(28px, 4vw) clamp(116px, 13vw, 156px);
         align-items: stretch;
       }
 
@@ -1947,9 +2108,9 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: clamp(44px, 7vw, 104px);
+        gap: clamp(52px, 8vw, 128px);
         width: 100%;
-        max-width: 920px;
+        max-width: min(80vw, 1400px);
         margin-left: auto;
         margin-right: auto;
       }
@@ -1959,13 +2120,13 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: clamp(220px, 30vw, 300px);
+        width: clamp(260px, 34vw, 360px);
         min-width: 0;
       }
 
       .about-photo-scene {
-        width: clamp(176px, 23vw, 220px);
-        height: clamp(176px, 23vw, 220px);
+        width: clamp(210px, 27vw, 270px);
+        height: clamp(210px, 27vw, 270px);
         margin: 0 clamp(8px, 1.5vw, 20px);
       }
 
@@ -2406,7 +2567,7 @@
 
     <section class="problem-statement" aria-labelledby="problem-label">
       <p class="problem-statement__label" id="problem-label">The problem</p>
-      <p class="problem-statement__quote">Some ideas make sense before they&nbsp;become words. Draft gives them a place to&nbsp;start.</p>
+      <p class="problem-statement__quote">Some ideas make sense before they&nbsp;become words.<br class="pq-break" aria-hidden="true"> Draft gives them a place to&nbsp;start.</p>
     </section>
 
     <div class="features-float-scene" id="featuresScene">

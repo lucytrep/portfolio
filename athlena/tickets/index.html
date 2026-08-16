@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#D8CDB9">
+  <link rel="canonical" href="https://lucytrep.com/athlena/tickets/">
+  <link rel="icon" type="image/svg+xml" href="../assets/athlena/favicon.svg">
+  <link rel="alternate icon" type="image/png" href="../assets/athlena/favicon-dark-transparent.png">
+  <meta name="description" content="Athlena tickets">
+  <title>Athlena Tickets</title>
+  <style>
+    @font-face {
+      font-family: "Nyght Serif";
+      src: url("../assets/fonts/NyghtSerif-RegularItalic.woff2") format("woff2");
+      font-style: italic;
+      font-weight: 400;
+      font-display: swap;
+    }
+
+    :root {
+      --ink: #0F0E0B;
+      --olive: #494132;
+      --taupe: #AD977B;
+      --cream: #D8CDB9;
+      --paper: #F1EBE3;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(180deg, var(--paper), var(--cream));
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 28px;
+    }
+
+    .card {
+      width: min(100%, 760px);
+      padding: 36px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(73, 65, 50, 0.14);
+      box-shadow: 0 24px 60px rgba(15, 14, 11, 0.1);
+    }
+
+    .brand,
+    h1 {
+      font-family: "Nyght Serif", Georgia, serif;
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+
+    .brand {
+      margin: 0 0 24px;
+      font-size: 2.5rem;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.8rem, 5vw, 4.3rem);
+      line-height: 0.95;
+    }
+
+    p {
+      margin: 0 0 14px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--olive);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.92rem;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid rgba(73, 65, 50, 0.18);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <p class="brand">Athlena</p>
+    <h1>Tickets page coming next.</h1>
+    <p>This route is reserved for the internal Athlena purchase flow. The homepage CTA already targets this page so the site structure stays stable while the full ticketing experience is built.</p>
+    <p>Next implementation pass can turn this into the real purchase flow using the `Tickets`, `Phone Tickets`, and `Ticket Flow` designs you’ve already provided.</p>
+    <div class="actions">
+      <a class="button" href="/athlena/">Back to Athlena</a>
+      <a class="button secondary" href="/athlena/#tickets">View tickets section</a>
+    </div>
+  </div>
+</body>
+</html>
