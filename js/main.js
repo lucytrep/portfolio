@@ -232,6 +232,7 @@
     hamburger.addEventListener('click', function () {
       var open = header.classList.toggle('nav-open');
       hamburger.setAttribute('aria-expanded', open);
+      document.body.style.overflow = open ? 'hidden' : '';
     });
   }
 

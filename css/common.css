@@ -526,6 +526,28 @@ p,
     min-width: 0;
   }
 
+  /* Top-left mark: favicon only, no wordmark/tagline */
+  .page-header .site-name {
+    display: inline-flex;
+    align-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 0;
+    line-height: 0;
+  }
+
+  .page-header .site-name::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url('../assets/favicon.png') center / contain no-repeat;
+  }
+
+  .page-header .site-tagline {
+    display: none;
+  }
+
   .page-header .header-grid > nav {
     flex: 1 0 100%;
     width: 100%;
@@ -562,31 +584,37 @@ p,
     align-items: center;
   }
 
+  /* Full-screen centered overlay menu (typical mobile app nav pattern) */
   .page-header nav {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
     display: flex;
     flex-direction: column;
-    grid-column: 1 / -1;
-    gap: var(--space-2);
-    padding: 0 0 0;
-    text-align: left;
-    font-size: var(--font-size-nav-open);
-    border-top: var(--border-width) solid transparent;
-    margin-top: 0;
-    max-height: 0;
-    overflow: hidden;
+    grid-column: unset;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: var(--space-4);
+    text-align: center;
+    font-size: 1.75rem;
+    background: var(--color-background);
+    border-top: 0;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
     transition:
-      max-height 380ms cubic-bezier(0.4, 0, 0.2, 1),
-      opacity 260ms ease,
-      padding 380ms cubic-bezier(0.4, 0, 0.2, 1),
-      border-color 260ms ease,
-      margin-top 380ms cubic-bezier(0.4, 0, 0.2, 1);
+      opacity 280ms ease,
+      visibility 0ms linear 280ms;
   }
 
   .page-header nav a {
     display: block;
-    padding: 0.375rem 0;
+    padding: 0.5rem 0;
     min-height: 0;
     line-height: var(--line-height-snug);
   }
@@ -601,16 +629,35 @@ p,
   }
 
   .page-header.nav-open nav {
-    max-height: 400px;
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
-    padding: var(--space-2) 0 var(--space-3);
-    border-top-color: var(--color-border);
-    margin-top: var(--space-2);
+    transition:
+      opacity 280ms ease,
+      visibility 0ms linear;
   }
 
   .page-header.nav-open .hamburger {
+    position: relative;
+    z-index: 9001;
     align-self: flex-end;
+  }
+
+  /* Hamburger bars morph into a close (×) icon while the overlay is open */
+  .page-header.nav-open .hamburger-bar:nth-child(1) {
+    transform: translateY(calc(var(--hamburger-gap) + var(--hamburger-bar-height))) rotate(45deg);
+  }
+
+  .page-header.nav-open .hamburger-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .page-header.nav-open .hamburger-bar:nth-child(3) {
+    transform: translateY(calc(-1 * (var(--hamburger-gap) + var(--hamburger-bar-height)))) rotate(-45deg);
+  }
+
+  .hamburger-bar {
+    transition: transform 220ms ease, opacity 180ms ease;
   }
 
   .page-footer .grid-12 {
@@ -627,18 +674,6 @@ p,
   }
 }
 
-/* Narrow phones — step down header before 375px */
-@media (max-width: 26.25rem) {
-  .page-header .site-tagline {
-    font-size: 0.8125rem;
-    line-height: var(--line-height-snug);
-  }
-
-  .page-header .site-name {
-    font-size: var(--font-size-sm);
-  }
-}
-
 /* iPhone SE / small phones — 375px CSS reference width */
 @media (max-width: 23.4375rem) {
   :root {
@@ -652,16 +687,6 @@ p,
 
   body {
     overflow-x: clip;
-  }
-
-  .page-header .site-tagline {
-    font-size: 0.6875rem;
-    letter-spacing: 0.02em;
-    line-height: var(--line-height-snug);
-  }
-
-  .page-header .site-name {
-    font-size: var(--font-size-xs);
   }
 
   .page-header nav {

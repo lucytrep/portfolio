@@ -177,6 +177,58 @@
 
 }
 
+/* Phone + tablet: thumbnails only — no captions, just stacked animations, full-bleed */
+@media (max-width: 62.5rem) {
+  /* No intro text — straight into the thumbnails */
+  .section-hero {
+    display: none;
+  }
+
+  /* Full-bleed — no side gutter, same gap above the first card and below the last as between cards */
+  main.section-projects.container {
+    padding-top: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0.5rem;
+  }
+
+  main.section-projects .project-grid {
+    display: flex;
+    flex-direction: column;
+    column-gap: 0;
+    row-gap: 0.5rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  main.section-projects .project-grid > * {
+    grid-column: unset;
+    width: 100%;
+    min-width: 0;
+  }
+
+  main.section-projects .project-card-meta,
+  main.section-projects .project-description {
+    display: none;
+  }
+
+  main.section-projects .project-card-image {
+    margin-bottom: 0;
+    border-radius: 0;
+  }
+
+  /* Kill hairline background-color gap at the box edge on some viewport widths
+     (e.g. Figma Design Challenge thumbnail on tablet) by slightly overscanning
+     the video past the rounded box, same as the cards that already do this inline */
+  main.section-projects .project-card-image video {
+    transform: scale(1.03);
+  }
+
+  #project-coming-soon {
+    display: none;
+  }
+}
+
 /* Stacked card meta (year above title) up to 1300px */
 @media (max-width: 81.25rem) {
   .project-card-meta {

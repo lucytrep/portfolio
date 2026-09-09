@@ -324,17 +324,25 @@
   .arch-row--tall      { height: 640px; }
 }
 
-/* ── Mobile: stack rows (≤ 800px) ── */
-@media (max-width: 50rem) {
+/* ── Phone + tablet: stack rows, thumbnails only, full-bleed (≤ 1000px) ── */
+@media (max-width: 62.5rem) {
   .gallery {
-    padding-top: 2.75rem;
-    padding-bottom: var(--space-5);
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 
-  .gallery-grid { gap: 1.1rem; }
-  .arch-row { gap: 1.1rem; }
-  .arch-row-stack { gap: 1.1rem; }
-  .arch-pair { gap: 1.1rem; grid-template-columns: 1fr; }
+  .gallery-grid { gap: 0.5rem; }
+  .arch-row { gap: 0.5rem; }
+  .arch-row-stack { gap: 0.5rem; }
+  .arch-pair { gap: 0.5rem; grid-template-columns: 1fr; }
+
+  .gallery-item-media,
+  .arch-pair .gallery-item-media,
+  .arch-row-stack .gallery-item-media {
+    border-radius: 0;
+  }
 
   /* All rows collapse to single column */
   .arch-row--2col,
@@ -353,11 +361,6 @@
     height: auto;
   }
 
-  /* Ecommerce + Sky Brown stay side by side */
-  .arch-pair--persist {
-    grid-template-columns: 1fr 1fr;
-  }
-
   /* Standard aspect-ratios for collapsed items */
   .arch-row .gallery-item-media,
   .arch-row-stack .gallery-item-media {
@@ -367,5 +370,10 @@
   /* Persist pair items stay portrait */
   .arch-pair--persist .gallery-item-media {
     aspect-ratio: 3 / 4;
+  }
+
+  /* No captions — thumbnails/animations only */
+  .gallery-item-title {
+    display: none;
   }
 }
