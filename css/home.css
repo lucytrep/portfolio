@@ -207,13 +207,16 @@
     min-width: 0;
   }
 
-  main.section-projects .project-year,
-  main.section-projects .project-description {
+  main.section-projects .project-year {
     display: none;
   }
 
   main.section-projects .project-title {
     margin-top: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  main.section-projects .project-description {
     padding: 0 0.5rem;
   }
 
