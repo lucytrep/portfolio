@@ -184,12 +184,12 @@
     display: none;
   }
 
-  /* Full-bleed — no side gutter, same gap above the first card and below the last as between cards */
+  /* Side gutter a bit tighter than the default container padding, but not edge-to-edge */
   main.section-projects.container {
     padding-top: 0.5rem;
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: var(--space-5);
   }
 
   main.section-projects .project-grid {
@@ -222,7 +222,6 @@
 
   main.section-projects .project-card-image {
     margin-bottom: 0;
-    border-radius: 0;
   }
 
   /* Kill hairline background-color gap at the box edge on some viewport widths
