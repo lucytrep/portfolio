@@ -207,9 +207,14 @@
     min-width: 0;
   }
 
-  main.section-projects .project-card-meta,
+  main.section-projects .project-year,
   main.section-projects .project-description {
     display: none;
+  }
+
+  main.section-projects .project-title {
+    margin-top: 0.5rem;
+    padding: 0 0.5rem;
   }
 
   main.section-projects .project-card-image {

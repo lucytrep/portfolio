@@ -689,15 +689,4 @@ p,
     overflow-x: clip;
   }
 
-  .page-header nav {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: var(--space-3);
-    margin-top: var(--space-2);
-    font-size: 1.0625rem;
-  }
-
-  .page-header nav a + a {
-    margin-top: 0;
-  }
 }
