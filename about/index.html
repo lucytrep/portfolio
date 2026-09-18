@@ -5,16 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About · Lucytrep</title>
-  <link rel="icon" href="../assets/favicon.png" type="image/png" />
-  <link rel="stylesheet" href="../css/common.css" />
-  <link rel="stylesheet" href="../css/about.css" />
+  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
+  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
+  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
+  <link rel="stylesheet" href="../css/common.css?v=cta-pill1" />
+  <link rel="stylesheet" href="../css/about.css?v=cta-pill1" />
 </head>
 <body>
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
-      <div class="span-6">
-        <a href="../" class="site-name">LUCILLE TREPANIER</a>
-        <span class="site-tagline">Product Designer</span>
+      <div class="span-6 site-brand">
+        <a href="../" class="site-logo-mark" aria-label="Home"></a>
+        <div class="site-brand-text">
+          <a href="../" class="site-name">LUCYTREP LABS</a>
+          <span class="site-tagline">Product Designer</span>
+        </div>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -25,7 +30,6 @@
         <a href="../case-studies/">Work</a>
         <a href="../archive/">Archive</a>
         <a href="../about/" aria-current="page">About</a>
-        <a href="../assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </div>
   </header>
@@ -33,439 +37,448 @@
   <main class="container about">
 
     <!-- ─── Hero ──────────────────────────────────────────── -->
-    <section class="about-hero">
-      <div class="about-hero-text">
+    <section class="about-hero" data-about-gallery>
+      <div class="about-hero-copy">
         <p class="about-kicker">About</p>
-        <h1 class="about-title">Classically trained across Paris, Toronto, and New York, with a foundation in craft and a systems-driven approach to design.</h1>
-        <p class="about-subtitle">Currently completing a Master's in Digital Product Design at Parsons, focused on accessibility, clarity, and building confident user experiences. My perspective is shaped by ADHD and dyslexia, which sharpen how I process complexity, recognize patterns, and design for clarity at scale.</p>
-        <a href="../contact/" class="about-desktop-btn">Contact me →</a>
-      </div>
-      <div class="about-hero-media">
-        <div class="about-hero-imageSwap">
-          <img class="about-hero-image about-hero-image--base" src="../assets/about-photo.png" alt="Portrait of Lucille Trepanier" loading="eager" />
-          <img class="about-hero-image about-hero-image--hover" src="../assets/about-photo-hover.jpeg" alt="" loading="lazy" />
+        <div class="about-hero-copy-main">
+          <p class="about-hero-index"><span data-gallery-index>01</span>/02</p>
+          <h1 class="about-hero-title">Vancouver<br>Island to<br>New York.</h1>
+          <p class="about-hero-lede">A designer shaped by four cities. Classically trained across Paris, Toronto, and New York, with a foundation in craft and a systems-driven approach to design.</p>
+          <a href="../contact/" class="about-hero-link">Let's connect</a>
         </div>
+      </div>
+      <figure class="about-hero-figure">
+        <div class="about-hero-frame">
+          <img class="about-hero-image about-hero-image--then" src="../assets/about-photo.png" alt="Lucille Trepanier as a child" width="848" height="1024" data-caption="Then · Nanaimo" data-index="01" />
+          <img class="about-hero-image about-hero-image--now" src="../assets/about-photo-now.png" alt="Portrait of Lucille Trepanier" width="682" height="1024" data-caption="Now · New York" data-index="02" loading="lazy" />
+        </div>
+        <figcaption class="about-hero-caption">
+          <span data-gallery-caption>Then · Nanaimo</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ─── Story + timeline ──────────────────────────────── -->
+    <section class="about-story" id="about-story">
+      <div class="about-story-main">
+        <p class="about-kicker">The path</p>
+        <p class="about-story-lede">My perspective is shaped by ADHD and dyslexia, which sharpen how I process complexity, recognize patterns, and design for clarity at scale. The cities are the through-line — each one a different way of seeing, making, and moving toward the work.</p>
+
+        <article class="about-chapter" id="city-nanaimo" data-city="nanaimo">
+          <h2 class="about-chapter-title">Nanaimo</h2>
+          <p class="about-body-text">Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.</p>
+        </article>
+
+        <article class="about-chapter" id="city-paris" data-city="paris">
+          <h2 class="about-chapter-title">Paris</h2>
+          <p class="about-body-text">At 17 I studied graphic design through Parsons in Paris and saw the world I wanted. Craft, type, and the pace of a city that takes beauty seriously — it made the path feel real for the first time.</p>
+        </article>
+
+        <article class="about-chapter" id="city-toronto" data-city="toronto">
+          <h2 class="about-chapter-title">Toronto</h2>
+          <p class="about-body-text">At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger. University wasn't a given. The work became how I proved it anyway.</p>
+        </article>
+
+        <article class="about-chapter" id="city-newyork" data-city="newyork">
+          <h2 class="about-chapter-title">New York</h2>
+          <p class="about-body-text">Moved here and plan to stay. Parsons School of Design, Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that's hard to replicate.</p>
+        </article>
+      </div>
+
+      <aside class="about-timeline" aria-label="Cities">
+        <div class="about-timeline-track" data-timeline>
+          <span class="about-timeline-line" aria-hidden="true"></span>
+          <span class="about-timeline-fill" aria-hidden="true"></span>
+
+          <a class="about-timeline-city" href="#city-nanaimo" data-city-link="nanaimo">
+            <span class="about-timeline-dot" aria-hidden="true"></span>
+            <span class="about-timeline-meta">Home</span>
+            <span class="about-timeline-name">Nanaimo</span>
+          </a>
+          <a class="about-timeline-city" href="#city-paris" data-city-link="paris">
+            <span class="about-timeline-dot" aria-hidden="true"></span>
+            <span class="about-timeline-meta">17</span>
+            <span class="about-timeline-name">Paris</span>
+          </a>
+          <a class="about-timeline-city" href="#city-toronto" data-city-link="toronto">
+            <span class="about-timeline-dot" aria-hidden="true"></span>
+            <span class="about-timeline-meta">18</span>
+            <span class="about-timeline-name">Toronto</span>
+          </a>
+          <a class="about-timeline-city" href="#city-newyork" data-city-link="newyork">
+            <span class="about-timeline-dot" aria-hidden="true"></span>
+            <span class="about-timeline-meta">Now</span>
+            <span class="about-timeline-name">New York</span>
+          </a>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ─── Photo album ───────────────────────────────────── -->
+    <section class="about-album" id="album">
+      <div class="about-album-header">
+        <p class="about-kicker">Album</p>
+        <h2 class="about-section-title">Four cities.</h2>
+      </div>
+
+      <div class="about-album-stage" data-album aria-label="Photo album">
+        <div class="about-album-track">
+          <figure class="about-album-item" data-title="Hammock days" data-meta="Nanaimo, Vancouver Island">
+            <img src="../assets/images/about/nanaimo/hammock.jpg" alt="Hammock on the beach, Vancouver Island" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Long Beach" data-meta="Nanaimo, Vancouver Island">
+            <img src="../assets/images/about/nanaimo/beach.JPG" alt="Aerial view of sandy beach, Vancouver Island" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="In the swell" data-meta="Nanaimo, Vancouver Island">
+            <img src="../assets/images/about/nanaimo/swell.jpg" alt="Surfers in the ocean swell" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Surf day" data-meta="Vancouver Island">
+            <img src="../assets/images/about/nanaimo/surf.JPG" alt="Surfing off Vancouver Island" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Whistler" data-meta="British Columbia">
+            <img src="../assets/images/about/nanaimo/whistler.JPG" alt="Mountain glacier view, Whistler" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="World Cup" data-meta="Paris">
+            <img src="../assets/images/about/toronto/paris.jpg" alt="World Cup celebrations in Paris" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="The skyline" data-meta="Toronto">
+            <img src="../assets/images/about/toronto/skyline.JPG" alt="Toronto skyline" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Raptors game" data-meta="Scotiabank Arena, Toronto">
+            <img src="../assets/images/about/toronto/raps.JPG" alt="Toronto Raptors game at Scotiabank Arena" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item about-album-item--subject" data-title="IARIGAI" data-meta="Research conference, Toronto">
+            <img src="../assets/images/about/toronto/research.jpg" alt="Research conference presentation" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item about-album-item--subject" data-title="TCS Waterfront Marathon" data-meta="Toronto">
+            <img src="../assets/images/about/toronto/run.JPG" alt="After the TCS Toronto Waterfront Marathon" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Manhattan Bridge" data-meta="DUMBO, Brooklyn">
+            <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Sunset" data-meta="New York">
+            <img src="../assets/images/about/ny/sunset.jpg" alt="Sunset over New York" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="US Open" data-meta="Arthur Ashe Stadium">
+            <img src="../assets/images/about/ny/usopen.JPG" alt="US Open at Arthur Ashe Stadium" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item about-album-item--subject" data-title="Parsons" data-meta="The New School, New York">
+            <img src="../assets/images/about/ny/parsons.JPG" alt="Outside The New School, Parsons" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item" data-title="Rose Main Reading Room" data-meta="New York Public Library">
+            <img src="../assets/images/about/ny/roseroom.jpg" alt="Working in the Rose Main Reading Room, NYPL" loading="lazy" draggable="false" />
+          </figure>
+          <figure class="about-album-item about-album-item--subject" data-title="Runway AI Summit" data-meta="New York">
+            <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" loading="lazy" draggable="false" />
+          </figure>
+        </div>
+      </div>
+
+      <div class="about-album-caption" aria-live="polite">
+        <p class="about-album-caption-title" data-album-title>Hammock days</p>
+        <p class="about-album-caption-meta" data-album-meta>Nanaimo, Vancouver Island</p>
       </div>
     </section>
 
-    <!-- ─── The Journey ──────────────────────────────────── -->
-    <section class="about-journey" id="about-journey">
-      <div class="about-journey-header">
-        <p class="about-kicker">The Journey</p>
-        <h2 class="about-journey-title">Struggled through school. University wasn't a given.<br>Now completing a Master's in New York.</h2>
+    <!-- ─── Play ──────────────────────────────────────────── -->
+    <section class="about-play" id="play">
+      <div class="about-play-header">
+        <p class="about-kicker">Play</p>
+        <h2 class="about-section-title">What I'm into when I'm not designing.</h2>
       </div>
 
-      <div class="about-journey-grid">
+      <div class="about-play-grid">
 
-        <div class="about-journey-item">
-          <div class="about-journey-image" data-slideshow>
-            <img src="../assets/images/about/nanaimo/hammock.jpg" alt="Hammock on the beach, Vancouver Island" class="journey-slide journey-slide--active" />
-            <img src="../assets/images/about/nanaimo/whistler.JPG" alt="Mountain glacier view, Whistler" class="journey-slide" />
-            <img src="../assets/images/about/nanaimo/surf.JPG" alt="Aerial view of surfboards on sand" class="journey-slide" />
-            <img src="../assets/images/about/nanaimo/beach.JPG" alt="Aerial view of sandy beach, Vancouver Island" class="journey-slide" />
-            <img src="../assets/images/about/nanaimo/swell.jpg" alt="Surfers in the ocean swell" class="journey-slide" />
+        <!-- Spotify: drop a playlist/album embed URL into data-spotify-embed to replace the fallback player -->
+        <article class="play-card play-card--spotify" data-spotify-embed="">
+          <p class="play-card-label">Spotify</p>
+          <div class="play-spotify" data-spotify-root>
+            <div class="play-spotify-art" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="play-spotify-copy">
+              <p class="play-spotify-kicker">Listening</p>
+              <h3>@lucytrep</h3>
+              <p>What I'm playing lately. Follow the profile, or this becomes a live player when a playlist is embedded.</p>
+            </div>
+            <a class="play-spotify-btn" href="https://open.spotify.com/user/lucytrep" target="_blank" rel="noopener noreferrer">Open Spotify</a>
           </div>
-          <h3 class="about-journey-item-title">Nanaimo, Vancouver Island</h3>
-          <p class="about-journey-item-body">Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.</p>
-        </div>
+        </article>
 
-        <div class="about-journey-item">
-          <div class="about-journey-image" data-slideshow>
-            <img src="../assets/images/about/toronto/paris.jpg" alt="World Cup celebrations in Paris" class="journey-slide journey-slide--active" />
-            <img src="../assets/images/about/toronto/research.jpg" alt="Research conference presentation" class="journey-slide" />
-            <img src="../assets/images/about/toronto/raps.JPG" alt="Toronto Raptors game at Scotiabank Arena" class="journey-slide" />
-            <img src="../assets/images/about/toronto/skyline.JPG" alt="Toronto skyline" class="journey-slide" />
-          </div>
-          <h3 class="about-journey-item-title">Paris + Toronto</h3>
-          <p class="about-journey-item-body">At 17 I studied graphic design through Parsons in Paris and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.</p>
-        </div>
+        <article class="play-card play-card--maps">
+          <p class="play-card-label">Google Maps</p>
+          <a class="play-maps-link" href="https://www.google.com/maps/@/data=!3m1!4b1!4m2!11m1!2suaW8V7MY18y5VpSML7XhcV9Q16tPoQ" target="_blank" rel="noopener noreferrer">
+            <p class="play-maps-kicker">Saved list</p>
+            <h3>Where I've been</h3>
+            <p>A running list of spots across the cities — New York, Toronto, and Paris.</p>
+            <span class="play-card-cta">Open in Maps →</span>
+          </a>
+        </article>
 
-        <div class="about-journey-item">
-          <div class="about-journey-image" data-slideshow>
-            <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" class="journey-slide journey-slide--active" />
-            <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" class="journey-slide" />
-            <img src="../assets/images/about/ny/parsons.JPG" alt="Outside The New School, Parsons" class="journey-slide" />
-            <img src="../assets/images/about/ny/sunset.jpg" alt="NYC skyline at sunset from Brooklyn" class="journey-slide" />
-            <img src="../assets/images/about/ny/roseroom.jpg" alt="Working in the Rose Main Reading Room, NYPL" class="journey-slide" />
-            <img src="../assets/images/about/ny/usopen.JPG" alt="US Open at Arthur Ashe Stadium" class="journey-slide" />
-          </div>
-          <h3 class="about-journey-item-title">New York</h3>
-          <p class="about-journey-item-body">Moved here this past August and plan to stay. I'm at Parsons School of Design studying Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that's hard to replicate.</p>
-        </div>
+        <article class="play-card play-card--cosmos">
+          <p class="play-card-label">Cosmos</p>
+          <a class="play-cosmos" href="https://www.cosmos.so/lucytrep" target="_blank" rel="noopener noreferrer">
+            <div class="play-cosmos-mosaic" aria-hidden="true">
+              <img src="../assets/images/about/ny/sunset.jpg" alt="" loading="lazy" />
+              <img src="../assets/images/about/nanaimo/surf.JPG" alt="" loading="lazy" />
+              <img src="../assets/images/about/toronto/paris.jpg" alt="" loading="lazy" />
+              <img src="../assets/images/about/ny/roseroom.jpg" alt="" loading="lazy" />
+            </div>
+            <div class="play-cosmos-meta">
+              <h3>@lucytrep</h3>
+              <p>Visual saves, references, and rabbit holes.</p>
+              <span class="play-card-cta">Open Cosmos →</span>
+            </div>
+          </a>
+        </article>
+
+        <article class="play-card play-card--beli">
+          <p class="play-card-label">Beli</p>
+          <a class="play-beli" href="https://beliapp.com/" target="_blank" rel="noopener noreferrer">
+            <p class="play-beli-kicker">Ranking spots</p>
+            <h3>Where I eat</h3>
+            <p>Ranking restaurants from New York back through Toronto and Paris — the list is always in motion.</p>
+            <ul class="play-beli-chips">
+              <li>New York</li>
+              <li>Toronto</li>
+              <li>Paris</li>
+            </ul>
+            <span class="play-card-cta">Open Beli →</span>
+          </a>
+        </article>
 
       </div>
     </section>
 
   </main>
 
-  <footer class="container page-footer">
-    <div class="grid-12">
-      <div class="span-6">
-        <span class="footer-credit">Designed + coded by</span><br />
-        <span class="footer-name">Lucille Trepanier</span>
-      </div>
-      <div class="span-6 footer-right">
-        <div class="footer-socials">
-          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/lucytrep/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          
-        </div>
-      </div>
-    </div>
-  </footer>
+  <footer class="container page-footer"></footer>
 
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=cta-pill1"></script>
   <script>
-  // ── Journey cinematic scroll animation ──
   (function () {
     'use strict';
 
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (window.innerWidth < 800) return;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    var SEEN_KEY = 'jc-v2';
-    var journeySection = document.getElementById('about-journey');
-    if (!journeySection) return;
+    (function initHeroGallery() {
+      var root = document.querySelector('[data-about-gallery]');
+      var figure = root && root.querySelector('.about-hero-figure');
+      var frame = root && root.querySelector('.about-hero-frame');
+      if (!root || !figure || !frame) return;
 
-    // Replay animation on every reload
-    var navEntry = window.performance && performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
-    if ((navEntry && navEntry.type === 'reload') ||
-        (window.performance && performance.navigation && performance.navigation.type === 1)) {
-      sessionStorage.removeItem(SEEN_KEY);
-    }
-    if (sessionStorage.getItem(SEEN_KEY)) return;
+      var images = Array.prototype.slice.call(root.querySelectorAll('.about-hero-image'));
+      var indexEl = root.querySelector('[data-gallery-index]');
+      var captionEl = root.querySelector('[data-gallery-caption]');
+      if (images.length < 2) return;
 
-    var base = '../assets/images/about/';
-    var SLIDE_MS = 5000; // ms per slide after animation completes
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-    var filmSrcs = [
-      'nanaimo/whistler.JPG', 'toronto/research.jpg', 'nanaimo/surf.JPG',
-      'ny/parsons.JPG', 'toronto/raps.JPG', 'nanaimo/beach.JPG',
-      'ny/sunset.jpg', 'toronto/run.JPG', 'nanaimo/swell.jpg',
-      'ny/usopen.JPG', 'toronto/skyline.JPG', 'ny/roseroom.jpg',
-    ];
-
-    var heroData = [
-      { srcs: ['nanaimo/hammock.jpg', 'nanaimo/whistler.JPG', 'nanaimo/surf.JPG', 'nanaimo/beach.JPG', 'nanaimo/swell.jpg'],
-        title: 'Nanaimo, Vancouver Island',
-        body: 'Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.' },
-      { srcs: ['toronto/paris.jpg', 'toronto/research.jpg', 'toronto/raps.JPG', 'toronto/skyline.JPG'],
-        title: 'Paris + Toronto',
-        body: 'At 17 I studied graphic design through Parsons in Paris and saw the world I wanted. At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger.' },
-      { srcs: ['ny/runway-ai.jpg', 'ny/dumbo.jpg', 'ny/parsons.JPG', 'ny/sunset.jpg', 'ny/roseroom.jpg', 'ny/usopen.JPG'],
-        title: 'New York',
-        body: 'Moved here this past August and plan to stay. I\'m at Parsons School of Design studying Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that\'s hard to replicate.' },
-    ];
-
-    // ── Spacer — provides scroll distance for the animation.
-    // Cap it so very large monitors don't create a confusing blank gulf
-    // between the hero and the journey sequence. ──
-    var spacer = document.createElement('div');
-    spacer.style.cssText = 'height:clamp(40rem, 88vh, 58rem);';
-    journeySection.parentNode.insertBefore(spacer, journeySection);
-
-    // Hide the static journey section — animation builds it live
-    journeySection.style.visibility = 'hidden';
-
-    // ── Scroll hint — visible when user reaches spacer, fades once animation starts ──
-    var hint = document.createElement('div');
-    hint.style.cssText = 'position:fixed;bottom:2.5rem;left:50%;transform:translateX(-50%);z-index:201;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:0.4rem;opacity:0;transition:opacity 500ms ease;';
-    hint.innerHTML = '<span style="font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-muted);white-space:nowrap;">The Journey</span>'
-      + '<svg width="14" height="20" viewBox="0 0 14 20" fill="none" style="animation:hintBounce 1.4s ease-in-out infinite;"><path d="M7 2v14M1 11l6 6 6-6" stroke="var(--color-muted)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-    document.head.insertAdjacentHTML('beforeend', '<style>@keyframes hintBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}</style>');
-    document.body.appendChild(hint);
-
-    // Show hint when spacer top enters bottom of viewport
-    var hintIO = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { hint.style.opacity = e.isIntersecting ? '1' : '0'; });
-    }, { rootMargin: '0px 0px -60px 0px' });
-    hintIO.observe(spacer);
-
-    // ── Fixed overlay ─────────────────────────────────────────
-    var overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;z-index:200;background:var(--color-background);overflow:hidden;opacity:0;pointer-events:none;';
-    document.body.appendChild(overlay);
-
-    // Film strip
-    var filmStrip = document.createElement('div');
-    filmStrip.className = 'jc-film-strip';
-    overlay.appendChild(filmStrip);
-
-    filmSrcs.forEach(function (src) {
-      var item = document.createElement('div');
-      item.className = 'jc-film-item';
-      var img = document.createElement('img');
-      img.src = base + src;
-      img.loading = 'lazy';
-      img.draggable = false;
-      item.appendChild(img);
-      filmStrip.appendChild(item);
-    });
-
-    // Hero images — stacked so they can rotate after animation completes
-    var heroEls = heroData.map(function (item) {
-      var div = document.createElement('div');
-      div.className = 'jc-hero-item';
-      item.srcs.forEach(function (src, idx) {
-        var img = document.createElement('img');
-        img.src = base + src;
-        img.loading = idx === 0 ? 'eager' : 'lazy';
-        if (idx === 0) img.setAttribute('fetchpriority', 'high');
-        img.decoding = 'async';
-        img.draggable = false;
-        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;user-select:none;pointer-events:none;opacity:' + (idx === 0 ? '1' : '0') + ';transition:opacity 900ms ease;';
-        div.appendChild(img);
-      });
-      overlay.appendChild(div);
-      return div;
-    });
-
-    // Kicker + headline (matches static journey section header)
-    var kicker = document.createElement('div');
-    kicker.className = 'jc-kicker';
-    var kickerP = document.createElement('p');
-    kickerP.className = 'about-kicker';
-    kickerP.textContent = 'The Journey';
-    var kickerH2 = document.createElement('h2');
-    kickerH2.className = 'about-journey-title';
-    kickerH2.style.marginBottom = '0';
-    kickerH2.innerHTML = 'Struggled through school. University wasn\'t a given.<br>Now completing a Master\'s in New York.';
-    kicker.appendChild(kickerP);
-    kicker.appendChild(kickerH2);
-    overlay.appendChild(kicker);
-
-    // Text grid
-    var textGrid = document.createElement('div');
-    textGrid.className = 'jc-text-grid';
-    heroData.forEach(function (item) {
-      var div = document.createElement('div');
-      div.className = 'jc-text-item';
-      var h3 = document.createElement('h3');
-      h3.textContent = item.title;
-      var p = document.createElement('p');
-      p.textContent = item.body;
-      div.appendChild(h3);
-      div.appendChild(p);
-      textGrid.appendChild(div);
-    });
-    overlay.appendChild(textGrid);
-
-    // ── Helpers ───────────────────────────────────────────────
-    function lerp(a, b, t) { return a + (b - a) * t; }
-    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
-    function easeOut3(t) { return 1 - Math.pow(1 - t, 3); }
-    function easeInOut3(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
-
-    // ── State ─────────────────────────────────────────────────
-    var spacerY0 = 0, scrollRange = 1;
-    var filmItemW = 0, filmItemH = 0, filmGap = 0, totalFilmW = 0;
-    var heroFinal = [];
-    var ticking = false, completed = false;
-
-    // ── Measure ───────────────────────────────────────────────
-    function measure() {
-      var vw = window.innerWidth;
-      var vh = window.innerHeight;
-
-      spacerY0    = spacer.getBoundingClientRect().top + window.scrollY;
-      scrollRange = Math.max(1, spacer.offsetHeight);
-
-      // Hero final positions — computed first so film items match
-      var mainEl = document.querySelector('main');
-      var pad    = mainEl ? parseFloat(getComputedStyle(mainEl).paddingLeft) : Math.round(vw * 0.04);
-      var gap    = Math.round(vw * 0.016); // tighter cinematic gap
-      var avail  = vw - 2 * pad;
-      var cardW  = (avail - 2 * gap) / 3;
-      var cardH  = cardW * (2.9 / 3);
-
-      // Film sizing — match hero card dimensions for seamless transition
-      filmItemW  = Math.round(cardW);
-      filmItemH  = Math.round(cardH);
-      filmGap    = Math.round(vw * 0.012);
-      totalFilmW = filmSrcs.length * (filmItemW + filmGap) - filmGap;
-
-      filmStrip.style.gap = filmGap + 'px';
-      Array.from(filmStrip.children).forEach(function (c) {
-        c.style.width  = filmItemW + 'px';
-        c.style.height = filmItemH + 'px';
-      });
-      filmStrip.style.top = Math.round((vh - filmItemH) / 2) + 'px';
-
-      // Kicker sits near the top; gridTop is derived from kicker + header height + gap
-      var kickerTop = Math.round(vh * 0.06); // ~6% from top — small breathing room below nav
-      var gridTop   = kickerTop + 185;       // kicker label (~20) + headline (~110) + gap (~55)
-
-      heroFinal = [0, 1, 2].map(function (i) {
-        return { left: pad + i * (cardW + gap), top: gridTop, width: cardW, height: cardH };
-      });
-
-      heroEls.forEach(function (el, i) {
-        el.style.width  = heroFinal[i].width  + 'px';
-        el.style.height = heroFinal[i].height + 'px';
-      });
-
-      kicker.style.top  = kickerTop + 'px';
-      kicker.style.left = pad + 'px';
-
-      textGrid.style.gap  = gap + 'px';
-      if (heroFinal[0]) {
-        // 28px gap below images (matches var(--space-4))
-        textGrid.style.top  = Math.round(heroFinal[0].top + heroFinal[0].height + 28) + 'px';
-        textGrid.style.left = pad + 'px';
-        textGrid.style.right = pad + 'px';
+      function setMeta(i) {
+        var active = images[i] || images[0];
+        if (indexEl) indexEl.textContent = active.getAttribute('data-index') || '';
+        if (captionEl) captionEl.textContent = active.getAttribute('data-caption') || '';
       }
-    }
 
-    // ── Tick ──────────────────────────────────────────────────
-    function tick() {
-      ticking = false;
-      if (completed) return;
-
-      var vw  = window.innerWidth;
-      var raw = (window.scrollY - spacerY0) / scrollRange;
-      var p   = clamp(raw, 0, 1);
-
-      // Overlay: invisible before spacer, fades in over first 5% of scroll
-      if (raw <= 0) {
-        overlay.style.opacity        = '0';
-        overlay.style.pointerEvents  = 'none';
+      if (finePointer) {
+        frame.addEventListener('mouseenter', function () { setMeta(1); });
+        frame.addEventListener('mouseleave', function () { setMeta(0); });
         return;
       }
-      var overlayAlpha = raw < 0.05 ? raw / 0.05 : 1;
-      overlay.style.opacity       = overlayAlpha;
-      overlay.style.pointerEvents = 'auto';
-      hint.style.opacity = '0';
 
-      // — Film strip (0 → 0.65) —
-      var filmP  = clamp(p / 0.65, 0, 1);
-      var filmE  = easeInOut3(filmP);
-      filmStrip.style.transform = 'translateX(' + lerp(vw + 60, -(totalFilmW - vw * 0.38), filmE) + 'px)';
-      filmStrip.style.opacity   = filmP < 0.78 ? 1 : clamp(1 - (filmP - 0.78) / 0.22, 0, 1);
-      var filmScale = lerp(0.60, 1, filmE);
-      Array.from(filmStrip.children).forEach(function (c) { c.style.transform = 'scale(' + filmScale + ')'; });
-
-      // — Hero images staggered (0.50 → 0.87) —
-      heroEls.forEach(function (el, i) {
-        var hS = 0.50 + i * 0.055, hE = hS + 0.34;
-        var hp = clamp((p - hS) / (hE - hS), 0, 1);
-        var he = easeOut3(hp);
-        var fp = heroFinal[i];
-        if (!fp || !fp.width) return;
-        var s  = lerp(0.50, 1, he);
-        var cx = lerp(vw + 80 + i * (fp.width * 0.9 + 36), fp.left + fp.width  / 2, he);
-        var cy = fp.top + fp.height / 2;
-        el.style.transform       = 'translate(' + (cx - fp.width*s/2) + 'px,' + (cy - fp.height*s/2) + 'px) scale(' + s + ')';
-        el.style.transformOrigin = '0 0';
-        el.style.opacity         = hp > 0 ? 1 : 0;
+      frame.addEventListener('click', function () {
+        figure.classList.toggle('is-swapped');
+        setMeta(figure.classList.contains('is-swapped') ? 1 : 0);
       });
+    })();
 
-      // — Kicker (0.72 → 0.84) —
-      kicker.style.opacity   = clamp((p - 0.72) / 0.12, 0, 1);
+    // Paste a Spotify playlist or album embed URL here to replace the fallback card.
+    // Example: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'
+    var SPOTIFY_EMBED = '';
 
-      // — Text (0.84 → 1.0) —
-      textGrid.style.opacity = clamp((p - 0.84) / 0.16, 0, 1);
+    (function initSpotify() {
+      var card = document.querySelector('[data-spotify-embed]');
+      var root = document.querySelector('[data-spotify-root]');
+      if (!card || !root) return;
+      var src = (card.getAttribute('data-spotify-embed') || SPOTIFY_EMBED || '').trim();
+      if (!src) return;
+      var iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.title = 'Spotify player';
+      iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
+      iframe.loading = 'lazy';
+      iframe.setAttribute('allowfullscreen', '');
+      root.replaceWith(iframe);
+    })();
 
-      if (p >= 1) complete();
-    }
+    (function initAlbum() {
+      var stage = document.querySelector('[data-album]');
+      if (!stage) return;
 
-    // ── Complete ──────────────────────────────────────────────
-    function complete() {
-      completed = true;
-      sessionStorage.setItem(SEEN_KEY, '1');
+      var track = stage.querySelector('.about-album-track');
+      var items = Array.prototype.slice.call(stage.querySelectorAll('.about-album-item'));
+      var titleEl = document.querySelector('[data-album-title]');
+      var metaEl = document.querySelector('[data-album-meta]');
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      var native = reduceMotion || !finePointer;
 
-      // ─ Step 1: measure while overlay is still position:fixed ──────────────
-      // textGrid.scrollHeight is valid because the overlay has been rendered.
-      var textTop  = parseFloat(textGrid.style.top) || 0;
-      var textH    = Math.max(textGrid.scrollHeight, 160);
-      var sectionH = Math.ceil(Math.max(
-        textTop + textH,
-        heroFinal.reduce(function (m, fp) { return Math.max(m, fp.top + fp.height); }, 0)
-      ) + 80);
-
-      // ─ Step 2: silent scroll to spacerY0 ──────────────────────────────────
-      // The overlay is opaque and position:fixed, so the user sees nothing.
-      // After conversion the overlay lands at ~spacerY0, making its top = viewport 0.
-      window.scrollTo(0, spacerY0);
-
-      // ─ Step 3: lock content in place (overlay still fixed, invisible) ──────
-      filmStrip.remove();
-      heroEls.forEach(function (el, i) {
-        var fp = heroFinal[i];
-        el.style.left          = fp.left + 'px';
-        el.style.top           = fp.top  + 'px';
-        el.style.transform     = 'none';
-        el.style.pointerEvents = 'auto';
-      });
-      kicker.style.pointerEvents   = 'auto';
-      textGrid.style.pointerEvents = 'auto';
-      textGrid.style.opacity       = '1';
-      kicker.style.opacity         = '1';
-
-      // ─ Step 4: convert overlay → in-flow section, insert BEFORE footer ────
-      // Do this BEFORE removing the spacer so the document stays tall enough
-      // that scrollY = spacerY0 is not clamped by the browser.
-      // (doc height at this point: pre-content + spacer(350vh) + journey + sectionH + footer)
-      overlay.style.cssText =
-        'position:relative;width:100%;height:' + sectionH + 'px;' +
-        'overflow:visible;background:var(--color-background);';
-      var footer = document.querySelector('.page-footer');
-      footer.parentNode.insertBefore(overlay, footer);
-
-      // ─ Step 5: now remove spacer + journey section ─────────────────────────
-      // New doc height: ~spacerY0 + sectionH + footerH
-      // New scrollMax: ~spacerY0 + sectionH + footerH − vh > spacerY0 → no clamping.
-      spacer.remove();
-      journeySection.remove();
-
-      // ─ Step 6: pixel-perfect correction ───────────────────────────────────
-      var delta = overlay.getBoundingClientRect().top;
-      if (Math.abs(delta) > 0) {
-        window.scrollTo(0, window.scrollY + delta);
+      function setCaption(item) {
+        if (!item) return;
+        items.forEach(function (el) { el.classList.toggle('is-active', el === item); });
+        if (titleEl) titleEl.textContent = item.getAttribute('data-title') || '';
+        if (metaEl) metaEl.textContent = item.getAttribute('data-meta') || '';
       }
 
-      // ─ Step 7: start image rotation in each hero card ─────────────────────
-      startSlideshow();
-    }
-
-    function startSlideshow() {
-      heroEls.forEach(function (el, i) {
-        var imgs = Array.from(el.querySelectorAll('img'));
-        if (imgs.length <= 1) return;
-        var current = 0;
-        setTimeout(function () {
-          setInterval(function () {
-            imgs[current].style.opacity = '0';
-            current = (current + 1) % imgs.length;
-            imgs[current].style.opacity = '1';
-          }, SLIDE_MS);
-        }, i * 1500); // stagger columns slightly
+      items.forEach(function (item) {
+        item.addEventListener('mouseenter', function () { setCaption(item); });
+        item.addEventListener('focus', function () { setCaption(item); });
       });
-    }
 
-    // ── Listeners ─────────────────────────────────────────────
-    function onScroll() {
-      if (completed) { window.removeEventListener('scroll', onScroll); return; }
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(tick);
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
+      if (native) {
+        stage.classList.add('is-native');
+        return;
+      }
 
-    window.addEventListener('resize', function () {
-      measure();
-      if (!completed) requestAnimationFrame(tick);
-    });
+      var pos = 0;
+      var vel = 0;
+      var raf = 0;
+      var lastTime = 0;
+      var maxSpeed = 12;
+      var EDGE = 0.16;
 
-    // Re-measure once all resources (fonts, images) have loaded so spacerY0
-    // reflects the fully-settled layout. On first visit this corrects any
-    // shift from web-font swap or above-fold images changing height.
-    window.addEventListener('load', function () {
-      if (!completed) { measure(); tick(); }
-    });
+      function maxShift() {
+        return Math.max(0, track.scrollWidth - stage.clientWidth);
+      }
 
-    requestAnimationFrame(function () { measure(); tick(); });
+      function clamp() {
+        var max = maxShift();
+        if (pos < 0) pos = 0;
+        if (pos > max) pos = max;
+      }
+
+      function render() {
+        track.style.transform = 'translate3d(' + (-pos) + 'px, 0, 0)';
+      }
+
+      function loop(now) {
+        if (!vel) {
+          lastTime = 0;
+          raf = 0;
+          return;
+        }
+        var dt = lastTime ? Math.min(32, now - lastTime) / 16.67 : 1;
+        lastTime = now;
+        pos += vel * dt;
+        clamp();
+        render();
+        raf = requestAnimationFrame(loop);
+      }
+
+      function start() {
+        if (!raf) raf = requestAnimationFrame(loop);
+      }
+
+      function stopPan() {
+        vel = 0;
+        lastTime = 0;
+      }
+
+      pos = 0;
+      clamp();
+      render();
+
+      stage.addEventListener('mouseleave', function () {
+        stopPan();
+        items.forEach(function (el) { el.classList.remove('is-active'); });
+      });
+
+      stage.addEventListener('mousemove', function (e) {
+        var overItem = e.target.closest && e.target.closest('.about-album-item');
+        if (overItem) setCaption(overItem);
+
+        var rect = stage.getBoundingClientRect();
+        var t = (e.clientX - rect.left) / Math.max(1, rect.width);
+        t = Math.min(1, Math.max(0, t));
+        var inEdge = t <= EDGE || t >= (1 - EDGE);
+
+        if (!inEdge) {
+          stopPan();
+          return;
+        }
+
+        var sign = t >= 0.5 ? 1 : -1;
+        var depth = t >= 0.5 ? (t - (1 - EDGE)) / EDGE : (EDGE - t) / EDGE;
+        depth = Math.min(1, Math.max(0, depth));
+        vel = sign * depth * depth * maxSpeed;
+        start();
+      });
+
+      window.addEventListener('resize', function () {
+        clamp();
+        render();
+      });
+    })();
+
+    (function initTimeline() {
+      var chapters = Array.prototype.slice.call(document.querySelectorAll('.about-chapter[data-city]'));
+      var links = Array.prototype.slice.call(document.querySelectorAll('[data-city-link]'));
+      var fill = document.querySelector('.about-timeline-fill');
+      if (!chapters.length || !links.length) return;
+
+      function setActive(id) {
+        var index = 0;
+        chapters.forEach(function (chapter, i) {
+          var on = chapter.getAttribute('data-city') === id;
+          chapter.classList.toggle('is-active', on);
+          if (on) index = i;
+        });
+        links.forEach(function (link, i) {
+          var on = link.getAttribute('data-city-link') === id;
+          if (i <= index) link.classList.add('is-seen');
+          link.classList.toggle('is-active', on);
+          if (on && !link.dataset.popped) {
+            link.dataset.popped = '1';
+            link.classList.remove('is-popping');
+            void link.offsetWidth;
+            link.classList.add('is-popping');
+          }
+        });
+        if (fill) {
+          fill.style.height = (index === 0 ? '10%' : ((index / Math.max(1, links.length - 1)) * 100) + '%');
+        }
+      }
+
+      if (reduceMotion || !window.IntersectionObserver) {
+        links.forEach(function (link) { link.classList.add('is-seen', 'is-active'); });
+        chapters.forEach(function (chapter) { chapter.classList.add('is-active'); });
+        if (fill) fill.style.height = '100%';
+        return;
+      }
+
+      setActive(chapters[0].getAttribute('data-city'));
+
+      var observer = new IntersectionObserver(
+        function (entries) {
+          var visible = entries
+            .filter(function (entry) { return entry.isIntersecting; })
+            .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; })[0];
+          if (!visible) return;
+          setActive(visible.target.getAttribute('data-city'));
+        },
+        { rootMargin: '-32% 0px -42% 0px', threshold: [0.15, 0.4, 0.7] }
+      );
+
+      chapters.forEach(function (chapter) { observer.observe(chapter); });
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var target = document.getElementById(link.getAttribute('href').slice(1));
+          if (!target) return;
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+      });
+    })();
   })();
   </script>
 </body>

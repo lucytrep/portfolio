@@ -1,0 +1,547 @@
+/* About page only */
+
+.about {
+  padding-inline: var(--container-padding);
+}
+
+/* ─── Hero ───────────────────────────────────────────────── */
+
+.about-hero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  align-items: stretch;
+  padding-top: 0;
+  padding-bottom: var(--space-4);
+  min-height: 92dvh;
+}
+
+.about-hero-text {
+  grid-column: 1 / span 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(100%, 44rem);
+  justify-self: start;
+}
+
+.about-hero-media {
+  grid-column: 7 / -1;
+  align-self: stretch;
+}
+
+.about-hero-imageSwap {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  background: var(--color-bg-subtle);
+  border: var(--border-width) solid var(--color-border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+}
+
+@media (min-width: 50.0625rem) {
+  .about-hero {
+    padding-bottom: 0;
+  }
+
+  .about-hero-media,
+  .about-hero-imageSwap {
+    height: 100%;
+    min-height: 100%;
+  }
+}
+
+.about-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.about-hero-image--hover {
+  opacity: 0;
+  transform: scale(1.28) translateX(-2%);
+  transform-origin: center center;
+  object-position: 100% 10%;
+  transition: opacity 1300ms ease;
+}
+
+.about-hero-imageSwap.is-auto-swapped .about-hero-image--hover {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-hero-imageSwap:hover .about-hero-image--hover {
+    opacity: 1;
+  }
+}
+
+/* ─── Hero typography ─────────────────────────────────────── */
+
+.about-kicker {
+  margin: 0 0 var(--space-3) 0;
+}
+
+.about-title {
+  margin: 0;
+  font-size: clamp(1.875rem, 3.25vw, 2.75rem);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.025em;
+}
+
+.about-subtitle {
+  margin: var(--space-4) 0 0 0;
+  font-size: var(--font-size-lg);
+  color: var(--color-muted);
+  line-height: var(--line-height-base);
+  max-width: 36rem;
+  text-wrap: pretty;
+}
+
+.about-subtitle + .about-subtitle {
+  margin-top: var(--space-3);
+}
+
+.about-desktop-btn {
+  align-self: flex-start;
+  margin-top: var(--space-4);
+}
+
+/* ─── Editorial rows ──────────────────────────────────────── */
+
+.about-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
+.about-row-label {
+  grid-column: 1 / span 2;
+  margin: 0;
+  padding-top: 0.2rem; /* optical alignment with first line of heading */
+}
+
+.about-row-content {
+  grid-column: 3 / span 7;
+}
+
+.about-row-heading {
+  margin: 0 0 var(--space-2) 0;
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.about-body-text {
+  margin: 0;
+  font-size: 1.0625rem;
+  color: var(--color-prose);
+  line-height: 1.75;
+}
+
+.about-body-text + .about-body-text {
+  margin-top: var(--space-3);
+}
+
+.about-body-text a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-border);
+}
+
+.about-body-text a:hover {
+  text-decoration-color: var(--color-text);
+}
+
+/* ─── Image moments ───────────────────────────────────────── */
+
+.about-image-wide {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
+/* ─── Wide slideshow ──────────────────────────────────────── */
+
+.about-slideshow {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--color-bg-subtle);
+  border: var(--border-width) solid var(--color-border);
+}
+
+.about-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  animation: aboutSlide 24s ease-in-out infinite;
+}
+
+/* Placeholder tones — remove once real images are added */
+.about-slide--1 { background: #f5f2ef; animation-delay: 0s;   opacity: 1; }
+.about-slide--2 { background: #eff2f5; animation-delay: 6s;  }
+.about-slide--3 { background: #eff5ef; animation-delay: 12s; }
+.about-slide--4 { background: #f5efef; animation-delay: 18s; }
+
+.about-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@keyframes aboutSlide {
+  0%          { opacity: 1; }
+  20.83%      { opacity: 1; }   /* hold for 5s of 24s cycle */
+  25%         { opacity: 0; }   /* fade over ~1s */
+  100%        { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-slide {
+    animation: none;
+    opacity: 0;
+  }
+  .about-slide--1 {
+    opacity: 1;
+  }
+}
+
+.about-image-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--grid-gap);
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
+}
+
+.about-placeholder {
+  background: var(--color-bg-subtle);
+  border: var(--border-width) dashed var(--color-border);
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-light);
+  text-align: center;
+  padding: var(--space-2);
+}
+
+.about-placeholder--wide {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+}
+
+.about-placeholder--portrait {
+  aspect-ratio: 4 / 5;
+}
+
+/* ─── The Journey ────────────────────────────────────────── */
+
+.about-journey {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
+
+.about-journey-header {
+  margin-bottom: var(--space-5);
+}
+
+.about-journey-header.reveal-hidden {
+  opacity: 0;
+  transform: translateY(2.25rem);
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-journey-header.reveal-hidden.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-journey-title {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.about-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.about-journey-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-journey-item.reveal-hidden {
+  opacity: 0;
+  transform: translateY(2.5rem) scale(0.985);
+  transition:
+    opacity 760ms ease,
+    transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-journey-item.reveal-hidden.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.about-journey-item:nth-child(1).reveal-hidden {
+  transition-delay: 80ms;
+}
+
+.about-journey-item:nth-child(2).reveal-hidden {
+  transition-delay: 180ms;
+}
+
+.about-journey-item:nth-child(3).reveal-hidden {
+  transition-delay: 280ms;
+}
+
+.about-journey-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2.9;
+  border-radius: 0.8rem;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-bg-subtle);
+  overflow: hidden;
+  margin-bottom: var(--space-4);
+}
+
+.about-journey-item.reveal-hidden .about-journey-image {
+  transform: scale(1.08);
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-journey-item.reveal-hidden.reveal-visible .about-journey-image {
+  transform: scale(1);
+}
+
+.about-journey-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Slideshow images — stacked, fade between them */
+.journey-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 600ms ease;
+}
+
+.journey-slide--active {
+  opacity: 1;
+}
+
+.about-journey-item-title {
+  margin: 0 0 var(--space-2) 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.about-journey-item-body {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  color: var(--color-prose);
+  line-height: 1.7;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 50rem) {
+  .about-hero {
+    display: flex;
+    flex-direction: column;
+    padding-top: 3.5rem;
+    padding-bottom: var(--space-5);
+  }
+
+  .about-hero-media {
+    margin-top: var(--space-4);
+    width: 88%;
+    align-self: center;
+  }
+
+  .about-hero-imageSwap {
+    min-height: min(55svh, 38rem);
+  }
+
+  .about-title {
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+  }
+
+  .about-subtitle {
+    max-width: none;
+  }
+
+  .about-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .about-image-pair {
+    grid-template-columns: 1fr;
+    row-gap: var(--grid-gap);
+  }
+
+  .about-journey-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .about-journey-item-body {
+    font-size: 1rem;
+  }
+
+  .about-journey {
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+  }
+}
+
+@media (max-width: 23.4375rem) {
+  .about-hero {
+    padding-top: 2.5rem;
+  }
+
+  .about-title {
+    font-size: clamp(1.4rem, 5.5vw, 1.75rem);
+  }
+}
+
+/* ─── Journey Cinematic Scroll Stage ─────────────────────── */
+
+/* Film strip */
+.jc-film-strip {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.jc-film-item {
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-bg-subtle);
+}
+
+.jc-film-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Invisible reference grid — used only for measuring final hero positions */
+.jc-grid-ref {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding-inline: var(--container-padding);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.jc-ref-item {
+  aspect-ratio: 3 / 2.9;
+}
+
+/* Hero images (JS-positioned, animated from right to grid) */
+.jc-hero-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: var(--border-width) solid var(--color-border);
+  background: var(--color-bg-subtle);
+  will-change: transform, opacity;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jc-hero-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Kicker label + headline that fades in above the grid */
+.jc-kicker {
+  position: absolute;
+  left: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Text grid that fades in below the locked images */
+.jc-text-grid {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.jc-text-item h3 {
+  margin: 0 0 var(--space-2) 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text);
+}
+
+.jc-text-item p {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  color: var(--color-prose);
+  line-height: 1.7;
+}
