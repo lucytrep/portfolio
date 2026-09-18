@@ -2,164 +2,356 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Lucytrep · Product Designer</title>
-  <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <link rel="stylesheet" href="css/common.css" />
+  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
+  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
+  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
+  <link rel="stylesheet" href="css/common.css?v=cta-pill1" />
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      background: #000;
-      overflow: hidden;
+    body {
+      background: #fff;
     }
 
-    .hero-video {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      min-width: 100vw;
-      min-height: 100vh;
-      min-height: 100dvh;
-      width: auto;
-      height: auto;
-      transform: translate(-50%, -50%);
-      object-fit: cover;
-      display: block;
-      pointer-events: none;
-    }
-
-    /* Explore overlay — hidden until video ends */
-    #interaction-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(255, 255, 255, 0);
-      pointer-events: none;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.8s ease;
-    }
-
-    #interaction-overlay.is-active {
-      background: rgba(255, 255, 255, 0.9);
-      pointer-events: auto;
-    }
-
-    .overlay-headline {
-      font-family: var(--font-sans, sans-serif);
-      font-size: clamp(1.75rem, 3.5vw, 3rem);
-      font-weight: 400;
-      letter-spacing: -0.02em;
-      color: #000;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.6s ease 0.15s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
-      max-width: 80vw;
-      line-height: 1.15;
-      margin: 0 0 1.75rem 0;
-    }
-
-    #interaction-overlay.is-active .overlay-headline {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    #explore-btn {
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.6s ease 0.3s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-    }
-
-    #interaction-overlay.is-active #explore-btn {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    #explore-btn a {
-      display: inline-block;
-      font-family: var(--font-sans, sans-serif);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #fff;
-      text-decoration: none;
-      border: 1.5px solid #000;
-      padding: 0.7rem 2rem;
-      border-radius: 999px;
-      background: #000;
-      transition: background 0.2s ease, color 0.2s ease;
-    }
-
-    #explore-btn a:hover {
-      background: #222;
-      border-color: #222;
-    }
-
+    /* Header overlays the hero so the video is full-bleed behind the nav */
     #page-header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 100;
+      width: 100%;
+    }
+
+    #page-header:not(.header-scrolled),
+    #page-header.header-scrolled {
       background: transparent !important;
       border-bottom-color: transparent !important;
+    }
+
+    #page-header:not(.header-scrolled) .site-name {
+      color: #000 !important;
+    }
+
+    #page-header:not(.header-scrolled) .hamburger-bar {
+      background: #000 !important;
     }
 
     #page-header.nav-open {
       background: #fff !important;
     }
 
-    #page-header .site-name,
-    #page-header .site-tagline,
-    #page-header nav a {
-      color: #000 !important;
+    .hero-video-section {
+      position: relative;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: #fff;
     }
 
-    #page-header .hamburger-bar {
-      background: #000 !important;
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
-    /* ── Mobile: full-viewport cover video, white background + nav ── */
+    /* Soft white gradient behind the scroll cue; fades the video into the page */
+    .hero-video-section::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 14rem;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Scroll cue: fades out once the hero is scrolled past (see js below) */
+    .scroll-cue {
+      position: absolute;
+      left: 50%;
+      bottom: 2rem;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: #111;
+      opacity: 1;
+      transition: opacity 300ms ease;
+      pointer-events: none;
+    }
+
+    .scroll-cue.is-hidden {
+      opacity: 0;
+    }
+
+    .scroll-cue-label {
+      font-size: var(--font-size-xs);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .scroll-cue-arrow {
+      animation: scroll-cue-bounce 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scroll-cue-bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(0.35rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-cue-arrow {
+        animation: none;
+      }
+    }
+
+    /* Quote — same display voice as the About hero, centered in a photo field */
+    .home-quote-section {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 8.5rem var(--container-padding);
+      margin-bottom: 14rem;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .home-quote-field {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .home-quote-photo {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      width: var(--w);
+      height: var(--h);
+      margin: 0;
+      overflow: hidden;
+      border-radius: 0.45rem;
+      background: var(--color-bg-subtle);
+      box-shadow: 0 0 0 1px #e0e0e0, 0 14px 36px rgba(0, 0, 0, 0.08);
+      opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    .home-quote-photo--lg { z-index: 1; }
+    .home-quote-photo--md { z-index: 2; }
+    .home-quote-photo--sm { z-index: 3; }
+
+    .home-quote-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: var(--pos, center);
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .home-quote-copy {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 36rem;
+    }
+
+    .home-quote-copy::before {
+      content: '';
+      position: absolute;
+      inset: -5.5rem -7rem;
+      background: radial-gradient(ellipse at center, #fff 38%, rgba(255, 255, 255, 0) 72%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .section-eyebrow {
+      margin: 0 0 1.25rem;
+      text-align: center;
+    }
+
+    .home-quote {
+      margin: 0;
+      font-weight: 800;
+      font-size: clamp(3.05rem, 7vw, 6.35rem);
+      line-height: 0.86;
+      letter-spacing: -0.055em;
+      text-transform: uppercase;
+      color: #111;
+    }
+
+    .home-quote-lede {
+      margin: 1.15rem auto 0;
+      max-width: 28rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-muted);
+      text-wrap: pretty;
+    }
+
+    .home-quote-link {
+      margin-top: 1.35rem;
+    }
+
+    /* Client logo marquee — continuous, seamless loop; pauses on hover */
+    .clients-section {
+      padding-top: 18rem;
+      padding-bottom: 11rem;
+    }
+
+    .clients-section .section-eyebrow {
+      margin-bottom: 2.25rem;
+    }
+
+    .clients-marquee {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    }
+
+    .clients-track {
+      display: flex;
+      width: max-content;
+      animation: clients-scroll 90s linear infinite;
+    }
+
+    .clients-track:hover {
+      animation-play-state: paused;
+    }
+
+    .clients-group {
+      display: flex;
+      align-items: center;
+      gap: 6.75rem;
+      flex: 0 0 auto;
+      padding: 0 3.375rem;
+    }
+
+    .client-tile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      height: 3.5rem;
+      padding: 0;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .client-tile:focus-visible {
+      outline: 1px solid var(--color-text);
+      outline-offset: 0.4rem;
+      border-radius: 0.25rem;
+    }
+
+    .client-tile img {
+      display: block;
+      height: 3.5rem;
+      width: auto;
+      max-height: 3.5rem;
+      object-fit: contain;
+      object-position: center;
+      filter: grayscale(1) opacity(0.55);
+      transition: filter 220ms ease, opacity 220ms ease;
+    }
+
+    .client-tile:hover img,
+    .client-tile:focus-visible img {
+      filter: none;
+      opacity: 1;
+    }
+
+    @keyframes clients-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .clients-track {
+        animation: none;
+      }
+
+      .home-quote-photo {
+        opacity: 1;
+        transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+        will-change: auto;
+      }
+    }
+
+    @media (max-width: 70rem) {
+      .home-quote-photo--sm {
+        display: none;
+      }
+    }
+
     @media (max-width: 48rem) {
-      html, body {
-        background: #fff;
+      .home-quote-section {
+        min-height: 38rem;
+        padding: 7.5rem var(--container-padding) 8.5rem;
+        margin-bottom: 8rem;
       }
 
-      .hero-video {
-        /* Clean full-viewport cover — no over-zoom from min-constraint math */
-        top: 0;
-        left: 0;
-        transform: none;
-        width: 100vw;
-        height: 100dvh;
-        min-width: 0;
-        min-height: 0;
-        object-fit: cover;
-        pointer-events: auto;
+      .clients-section {
+        padding-top: 10rem;
       }
 
-      /* White nav bar on mobile */
-      #page-header {
-        background: #fff !important;
-        border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+      .home-quote-photo--md {
+        display: none;
       }
-    }
 
-    /* Force overlay visible on mobile regardless of JS timing */
-    @media (max-width: 800px) {
-      #interaction-overlay {
-        background: rgba(255, 255, 255, 0.9) !important;
-        pointer-events: auto !important;
+      .home-quote-copy::before {
+        inset: -3.5rem -2.5rem;
       }
-      #interaction-overlay .overlay-headline,
-      #interaction-overlay #explore-btn {
-        opacity: 1 !important;
-        transform: translateY(0) !important;
+
+      .home-quote-photo {
+        width: calc(var(--w) * 0.52);
+        height: calc(var(--h) * 0.52);
+      }
+
+      .home-quote-photo:nth-child(1) { --x: 16%; --y: 9%; }
+      .home-quote-photo:nth-child(5) { --x: 86%; --y: 9%; }
+      .home-quote-photo:nth-child(9) { --x: 86%; --y: 91%; }
+      .home-quote-photo:nth-child(13) { --x: 16%; --y: 91%; }
+
+      .home-quote {
+        font-size: clamp(2.85rem, 12vw, 4.6rem);
+      }
+
+      .client-tile {
+        height: 2.75rem;
+      }
+
+      .client-tile img {
+        height: 2.75rem;
+        max-height: 2.75rem;
+      }
+
+      .clients-group {
+        gap: 4.75rem;
+        padding: 0 2.375rem;
+      }
+
+      .clients-track {
+        animation-duration: 70s;
       }
     }
   </style>
@@ -175,9 +367,12 @@
 
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
-      <div class="span-6">
-        <a href="./" class="site-name">LUCILLE TREPANIER</a>
-        <span class="site-tagline">Product Designer</span>
+      <div class="span-6 site-brand">
+        <a href="./" class="site-logo-mark" aria-label="Home"></a>
+        <div class="site-brand-text">
+          <a href="./" class="site-name">LUCYTREP LABS</a>
+          <span class="site-tagline">Product Designer</span>
+        </div>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -188,44 +383,133 @@
         <a href="case-studies/">Work</a>
         <a href="archive/">Archive</a>
         <a href="about/">About</a>
-        <a href="assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </div>
   </header>
 
-  <!-- Source elements let iOS Safari see the src at parse time, enabling autoplay without JS -->
-  <video class="hero-video" id="hero-video" autoplay muted playsinline preload="auto">
-    <source src="assets/PhoneHero.mp4" media="(max-width: 800px)" type="video/mp4" />
-    <source src="assets/HeroVideo.mp4" type="video/mp4" />
-  </video>
+  <section class="hero-video-section">
+    <!-- Source elements let iOS Safari see the src at parse time, enabling autoplay without JS -->
+    <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto">
+      <source src="assets/PhoneHero.mp4" media="(max-width: 800px)" type="video/mp4" />
+      <source src="assets/HeroVideo.mp4" type="video/mp4" />
+    </video>
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="scroll-cue-label">Scroll</span>
+      <svg class="scroll-cue-arrow" width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </section>
 
-  <div id="interaction-overlay">
-    <p class="overlay-headline">See what I'm building.</p>
-    <div id="explore-btn"><a href="case-studies/">Explore</a></div>
-  </div>
+  <section class="home-quote-section" data-quote-field>
+    <div class="home-quote-field" aria-hidden="true">
+      <figure class="home-quote-photo home-quote-photo--lg" style="--x:12%;--y:20%;--w:11.25rem;--h:14.5rem;--rot:-6deg;--pos:center" data-x="12" data-y="20" data-rot="-6" data-depth="0.85" data-delay="0.00">
+        <img src="assets/images/about/nanaimo/hammock.jpg" alt="" width="848" height="1100" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--md" style="--x:28%;--y:10%;--w:8.25rem;--h:6.1rem;--rot:4deg;--pos:center 90%" data-x="28" data-y="10" data-rot="4" data-depth="0.42" data-delay="0.18">
+        <img src="assets/images/about/nanaimo/surf.JPG" alt="" width="800" height="1000" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:41%;--y:8%;--w:5.75rem;--h:4.2rem;--rot:-3deg;--pos:center" data-x="41" data-y="8" data-rot="-3" data-depth="0.28" data-delay="0.28">
+        <img src="assets/images/about/ny/usopen.JPG" alt="" width="900" height="640" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:62%;--y:6%;--w:4.25rem;--h:5.5rem;--rot:7deg;--pos:center 20%" data-x="62" data-y="6" data-rot="7" data-depth="0.22" data-delay="0.36">
+        <img src="assets/images/about/ny/runway-ai.jpg" alt="" width="700" height="900" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--lg" style="--x:79%;--y:16%;--w:13.25rem;--h:9.25rem;--rot:5deg;--pos:center" data-x="79" data-y="16" data-rot="5" data-depth="0.7" data-delay="0.06">
+        <img src="assets/images/about/toronto/paris.jpg" alt="" width="1200" height="840" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:93%;--y:22%;--w:4.75rem;--h:6.25rem;--rot:-5deg;--pos:center" data-x="93" data-y="22" data-rot="-5" data-depth="0.38" data-delay="0.22">
+        <img src="assets/images/about/ny/roseroom.jpg" alt="" width="700" height="920" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--md" style="--x:88%;--y:48%;--w:8.5rem;--h:11rem;--rot:3deg;--pos:center" data-x="88" data-y="48" data-rot="3" data-depth="1" data-delay="0.10">
+        <img src="assets/images/about/ny/dumbo.jpg" alt="" width="900" height="1170" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:86%;--y:66%;--w:5.25rem;--h:3.9rem;--rot:-4deg;--pos:center" data-x="86" data-y="66" data-rot="-4" data-depth="0.32" data-delay="0.32">
+        <img src="assets/images/about/nanaimo/beach.JPG" alt="" width="900" height="660" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--lg" style="--x:82%;--y:82%;--w:12.25rem;--h:8.35rem;--rot:-3deg;--pos:center" data-x="82" data-y="82" data-rot="-3" data-depth="0.62" data-delay="0.08">
+        <img src="assets/images/about/ny/sunset.jpg" alt="" width="1200" height="820" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--md" style="--x:70%;--y:90%;--w:6.75rem;--h:8.75rem;--rot:6deg;--pos:center 18%" data-x="70" data-y="90" data-rot="6" data-depth="0.48" data-delay="0.20">
+        <img src="assets/images/about/ny/parsons.JPG" alt="" width="800" height="1040" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:38%;--y:91%;--w:6rem;--h:4.4rem;--rot:2deg;--pos:center" data-x="38" data-y="91" data-rot="2" data-depth="0.26" data-delay="0.34">
+        <img src="assets/images/about/toronto/skyline.JPG" alt="" width="900" height="660" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:22%;--y:91%;--w:5rem;--h:6.5rem;--rot:-7deg;--pos:center 16%" data-x="22" data-y="91" data-rot="-7" data-depth="0.34" data-delay="0.26">
+        <img src="assets/images/about/toronto/run.JPG" alt="" width="700" height="910" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--lg" style="--x:16%;--y:84%;--w:12.5rem;--h:8.65rem;--rot:4deg;--pos:center" data-x="16" data-y="84" data-rot="4" data-depth="0.72" data-delay="0.04">
+        <img src="assets/images/about/nanaimo/swell.jpg" alt="" width="1200" height="840" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:5%;--y:70%;--w:5rem;--h:6.5rem;--rot:5deg;--pos:center 18%" data-x="5" data-y="70" data-rot="5" data-depth="0.4" data-delay="0.16">
+        <img src="assets/images/about/toronto/research.jpg" alt="" width="700" height="910" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--md" style="--x:8%;--y:47%;--w:7.25rem;--h:9.25rem;--rot:-4deg;--pos:center 22%" data-x="8" data-y="47" data-rot="-4" data-depth="0.9" data-delay="0.12">
+        <img src="assets/images/about/toronto/raps.JPG" alt="" width="800" height="1020" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:7%;--y:28%;--w:4.5rem;--h:5.75rem;--rot:6deg;--pos:center" data-x="7" data-y="28" data-rot="6" data-depth="0.3" data-delay="0.30">
+        <img src="assets/images/about/nanaimo/whistler.JPG" alt="" width="700" height="900" loading="lazy" decoding="async" />
+      </figure>
+    </div>
+    <div class="home-quote-copy">
+      <p class="section-eyebrow">About</p>
+      <h2 class="home-quote">Complex<br>problems.<br>Clear work.</h2>
+      <p class="home-quote-lede">Product designer turning complex problems into clear, intuitive, and visually distinctive experiences.</p>
+      <a href="about/" class="home-quote-link">More about me</a>
+    </div>
+  </section>
+
+  <section class="clients-section" aria-labelledby="clients-eyebrow">
+    <p class="section-eyebrow" id="clients-eyebrow">Clients</p>
+    <div class="clients-marquee">
+      <div class="clients-track">
+      <div class="clients-group">
+        <a class="client-tile" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/tiktok.svg" width="96" height="96" alt="TikTok" /></a>
+        <a class="client-tile" href="https://www.google.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/google.svg" width="24" height="24" alt="Google" /></a>
+        <a class="client-tile" href="https://www.nba.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/nba.png" width="324" height="648" style="height:calc(3.5rem * 1.05);max-height:calc(3.5rem * 1.05);" alt="NBA" /></a>
+        <a class="client-tile" href="https://www.lego.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/lego.png" width="1200" height="1200" alt="LEGO" /></a>
+        <a class="client-tile client-tile--wide" href="https://www.fanatics.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/fanatics.svg" width="233" height="48" alt="Fanatics" /></a>
+        <a class="client-tile" href="https://www.fifa.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/fifa.svg" width="1000" height="328" alt="FIFA" /></a>
+        <a class="client-tile client-tile--wide" href="https://www.wnba.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/wnba.png" width="1344" height="724" style="height:calc(3.5rem * 1.19);max-height:calc(3.5rem * 1.19);" alt="WNBA" /></a>
+        <a class="client-tile" href="https://www.nfl.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/nfl.svg" width="270" height="371" alt="NFL" /></a>
+        <a class="client-tile" href="https://www.nike.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/nike.png" width="3819" height="1626" style="height:calc(3.5rem * 1.27);max-height:calc(3.5rem * 1.27);" alt="Nike" /></a>
+        <a class="client-tile" href="https://www.bell.ca/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/bell.svg" width="270" height="154" alt="Bell" /></a>
+        <a class="client-tile" href="https://www.nike.com/jordan" target="_blank" rel="noopener noreferrer"><img src="assets/clients/jordan-brand.png" width="996" height="936" style="height:calc(3.5rem * 1.07);max-height:calc(3.5rem * 1.07);" alt="Jordan Brand" /></a>
+        <a class="client-tile client-tile--wide" href="https://www.mitchellandness.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/mitchell-ness.png" width="1632" height="414" style="height:calc(3.5rem * 1.5);max-height:calc(3.5rem * 1.5);" alt="Mitchell &amp; Ness" /></a>
+        <a class="client-tile" href="https://www.mlb.com/mets" target="_blank" rel="noopener noreferrer"><img src="assets/clients/ny-mets.png" width="1327" height="1327" style="height:calc(3.5rem * 1.07);max-height:calc(3.5rem * 1.07);" alt="NY Mets" /></a>
+        <a class="client-tile" href="https://www.nba.com/raptors" target="_blank" rel="noopener noreferrer"><img src="assets/clients/raptors.png" width="322" height="285" style="height:calc(3.5rem * 1.08);max-height:calc(3.5rem * 1.08);" alt="Toronto Raptors" /></a>
+        <a class="client-tile" href="https://www.wearfigs.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/figs.png" width="915" height="327" style="height:calc(3.5rem * 1.36);max-height:calc(3.5rem * 1.36);" alt="FIGS" /></a>
+        <a class="client-tile" href="https://www.dove.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/dove.svg" width="290" height="110" alt="Dove" /></a>
+        <a class="client-tile" href="https://www.axe.com/" target="_blank" rel="noopener noreferrer"><img src="assets/clients/axe.svg" width="1438" height="348" alt="Axe" /></a>
+      </div>
+      <div class="clients-group" aria-hidden="true">
+        <a class="client-tile" href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/tiktok.svg" width="96" height="96" alt="" /></a>
+        <a class="client-tile" href="https://www.google.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/google.svg" width="24" height="24" alt="" /></a>
+        <a class="client-tile" href="https://www.nba.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/nba.png" width="324" height="648" style="height:calc(3.5rem * 1.05);max-height:calc(3.5rem * 1.05);" alt="" /></a>
+        <a class="client-tile" href="https://www.lego.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/lego.png" width="1200" height="1200" alt="" /></a>
+        <a class="client-tile client-tile--wide" href="https://www.fanatics.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/fanatics.svg" width="233" height="48" alt="" /></a>
+        <a class="client-tile" href="https://www.fifa.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/fifa.svg" width="1000" height="328" alt="" /></a>
+        <a class="client-tile client-tile--wide" href="https://www.wnba.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/wnba.png" width="1344" height="724" style="height:calc(3.5rem * 1.19);max-height:calc(3.5rem * 1.19);" alt="" /></a>
+        <a class="client-tile" href="https://www.nfl.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/nfl.svg" width="270" height="371" alt="" /></a>
+        <a class="client-tile" href="https://www.nike.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/nike.png" width="3819" height="1626" style="height:calc(3.5rem * 1.27);max-height:calc(3.5rem * 1.27);" alt="" /></a>
+        <a class="client-tile" href="https://www.bell.ca/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/bell.svg" width="270" height="154" alt="" /></a>
+        <a class="client-tile" href="https://www.nike.com/jordan" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/jordan-brand.png" width="996" height="936" style="height:calc(3.5rem * 1.07);max-height:calc(3.5rem * 1.07);" alt="" /></a>
+        <a class="client-tile client-tile--wide" href="https://www.mitchellandness.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/mitchell-ness.png" width="1632" height="414" style="height:calc(3.5rem * 1.5);max-height:calc(3.5rem * 1.5);" alt="" /></a>
+        <a class="client-tile" href="https://www.mlb.com/mets" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/ny-mets.png" width="1327" height="1327" style="height:calc(3.5rem * 1.07);max-height:calc(3.5rem * 1.07);" alt="" /></a>
+        <a class="client-tile" href="https://www.nba.com/raptors" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/raptors.png" width="322" height="285" style="height:calc(3.5rem * 1.08);max-height:calc(3.5rem * 1.08);" alt="" /></a>
+        <a class="client-tile" href="https://www.wearfigs.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/figs.png" width="915" height="327" style="height:calc(3.5rem * 1.36);max-height:calc(3.5rem * 1.36);" alt="" /></a>
+        <a class="client-tile" href="https://www.dove.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/dove.svg" width="290" height="110" alt="" /></a>
+        <a class="client-tile" href="https://www.axe.com/" target="_blank" rel="noopener noreferrer" tabindex="-1"><img src="assets/clients/axe.svg" width="1438" height="348" alt="" /></a>
+      </div>
+      </div>
+    </div>
+  </section>
 
   <script>
-    var video   = document.getElementById('hero-video');
-    var overlay = document.getElementById('interaction-overlay');
-    var videoEnded = false;
-    var overlayActivatedByUser = false;
+    var video = document.getElementById('hero-video');
 
     function tryPlay() { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
-
-    function showOverlay() {
-      videoEnded = true;
-      overlay.classList.add('is-active');
-    }
-
-    function hideOverlay() {
-      overlay.classList.remove('is-active');
-    }
-
-    function activateOverlayFromInteraction() {
-      if (overlayActivatedByUser) return;
-      overlayActivatedByUser = true;
-      showOverlay();
-    }
 
     // Multiple attempts — iOS Safari requires at least one of these to fire for muted autoplay
     tryPlay();
@@ -239,58 +523,169 @@
     // Tap/click on the video itself triggers play (mobile fallback + desktop Safari)
     video.addEventListener('click', tryPlay);
 
-    // Mobile: loop immediately, muted, skip first second of intro, show overlay from load
-    if (window.matchMedia('(max-width: 800px)').matches) {
-      video.loop = true;
-      showOverlay();
-      var mobileSkipped = false;
-      function skipIntro() {
-        if (mobileSkipped) return;
-        mobileSkipped = true;
-        video.currentTime = 1;
-      }
-      video.addEventListener('loadedmetadata', skipIntro, { once: true });
-      video.addEventListener('canplay', skipIntro, { once: true });
-      setTimeout(skipIntro, 200);
+    // Skip the first second of intro so the loop starts mid-motion
+    var skipped = false;
+    function skipIntro() {
+      if (skipped) return;
+      skipped = true;
+      video.currentTime = 1;
+    }
+    video.addEventListener('loadedmetadata', skipIntro, { once: true });
+    video.addEventListener('canplay', skipIntro, { once: true });
+    setTimeout(skipIntro, 200);
+
+    var scrollCue = document.querySelector('.scroll-cue');
+    if (scrollCue) {
+      window.addEventListener('scroll', function () {
+        scrollCue.classList.toggle('is-hidden', window.scrollY > 24);
+      }, { passive: true });
     }
 
-    video.addEventListener('ended', function () {
-      // Loop the video silently behind the overlay
-      video.loop = true;
-      video.play().catch(function () {});
-      // Fade in the explore overlay
-      showOverlay();
-    });
+    (function initQuoteField() {
+      var section = document.querySelector('[data-quote-field]');
+      if (!section) return;
 
-    // Scroll-to-reveal / scroll-to-dismiss (dismiss disabled on mobile)
-    function handleScrollIntent(deltaY) {
-      if (deltaY > 0) {
-        showOverlay();
-      } else if (deltaY < 0 && !window.matchMedia('(max-width: 800px)').matches) {
-        hideOverlay();
+      var photos = Array.prototype.slice.call(section.querySelectorAll('.home-quote-photo'));
+      if (!photos.length) return;
+
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      function restTransform(el) {
+        var rot = el.getAttribute('data-rot') || '0';
+        el.style.opacity = '1';
+        el.style.transform = 'translate(-50%, -50%) rotate(' + rot + 'deg)';
       }
-    }
 
-    // First interaction surfaces the overlay on desktop (mobile is always-on via CSS)
-    window.addEventListener('pointerdown', activateOverlayFromInteraction, { passive: true });
+      if (reduceMotion) {
+        photos.forEach(restTransform);
+        return;
+      }
 
-    // Wheel (desktop + trackpad)
-    window.addEventListener('wheel', function (e) {
-      handleScrollIntent(e.deltaY);
-    }, { passive: true });
+      var STIFF = 0.062;
+      var DAMP = 0.8;
+      var mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+      var started = false;
+      var startTime = 0;
+      var lastTime = 0;
+      var raf = 0;
 
-    // Touch (mobile)
-    var touchStartY = 0;
-    window.addEventListener('touchstart', function (e) {
-      touchStartY = e.touches[0].clientY;
-      activateOverlayFromInteraction();
-    }, { passive: true });
+      photos.forEach(function (el) {
+        var x = parseFloat(el.getAttribute('data-x'));
+        var y = parseFloat(el.getAttribute('data-y'));
+        var rot = parseFloat(el.getAttribute('data-rot')) || 0;
+        el._q = {
+          rot: rot,
+          depth: parseFloat(el.getAttribute('data-depth')) || 0.5,
+          delay: parseFloat(el.getAttribute('data-delay')) || 0,
+          fromX: (x - 50) * 2.2,
+          fromY: (y - 50) * 2.4,
+          fromRot: x < 50 ? -14 : 14,
+          px: 0,
+          py: 0,
+          pr: x < 50 ? -14 : 14,
+          ps: 0.72,
+          po: 0,
+          vx: 0,
+          vy: 0,
+          vr: 0,
+          primed: false,
+          phase: (x * 0.17 + y * 0.13) % (Math.PI * 2),
+          freq: 0.28 + ((x + y) % 17) / 42,
+          amp: 16 + ((x * y) % 22)
+        };
+      });
 
-    window.addEventListener('touchmove', function (e) {
-      handleScrollIntent(touchStartY - e.touches[0].clientY);
-    }, { passive: true });
+      function springTo(state, velKey, posKey, target, stiff, damp, dt) {
+        state[velKey] += (target - state[posKey]) * stiff * dt;
+        state[velKey] *= Math.pow(damp, dt);
+        state[posKey] += state[velKey] * dt;
+      }
+
+      function tick(now) {
+        if (!started) {
+          raf = 0;
+          return;
+        }
+        raf = requestAnimationFrame(tick);
+        if (!startTime) startTime = now;
+        var dt = lastTime ? Math.min(32, now - lastTime) / 16.67 : 1;
+        lastTime = now;
+        var t = (now - startTime) / 1000;
+        var w = section.clientWidth;
+        var h = section.clientHeight;
+
+        mouse.x += (mouse.tx - mouse.x) * (1 - Math.pow(0.9, dt));
+        mouse.y += (mouse.ty - mouse.y) * (1 - Math.pow(0.9, dt));
+
+        photos.forEach(function (el) {
+          var q = el._q;
+          var fromXpx = q.fromX * (w / 100);
+          var fromYpx = q.fromY * (h / 100);
+          if (!q.primed) {
+            q.px = fromXpx;
+            q.py = fromYpx;
+            q.primed = true;
+          }
+
+          var local = t - q.delay;
+          var live = local >= 0;
+          var intro = live ? Math.min(1, local / 1.35) : 0;
+          var ease = 1 - Math.pow(1 - intro, 3.6);
+
+          var floatX = live ? Math.sin(t * q.freq + q.phase) * q.amp : 0;
+          var floatY = live ? Math.cos(t * q.freq * 0.82 + q.phase) * q.amp * 0.9 : 0;
+          var parX = mouse.x * q.depth * 46;
+          var parY = mouse.y * q.depth * 32;
+
+          var tx = fromXpx * (1 - ease) + floatX + parX;
+          var ty = fromYpx * (1 - ease) + floatY + parY;
+          var tr = q.fromRot * (1 - ease) + q.rot + (live ? Math.sin(t * q.freq * 0.45 + q.phase) * 2 : 0);
+          var ts = 0.72 + 0.28 * ease;
+          var to = ease;
+
+          springTo(q, 'vx', 'px', tx, STIFF, DAMP, dt);
+          springTo(q, 'vy', 'py', ty, STIFF, DAMP, dt);
+          springTo(q, 'vr', 'pr', tr, 0.075, 0.82, dt);
+          q.ps += (ts - q.ps) * (1 - Math.pow(0.86, dt));
+          q.po += (to - q.po) * (1 - Math.pow(0.84, dt));
+
+          el.style.opacity = q.po;
+          el.style.transform =
+            'translate(-50%, -50%) translate3d(' + q.px.toFixed(2) + 'px,' + q.py.toFixed(2) + 'px,0) rotate(' +
+            q.pr.toFixed(2) + 'deg) scale(' + q.ps.toFixed(3) + ')';
+        });
+      }
+
+      function startLoop() {
+        if (started) return;
+        started = true;
+        lastTime = 0;
+        if (!raf) raf = requestAnimationFrame(tick);
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) startLoop();
+        });
+      }, { threshold: 0, rootMargin: '12% 0px' });
+      io.observe(section);
+
+      if (finePointer) {
+        section.addEventListener('mousemove', function (e) {
+          var r = section.getBoundingClientRect();
+          mouse.tx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+          mouse.ty = ((e.clientY - r.top) / r.height - 0.5) * 2;
+        }, { passive: true });
+        section.addEventListener('mouseleave', function () {
+          mouse.tx = 0;
+          mouse.ty = 0;
+        });
+      }
+    })();
   </script>
 
-  <script src="js/main.js"></script>
+  <footer class="container page-footer"></footer>
+  <script src="js/main.js?v=cta-pill1"></script>
 </body>
 </html>

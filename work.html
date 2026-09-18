@@ -4,8 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Work · Lucytrep</title>
-  <link rel="icon" href="assets/favicon.png" type="image/png" />
-  <link rel="stylesheet" href="css/common.css" />
+  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
+  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
+  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
+  <link rel="stylesheet" href="css/common.css?v=cta-pill1" />
   <link rel="stylesheet" href="css/work.css" />
 </head>
 <body>
@@ -24,9 +26,12 @@
   <div id="work-content" class="work-lock-hidden">
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
-      <div class="span-6">
-        <a href="./" class="site-name">LUCILLE TREPANIER</a>
-        <span class="site-tagline">Product Designer</span>
+      <div class="span-6 site-brand">
+        <a href="./" class="site-logo-mark" aria-label="Home"></a>
+        <div class="site-brand-text">
+          <a href="./" class="site-name">LUCYTREP LABS</a>
+          <span class="site-tagline">Product Designer</span>
+        </div>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -37,7 +42,6 @@
         <a href="case-studies/">Work</a>
         <a href="archive/">Archive</a>
         <a href="about/">About</a>
-        <a href="assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
       </nav>
     </div>
   </header>
@@ -55,26 +59,10 @@
     </div>
   </main>
 
-  <footer class="container page-footer">
-    <div class="grid-12">
-      <div class="span-6">
-        <span class="footer-credit">Designed + coded by</span><br />
-        <span class="footer-name">Lucille Trepanier</span>
-      </div>
-      <div class="span-6 footer-right">
-        <div class="footer-socials">
-          <a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M1 1h14v10H1V1zm2 2v6h10V3L8 7 3 3z" stroke="currentColor" stroke-width="1" fill="none"/></svg>
-          </a>
-          <a href="https://www.linkedin.com/in/lucytrep/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
-          
-        </div>
-      </div>
-    </div>
-  </footer>
+  <footer class="container page-footer"></footer>
   </div>
 
   <script src="js/work-lock.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=cta-pill1"></script>
 </body>
 </html>

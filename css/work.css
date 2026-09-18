@@ -1,4 +1,4 @@
-/* Password lock: hide full work content until unlocked */
+/* Password lock: hide archive content until unlocked */
 .work-lock-hidden {
   display: none !important;
 }
@@ -12,6 +12,124 @@
   justify-content: center;
   background: var(--color-background, #fff);
   padding: var(--container-padding, 1.5rem);
+}
+
+/* Archive: keep header, home, nav, and footer visible over the lock */
+body.archive-page {
+  --archive-lock-pad: var(--container-padding, 1.5rem);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+body.archive-page .page-header,
+body.archive-page .page-footer {
+  flex-shrink: 0;
+  z-index: 10050;
+}
+
+body.archive-page .page-footer {
+  background: var(--color-background);
+}
+
+body.archive-page .page-header {
+  position: sticky;
+  top: 0;
+  background: transparent;
+}
+
+body.archive-page .page-footer {
+  margin-top: auto;
+  position: relative;
+}
+
+body.archive-page .mobile-home-badge,
+body.archive-page .mobile-tabbar,
+body.archive-page .chat-lock {
+  z-index: 10051;
+}
+
+body.archive-page #work-content {
+  position: relative;
+  z-index: 0;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Locked archive: gallery stays visible under frosted glass */
+body.archive-page.is-work-locked {
+  height: 100svh;
+  overflow: hidden;
+}
+
+body.archive-page.is-work-locked .page-footer {
+  display: none;
+}
+
+body.archive-page.is-work-locked .page-header {
+  position: relative;
+  z-index: 10050;
+  background: transparent;
+}
+
+body.archive-page.is-work-locked #work-content.work-lock-hidden {
+  display: block !important;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+
+body.archive-page.is-work-locked #work-content.work-lock-hidden::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.82);
+  pointer-events: none;
+}
+
+body.archive-page.is-work-locked #work-content.work-lock-hidden .gallery {
+  padding-top: 5rem;
+  transform: scale(1.06);
+  filter: blur(28px) saturate(0.45) brightness(1.18);
+}
+
+body.archive-page.is-work-locked .work-lock-screen {
+  position: fixed;
+  z-index: 2;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  padding: var(--archive-lock-pad);
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  body.archive-page.is-work-locked #work-content.work-lock-hidden .gallery {
+    filter: none;
+    transform: none;
+  }
+
+  body.archive-page.is-work-locked #work-content.work-lock-hidden::after {
+    background: rgba(255, 255, 255, 0.94);
+  }
+}
+
+@media (max-width: 62.5rem) {
+  body.archive-page.is-work-locked {
+    padding-bottom: 0;
+  }
 }
 
 .work-lock-screen.is-hidden {

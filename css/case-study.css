@@ -1,9 +1,23 @@
 /* Case study detail pages */
 
-/* Keep header opaque on case study pages at all viewport sizes */
+/* Overlay nav so the collage fills the viewport behind it */
+#page-header,
+.page-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: transparent !important;
+  background-color: transparent !important;
+  border-bottom-color: transparent !important;
+}
+
+#page-header.header-scrolled,
 .page-header.header-scrolled {
-  background-color: var(--color-background);
-  border-bottom-color: var(--color-border);
+  background: transparent !important;
+  background-color: transparent !important;
+  border-bottom-color: transparent !important;
 }
 
 /* ── Editorial hero (shared across all case studies) ── */
@@ -15,7 +29,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem;
-  padding: 0.5rem;
+  padding: 0 0 0.5rem;
 }
 
 .cs-ed-img {
@@ -26,6 +40,34 @@
   /* Force GPU compositing so Safari correctly clips iframes inside overflow:hidden */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+}
+
+.cs-ed-grid > .cs-ed-img:first-child {
+  border-top-left-radius: 0;
+  background: transparent;
+}
+
+.cs-ed-grid > .cs-ed-img--full:first-child {
+  border-top-right-radius: 0;
+  min-height: 100svh;
+  aspect-ratio: auto;
+}
+
+.cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full),
+.cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
+  min-height: 100svh;
+  aspect-ratio: auto;
+}
+
+.cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
+  border-top-right-radius: 0;
+  background: transparent;
+}
+
+.cs-ed-grid > .cs-ed-img:first-child > *,
+.cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) > * {
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
 }
 
 .cs-ed-img--full {
@@ -59,7 +101,7 @@
 }
 
 .case-study {
-  padding-top: 3rem;
+  padding-top: calc(var(--space-2) + 2.5rem + var(--space-2) + var(--space-3));
   padding-bottom: var(--space-6);
   padding-inline: var(--container-padding);
 }
@@ -188,11 +230,6 @@
 
 .case-hero-kicker {
   margin: 0 0 var(--space-1) 0;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--color-muted);
 }
 
 .case-hero-title {
@@ -261,24 +298,7 @@
 }
 
 .case-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
   margin-top: var(--space-4);
-  padding: 0.65rem 1.2rem;
-  border: 1px solid var(--color-text);
-  border-radius: 9999px;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--color-text);
-  text-decoration: none;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  transition: background 0.18s ease, color 0.18s ease;
-}
-.case-cta-btn:hover {
-  background: var(--color-text);
-  color: var(--color-background);
 }
 
 .case-hero-image video {
@@ -348,11 +368,6 @@
 
 .case-section-label {
   margin: 0 0 var(--space-1) 0;
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--color-muted);
 }
 
 .case-section-title {
@@ -437,13 +452,15 @@
   text-decoration: none;
   background: transparent;
   transition:
-    background 180ms ease,
-    color 180ms ease;
+    background 150ms ease-out,
+    border-color 150ms ease-out,
+    color 150ms ease-out;
 }
 
 .case-link-button:hover {
-  background: var(--color-text);
-  color: var(--color-background);
+  background: var(--cursor-accent);
+  border-color: var(--cursor-accent);
+  color: var(--cursor-accent-contrast);
 }
 
 .case-link-button svg {
@@ -574,6 +591,16 @@
     grid-template-columns: 1fr;
   }
 
+  .cs-ed-grid > .cs-ed-img:first-child {
+    border-top-right-radius: 0;
+    min-height: 70svh;
+  }
+
+  .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
+    min-height: 0;
+    aspect-ratio: 4 / 3;
+  }
+
   .cs-ed-img--full {
     grid-column: 1;
     aspect-ratio: 16 / 9;
@@ -661,8 +688,10 @@
 }
 
 @media (max-width: 37.5rem) {
+  /* !important: some instances set grid-template-columns inline (e.g. 3fr 2fr)
+     to control desktop ratios, which would otherwise win over this class rule. */
   .case-section-media-row {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
   }
 
   /* Collapse all image grid rows, including inline-styled ones */
@@ -888,5 +917,26 @@
   /* Make Figma deck embeds taller on mobile so the black letterbox shrinks */
   .case-figma-deck {
     aspect-ratio: 4 / 5 !important;
+  }
+
+  /* Editorial photo mosaics built with ad-hoc inline grid-template-columns/rows
+     (fixed pixel row heights, multi-column spans) don't scale to phone widths.
+     Collapse them to a single stacked column and let each image fall back to
+     its natural aspect ratio instead of a fixed pixel height. */
+  .cs-mosaic {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: none !important;
+    aspect-ratio: auto !important;
+  }
+
+  .cs-mosaic > div {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .cs-mosaic-tall {
+    aspect-ratio: 3 / 4 !important;
   }
 }

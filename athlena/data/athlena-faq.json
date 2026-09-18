@@ -1,0 +1,58 @@
+[
+  {
+    "id": "arrival",
+    "category": "logistics",
+    "question": "How do I get in and what should I bring?",
+    "keywords": ["ticket", "entry", "arrival", "check-in", "bring", "qr", "id", "phone"],
+    "response": "Bring your ticket confirmation, a charged phone if your ticket is digital, and anything you need to stay comfortable. If you cannot find your confirmation, go to check-in or the support desk so staff can help verify your registration.",
+    "escalation": "support desk"
+  },
+  {
+    "id": "late-entry",
+    "category": "logistics",
+    "question": "What if I arrive late?",
+    "keywords": ["late", "miss", "doors", "entry", "after", "start"],
+    "response": "Late arrivals are usually still manageable unless a session has special entry restrictions. Head to the front desk or the nearest volunteer and they can guide you to the least disruptive entrance.",
+    "escalation": "front desk"
+  },
+  {
+    "id": "quiet-space",
+    "category": "accessibility",
+    "question": "Will there be seating or quiet places to rest?",
+    "keywords": ["quiet", "sit", "seating", "rest", "calm", "decompress", "sensory"],
+    "response": "If you need a place to sit, rest, or regulate, ask a staff member about seating areas, quieter corners, or any calm spaces. Your comfort matters, and it is okay to ask before things feel too overwhelming.",
+    "escalation": "accessibility desk"
+  },
+  {
+    "id": "accessibility",
+    "category": "accessibility",
+    "question": "Can the event help with accessibility needs?",
+    "keywords": ["accessibility", "wheelchair", "mobility", "hearing", "vision", "caption", "accommodation"],
+    "response": "Accessibility requests are welcome, including mobility support, seating guidance, sensory considerations, and communication needs. Tell staff what would help and they should connect you to the best available support.",
+    "escalation": "accessibility lead"
+  },
+  {
+    "id": "anxiety",
+    "category": "wellbeing",
+    "question": "I am anxious or overstimulated. What can I do?",
+    "keywords": ["anxious", "anxiety", "panic", "overstimulated", "overwhelmed", "nervous", "scared"],
+    "response": "You are not bothering anyone by asking for help. If the event feels overwhelming, move to a quieter area if you can and let a volunteer, usher, or support desk know that you need a calmer space, water, seating, or a moment to regroup.",
+    "escalation": "wellbeing support"
+  },
+  {
+    "id": "tickets",
+    "category": "tickets",
+    "question": "Can you help with ticket issues or refunds?",
+    "keywords": ["refund", "transfer", "billing", "wrong", "payment", "upgrade"],
+    "response": "Ticketing issues are usually handled by the event organizers or the ticketing platform. If your ticket looks wrong, you need a transfer, or you have a billing concern, contact the support desk or ticketing contact so they can verify the details.",
+    "escalation": "ticketing support"
+  },
+  {
+    "id": "human-help",
+    "category": "support",
+    "question": "How do I talk to a real person?",
+    "keywords": ["human", "real", "person", "staff", "volunteer", "contact", "help"],
+    "response": "You can always ask to speak with a real person. The fastest option is usually the nearest volunteer, entrance desk, or support desk, and they can escalate you to accessibility, safety, medical, or ticketing support when needed.",
+    "escalation": "support desk"
+  }
+]

@@ -1,5 +1,49 @@
 (function () {
   document.body.classList.add('has-custom-cursor');
+
+  // Favicon rotation: one Lt logomark colorway picked per browser session
+  // (sessionStorage), so it stays consistent across every page during a visit
+  // and reshuffles the next time the site is opened in a new tab/window.
+  // The cursor pill picks up the same colorway's accent color below.
+  (function () {
+    // `text` is a hand-picked contrast color per accent (not computed at runtime)
+    // so CTA labels stay readable against whichever colorway a session lands on.
+    var VARIANTS = [
+      { id: 'darkpurple', accent: '#4D49FC', text: '#ffffff' },
+      { id: 'lightblue', accent: '#007693', text: '#ffffff' },
+      { id: 'lightpurple', accent: '#E28CF8', text: '#000000' },
+      { id: 'lightyellow', accent: '#68B600', text: '#000000' },
+      { id: 'pink', accent: '#FF01E5', text: '#ffffff' },
+    ];
+    var STORAGE_KEY = 'lt-favicon-variant';
+    var variant = null;
+
+    try {
+      var storedId = window.sessionStorage && window.sessionStorage.getItem(STORAGE_KEY);
+      variant = VARIANTS.filter(function (v) {
+        return v.id === storedId;
+      })[0];
+      if (!variant) {
+        variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+        if (window.sessionStorage) window.sessionStorage.setItem(STORAGE_KEY, variant.id);
+      }
+    } catch (e) {
+      variant = VARIANTS[0];
+    }
+
+    var base = '/assets/favicons/' + variant.id;
+    var icon32 = document.getElementById('favicon-32');
+    var icon16 = document.getElementById('favicon-16');
+    var appleTouch = document.getElementById('apple-touch-icon');
+    if (icon32) icon32.href = base + '-32.png';
+    if (icon16) icon16.href = base + '-16.png';
+    if (appleTouch) appleTouch.href = base + '-180.png';
+
+    document.documentElement.style.setProperty('--cursor-accent', variant.accent);
+    document.documentElement.style.setProperty('--cursor-accent-contrast', variant.text);
+    document.documentElement.style.setProperty('--site-icon', "url('" + base + "-180.png')");
+  })();
+
   var isCaseStudyPage = !!document.querySelector('.case-study');
   var forceTopKey = 'force-top-case-study';
   var shouldForceTop = false;
@@ -236,6 +280,119 @@
     });
   }
 
+  // Desktop nav: a sliding pill that follows hover across Work / Archive / About / Resume
+  (function () {
+    var nav = document.getElementById('main-nav');
+    if (!nav) return;
+    var links = nav.querySelectorAll('a');
+    if (!links.length) return;
+
+    var thumb = document.createElement('span');
+    thumb.className = 'nav-thumb';
+    thumb.setAttribute('aria-hidden', 'true');
+    nav.insertBefore(thumb, nav.firstChild);
+    nav.classList.add('has-nav-thumb');
+
+    function currentLink() {
+      return nav.querySelector('a[aria-current="page"]');
+    }
+
+    function moveTo(el) {
+      if (!el) {
+        thumb.classList.remove('is-visible');
+        return;
+      }
+      var wasHidden = !thumb.classList.contains('is-visible');
+      if (wasHidden) thumb.style.transition = 'none';
+      var navRect = nav.getBoundingClientRect();
+      var r = el.getBoundingClientRect();
+      thumb.style.width = r.width + 'px';
+      thumb.style.height = r.height + 'px';
+      thumb.style.transform =
+        'translate(' + (r.left - navRect.left) + 'px,' + (r.top - navRect.top) + 'px)';
+      thumb.classList.add('is-visible');
+      if (wasHidden) {
+        void thumb.offsetWidth;
+        thumb.style.transition = '';
+      }
+    }
+
+    moveTo(currentLink());
+
+    Array.prototype.forEach.call(links, function (a) {
+      a.addEventListener('mouseenter', function () {
+        moveTo(a);
+      });
+    });
+    nav.addEventListener('mouseleave', function () {
+      moveTo(currentLink());
+    });
+    window.addEventListener('resize', function () {
+      moveTo(nav.matches(':hover') ? nav.querySelector('a:hover') || currentLink() : currentLink());
+    });
+  })();
+
+  // Mobile/tablet: top-center home badge + floating bottom pill nav
+  // (replaces the header below the 62.5rem breakpoint; desktop keeps the
+  // classic header). Clones the real nav links so hrefs/aria-current stay
+  // correct at any page depth. The pill grows/shrinks with scroll direction.
+  (function () {
+    var mainNav = document.getElementById('main-nav');
+    var siteLink = header && header.querySelector('.site-name');
+    if (!header || !mainNav) return;
+
+    var homeBadge = document.createElement('a');
+    homeBadge.className = 'mobile-home-badge';
+    homeBadge.href = siteLink ? siteLink.getAttribute('href') : '/';
+    homeBadge.setAttribute('aria-label', 'Home');
+    document.body.appendChild(homeBadge);
+
+    var tabbar = document.createElement('div');
+    tabbar.className = 'mobile-tabbar';
+
+    var pill = document.createElement('div');
+    pill.className = 'mobile-tabbar-pill';
+    mainNav.querySelectorAll('a').forEach(function (a) {
+      var label = (a.textContent || '').trim();
+      if (/^resume$/i.test(label) || a.getAttribute('target') === '_blank') return;
+      pill.appendChild(a.cloneNode(true));
+    });
+
+    tabbar.appendChild(pill);
+    document.body.appendChild(tabbar);
+
+    var lastY = window.scrollY;
+    var ticking = false;
+    function setCompact(on) {
+      tabbar.classList.toggle('is-compact', on);
+      homeBadge.classList.toggle('is-compact', on);
+      document.body.classList.toggle('mobile-nav-compact', on);
+    }
+    function updateTabbarSize() {
+      var y = window.scrollY;
+      if (y <= 4) {
+        setCompact(false);
+      } else if (y > lastY) {
+        setCompact(true);
+      } else if (y < lastY) {
+        setCompact(false);
+      }
+      lastY = y;
+      ticking = false;
+    }
+    updateTabbarSize(); // sync state immediately in case the page loads mid-scroll
+    window.addEventListener(
+      'scroll',
+      function () {
+        if (!ticking) {
+          window.requestAnimationFrame(updateTabbarSize);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
+  })();
+
   // Header: fade background + border when scrolled, restore at top
   (function () {
     if (!header) return;
@@ -246,15 +403,218 @@
     updateHeader();
   })();
 
+  function footerBarHTML() {
+    return (
+      '<div class="footer-bar">' +
+        '<div class="footer-brand">' +
+          '<span class="footer-credit">Designed + coded by</span>' +
+          '<span class="footer-name">Lucille Trepanier</span>' +
+        '</div>' +
+        '<div class="footer-right">' +
+          '<div class="footer-socials">' +
+            '<a href="mailto:lucytrep.labs@gmail.com" aria-label="Email">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<rect x="3" y="5" width="18" height="14" rx="2" />' +
+                '<path d="m4 7 8 6 8-6" />' +
+              '</svg>' +
+            '</a>' +
+            '<a href="https://www.linkedin.com/in/lucytrep/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />' +
+                '<rect x="2" y="9" width="4" height="12" />' +
+                '<circle cx="4" cy="4" r="2" />' +
+              '</svg>' +
+            '</a>' +
+            '<a href="/assets/LucyTrepanier_Resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />' +
+                '<path d="M14 2v6h6" />' +
+                '<path d="M8 13h8" />' +
+                '<path d="M8 17h8" />' +
+                '<path d="M8 9h2" />' +
+              '</svg>' +
+            '</a>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function connectFormHTML() {
+    return (
+      '<form class="footer-connect-form" id="connect-form" action="https://formspree.io/f/xnjwllpb" method="POST">' +
+        '<div class="footer-connect-row">' +
+          '<div class="footer-field">' +
+            '<label for="connect-name">Name</label>' +
+            '<input id="connect-name" name="first_name" type="text" placeholder="Your name" autocomplete="name" />' +
+          '</div>' +
+          '<div class="footer-field">' +
+            '<label for="connect-email">Email</label>' +
+            '<input id="connect-email" name="email" type="email" placeholder="Email address" autocomplete="email" required />' +
+          '</div>' +
+        '</div>' +
+        '<div class="footer-field">' +
+          '<label for="connect-message">Message</label>' +
+          '<textarea id="connect-message" name="project_description" placeholder="Tell me about the project or opportunity." required></textarea>' +
+        '</div>' +
+        '<button class="footer-submit" type="submit" id="connect-submit">Send</button>' +
+      '</form>'
+    );
+  }
+
+  function connectMetaHTML() {
+    return (
+      '<aside class="footer-connect-meta" aria-label="Contact details">' +
+        '<div>' +
+          '<p class="footer-meta-label">Email</p>' +
+          '<p><a href="mailto:lucytrep.labs@gmail.com">lucytrep.labs@gmail.com</a></p>' +
+        '</div>' +
+        '<div>' +
+          '<p class="footer-meta-label">LinkedIn</p>' +
+          '<p><a href="https://ca.linkedin.com/in/lucytrep" target="_blank" rel="noopener noreferrer">lucytrep</a></p>' +
+        '</div>' +
+        '<div>' +
+          '<p class="footer-meta-label">Based in</p>' +
+          '<p>New York City</p>' +
+        '</div>' +
+      '</aside>'
+    );
+  }
+
+  function connectFooterHTML(isConnectPage) {
+    var titleAttrs = isConnectPage ? ' class="footer-connect-title" aria-hidden="true"' : ' class="footer-connect-title"';
+    var leftBody = isConnectPage
+      ? connectMetaHTML()
+      : (
+          '<div class="footer-connect-actions">' +
+            connectMetaHTML() +
+            '<a class="footer-connect-cta" href="/contact/">Get in touch</a>' +
+          '</div>'
+        );
+
+    return (
+      '<div class="footer-connect">' +
+        '<div>' +
+          '<h2' + titleAttrs + '>Let\'s<br>collaborate.</h2>' +
+          leftBody +
+        '</div>' +
+        (isConnectPage ? connectFormHTML() : '') +
+      '</div>' +
+      footerBarHTML()
+    );
+  }
+
+  (function () {
+    var footer = document.querySelector('.page-footer');
+    if (!footer) {
+      footer = document.createElement('footer');
+      footer.className = 'container page-footer';
+      var mainScript = document.querySelector('script[src*="main.js"]');
+      if (mainScript && mainScript.parentNode) {
+        mainScript.parentNode.insertBefore(footer, mainScript);
+      } else {
+        document.body.appendChild(footer);
+      }
+    }
+    var isConnectPage = document.body.classList.contains('is-connect-page');
+    footer.id = 'connect';
+    footer.classList.toggle('is-connect-footer', isConnectPage);
+    footer.innerHTML = connectFooterHTML(isConnectPage);
+
+    var form = document.getElementById('connect-form');
+    var btn = document.getElementById('connect-submit');
+    if (!form || !btn) return;
+
+    var sent = false;
+    btn.addEventListener('click', function () {
+      if (!sent) return;
+      sent = false;
+      form.reset();
+      form.querySelectorAll('.footer-field, .footer-connect-row').forEach(function (el) {
+        el.hidden = false;
+      });
+      btn.textContent = 'Send';
+      btn.type = 'submit';
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (res) {
+          if (res.ok) {
+            btn.textContent = 'Sent ✓';
+            setTimeout(function () {
+              sent = true;
+              form.querySelectorAll('.footer-field, .footer-connect-row').forEach(function (el) {
+                el.hidden = true;
+              });
+              btn.disabled = false;
+              btn.type = 'button';
+              btn.textContent = 'Send another';
+            }, 800);
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Send';
+            alert('Something went wrong — please email me directly at lucytrep.labs@gmail.com');
+          }
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = 'Send';
+          alert('Something went wrong — please email me directly at lucytrep.labs@gmail.com');
+        });
+    });
+  })();
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a[href="#connect"]');
+    if (!link) return;
+    var target = document.getElementById('connect');
+    if (!target) return;
+    e.preventDefault();
+    if (header && header.classList.contains('nav-open') && hamburger) {
+      header.classList.remove('nav-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState(null, '', '#connect');
+    }
+  });
+
+  // Locked chat teaser: same launcher mark as the chatbot branch, inert for now
+  var chatLock = document.createElement('div');
+  chatLock.className = 'chat-lock';
+  chatLock.setAttribute('role', 'img');
+  chatLock.setAttribute('aria-label', 'Ask Luce, coming soon');
+  chatLock.innerHTML =
+    '<span class="chat-lock__name">Ask Luce</span>' +
+    '<span class="chat-lock__icon" aria-hidden="true">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
+      '<span class="chat-lock__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>' +
+    '</span>';
+  document.body.appendChild(chatLock);
+
   // Cursor pill: expand on project hover
   (function () {
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
 
+    var CASE_STUDY_LABEL = 'VIEW CASE STUDY';
+    var COMING_SOON_LABEL = 'COMING SOON';
+
     var pill = document.createElement('div');
     pill.className = 'cursor-pill';
     pill.setAttribute('aria-hidden', 'true');
-    pill.innerHTML = '<span class="cursor-pill__label">VIEW CASE STUDY</span>';
+    pill.innerHTML = '<span class="cursor-pill__label">' + CASE_STUDY_LABEL + '</span>';
     document.body.appendChild(pill);
     var label = pill.querySelector('.cursor-pill__label');
 
@@ -267,6 +627,7 @@
     var lastTs = 0;
     var dotSize = 21;
     var isExpanded = false;
+    var expandFromRight = false;
 
     function readDotSize() {
       var v = window.getComputedStyle(pill).getPropertyValue('--cursor-dot-size');
@@ -286,7 +647,8 @@
 
       currentX += (targetX - currentX) * a;
       currentY += (targetY - currentY) * a;
-      pill.style.transform = 'translate3d(' + currentX + 'px,' + currentY + 'px,0)';
+      var flip = expandFromRight ? ' translateX(-100%)' : '';
+      pill.style.transform = 'translate3d(' + currentX + 'px,' + currentY + 'px,0)' + flip;
       raf = window.requestAnimationFrame(animate);
     }
 
@@ -298,37 +660,49 @@
       if (!pill.classList.contains('is-visible')) pill.classList.add('is-visible');
     }
 
-    function setExpanded(next) {
-      if (isExpanded === next) return;
+    function setExpanded(next, nextLabel) {
+      if (next && label) {
+        var text = nextLabel || CASE_STUDY_LABEL;
+        if (label.textContent !== text) label.textContent = text;
 
-      if (next) {
         // Keep the pill snug to the label text
         var paddingX = 15; // px
         pill.style.setProperty('--cursor-pill-padding-x', paddingX + 'px');
-        if (label) {
-          var labelWidth = label.scrollWidth || 0;
-          var expandedWidth = Math.max(dotSize, labelWidth + paddingX * 2);
-          pill.style.setProperty('--cursor-pill-expanded-width', expandedWidth + 'px');
-        }
+        var labelWidth = label.scrollWidth || 0;
+        var expandedWidth = Math.max(dotSize, labelWidth + paddingX * 2);
+        pill.style.setProperty('--cursor-pill-expanded-width', expandedWidth + 'px');
       }
 
+      if (isExpanded === next) return;
       isExpanded = next;
       pill.classList.toggle('is-active', isExpanded);
       pill.classList.remove('is-faded');
     }
 
-    // Home page only: project grid links control the expanded state
-    var hoverTargets = document.querySelectorAll('.section-projects a.project-link');
-    if (hoverTargets && hoverTargets.length) {
-      hoverTargets.forEach(function (el) {
+    function bindPillHover(els, hoverLabel, fromRight) {
+      if (!els) return;
+      Array.prototype.forEach.call(els, function (el) {
         el.addEventListener('mouseenter', function () {
-          setExpanded(true);
+          expandFromRight = !!fromRight;
+          setExpanded(true, hoverLabel);
         });
         el.addEventListener('mouseleave', function () {
           setExpanded(false);
+          window.setTimeout(function () {
+            if (!isExpanded) expandFromRight = false;
+          }, 240);
         });
       });
     }
+
+    bindPillHover(document.querySelectorAll('.section-projects a.project-link'), CASE_STUDY_LABEL);
+    bindPillHover(document.querySelectorAll('.chat-lock'), COMING_SOON_LABEL, true);
+    bindPillHover(document.querySelectorAll('#project-coming-soon .project-link'), COMING_SOON_LABEL, true);
+    document.querySelectorAll('.page-footer .footer-socials a').forEach(function (el) {
+      var name = (el.getAttribute('aria-label') || '').trim();
+      if (!name) return;
+      bindPillHover([el], name.toUpperCase(), true);
+    });
 
     window.addEventListener('mousemove', onMove, { passive: true });
     window.addEventListener('blur', function () {
@@ -348,7 +722,9 @@
   (function () {
     function isProjectCaseStudyTarget(el) {
       if (!el) return false;
-      return !!el.closest('.section-projects a.project-link');
+      return !!el.closest(
+        '.section-projects a.project-link, .chat-lock, #project-coming-soon .project-link, .page-footer .footer-socials a'
+      );
     }
 
     function isInteractiveTarget(el) {
@@ -397,7 +773,7 @@
 
     var targetSelector = isCaseStudyPage
       ? '.project-card, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item'
-      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item';
+      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item, .about-album-header, .about-play-header, .play-card';
 
     var targets = document.querySelectorAll(targetSelector);
     if (!targets.length) return;
@@ -511,7 +887,7 @@
     var mediaEls = Array.from(
       document.querySelectorAll('main img, article img, main video, article video')
     ).filter(function (el) {
-      return !el.closest('.project-link') && !el.closest('.case-hero-image') && !el.closest('.about-hero-imageSwap');
+      return !el.closest('.project-link') && !el.closest('.case-hero-image') && !el.closest('.about-hero-imageSwap') && !el.closest('.about-hero-figure') && !el.closest('.about-play') && !el.closest('.about-album') && !el.closest('.clients-section');
     });
     if (!mediaEls.length) return;
 

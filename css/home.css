@@ -1,38 +1,50 @@
 /* Homepage only: hero + project grid. Uses design tokens from common.css. */
 
-/* Keep header opaque on the homepage at all viewport sizes */
-.page-header.header-scrolled {
-  background-color: var(--color-background);
-  border-bottom-color: var(--color-border);
-}
-
 .section-hero {
-  padding-top: 11rem;
-  padding-bottom: var(--space-2);
+  padding-top: 7.25rem;
+  padding-bottom: var(--space-6);
+  text-align: center;
 }
 
 .hero-content {
   grid-column: 1 / -1;
-  max-width: var(--hero-max-width);
+  max-width: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hero-label {
-  margin: 0 0 var(--space-1) 0;
-  font-size: var(--font-size-sm);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-muted);
+  margin: 0 0 1.25rem 0;
 }
 
 .hero-headline {
   margin: 0;
   font-family: inherit;
-  font-size: var(--font-size-hero);
-  font-weight: 700;
-  line-height: var(--line-height-tight);
-  letter-spacing: -0.01em;
+  font-size: clamp(3.05rem, 7vw, 6.35rem);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  text-transform: uppercase;
+  text-wrap: unset;
   color: var(--color-text);
+}
+
+.hero-headline em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.hero-lede {
+  margin: 1.15rem auto 0;
+  max-width: 36rem;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: 1.6;
+  text-wrap: pretty;
 }
 
 .section-projects {
@@ -127,7 +139,7 @@
     text-decoration: none;
     color: inherit;
   }
-  
+
   .project-link:focus-visible {
     outline: 1px solid var(--color-text);
     outline-offset: 0.1875rem;
@@ -185,11 +197,18 @@
   }
 
   /* Side gutter a bit tighter than the default container padding, but not edge-to-edge */
+  /* Room for the large resting home badge; collapses away as soon as the user scrolls
+     so the first thumbnail bleeds all the way to the top */
   main.section-projects.container {
-    padding-top: 0.5rem;
+    padding-top: 7rem;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-bottom: var(--space-5);
+    transition: padding-top 260ms ease;
+  }
+
+  body.mobile-nav-compact main.section-projects.container {
+    padding-top: 0.5rem;
   }
 
   main.section-projects .project-grid {
@@ -251,12 +270,12 @@
 
 @media (max-width: 23.4375rem) {
   .section-hero {
-    padding-top: 5.5rem;
-    padding-bottom: var(--space-1);
+    padding-top: 4.5rem;
+    padding-bottom: var(--space-4);
   }
 
   .hero-headline {
-    font-size: clamp(1.25rem, 5.2vw, 1.625rem);
+    font-size: clamp(2.85rem, 12vw, 4.6rem);
   }
 
   .project-year {

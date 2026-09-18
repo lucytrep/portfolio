@@ -7,12 +7,6 @@
   cursor: default;
 }
 
-/* Keep header opaque on the gallery page at all viewport sizes */
-.page-header.header-scrolled {
-  background-color: var(--color-background);
-  border-bottom-color: var(--color-border);
-}
-
 .gallery {
   padding-inline: var(--container-padding);
   padding-top: 4.25rem;
@@ -28,11 +22,6 @@
 
 .gallery-kicker {
   margin: 0 0 var(--space-1) 0;
-  font-size: var(--font-size-sm);
-  font-weight: 400;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--color-muted);
 }
 
 .gallery-title {

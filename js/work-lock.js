@@ -14,7 +14,12 @@
       sessionStorage.setItem(STORAGE_KEY, '1');
     } catch (e) {}
     if (lockScreen) lockScreen.classList.add('is-hidden');
-    if (workContent) workContent.classList.remove('work-lock-hidden');
+    if (workContent) {
+      workContent.classList.remove('work-lock-hidden');
+      workContent.removeAttribute('aria-hidden');
+      workContent.removeAttribute('inert');
+    }
+    document.body.classList.remove('is-work-locked');
   }
 
   function showError(text) {
