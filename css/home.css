@@ -21,10 +21,10 @@
 .hero-headline {
   margin: 0;
   font-family: inherit;
-  font-size: clamp(3.05rem, 7vw, 6.35rem);
-  font-weight: 800;
-  line-height: 0.86;
-  letter-spacing: -0.055em;
+  font-size: var(--display-size);
+  font-weight: var(--display-weight);
+  line-height: var(--display-leading);
+  letter-spacing: var(--display-tracking);
   text-transform: uppercase;
   text-wrap: unset;
   color: var(--color-text);
@@ -81,7 +81,8 @@
   margin-bottom: var(--space-2);
   transition: opacity 180ms ease;
   overflow: hidden;
-  border-radius: 0.8rem;
+  border-radius: var(--radius-media);
+  box-shadow: 0 0 0 1px var(--color-hairline);
 }
 
 .project-card-image video {
@@ -91,15 +92,37 @@
   display: block;
 }
 
+.project-card-image--zoom video {
+  transform: scale(1.2);
+  transform-origin: center;
+}
+
+.project-card-image--dark {
+  background: #0a102a;
+}
+
+.project-card-image--warm {
+  background: #f4f3ef;
+}
+
+/* Title, tag pills, and description share one grid so their order can be
+   rearranged per breakpoint (desktop: title+pills in a row, description
+   below; tablet/mobile: title, then description, then pills) without
+   touching the markup. */
 .project-card-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-2);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "title pills"
+    "desc  desc";
+  column-gap: var(--space-2);
+  row-gap: 0.3rem;
+  align-items: start;
   margin-bottom: var(--space-1);
 }
 
 .project-title {
+  grid-area: title;
   margin: 0;
   font-size: var(--font-size-lg);
   font-weight: 600;
@@ -107,19 +130,32 @@
 }
 
 .project-year {
-  flex-shrink: 0;
-  font-size: var(--font-size-xs);
-  font-weight: 400;
-  color: var(--color-light);
+  grid-area: pills;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
-.project-year .meta-sep {
-  display: inline-block;
-  margin: 0 0.35rem;
+.project-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: var(--color-bg-subtle);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  white-space: nowrap;
 }
 
 .project-description {
-  margin: 0 0 var(--space-1) 0;
+  grid-area: desc;
+  margin: 0;
   font-size: var(--font-size-sm);
   font-weight: 400;
   color: var(--color-muted);
@@ -135,20 +171,20 @@
 }
 
 .project-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
 
-  .project-link:focus-visible {
-    outline: 1px solid var(--color-text);
-    outline-offset: 0.1875rem;
-  }
+.project-link:focus-visible {
+  outline: 1px solid var(--color-text);
+  outline-offset: 0.1875rem;
+}
 
-  .project-link:hover .project-card-image,
-  .project-link:focus-visible .project-card-image {
-    opacity: 0.55;
-  }
+.project-link:hover .project-card-image,
+.project-link:focus-visible .project-card-image {
+  opacity: 0.55;
+}
 
 /* Mobile: home hero + project grid use full width (avoid 12-col + gap quirks on narrow viewports) */
 @media (max-width: 50rem) {
@@ -189,26 +225,36 @@
 
 }
 
-/* Phone + tablet: thumbnails only — no captions, just stacked animations, full-bleed */
+/* Phone + tablet: stacked cards, with the page hero sitting under the home badge */
 @media (max-width: 62.5rem) {
-  /* No intro text — straight into the thumbnails */
+  /* Keep Selected Work / headline / lede visible under the fixed logo */
   .section-hero {
-    display: none;
+    display: block;
+    padding-top: 5.75rem;
+    padding-bottom: 1.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .section-hero .hero-headline {
+    font-size: var(--display-size-compact);
+  }
+
+  .section-hero .hero-lede {
+    margin-top: 1rem;
+    max-width: none;
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--color-muted);
+    line-height: var(--line-height-snug);
   }
 
   /* Side gutter a bit tighter than the default container padding, but not edge-to-edge */
-  /* Room for the large resting home badge; collapses away as soon as the user scrolls
-     so the first thumbnail bleeds all the way to the top */
   main.section-projects.container {
-    padding-top: 7rem;
+    padding-top: 0;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-bottom: var(--space-5);
-    transition: padding-top 260ms ease;
-  }
-
-  body.mobile-nav-compact main.section-projects.container {
-    padding-top: 0.5rem;
   }
 
   main.section-projects .project-grid {
@@ -227,7 +273,7 @@
   }
 
   main.section-projects .project-year {
-    display: none;
+    padding: 0 0.5rem;
   }
 
   main.section-projects .project-title {
@@ -255,16 +301,20 @@
   }
 }
 
-/* Stacked card meta (year above title) up to 1300px */
+/* Stacked card meta up to 1300px (tablet + phone): title, then description,
+   then the tag pills last, all full width instead of title/pills in a row */
 @media (max-width: 81.25rem) {
   .project-card-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-1);
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "desc"
+      "pills";
+    row-gap: 0.5rem;
   }
 
   .project-year {
-    order: -1;
+    justify-content: flex-start;
   }
 }
 
@@ -275,16 +325,7 @@
   }
 
   .hero-headline {
-    font-size: clamp(2.85rem, 12vw, 4.6rem);
-  }
-
-  .project-year {
-    flex-shrink: 1;
-    max-width: 100%;
-  }
-
-  .project-year .meta-sep {
-    margin: 0 0.25rem;
+    font-size: var(--display-size-compact);
   }
 
   .section-projects {

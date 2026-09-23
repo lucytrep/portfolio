@@ -9,126 +9,13 @@ See /ROUTING.md -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Axsphere · Lucytrep</title>
-  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
-  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
-  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
-  <link rel="stylesheet" href="../css/common.css?v=cta-pill1" />
-  <link rel="stylesheet" href="../css/case-study.css?v=cta-pill1" />
+  <link rel="icon" href="/assets/favicons/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/common.css?v=nav-pad2" />
+  <link rel="stylesheet" href="../css/case-study.css?v=cs-firstrow4" />
   <style>
-    /* ── Axsphere: scroll-hero animation (page-specific) ── */
-
-    /* Launch zone: full-width, visually attached to the collage above */
-    .cs-launch-zone {
-      background: #fff;
-      padding: 0.5rem; /* matches .cs-ed-grid padding */
-    }
-
-    .cs-launch-inner {
-      width: 100%;
-    }
-
-    /* Slot: position:relative so flying wrapper can be absolute-over-placeholder */
-    .cs-launch-slot {
-      position: relative;
-      width: 100%;
-    }
-
-    /* Placeholder: stays in flow, preserves space when video goes fixed */
-    .cs-launch-placeholder {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 0.75rem;
-      background: transparent;
-    }
-
-    /* Flying video wrapper — starts absolute over placeholder, full-width */
-    #cs-fly-wrap {
-      position: absolute;
-      inset: 0;
-      border-radius: 0.75rem; /* matches cs-ed-img */
-      overflow: hidden;
-      background: transparent;
-    }
-
-    /* Fixed state: JS sets position via transform */
-    #cs-fly-wrap.is-flying {
-      position: fixed;
-      inset: auto;
-      top: 0;
-      left: 0;
-      z-index: 50;
-      pointer-events: none;
-      will-change: transform, width, height;
-      transform-origin: 0 0;
-    }
-
-    /* Nav overlays the collage */
-    #page-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      z-index: 100;
-      background: transparent !important;
-      border-bottom-color: transparent !important;
-    }
-
-    /* Remove grey fill and border from hero target while video is in transit */
-    #cs-hero-target {
-      background: transparent;
-      border: none;
-    }
-
-    /* Landed state: fills hero-image container */
-    #cs-fly-wrap.is-landed {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 0.75rem;
-      border: none;
-      background: none;
-      box-shadow: 0 0 0 1px #d7d7d7;
-      animation: flyLand 200ms ease forwards;
-    }
-    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
-    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
-
-    #cs-fly-wrap video,
-    #cs-fly-wrap iframe {
-      width: 100%;
-      height: 100%;
-      display: block;
-      border: none;
-    }
-
-    /* Text fade-in — only active when JS adds .case-hero--init */
-    .case-hero--init .case-hero-kicker,
-    .case-hero--init .case-hero-title,
-    .case-hero--init .case-meta-grid {
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-
-    .case-hero--init.case-hero--revealed .case-hero-kicker {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .case-hero--init.case-hero--revealed .case-hero-title {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.08s;
-    }
-
-    .case-hero--init.case-hero--revealed .case-meta-grid {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.18s;
-    }
-
     .axsphere-quote {
       margin: var(--space-4) 0;
     }
@@ -175,11 +62,10 @@ See /ROUTING.md -->
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6 site-brand">
-        <a href="../" class="site-logo-mark" aria-label="Home"></a>
-        <div class="site-brand-text">
-          <a href="../" class="site-name">LUCYTREP LABS</a>
-          <span class="site-tagline">Product Designer</span>
-        </div>
+        <a href="../" class="site-brand-lockup" aria-label="Home — Product Designer">
+          <span class="site-logo-mark" aria-hidden="true"></span>
+          <span class="site-role-pill">Product Designer</span>
+        </a>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -201,19 +87,19 @@ See /ROUTING.md -->
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
       <div class="cs-ed-img cs-ed-img--half" style="background:none;">
-        <img src="../assets/images/axsphere/Phone.jpg" alt="Axsphere app mockup" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+        <img src="../assets/images/axsphere/Phone.jpg" alt="Axsphere app mockup" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
       </div>
       <div class="cs-ed-img cs-ed-img--half" style="background:#E7E7E7;position:relative;">
         <iframe loading="lazy" src="https://player.vimeo.com/video/1182098028?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:177.8%;height:177.8%;transform:translate(-50%,-50%);border-radius:inherit;" title="live"></iframe>
       </div>
       <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
-        <img src="../assets/images/axsphere/Slides.jpg" alt="Axsphere project slides" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+        <img src="../assets/images/axsphere/Slides.jpg" alt="Axsphere project slides" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
       </div>
       <div class="cs-ed-img cs-ed-img--half">
-        <img src="../assets/images/axsphere/Angled.jpg" alt="Axsphere angled mockup" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+        <img src="../assets/images/axsphere/Angled.jpg" alt="Axsphere angled mockup" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
       </div>
       <div class="cs-ed-img cs-ed-img--half">
-        <img src="../assets/images/axsphere/Hand.jpg" alt="Axsphere hand mockup" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+        <img src="../assets/images/axsphere/Hand.jpg" alt="Axsphere hand mockup" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
       </div>
     </div>
   </div>
@@ -377,20 +263,20 @@ See /ROUTING.md -->
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row" style="grid-template-columns: 1800fr 3048fr;">
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Participants.jpg" alt="Research participants" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/Participants.jpg" alt="Research participants" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Overview.jpg" alt="User interviews, task analysis, and affinity map overview" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/Overview.jpg" alt="User interviews, task analysis, and affinity map overview" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row" style="grid-template-columns: 3048fr 1800fr;">
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/KeyInsights.jpg" alt="Key insights" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/KeyInsights.jpg" alt="Key insights" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Themes.jpg" alt="Themes" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/Themes.jpg" alt="Themes" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
@@ -419,20 +305,20 @@ See /ROUTING.md -->
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row" style="grid-template-columns: 1361fr 1442fr;">
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/Sketches.jpg" alt="Audit and sketches" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/Sketches.jpg" alt="Audit and sketches" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/User.jpg" alt="PRD and user journey" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/User.jpg" alt="PRD and user journey" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row" style="grid-template-columns: 1361fr 1442fr;">
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/AUDIT.jpg" alt="Competitive audit" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/AUDIT.jpg" alt="Competitive audit" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../assets/images/axsphere/PRD.jpg" alt="PRD document" style="width:100%;height:auto;display:block;" / loading="lazy">
+                        <img src="../assets/images/axsphere/PRD.jpg" alt="PRD document" style="width:100%;height:auto;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
@@ -455,16 +341,16 @@ See /ROUTING.md -->
             <div class="case-image-natural-grid">
               <div class="case-image-natural-grid-row case-image-natural-grid-row--4col" style="grid-template-columns: repeat(4, 1fr);">
                 <div class="case-image-natural">
-                  <img src="../assets/images/axsphere/controls.jpg" alt="Select preferences screen" style="width:100%;height:auto;display:block;" / loading="lazy">
+                  <img src="../assets/images/axsphere/controls.jpg" alt="Select preferences screen" style="width:100%;height:auto;display:block;" loading="lazy">
                 </div>
                 <div class="case-image-natural">
-                  <img src="../assets/images/axsphere/clear.jpg" alt="Check conditions in real time" style="width:100%;height:auto;display:block;" / loading="lazy">
+                  <img src="../assets/images/axsphere/clear.jpg" alt="Check conditions in real time" style="width:100%;height:auto;display:block;" loading="lazy">
                 </div>
                 <div class="case-image-natural">
-                  <img src="../assets/images/axsphere/space.jpg" alt="Find the right environment" style="width:100%;height:auto;display:block;" / loading="lazy">
+                  <img src="../assets/images/axsphere/space.jpg" alt="Find the right environment" style="width:100%;height:auto;display:block;" loading="lazy">
                 </div>
                 <div class="case-image-natural">
-                  <img src="../assets/images/axsphere/save.jpg" alt="Save comfortable spaces" style="width:100%;height:auto;display:block;" / loading="lazy">
+                  <img src="../assets/images/axsphere/save.jpg" alt="Save comfortable spaces" style="width:100%;height:auto;display:block;" loading="lazy">
                 </div>
               </div>
             </div>
@@ -495,10 +381,10 @@ See /ROUTING.md -->
             <div class="case-image-natural-grid">
               <div class="case-image-natural-grid-row" style="grid-template-columns: 1117fr 1361fr;">
                 <div class="case-image-natural">
-                  <img src="../assets/images/axsphere/LoFi.jpg" alt="Lo-fi and mid-fi wireframes" style="width:100%;height:auto;display:block;" / loading="lazy">
+                  <img src="../assets/images/axsphere/LoFi.jpg" alt="Lo-fi and mid-fi wireframes" style="width:100%;height:auto;display:block;" loading="lazy">
                 </div>
                 <div class="case-image-natural">
-                  <img src="../assets/images/axsphere/Testing.jpg" alt="Testing and feedback" style="width:100%;height:auto;display:block;" / loading="lazy">
+                  <img src="../assets/images/axsphere/Testing.jpg" alt="Testing and feedback" style="width:100%;height:auto;display:block;" loading="lazy">
                 </div>
               </div>
             </div>
@@ -596,10 +482,10 @@ See /ROUTING.md -->
             </div>
             <div class="case-section-media-row" style="margin-top: var(--space-2);">
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../assets/images/axsphere/LucyTrepanier_Web_2.jpg" alt="Axsphere app screens" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../assets/images/axsphere/LucyTrepanier_Web_2.jpg" alt="Axsphere app screens" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../assets/images/axsphere/LucyTrepanier_Web_3.jpg" alt="Axsphere brand merchandise" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../assets/images/axsphere/LucyTrepanier_Web_3.jpg" alt="Axsphere brand merchandise" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -620,10 +506,10 @@ See /ROUTING.md -->
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../assets/images/axsphere/brodo_9734.jpg" alt="Design critique session" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../assets/images/axsphere/brodo_9734.jpg" alt="Design critique session" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../assets/images/axsphere/brodo_9707.jpg" alt="Design critique session" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../assets/images/axsphere/brodo_9707.jpg" alt="Design critique session" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -641,7 +527,7 @@ See /ROUTING.md -->
 
   <footer class="container page-footer"></footer>
 
-  <script src="../js/main.js?v=cta-pill1"></script>
+  <script src="../js/main.js?v=scroll-mem1"></script>
   <script>
     window.__caseStudyFlyProjectionStrength = 1;
     window.__caseStudyFlyProjectionEase = 2.8;

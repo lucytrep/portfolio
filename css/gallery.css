@@ -37,7 +37,7 @@
 .gallery-grid {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--grid-gap);
 }
 
 /* Two horizontal bands — opened up so fewer pieces sit on screen at once */
@@ -155,7 +155,7 @@
 /* Media container */
 .gallery-item-media {
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-media);
   overflow: hidden;
   background: var(--color-bg-subtle);
   border: var(--border-width) solid var(--color-border);
@@ -168,6 +168,14 @@
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Show the full frame, centered, instead of cropping to fill the box —
+   for footage (like a phone-screen recording) that gets cut off under cover. */
+.gallery-item-media--contain img,
+.gallery-item-media--contain video {
+  object-fit: contain;
+  object-position: center;
 }
 
 /* Aspect ratio variants */
@@ -197,6 +205,94 @@
   opacity: 1;
 }
 
+/* Mixed-ratio campaign art: preserve the full composition while a softened,
+   faded copy of each frame fills any space behind it. */
+.gallery-item-media--backdrop-slideshow {
+  position: relative;
+  isolation: isolate;
+  background: var(--color-text);
+}
+
+.gallery-item-media--backdrop-slideshow .campaign-slide {
+  overflow: hidden;
+  pointer-events: none;
+  transition-duration: 180ms;
+}
+
+.gallery-item-media--backdrop-slideshow .campaign-slide-backdrop {
+  position: absolute;
+  inset: -1.5rem;
+  width: calc(100% + 3rem);
+  height: calc(100% + 3rem);
+  object-fit: cover;
+  filter: blur(20px) saturate(0.95) brightness(0.62);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.gallery-item-media--backdrop-slideshow .campaign-slide-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Inset desktop FIFA artwork while its blurred backdrop still fills the card. */
+@media (min-width: 62.5001rem) {
+  .gallery-item-media--fifa .campaign-slide-art {
+    inset: 6%;
+    width: 88%;
+    height: 88%;
+  }
+}
+
+.gallery-item-media--backdrop-slideshow .mamba-slide .campaign-slide-art {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Let the Mamba photography dissolve between frames instead of flashing. */
+.gallery-item-media--backdrop-slideshow .mamba-slide {
+  transition: opacity 900ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity;
+}
+
+.nacc-slideshow {
+  position: relative;
+  isolation: isolate;
+  background: #fff;
+}
+
+.gallery-item-media .nacc-slideshow-backdrop {
+  position: absolute;
+  inset: -1.5rem;
+  width: calc(100% + 3rem);
+  height: calc(100% + 3rem);
+  object-fit: cover;
+  filter: blur(18px) brightness(0.94);
+  transform: scale(1.08);
+}
+
+.gallery-item-media.nacc-slideshow .journey-slide {
+  z-index: 1;
+  object-fit: cover;
+  object-position: center;
+  transition-duration: 180ms;
+}
+
+/* Crop only the enlarged WPBL video from the right, removing the Gemini mark
+   while leaving its archive thumbnail untouched. */
+.lightbox-video--wpbl {
+  width: min(90vw, 1200px);
+  height: min(56.25vw, 86vh, 750px);
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: left center;
+}
+
 .gallery-item-title {
   margin: 0.7rem 0 0 0;
   font-size: var(--font-size-sm);
@@ -211,7 +307,7 @@
 
 .arch-row {
   display: grid;
-  gap: 2rem;
+  gap: var(--grid-gap);
   align-items: stretch;
 }
 
@@ -244,7 +340,9 @@
 .arch-pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: var(--grid-gap);
+  /* Keep intrinsic image/video sizes from expanding the parent row's track. */
+  min-height: 0;
   height: 100%;
 }
 
@@ -259,7 +357,7 @@
   min-height: 0;
   aspect-ratio: unset;
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-media);
   overflow: hidden;
   background: var(--color-bg-subtle);
   border: var(--border-width) solid var(--color-border);
@@ -270,7 +368,7 @@
 .arch-row-stack {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: var(--grid-gap);
   min-height: 0;
 }
 
@@ -286,7 +384,7 @@
   min-height: 0;
   aspect-ratio: unset;
   width: 100%;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-media);
   overflow: hidden;
   background: var(--color-bg-subtle);
   border: var(--border-width) solid var(--color-border);
@@ -295,27 +393,15 @@
 
 /* ─── Responsive ──────────────────────────────────────────── */
 
-/* ── Tablet: scale row heights down (800px – 1000px) ── */
-@media (max-width: 62.5rem) {
-  .gallery {
-    padding-top: 4.5rem;
-    padding-bottom: calc(var(--space-6) + 1.5rem);
-  }
-
-  .gallery-grid { gap: 1.5rem; }
-  .arch-row { gap: 1.5rem; }
-  .arch-row-stack { gap: 1.5rem; }
-  .arch-pair { gap: 1.5rem; }
-
-  .arch-row--landscape { height: 380px; }
-  .arch-row--compact   { height: 210px; }
-  .arch-row--portrait  { height: 480px; }
-  .arch-row--tall      { height: 640px; }
-}
-
 /* ── Phone + tablet: stack rows, thumbnails only, full-bleed (≤ 1000px) ── */
 @media (max-width: 62.5rem) {
-  .gallery {
+  /* Beat .container { padding: 0 var(--container-padding) } and the
+     desktop .gallery { padding-inline } rule so cards can hit the
+     viewport edges. Logical + physical zeros cover Safari/Chrome. */
+  main.container.gallery {
+    width: 100%;
+    max-width: none;
+    padding-inline: 0;
     padding-left: 0;
     padding-right: 0;
     padding-top: 0.5rem;
@@ -328,9 +414,11 @@
   .arch-pair { gap: 0.5rem; grid-template-columns: 1fr; }
 
   .gallery-item-media,
+  .arch-row .gallery-item-media,
   .arch-pair .gallery-item-media,
   .arch-row-stack .gallery-item-media {
     border-radius: 0;
+    border: 0;
   }
 
   /* All rows collapse to single column */
@@ -354,6 +442,11 @@
   .arch-row .gallery-item-media,
   .arch-row-stack .gallery-item-media {
     aspect-ratio: 16 / 9;
+  }
+
+  /* This campaign has dedicated square artwork for the mobile collage. */
+  .arch-row .gallery-item-media--backdrop-slideshow {
+    aspect-ratio: 1 / 1;
   }
 
   /* Persist pair items stay portrait */

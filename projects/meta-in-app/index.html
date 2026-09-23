@@ -5,55 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Meta In-App · Lucytrep</title>
-  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
-  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
-  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
-  <link rel="stylesheet" href="../../css/common.css?v=cta-pill1" />
-  <link rel="stylesheet" href="../../css/case-study.css?v=cta-pill1" />
-  <style>
-    .cs-launch-zone { background: #fff; padding: 0.5rem; }
-    .cs-launch-inner { width: 100%; }
-    .cs-launch-slot { position: relative; width: 100%; }
-    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
-    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; }
-    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
-    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; border: none; background: none; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
-    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
-    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
-    #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
-    #page-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      z-index: 100;
-      background: transparent !important;
-      border-bottom-color: transparent !important;
-    }
-    #cs-hero-target { background: transparent; border: none; }
-    .case-hero--init .case-hero-kicker,
-    .case-hero--init .case-hero-title,
-    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
-    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
-    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
-@media (prefers-reduced-motion: reduce) {
-      .case-hero--init .case-hero-kicker,
-      .case-hero--init .case-hero-title,
-      .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
-    }
-  </style>
+  <link rel="icon" href="/assets/favicons/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../../css/common.css?v=nav-pad2" />
+  <link rel="stylesheet" href="../../css/case-study.css?v=cs-firstrow4" />
 </head>
 <body>
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6 site-brand">
-        <a href="../../" class="site-logo-mark" aria-label="Home"></a>
-        <div class="site-brand-text">
-          <a href="../../" class="site-name">LUCYTREP LABS</a>
-          <span class="site-tagline">Product Designer</span>
-        </div>
+        <a href="../../" class="site-brand-lockup" aria-label="Home — Product Designer">
+          <span class="site-logo-mark" aria-hidden="true"></span>
+          <span class="site-role-pill">Product Designer</span>
+        </a>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -70,15 +36,15 @@
 
   <div class="cs-ed">
     <div class="cs-ed-grid">
-      <div class="cs-ed-img cs-ed-img--full" style="position:relative;min-height:100svh;aspect-ratio:unset;">
-        <iframe src="https://player.vimeo.com/video/1182137743?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&loop=1&controls=0&muted=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:130%;height:130%;transform:translate(-50%,-50%);border-radius:inherit;" title="LucyTrepanier_MotionProject2_Final"></iframe>
+      <div class="cs-ed-img cs-ed-img--full">
+        <iframe src="https://player.vimeo.com/video/1182137743?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" title="LucyTrepanier_MotionProject2_Final"></iframe>
       </div>
       <script src="https://player.vimeo.com/api/player.js"></script>
       <div class="cs-ed-img cs-ed-img--half" style="background:none;">
         <img src="../../assets/images/meta-in-app/Phone.jpg" alt="Marketplace chat phone mockup" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half" style="position:relative;background:#001669;">
-        <iframe src="https://player.vimeo.com/video/1182268510?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:50%;left:50%;width:130%;height:130%;transform:translate(-50%,-50%);border-radius:inherit;" title="UI for website"></iframe>
+        <iframe src="https://player.vimeo.com/video/1182268510?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" title="UI for website"></iframe>
       </div>
       <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall" style="background:none;">
         <img src="../../assets/images/meta-in-app/Slides.jpg" alt="Facebook Marketplace project slides" style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -217,12 +183,12 @@
                   </div>
                   <div class="case-carousel-slide" style="aspect-ratio:16/9;">
                     <div style="border-radius:0.8rem;overflow:hidden;height:100%;">
-                      <img src="../../assets/images/meta-in-app/analogous audit.png" alt="Analogous audit" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" / loading="lazy">
+                      <img src="../../assets/images/meta-in-app/analogous audit.png" alt="Analogous audit" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
                     </div>
                   </div>
                   <div class="case-carousel-slide" style="aspect-ratio:16/9;">
                     <div style="border-radius:0.8rem;overflow:hidden;height:100%;">
-                      <img src="../../assets/images/meta-in-app/journey.jpg" alt="System map" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" / loading="lazy">
+                      <img src="../../assets/images/meta-in-app/journey.jpg" alt="System map" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
                     </div>
                   </div>
                 </div>
@@ -267,23 +233,23 @@
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row case-image-natural-grid-row--1-4half">
                       <div class="case-image-natural" style="overflow:hidden;border-radius:0.8rem;">
-                        <img src="../../assets/images/meta-in-app/participants.jpg" alt="Research participants" style="width:108%;display:block;object-fit:cover;object-position:top;" / loading="lazy">
+                        <img src="../../assets/images/meta-in-app/participants.jpg" alt="Research participants" style="width:108%;display:block;object-fit:cover;object-position:top;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../../assets/images/meta-in-app/interviews.jpg" alt="User interviews" style="width:100%;display:block;" / loading="lazy">
+                        <img src="../../assets/images/meta-in-app/interviews.jpg" alt="User interviews" style="width:100%;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
                   <div class="case-carousel-slide">
                     <div class="case-image-natural-grid-row case-image-natural-grid-row--3equal">
                       <div class="case-image-natural">
-                        <img src="../../assets/images/meta-in-app/organize.jpg" alt="Organize insights" style="width:100%;display:block;" / loading="lazy">
+                        <img src="../../assets/images/meta-in-app/organize.jpg" alt="Organize insights" style="width:100%;display:block;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../../assets/images/meta-in-app/efficiency.jpg" alt="Efficiency insights" style="width:100%;display:block;" / loading="lazy">
+                        <img src="../../assets/images/meta-in-app/efficiency.jpg" alt="Efficiency insights" style="width:100%;display:block;" loading="lazy">
                       </div>
                       <div class="case-image-natural">
-                        <img src="../../assets/images/meta-in-app/trust&amp;safety.jpg" alt="Trust and safety insights" style="width:100%;display:block;" / loading="lazy">
+                        <img src="../../assets/images/meta-in-app/trust&amp;safety.jpg" alt="Trust and safety insights" style="width:100%;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
@@ -305,14 +271,14 @@
             </div>
             <div style="margin-top: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2);">
               <div class="case-image-block" style="aspect-ratio: 16 / 6;">
-                <img src="../../assets/images/meta-in-app/opportunity.jpg" alt="Opportunity mapping" class="no-dim" style="width:100%;height:100%;object-fit:contain;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/opportunity.jpg" alt="Opportunity mapping" class="no-dim" style="width:100%;height:100%;object-fit:contain;display:block;" loading="lazy">
               </div>
               <div class="case-section-media-row" style="margin-top: 0; margin-bottom: 0;">
                 <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                  <img src="../../assets/images/meta-in-app/feedback2.jpg" alt="User feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" / loading="lazy">
+                  <img src="../../assets/images/meta-in-app/feedback2.jpg" alt="User feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
                 </div>
                 <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                  <img src="../../assets/images/meta-in-app/feedback3.jpg" alt="Alumni feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" / loading="lazy">
+                  <img src="../../assets/images/meta-in-app/feedback3.jpg" alt="Alumni feedback insights" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
                 </div>
               </div>
             </div>
@@ -358,10 +324,10 @@
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../../assets/images/meta-in-app/lo-fi.jpg" alt="Lo-fi and mid-fi wireframes" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/lo-fi.jpg" alt="Lo-fi and mid-fi wireframes" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../../assets/images/meta-in-app/testing.jpg" alt="Testing feedback" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/testing.jpg" alt="Testing feedback" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -384,7 +350,7 @@
             </div>
             <div class="case-section-media-row" style="margin-top:var(--space-2);">
               <div class="case-image-block" style="aspect-ratio:3/2;box-shadow:0 0 0 1px #e0e0e0;">
-                <img src="../../assets/images/meta-in-app/1.jpg" alt="Final product screen 1" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/1.jpg" alt="Final product screen 1" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="aspect-ratio:3/2;box-shadow:0 0 0 1px #e0e0e0;">
                 <video preload="metadata" src="../../assets/images/meta-in-app/impact.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
@@ -402,7 +368,7 @@
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="aspect-ratio:3/2;outline:1px solid #e0e0e0;">
-                <img src="../../assets/images/meta-in-app/2.jpg" alt="Impact 2" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/2.jpg" alt="Impact 2" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="aspect-ratio:3/2;outline:1px solid #e0e0e0;">
                 <video preload="metadata" src="../../assets/images/meta-in-app/emojis.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
@@ -423,10 +389,10 @@
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../../assets/images/meta-in-app/reflection.jpg" alt="Team working session" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/reflection.jpg" alt="Team working session" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="aspect-ratio: 3 / 2;">
-                <img src="../../assets/images/meta-in-app/reflection2.jpg" alt="Team critique session" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/meta-in-app/reflection2.jpg" alt="Team critique session" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -452,7 +418,7 @@
 
   <footer class="container page-footer"></footer>
 
-  <script src="../../js/main.js?v=cta-pill1"></script>
+  <script src="../../js/main.js?v=scroll-mem1"></script>
   <script>
     window.__caseStudyFlyProjectionStrength = 1;
     window.__caseStudyFlyProjectionEase = 2.8;

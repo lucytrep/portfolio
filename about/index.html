@@ -5,21 +5,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About · Lucytrep</title>
-  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
-  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
-  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
-  <link rel="stylesheet" href="../css/common.css?v=cta-pill1" />
-  <link rel="stylesheet" href="../css/about.css?v=cta-pill1" />
+  <link rel="icon" href="/assets/favicons/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../css/common.css?v=scroll-cue1" />
+  <link rel="stylesheet" href="../css/about.css?v=hero-order1" />
 </head>
 <body>
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6 site-brand">
-        <a href="../" class="site-logo-mark" aria-label="Home"></a>
-        <div class="site-brand-text">
-          <a href="../" class="site-name">LUCYTREP LABS</a>
-          <span class="site-tagline">Product Designer</span>
-        </div>
+        <a href="../" class="site-brand-lockup" aria-label="Home, Product Designer">
+          <span class="site-logo-mark" aria-hidden="true"></span>
+          <span class="site-role-pill">Product Designer</span>
+        </a>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -39,222 +39,249 @@
     <!-- ─── Hero ──────────────────────────────────────────── -->
     <section class="about-hero" data-about-gallery>
       <div class="about-hero-copy">
-        <p class="about-kicker">About</p>
         <div class="about-hero-copy-main">
-          <p class="about-hero-index"><span data-gallery-index>01</span>/02</p>
-          <h1 class="about-hero-title">Vancouver<br>Island to<br>New York.</h1>
-          <p class="about-hero-lede">A designer shaped by four cities. Classically trained across Paris, Toronto, and New York, with a foundation in craft and a systems-driven approach to design.</p>
+          <h1 class="about-hero-title">Curious by nature.<br>Different by design.</h1>
+          <p class="about-hero-lede">Graphic and digital designer turned product thinker, currently completing my Master's in Communication Design at Parsons. My focus is digital product design, UI/UX, and AI-driven solutions that bridge user needs with business objectives.</p>
+          <p class="about-hero-lede">I'm dyslexic, and it's given me a mind built for patterns and visuals. Reading and writing were never my strong suit growing up, but aesthetics, design, and a good challenge lit me up, and that's still what drives how I work today. I'd rather take the unfamiliar path than the safe one, which is why I've built products, taught myself new tools, and gone looking for the harder problem more than once. I'm a connector at heart, endlessly curious about what makes people tick, and that curiosity is what shapes every product I touch.</p>
           <a href="../contact/" class="about-hero-link">Let's connect</a>
         </div>
       </div>
       <figure class="about-hero-figure">
         <div class="about-hero-frame">
-          <img class="about-hero-image about-hero-image--then" src="../assets/about-photo.png" alt="Lucille Trepanier as a child" width="848" height="1024" data-caption="Then · Nanaimo" data-index="01" />
-          <img class="about-hero-image about-hero-image--now" src="../assets/about-photo-now.png" alt="Portrait of Lucille Trepanier" width="682" height="1024" data-caption="Now · New York" data-index="02" loading="lazy" />
+          <img class="about-hero-image about-hero-image--then" src="../assets/about-photo.png" alt="Lucille Trepanier as a child" width="848" height="1024" />
+          <img class="about-hero-image about-hero-image--now" src="../assets/about-photo-now.png" alt="Portrait of Lucille Trepanier" width="682" height="1024" loading="lazy" />
         </div>
-        <figcaption class="about-hero-caption">
-          <span data-gallery-caption>Then · Nanaimo</span>
-        </figcaption>
       </figure>
     </section>
 
-    <!-- ─── Story + timeline ──────────────────────────────── -->
-    <section class="about-story" id="about-story">
-      <div class="about-story-main">
-        <p class="about-kicker">The path</p>
-        <p class="about-story-lede">My perspective is shaped by ADHD and dyslexia, which sharpen how I process complexity, recognize patterns, and design for clarity at scale. The cities are the through-line — each one a different way of seeing, making, and moving toward the work.</p>
+    <a class="scroll-cue" href="#places" data-scroll-cue>
+      <span class="scroll-cue-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v12" stroke-width="1.75" />
+        <path d="m7 13 5 5 5-5" stroke-width="1.75" />
+        </svg>
+      </span>
+      <span class="visually-hidden">Scroll down</span>
+    </a>
 
-        <article class="about-chapter" id="city-nanaimo" data-city="nanaimo">
-          <h2 class="about-chapter-title">Nanaimo</h2>
-          <p class="about-body-text">Grew up in Nanaimo on Vancouver Island, always looking toward the city. Post-secondary schooling was going to be tricky and require accommodations to support how I learn, so I approached things differently. Technology became how I think, create, and build.</p>
-        </article>
+    <!-- ─── Places ────────────────────────────────────────── -->
+    <section class="about-places" id="places">
+      <div class="about-places-track" data-places>
+        <div class="about-places-viewport">
+          <div class="about-places-cluster">
+          <div class="about-places-nav">
+            <p class="section-eyebrow about-places-kicker">Four cities</p>
+            <ol class="about-places-index" data-places-index>
+              <li>
+                <button type="button" data-place-jump="0" aria-current="true">
+                  <span class="about-places-num">01</span>
+                  <span class="about-places-name">Vancouver Island</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" data-place-jump="1">
+                  <span class="about-places-num">02</span>
+                  <span class="about-places-name">Paris</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" data-place-jump="2">
+                  <span class="about-places-num">03</span>
+                  <span class="about-places-name">Toronto</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" data-place-jump="3">
+                  <span class="about-places-num">04</span>
+                  <span class="about-places-name">New York</span>
+                </button>
+              </li>
+            </ol>
+          </div>
 
-        <article class="about-chapter" id="city-paris" data-city="paris">
-          <h2 class="about-chapter-title">Paris</h2>
-          <p class="about-body-text">At 17 I studied graphic design through Parsons in Paris and saw the world I wanted. Craft, type, and the pace of a city that takes beauty seriously — it made the path feel real for the first time.</p>
-        </article>
+          <div class="about-places-stage">
+            <article class="about-place is-active" data-city="nanaimo">
+              <div class="about-place-copy">
+                <h2 class="about-place-city">Vancouver Island</h2>
+                <p class="about-place-location">British Columbia</p>
+                <p class="about-place-text">Grew up surrounded by nature, staring across the water at the city lights on the mainland, wondering what it would be like on the other side. School was never going to be simple for how I learn, so early on I found my own way through it. Technology became the tool that let me think, create, and build on my own terms.</p>
+              </div>
+              <figure class="about-place-media">
+                <img src="../assets/images/about/nanaimo/ridge.jpg?v=ridge3" alt="Snowy coastal mountains above the water, Vancouver Island" width="1024" height="700" loading="lazy" />
+              </figure>
+            </article>
 
-        <article class="about-chapter" id="city-toronto" data-city="toronto">
-          <h2 class="about-chapter-title">Toronto</h2>
-          <p class="about-body-text">At 18 I left the island, moved across the country to Toronto to study technology, and started building toward something bigger. University wasn't a given. The work became how I proved it anyway.</p>
-        </article>
+            <article class="about-place" data-city="paris">
+              <div class="about-place-copy">
+                <h2 class="about-place-city">Paris</h2>
+                <p class="about-place-location">France</p>
+                <p class="about-place-text">Studied graphic design through Parsons and saw the world I wanted to be part of. Craft, type, a city that takes beauty seriously. For the first time, the path felt real.</p>
+              </div>
+              <figure class="about-place-media">
+                <img src="../assets/images/about/toronto/paris.jpg" alt="Crowd with French flags on Boulevard des Italiens" width="1600" height="1200" loading="lazy" />
+              </figure>
+            </article>
 
-        <article class="about-chapter" id="city-newyork" data-city="newyork">
-          <h2 class="about-chapter-title">New York</h2>
-          <p class="about-body-text">Moved here and plan to stay. Parsons School of Design, Digital Product Design, with a strong focus on accessibility and systems thinking. My dyslexic mind and deep visual foundation give me a perspective that's hard to replicate.</p>
-        </article>
+            <article class="about-place" data-city="toronto">
+              <div class="about-place-copy">
+                <h2 class="about-place-city">Toronto</h2>
+                <p class="about-place-location">Ontario</p>
+                <p class="about-place-text">Left the island and moved across the country to study tech and design, chasing something bigger than what I knew. University wasn't a given for me. The work became how I proved I belonged there.</p>
+              </div>
+              <figure class="about-place-media">
+                <img src="../assets/images/about/toronto/city-hall.jpg?v=rink1" alt="Toronto City Hall and the Nathan Phillips Square rink at night" width="768" height="1024" loading="lazy" />
+              </figure>
+            </article>
+
+            <article class="about-place" data-city="newyork">
+              <div class="about-place-copy">
+                <h2 class="about-place-city">New York</h2>
+                <p class="about-place-location">United States</p>
+                <p class="about-place-text">Moved here, and I'm staying. Parsons School of Design, Digital Product Design, with a focus on accessibility and systems thinking. Being dyslexic shaped how I see, and it still shapes the way I design.</p>
+              </div>
+              <figure class="about-place-media">
+                <img src="../assets/images/about/ny/skyline.jpg?v=times2" alt="Yellow taxi on a Times Square street, New York" width="1534" height="2048" loading="lazy" />
+              </figure>
+            </article>
+          </div>
+          </div>
+        </div>
       </div>
 
-      <aside class="about-timeline" aria-label="Cities">
-        <div class="about-timeline-track" data-timeline>
-          <span class="about-timeline-line" aria-hidden="true"></span>
-          <span class="about-timeline-fill" aria-hidden="true"></span>
-
-          <a class="about-timeline-city" href="#city-nanaimo" data-city-link="nanaimo">
-            <span class="about-timeline-dot" aria-hidden="true"></span>
-            <span class="about-timeline-meta">Home</span>
-            <span class="about-timeline-name">Nanaimo</span>
-          </a>
-          <a class="about-timeline-city" href="#city-paris" data-city-link="paris">
-            <span class="about-timeline-dot" aria-hidden="true"></span>
-            <span class="about-timeline-meta">17</span>
-            <span class="about-timeline-name">Paris</span>
-          </a>
-          <a class="about-timeline-city" href="#city-toronto" data-city-link="toronto">
-            <span class="about-timeline-dot" aria-hidden="true"></span>
-            <span class="about-timeline-meta">18</span>
-            <span class="about-timeline-name">Toronto</span>
-          </a>
-          <a class="about-timeline-city" href="#city-newyork" data-city-link="newyork">
-            <span class="about-timeline-dot" aria-hidden="true"></span>
-            <span class="about-timeline-meta">Now</span>
-            <span class="about-timeline-name">New York</span>
-          </a>
+      <!-- Mobile-only: same carousel layout as the Interests album -->
+      <div class="about-places-mobile" data-places-mobile>
+        <h2 class="about-section-title about-album-heading" id="places-mobile-title">Four cities</h2>
+        <div class="about-album-stage is-native is-mobile" data-places-mobile-stage aria-label="Four cities">
+          <div class="about-album-track">
+            <figure class="about-album-item is-active" data-city="nanaimo" data-title="Vancouver Island" data-meta="British Columbia" data-description="Grew up surrounded by nature, staring across the water at the city lights on the mainland, wondering what it would be like on the other side. School was never going to be simple for how I learn, so early on I found my own way through it. Technology became the tool that let me think, create, and build on my own terms.">
+              <div class="about-album-media">
+                <img src="../assets/images/about/nanaimo/ridge.jpg?v=ridge3" alt="Snowy coastal mountains above the water, Vancouver Island" loading="lazy" draggable="false" />
+              </div>
+            </figure>
+            <figure class="about-album-item" data-city="paris" data-title="Paris" data-meta="France" data-description="Studied graphic design through Parsons and saw the world I wanted to be part of. Craft, type, a city that takes beauty seriously. For the first time, the path felt real.">
+              <div class="about-album-media">
+                <img src="../assets/images/about/toronto/paris.jpg" alt="Crowd with French flags on Boulevard des Italiens" loading="lazy" draggable="false" />
+              </div>
+            </figure>
+            <figure class="about-album-item" data-city="toronto" data-title="Toronto" data-meta="Ontario" data-description="Left the island and moved across the country to study tech and design, chasing something bigger than what I knew. University wasn't a given for me. The work became how I proved I belonged there.">
+              <div class="about-album-media">
+                <img src="../assets/images/about/toronto/city-hall.jpg?v=rink1" alt="Toronto City Hall and the Nathan Phillips Square rink at night" loading="lazy" draggable="false" />
+              </div>
+            </figure>
+            <figure class="about-album-item" data-city="newyork" data-title="New York" data-meta="United States" data-description="Moved here, and I'm staying. Parsons School of Design, Digital Product Design, with a focus on accessibility and systems thinking. Being dyslexic shaped how I see, and it still shapes the way I design.">
+              <div class="about-album-media">
+                <img src="../assets/images/about/ny/skyline.jpg?v=times2" alt="Yellow taxi on a Times Square street, New York" loading="lazy" draggable="false" />
+              </div>
+            </figure>
+          </div>
         </div>
-      </aside>
+
+        <div class="about-album-caption is-visible" data-places-mobile-caption aria-live="polite" aria-hidden="false">
+          <h3 data-places-mobile-title>Vancouver Island</h3>
+          <span class="about-album-location" data-places-mobile-meta>British Columbia</span>
+          <p data-places-mobile-description>Grew up surrounded by nature, staring across the water at the city lights on the mainland, wondering what it would be like on the other side. School was never going to be simple for how I learn, so early on I found my own way through it. Technology became the tool that let me think, create, and build on my own terms.</p>
+        </div>
+      </div>
     </section>
 
+
     <!-- ─── Photo album ───────────────────────────────────── -->
-    <section class="about-album" id="album">
-      <div class="about-album-header">
-        <p class="about-kicker">Album</p>
-        <h2 class="about-section-title">Four cities.</h2>
+    <section class="about-album" id="album" aria-labelledby="interests-title">
+      <h2 class="about-section-title about-album-heading" id="interests-title">Interests</h2>
+
+      <div class="about-album-caption is-visible" data-album-caption aria-live="polite" aria-hidden="false">
+        <h3 data-album-title>Wave Watching</h3>
+        <span class="about-album-location" data-album-meta>Tofino, British Columbia</span>
+        <p data-album-description>I could sit on this hillside in Tofino all summer watching the surfers. The ocean's vastness is where a lot of my <strong>creativity</strong> and visual direction comes from. I love taking things in from a distance and people watching.</p>
       </div>
 
       <div class="about-album-stage" data-album aria-label="Photo album">
         <div class="about-album-track">
-          <figure class="about-album-item" data-title="Hammock days" data-meta="Nanaimo, Vancouver Island">
-            <img src="../assets/images/about/nanaimo/hammock.jpg" alt="Hammock on the beach, Vancouver Island" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="ocean" data-title="Island Life" data-meta="Tofino, British Columbia" data-description="Shot on film in Tofino once the rain cleared and the salt air settled. A lot of us on the island hang out here, looking out at the open ocean.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/nanaimo/hammock.jpg" alt="Hammock on the beach, Vancouver Island" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Long Beach" data-meta="Nanaimo, Vancouver Island">
-            <img src="../assets/images/about/nanaimo/beach.JPG" alt="Aerial view of sandy beach, Vancouver Island" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="film" data-title="Film Photography" data-meta="Tofino, British Columbia" data-description="Shot on my film camera. It almost looks like a painting, and I hope to get it framed one day.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/nanaimo/beach.JPG" alt="Aerial view of sandy beach, Vancouver Island" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="In the swell" data-meta="Nanaimo, Vancouver Island">
-            <img src="../assets/images/about/nanaimo/swell.jpg" alt="Surfers in the ocean swell" loading="lazy" draggable="false" />
+          <figure class="about-album-item is-active" data-album-default data-takeaway="creativity" data-title="Wave Watching" data-meta="Tofino, British Columbia" data-description="I could sit on this hillside in Tofino all summer watching the surfers. The ocean's vastness is where a lot of my creativity and visual direction comes from. I love taking things in from a distance and people watching.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/nanaimo/swell.jpg" alt="Surfers in the ocean swell" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Surf day" data-meta="Vancouver Island">
-            <img src="../assets/images/about/nanaimo/surf.JPG" alt="Surfing off Vancouver Island" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="playing" data-title="Surfing" data-meta="Tofino, British Columbia" data-description="My sister and I waxing our boards while a friend flew a drone overhead. We spent the rest of the day playing in the water.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/nanaimo/surf.JPG" alt="Surfing off Vancouver Island" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Whistler" data-meta="British Columbia">
-            <img src="../assets/images/about/nanaimo/whistler.JPG" alt="Mountain glacier view, Whistler" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="colours" data-title="Hiking" data-meta="Whistler, British Columbia" data-description="A summer hike with my best friend. I usually ski Whistler, so seeing the glaciers in the sun was a first, and the colours of the mountains were unlike anything I'd seen.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/nanaimo/whistler.JPG" alt="Mountain glacier view, Whistler" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="World Cup" data-meta="Paris">
-            <img src="../assets/images/about/toronto/paris.jpg" alt="World Cup celebrations in Paris" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="friends" data-title="City Picnics" data-meta="Toronto, Ontario" data-description="I spent years in Toronto. I finished my undergrad there and worked there for two years, so a big part of my past life lives in this city. Shot from Riverdale Park on the east side, where my friends and I would eat charcuterie and watch the sunset.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/toronto/skyline.JPG" alt="Toronto skyline" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="The skyline" data-meta="Toronto">
-            <img src="../assets/images/about/toronto/skyline.JPG" alt="Toronto skyline" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="shared" data-title="Public Speaking" data-meta="Toronto, Ontario" data-description="Public speaking used to be a ritual for me. This was a lecture I gave at an event on AI and design, where I shared how I use AI in my projects and helped students prepare for the nuances of it before entering the workforce.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/toronto/raps.JPG" alt="Toronto Raptors game at Scotiabank Arena" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Raptors game" data-meta="Scotiabank Arena, Toronto">
-            <img src="../assets/images/about/toronto/raps.JPG" alt="Toronto Raptors game at Scotiabank Arena" loading="lazy" draggable="false" />
+          <figure class="about-album-item about-album-item--subject" data-takeaway="research" data-title="Research" data-meta="Wuppertal, Germany" data-description="Defending our undergrad research with my colleague. After a year of hard work, we presented to hundreds of technologists, designers, and engineers on AI in graphic communications.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/toronto/research.jpg" alt="Research conference presentation" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item about-album-item--subject" data-title="IARIGAI" data-meta="Research conference, Toronto">
-            <img src="../assets/images/about/toronto/research.jpg" alt="Research conference presentation" loading="lazy" draggable="false" />
+          <figure class="about-album-item about-album-item--subject" data-takeaway="pushed" data-title="Running" data-meta="Toronto, Ontario" data-description="Like everyone, I had my running phase. I'd only run 10Ks, then pushed myself through a half marathon on minimal training. My mom ran this same race 20 years ago at my age, so I wanted to follow in her footsteps. Pun intended.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/toronto/run.JPG" alt="After the TCS Toronto Waterfront Marathon" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item about-album-item--subject" data-title="TCS Waterfront Marathon" data-meta="Toronto">
-            <img src="../assets/images/about/toronto/run.JPG" alt="After the TCS Toronto Waterfront Marathon" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="frame" data-title="Street Photography" data-meta="New York, New York" data-description="Some of my first photos after moving to New York last year. Total tourist trap, but I'll never get over the Empire State Building lining up perfectly in the frame.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Manhattan Bridge" data-meta="DUMBO, Brooklyn">
-            <img src="../assets/images/about/ny/dumbo.jpg" alt="Manhattan Bridge from DUMBO, Brooklyn" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="home" data-title="Waterfront Walks" data-meta="New York, New York" data-description="Watching a gorgeous sunset over the East River from Williamsburg with a friend. Being near the water here reminds me of home.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/ny/sunset.jpg" alt="Sunset over New York" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Sunset" data-meta="New York">
-            <img src="../assets/images/about/ny/sunset.jpg" alt="Sunset over New York" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="tennis" data-title="Tennis" data-meta="Arthur Ashe Stadium, New York" data-description="I was lucky enough to see some of my favourites. It was my first time watching tennis in a stadium, and I still can't believe it was in my new city. Also, the Honey Deuce is unreal.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/ny/usopen.JPG" alt="US Open at Arthur Ashe Stadium" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="US Open" data-meta="Arthur Ashe Stadium">
-            <img src="../assets/images/about/ny/usopen.JPG" alt="US Open at Arthur Ashe Stadium" loading="lazy" draggable="false" />
+          <figure class="about-album-item about-album-item--subject" data-takeaway="dream" data-title="Design School" data-meta="New York, New York" data-description="I'd wanted to go to Parsons since high school, so orientation week felt like a dream. It's also where I met my best friends and future roommates.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/ny/parsons.JPG" alt="Outside The New School, Parsons" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item about-album-item--subject" data-title="Parsons" data-meta="The New School, New York">
-            <img src="../assets/images/about/ny/parsons.JPG" alt="Outside The New School, Parsons" loading="lazy" draggable="false" />
+          <figure class="about-album-item" data-takeaway="creative" data-title="Libraries" data-meta="New York, New York" data-description="One of my favourite spots to work at the New York Public Library. Whenever I hit creative block, I'd stare up at the ceiling. It's vivid, and the best place to lock in.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/ny/roseroom.jpg" alt="Working in the Rose Main Reading Room, NYPL" loading="lazy" draggable="false" />
+            </div>
           </figure>
-          <figure class="about-album-item" data-title="Rose Main Reading Room" data-meta="New York Public Library">
-            <img src="../assets/images/about/ny/roseroom.jpg" alt="Working in the Rose Main Reading Room, NYPL" loading="lazy" draggable="false" />
-          </figure>
-          <figure class="about-album-item about-album-item--subject" data-title="Runway AI Summit" data-meta="New York">
-            <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" loading="lazy" draggable="false" />
+          <figure class="about-album-item about-album-item--subject" data-takeaway="learning" data-title="Creative Technology" data-meta="New York, New York" data-description="I got to attend thanks to a microgrant. Conferences are one of my favourite things because they're social and keep me learning outside of work. My classmates and I learned a lot from Runway and their generative AI platform, plus people from Microsoft, Etsy, and Columbia.">
+            <div class="about-album-media">
+              <img src="../assets/images/about/ny/runway-ai.jpg" alt="Runway AI Summit conference, New York" loading="lazy" draggable="false" />
+            </div>
           </figure>
         </div>
       </div>
 
-      <div class="about-album-caption" aria-live="polite">
-        <p class="about-album-caption-title" data-album-title>Hammock days</p>
-        <p class="about-album-caption-meta" data-album-meta>Nanaimo, Vancouver Island</p>
-      </div>
-    </section>
-
-    <!-- ─── Play ──────────────────────────────────────────── -->
-    <section class="about-play" id="play">
-      <div class="about-play-header">
-        <p class="about-kicker">Play</p>
-        <h2 class="about-section-title">What I'm into when I'm not designing.</h2>
-      </div>
-
-      <div class="about-play-grid">
-
-        <!-- Spotify: drop a playlist/album embed URL into data-spotify-embed to replace the fallback player -->
-        <article class="play-card play-card--spotify" data-spotify-embed="">
-          <p class="play-card-label">Spotify</p>
-          <div class="play-spotify" data-spotify-root>
-            <div class="play-spotify-art" aria-hidden="true">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <div class="play-spotify-copy">
-              <p class="play-spotify-kicker">Listening</p>
-              <h3>@lucytrep</h3>
-              <p>What I'm playing lately. Follow the profile, or this becomes a live player when a playlist is embedded.</p>
-            </div>
-            <a class="play-spotify-btn" href="https://open.spotify.com/user/lucytrep" target="_blank" rel="noopener noreferrer">Open Spotify</a>
-          </div>
-        </article>
-
-        <article class="play-card play-card--maps">
-          <p class="play-card-label">Google Maps</p>
-          <a class="play-maps-link" href="https://www.google.com/maps/@/data=!3m1!4b1!4m2!11m1!2suaW8V7MY18y5VpSML7XhcV9Q16tPoQ" target="_blank" rel="noopener noreferrer">
-            <p class="play-maps-kicker">Saved list</p>
-            <h3>Where I've been</h3>
-            <p>A running list of spots across the cities — New York, Toronto, and Paris.</p>
-            <span class="play-card-cta">Open in Maps →</span>
-          </a>
-        </article>
-
-        <article class="play-card play-card--cosmos">
-          <p class="play-card-label">Cosmos</p>
-          <a class="play-cosmos" href="https://www.cosmos.so/lucytrep" target="_blank" rel="noopener noreferrer">
-            <div class="play-cosmos-mosaic" aria-hidden="true">
-              <img src="../assets/images/about/ny/sunset.jpg" alt="" loading="lazy" />
-              <img src="../assets/images/about/nanaimo/surf.JPG" alt="" loading="lazy" />
-              <img src="../assets/images/about/toronto/paris.jpg" alt="" loading="lazy" />
-              <img src="../assets/images/about/ny/roseroom.jpg" alt="" loading="lazy" />
-            </div>
-            <div class="play-cosmos-meta">
-              <h3>@lucytrep</h3>
-              <p>Visual saves, references, and rabbit holes.</p>
-              <span class="play-card-cta">Open Cosmos →</span>
-            </div>
-          </a>
-        </article>
-
-        <article class="play-card play-card--beli">
-          <p class="play-card-label">Beli</p>
-          <a class="play-beli" href="https://beliapp.com/" target="_blank" rel="noopener noreferrer">
-            <p class="play-beli-kicker">Ranking spots</p>
-            <h3>Where I eat</h3>
-            <p>Ranking restaurants from New York back through Toronto and Paris — the list is always in motion.</p>
-            <ul class="play-beli-chips">
-              <li>New York</li>
-              <li>Toronto</li>
-              <li>Paris</li>
-            </ul>
-            <span class="play-card-cta">Open Beli →</span>
-          </a>
-        </article>
-
-      </div>
     </section>
 
   </main>
 
   <footer class="container page-footer"></footer>
 
-  <script src="../js/main.js?v=cta-pill1"></script>
+  <script src="../js/main.js?v=scroll-cue1"></script>
   <script>
   (function () {
     'use strict';
@@ -267,93 +294,493 @@
       var frame = root && root.querySelector('.about-hero-frame');
       if (!root || !figure || !frame) return;
 
-      var images = Array.prototype.slice.call(root.querySelectorAll('.about-hero-image'));
-      var indexEl = root.querySelector('[data-gallery-index]');
-      var captionEl = root.querySelector('[data-gallery-caption]');
-      if (images.length < 2) return;
+      if (root.querySelectorAll('.about-hero-image').length < 2) return;
 
       var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-      function setMeta(i) {
-        var active = images[i] || images[0];
-        if (indexEl) indexEl.textContent = active.getAttribute('data-index') || '';
-        if (captionEl) captionEl.textContent = active.getAttribute('data-caption') || '';
-      }
-
-      if (finePointer) {
-        frame.addEventListener('mouseenter', function () { setMeta(1); });
-        frame.addEventListener('mouseleave', function () { setMeta(0); });
-        return;
-      }
+      if (finePointer) return;
 
       frame.addEventListener('click', function () {
         figure.classList.toggle('is-swapped');
-        setMeta(figure.classList.contains('is-swapped') ? 1 : 0);
       });
     })();
 
-    // Paste a Spotify playlist or album embed URL here to replace the fallback card.
-    // Example: 'https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M'
-    var SPOTIFY_EMBED = '';
+    (function initPlaces() {
+      var track = document.querySelector('[data-places]');
+      var viewport = track && track.querySelector('.about-places-viewport');
+      var stage = viewport && viewport.querySelector('.about-places-stage');
+      var items = viewport ? Array.prototype.slice.call(viewport.querySelectorAll('.about-place')) : [];
+      var jumps = Array.prototype.slice.call(document.querySelectorAll('[data-place-jump]'));
+      if (!track || !viewport || !items.length) return;
 
-    (function initSpotify() {
-      var card = document.querySelector('[data-spotify-embed]');
-      var root = document.querySelector('[data-spotify-root]');
-      if (!card || !root) return;
-      var src = (card.getAttribute('data-spotify-embed') || SPOTIFY_EMBED || '').trim();
-      if (!src) return;
-      var iframe = document.createElement('iframe');
-      iframe.src = src;
-      iframe.title = 'Spotify player';
-      iframe.allow = 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture';
-      iframe.loading = 'lazy';
-      iframe.setAttribute('allowfullscreen', '');
-      root.replaceWith(iframe);
+      var last = items.length - 1;
+      var activeIndex = 0;
+      var compactMq = window.matchMedia('(max-width: 62.5rem)');
+      var staticObserver = null;
+      var enhanced = false;
+      var running = false;
+      var hold = 0.62;
+      var displayPos = 0;
+
+      function setActiveItem(index) {
+        activeIndex = index;
+        items.forEach(function (item, i) {
+          item.classList.toggle('is-active', i === index);
+        });
+        jumps.forEach(function (btn, i) {
+          if (i === index) btn.setAttribute('aria-current', 'true');
+          else btn.removeAttribute('aria-current');
+        });
+      }
+
+      function shouldEnhance() {
+        return !reduceMotion && !!window.IntersectionObserver && !compactMq.matches;
+      }
+
+      function clearEnhancedStyles() {
+        running = false;
+        displayPos = 0;
+        track.style.height = '';
+        if (stage) stage.style.height = '';
+        items.forEach(function (item) {
+          item.style.opacity = '';
+          item.style.removeProperty('--place-y');
+          item.style.zIndex = '';
+          item.style.pointerEvents = '';
+          item.removeAttribute('aria-hidden');
+        });
+      }
+
+      function bindStatic() {
+        if (staticObserver || !window.IntersectionObserver) return;
+        staticObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                var index = items.indexOf(entry.target);
+                setActiveItem(index);
+              }
+            });
+          },
+          { rootMargin: '-45% 0px -45% 0px', threshold: 0 }
+        );
+        items.forEach(function (item) { staticObserver.observe(item); });
+      }
+
+      function unbindStatic() {
+        if (!staticObserver) return;
+        staticObserver.disconnect();
+        staticObserver = null;
+      }
+
+      function exitBuffer() {
+        return Math.round(viewport.offsetHeight * 0.18);
+      }
+
+      function layout() {
+        var segment = Math.round(window.innerHeight * 1.05);
+        track.style.height = (last * segment + viewport.offsetHeight + exitBuffer()) + 'px';
+        if (!stage) return;
+        var maxH = 0;
+        items.forEach(function (item) {
+          maxH = Math.max(maxH, item.offsetHeight);
+        });
+        stage.style.height = Math.max(maxH, 1) + 'px';
+      }
+
+      function scrollableRange() {
+        return Math.max(track.offsetHeight - viewport.offsetHeight - exitBuffer(), 1);
+      }
+
+      function chapterFromRaw(rawPos) {
+        var clamped = Math.min(Math.max(rawPos, 0), last);
+        if (clamped >= last) return last;
+        var i = Math.floor(clamped);
+        var f = clamped - i;
+        if (f <= hold) return i;
+        var u = (f - hold) / (1 - hold);
+        u = u * u * (3 - 2 * u);
+        return i + u;
+      }
+
+      function rawForIndex(index) {
+        if (index <= 0) return 0;
+        if (index >= last) return last;
+        return index + hold * 0.12;
+      }
+
+      function hideItem(item) {
+        item.style.opacity = '0';
+        item.style.setProperty('--place-y', '0px');
+        item.style.zIndex = '0';
+        item.style.pointerEvents = 'none';
+        item.setAttribute('aria-hidden', 'true');
+      }
+
+      function showItem(item, opts) {
+        var opacity = opts.opacity == null ? 1 : opts.opacity;
+        item.style.opacity = String(opacity);
+        item.style.setProperty('--place-y', (opts.y || 0) + 'px');
+        item.style.zIndex = String(opts.z || 1);
+        item.style.pointerEvents = opts.interactive ? 'auto' : 'none';
+        item.setAttribute('aria-hidden', opts.interactive ? 'false' : 'true');
+      }
+
+      function readTarget() {
+        var trackRect = track.getBoundingClientRect();
+        var stickyTop = viewport.getBoundingClientRect().top;
+        var scrolled = stickyTop - trackRect.top;
+        var raw = scrolled / scrollableRange() * last;
+        return chapterFromRaw(raw);
+      }
+
+      function applyPos(pos) {
+        var from = Math.min(Math.floor(pos), last);
+        var t = pos - from;
+        if (from === last) t = 0;
+        var nearest = t > 0.45 ? Math.min(from + 1, last) : from;
+        if (nearest !== activeIndex) setActiveItem(nearest);
+
+        items.forEach(function (item, i) {
+          if (i === from && t === 0) {
+            showItem(item, { opacity: 1, y: 0, z: 2, interactive: true });
+            return;
+          }
+          if (i === from) {
+            showItem(item, {
+              opacity: 1 - t,
+              y: -10 * t,
+              z: 1,
+              interactive: t < 0.5
+            });
+            return;
+          }
+          if (i === from + 1) {
+            showItem(item, {
+              opacity: t,
+              y: (1 - t) * 14,
+              z: 3,
+              interactive: t >= 0.5
+            });
+            return;
+          }
+          hideItem(item);
+        });
+      }
+
+      function tick() {
+        if (!enhanced) {
+          running = false;
+          return;
+        }
+        var target = readTarget();
+        var delta = target - displayPos;
+        if (Math.abs(delta) < 0.0018) {
+          displayPos = target;
+          applyPos(displayPos);
+          running = false;
+          return;
+        }
+        var k = Math.abs(delta) > 1.15 ? 0.3 : 0.18;
+        displayPos += delta * k;
+        applyPos(displayPos);
+        requestAnimationFrame(tick);
+      }
+
+      function onScroll() {
+        if (!enhanced || running) return;
+        running = true;
+        requestAnimationFrame(tick);
+      }
+
+      function scrollToIndex(index) {
+        if (!enhanced) {
+          items[index].scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+          return;
+        }
+        var trackRect = track.getBoundingClientRect();
+        var stickyTop = viewport.getBoundingClientRect().top;
+        var t = last ? rawForIndex(index) / last : 0;
+        var y = window.scrollY + trackRect.top - stickyTop + t * scrollableRange();
+        window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
+      }
+
+      function syncMode() {
+        if (!shouldEnhance()) {
+          enhanced = false;
+          track.classList.remove('is-enhanced');
+          clearEnhancedStyles();
+          bindStatic();
+          return;
+        }
+        unbindStatic();
+        enhanced = true;
+        track.classList.add('is-enhanced');
+        layout();
+        displayPos = readTarget();
+        applyPos(displayPos);
+      }
+
+      setActiveItem(0);
+
+      jumps.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var index = Number(btn.getAttribute('data-place-jump'));
+          if (!isFinite(index) || index < 0 || index > last) return;
+          scrollToIndex(index);
+        });
+      });
+
+      Array.prototype.forEach.call(viewport.querySelectorAll('.about-place-media img'), function (img) {
+        if (img.complete) return;
+        img.addEventListener('load', function () {
+          if (enhanced) layout();
+        });
+      });
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', function () {
+        if (enhanced) {
+          layout();
+          displayPos = readTarget();
+          applyPos(displayPos);
+        }
+      });
+      if (compactMq.addEventListener) compactMq.addEventListener('change', syncMode);
+      else if (compactMq.addListener) compactMq.addListener(syncMode);
+
+      syncMode();
+    })();
+
+    (function initPlacesMobile() {
+      var wrapper = document.querySelector('[data-places-mobile]');
+      var stage = wrapper && wrapper.querySelector('[data-places-mobile-stage]');
+      var track = stage && stage.querySelector('.about-album-track');
+      var items = track ? Array.prototype.slice.call(track.querySelectorAll('.about-album-item')) : [];
+      if (!wrapper || !stage || !items.length) return;
+
+      var titleEl = wrapper.querySelector('[data-places-mobile-title]');
+      var metaEl = wrapper.querySelector('[data-places-mobile-meta]');
+      var descriptionEl = wrapper.querySelector('[data-places-mobile-description]');
+      var compactMq = window.matchMedia('(max-width: 62.5rem)');
+      var current = 0;
+
+      function startPad() {
+        var cs = window.getComputedStyle(stage);
+        return parseFloat(cs.scrollPaddingInlineStart || cs.paddingInlineStart || cs.paddingLeft) || 0;
+      }
+
+      function alignItem(index, behavior) {
+        index = Math.max(0, Math.min(items.length - 1, index));
+        var itemRect = items[index].getBoundingClientRect();
+        var stageRect = stage.getBoundingClientRect();
+        stage.scrollTo({
+          left: stage.scrollLeft + itemRect.left - stageRect.left - startPad(),
+          behavior: behavior
+        });
+      }
+
+      function setCaption(index) {
+        current = index;
+        items.forEach(function (el, i) { el.classList.toggle('is-active', i === index); });
+        var item = items[index];
+        if (!item) return;
+        if (titleEl) titleEl.textContent = item.getAttribute('data-title') || '';
+        if (metaEl) metaEl.textContent = item.getAttribute('data-meta') || '';
+        if (descriptionEl) descriptionEl.textContent = item.getAttribute('data-description') || '';
+      }
+
+      stage.addEventListener('scroll', function () {
+        var origin = stage.getBoundingClientRect().left + startPad();
+        var nearest = current;
+        var distance = Infinity;
+        items.forEach(function (item, index) {
+          var delta = Math.abs(item.getBoundingClientRect().left - origin);
+          if (delta < distance) { nearest = index; distance = delta; }
+        });
+        if (nearest !== current) setCaption(nearest);
+      }, { passive: true });
+
+      window.addEventListener('resize', function () {
+        if (compactMq.matches) alignItem(current, 'instant');
+      });
+
+      function onModeChange() {
+        if (compactMq.matches) {
+          setCaption(0);
+          stage.scrollLeft = 0;
+        }
+      }
+      if (compactMq.addEventListener) compactMq.addEventListener('change', onModeChange);
+      else if (compactMq.addListener) compactMq.addListener(onModeChange);
+
+      setCaption(0);
+      if (compactMq.matches) stage.scrollLeft = 0;
     })();
 
     (function initAlbum() {
+      var controller = new AbortController();
+      var raf = 0;
+      function listen(target, event, callback, options) {
+        target.addEventListener(event, callback, Object.assign({}, options, { signal: controller.signal }));
+      }
       var stage = document.querySelector('[data-album]');
       if (!stage) return;
 
       var track = stage.querySelector('.about-album-track');
-      var items = Array.prototype.slice.call(stage.querySelectorAll('.about-album-item'));
+      var originalItems = Array.prototype.slice.call(stage.querySelectorAll('.about-album-item'));
+      var defaultItem = stage.querySelector('[data-album-default]') || originalItems[0];
+      var captionEl = document.querySelector('[data-album-caption]');
       var titleEl = document.querySelector('[data-album-title]');
       var metaEl = document.querySelector('[data-album-meta]');
-      var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      var native = reduceMotion || !finePointer;
+      var descriptionEl = document.querySelector('[data-album-description]');
+      // Native snap carousel on compact layouts, or when nothing can hover
+      // (iPad / Chrome device-mode). Hover-scale stays for mouse/trackpad,
+      // including widths Chrome still calls "tablet" (~1024px).
+      var compactMq = window.matchMedia('(max-width: 62.5rem)');
+      var canHoverMq = window.matchMedia('(any-hover: hover)');
+
+      function useNativeAlbum() {
+        return compactMq.matches || !canHoverMq.matches;
+      }
+
+      function restartAlbum() {
+        controller.abort();
+        if (raf) cancelAnimationFrame(raf);
+        stage.querySelectorAll('[data-album-set="before"], [data-album-set="after"]').forEach(function (el) { el.remove(); });
+        stage.classList.remove('is-mobile', 'is-native');
+        track.style.transform = '';
+        stage.scrollLeft = 0;
+        initAlbum();
+      }
+
+      listen(compactMq, 'change', restartAlbum);
+      listen(canHoverMq, 'change', restartAlbum);
+
+      var items = originalItems;
 
       function setCaption(item) {
         if (!item) return;
         items.forEach(function (el) { el.classList.toggle('is-active', el === item); });
         if (titleEl) titleEl.textContent = item.getAttribute('data-title') || '';
         if (metaEl) metaEl.textContent = item.getAttribute('data-meta') || '';
+        if (descriptionEl) {
+          var description = item.getAttribute('data-description') || '';
+          var takeaway = item.getAttribute('data-takeaway') || '';
+          var wordIndex = takeaway ? description.indexOf(takeaway) : -1;
+          descriptionEl.textContent = '';
+          if (wordIndex === -1) {
+            descriptionEl.textContent = description;
+          } else {
+            var emphasis = document.createElement('strong');
+            emphasis.textContent = takeaway;
+            descriptionEl.append(
+              document.createTextNode(description.slice(0, wordIndex)),
+              emphasis,
+              document.createTextNode(description.slice(wordIndex + takeaway.length))
+            );
+          }
+        }
+        if (captionEl) {
+          captionEl.classList.add('is-visible');
+          captionEl.setAttribute('aria-hidden', 'false');
+        }
       }
 
-      items.forEach(function (item) {
-        item.addEventListener('mouseenter', function () { setCaption(item); });
-        item.addEventListener('focus', function () { setCaption(item); });
-      });
+      if (useNativeAlbum()) {
+        var current = 0;
+        stage.classList.add('is-native', 'is-mobile');
 
-      if (native) {
-        stage.classList.add('is-native');
+        function startPad() {
+          var cs = window.getComputedStyle(stage);
+          return parseFloat(cs.scrollPaddingInlineStart || cs.paddingInlineStart || cs.paddingLeft) || 0;
+        }
+
+        function updateMobile(index) {
+          current = index;
+          setCaption(items[current]);
+        }
+
+        function alignMobile(index, behavior) {
+          index = Math.max(0, Math.min(items.length - 1, index));
+          var itemRect = items[index].getBoundingClientRect();
+          var stageRect = stage.getBoundingClientRect();
+          stage.scrollTo({
+            left: stage.scrollLeft + itemRect.left - stageRect.left - startPad(),
+            behavior: behavior
+          });
+        }
+
+        listen(stage, 'scroll', function () {
+          var origin = stage.getBoundingClientRect().left + startPad();
+          var nearest = current;
+          var distance = Infinity;
+          items.forEach(function (item, index) {
+            var delta = Math.abs(item.getBoundingClientRect().left - origin);
+            if (delta < distance) { nearest = index; distance = delta; }
+          });
+          if (nearest !== current) updateMobile(nearest);
+        }, { passive: true });
+        listen(window, 'resize', function () {
+          if (useNativeAlbum()) alignMobile(current, 'instant');
+        });
+        originalItems.forEach(function (item) {
+          if (!item.hasAttribute('tabindex')) item.setAttribute('tabindex', '0');
+        });
+        updateMobile(current);
+        stage.scrollLeft = 0;
         return;
       }
 
+      originalItems.forEach(function (item) {
+        item.setAttribute('data-album-set', 'original');
+        if (!item.hasAttribute('tabindex')) item.setAttribute('tabindex', '0');
+      });
+
+      function cloneSet(name) {
+        var fragment = document.createDocumentFragment();
+        originalItems.forEach(function (item) {
+          var clone = item.cloneNode(true);
+          clone.classList.remove('is-active');
+          clone.removeAttribute('data-album-default');
+          clone.setAttribute('data-album-set', name);
+          clone.setAttribute('aria-hidden', 'true');
+          fragment.appendChild(clone);
+        });
+        return fragment;
+      }
+
+      track.insertBefore(cloneSet('before'), track.firstChild);
+      track.appendChild(cloneSet('after'));
+
+      items = Array.prototype.slice.call(stage.querySelectorAll('.about-album-item'));
+      var firstBefore = track.querySelector('[data-album-set="before"]');
+      var firstOriginal = track.querySelector('[data-album-set="original"]');
+      var cycleWidth = 0;
+
+      function measureCycle() {
+        cycleWidth = firstOriginal.offsetLeft - firstBefore.offsetLeft;
+      }
+
+      items.forEach(function (item) {
+        listen(item, 'pointerenter', function () { setCaption(item); });
+        listen(item, 'focus', function () { setCaption(item); });
+        listen(item, 'click', function () { setCaption(item); });
+      });
+
+      setCaption(defaultItem);
+
       var pos = 0;
       var vel = 0;
-      var raf = 0;
       var lastTime = 0;
       var maxSpeed = 12;
       var EDGE = 0.16;
 
-      function maxShift() {
-        return Math.max(0, track.scrollWidth - stage.clientWidth);
-      }
-
-      function clamp() {
-        var max = maxShift();
-        if (pos < 0) pos = 0;
-        if (pos > max) pos = max;
+      function wrap() {
+        if (pos < cycleWidth * 0.5) {
+          pos += cycleWidth;
+        } else if (pos >= cycleWidth * 1.5) {
+          pos -= cycleWidth;
+        }
       }
 
       function render() {
@@ -369,7 +796,7 @@
         var dt = lastTime ? Math.min(32, now - lastTime) / 16.67 : 1;
         lastTime = now;
         pos += vel * dt;
-        clamp();
+        wrap();
         render();
         raf = requestAnimationFrame(loop);
       }
@@ -383,18 +810,19 @@
         lastTime = 0;
       }
 
-      pos = 0;
-      clamp();
+      measureCycle();
+      pos = cycleWidth;
       render();
 
-      stage.addEventListener('mouseleave', function () {
+      listen(stage, 'pointerleave', function () {
         stopPan();
-        items.forEach(function (el) { el.classList.remove('is-active'); });
       });
 
-      stage.addEventListener('mousemove', function (e) {
+      listen(stage, 'pointermove', function (e) {
         var overItem = e.target.closest && e.target.closest('.about-album-item');
         if (overItem) setCaption(overItem);
+
+        if (e.pointerType && e.pointerType !== 'mouse') return;
 
         var rect = stage.getBoundingClientRect();
         var t = (e.clientX - rect.left) / Math.max(1, rect.width);
@@ -413,72 +841,17 @@
         start();
       });
 
-      window.addEventListener('resize', function () {
-        clamp();
+      listen(window, 'resize', function () {
+        var oldCycle = cycleWidth;
+        var phase = oldCycle ? ((pos % oldCycle) + oldCycle) % oldCycle : 0;
+        measureCycle();
+        pos = cycleWidth + (oldCycle ? phase * (cycleWidth / oldCycle) : 0);
+        wrap();
         render();
       });
     })();
 
-    (function initTimeline() {
-      var chapters = Array.prototype.slice.call(document.querySelectorAll('.about-chapter[data-city]'));
-      var links = Array.prototype.slice.call(document.querySelectorAll('[data-city-link]'));
-      var fill = document.querySelector('.about-timeline-fill');
-      if (!chapters.length || !links.length) return;
 
-      function setActive(id) {
-        var index = 0;
-        chapters.forEach(function (chapter, i) {
-          var on = chapter.getAttribute('data-city') === id;
-          chapter.classList.toggle('is-active', on);
-          if (on) index = i;
-        });
-        links.forEach(function (link, i) {
-          var on = link.getAttribute('data-city-link') === id;
-          if (i <= index) link.classList.add('is-seen');
-          link.classList.toggle('is-active', on);
-          if (on && !link.dataset.popped) {
-            link.dataset.popped = '1';
-            link.classList.remove('is-popping');
-            void link.offsetWidth;
-            link.classList.add('is-popping');
-          }
-        });
-        if (fill) {
-          fill.style.height = (index === 0 ? '10%' : ((index / Math.max(1, links.length - 1)) * 100) + '%');
-        }
-      }
-
-      if (reduceMotion || !window.IntersectionObserver) {
-        links.forEach(function (link) { link.classList.add('is-seen', 'is-active'); });
-        chapters.forEach(function (chapter) { chapter.classList.add('is-active'); });
-        if (fill) fill.style.height = '100%';
-        return;
-      }
-
-      setActive(chapters[0].getAttribute('data-city'));
-
-      var observer = new IntersectionObserver(
-        function (entries) {
-          var visible = entries
-            .filter(function (entry) { return entry.isIntersecting; })
-            .sort(function (a, b) { return b.intersectionRatio - a.intersectionRatio; })[0];
-          if (!visible) return;
-          setActive(visible.target.getAttribute('data-city'));
-        },
-        { rootMargin: '-32% 0px -42% 0px', threshold: [0.15, 0.4, 0.7] }
-      );
-
-      chapters.forEach(function (chapter) { observer.observe(chapter); });
-
-      links.forEach(function (link) {
-        link.addEventListener('click', function (e) {
-          var target = document.getElementById(link.getAttribute('href').slice(1));
-          if (!target) return;
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        });
-      });
-    })();
   })();
   </script>
 </body>

@@ -5,39 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acuity · Lucytrep</title>
-  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
-  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
-  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
-  <link rel="stylesheet" href="../../css/common.css?v=cta-pill1" />
-  <link rel="stylesheet" href="../../css/case-study.css?v=cta-pill1" />
+  <link rel="icon" href="/assets/favicons/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../../css/common.css?v=nav-pad2" />
+  <link rel="stylesheet" href="../../css/case-study.css?v=cs-firstrow4" />
   <style>
-    .cs-launch-zone { background: #fff; padding: 0.5rem; }
-    .cs-launch-inner { width: 100%; }
-    .cs-launch-slot { position: relative; width: 100%; }
-    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; border-radius: 0.75rem; background: transparent; }
-    .cs-launch-slot { border-radius: 0.75rem; }
-    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: #fff; }
-    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
-    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; border: none; background: none; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
-    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
-    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
-    #page-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      z-index: 100;
-      background: transparent !important;
-      border-bottom-color: transparent !important;
-    }
-    #cs-hero-target { background: transparent; border: none; }
-    .case-hero--init .case-hero-kicker,
-    .case-hero--init .case-hero-title,
-    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(8px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
-    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.08s; }
-    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
     .acuity-overview-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.95fr);
@@ -53,7 +27,7 @@
       min-width: 0;
     }
     .acuity-overview-grid__panel {
-      border-radius: 0.8rem;
+      border-radius: var(--radius-media);
       overflow: hidden;
       background: #eceae6;
       min-width: 0;
@@ -102,11 +76,10 @@
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6 site-brand">
-        <a href="../../" class="site-logo-mark" aria-label="Home"></a>
-        <div class="site-brand-text">
-          <a href="../../" class="site-name">LUCYTREP LABS</a>
-          <span class="site-tagline">Product Designer</span>
-        </div>
+        <a href="../../" class="site-brand-lockup" aria-label="Home — Product Designer">
+          <span class="site-logo-mark" aria-hidden="true"></span>
+          <span class="site-role-pill">Product Designer</span>
+        </a>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -123,8 +96,8 @@
 
   <div class="cs-ed">
     <div class="cs-ed-grid">
-      <div class="cs-ed-img cs-ed-img--full" style="position:relative;">
-        <iframe src="https://player.vimeo.com/video/1171057107?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;background=1&amp;autoplay=1&amp;muted=1&amp;loop=1" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:62%;left:50%;width:130%;height:130%;transform:translate(-50%,-50%);border:none;" title="Acuity"></iframe>
+      <div class="cs-ed-img cs-ed-img--full">
+        <iframe src="https://player.vimeo.com/video/1171057107?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Acuity"></iframe>
       </div>
       <div class="cs-ed-img cs-ed-img--half" style="background:none;">
         <video preload="metadata" src="../../assets/images/acuity/products.mov" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
@@ -224,21 +197,21 @@
                 <div class="case-carousel-track" style="height:100%;">
                   <div class="case-carousel-slide" style="height:100%;">
                     <div style="border-radius:0.8rem;overflow:hidden;height:100%;">
-                      <img src="../../assets/images/acuity/cover.jpg" alt="Acuity — Clarity Before Crisis" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" / loading="lazy">
+                      <img src="../../assets/images/acuity/cover.jpg" alt="Acuity — Clarity Before Crisis" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
                     </div>
                   </div>
                   <div class="case-carousel-slide" style="height:100%;">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);height:100%;align-items:stretch;">
                       <div style="display:flex;flex-direction:column;gap:var(--space-2);min-height:0;">
                         <div style="border-radius:0.8rem;overflow:hidden;flex:1;min-height:0;">
-                          <img src="../../assets/images/acuity/overview.jpg" alt="Acuity app screens" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" / loading="lazy">
+                          <img src="../../assets/images/acuity/overview.jpg" alt="Acuity app screens" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
                         </div>
                         <div style="border-radius:0.8rem;overflow:hidden;flex:1;min-height:0;">
-                          <img src="../../assets/images/acuity/group.jpg" alt="Hackathon team group photo" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" / loading="lazy">
+                          <img src="../../assets/images/acuity/group.jpg" alt="Hackathon team group photo" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
                         </div>
                       </div>
                       <div style="border-radius:0.8rem;overflow:hidden;min-height:0;">
-                        <img src="../../assets/images/acuity/hackathon.jpeg" alt="Hackathon event" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" / loading="lazy">
+                        <img src="../../assets/images/acuity/hackathon.jpeg" alt="Hackathon event" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
@@ -297,20 +270,20 @@
                   <div class="case-carousel-slide">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
                       <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:4/3;">
-                        <img src="../../assets/images/acuity/chart1.jpg" alt="Wearable technology market size and share" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                        <img src="../../assets/images/acuity/chart1.jpg" alt="Wearable technology market size and share" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
                       </div>
                       <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:4/3;">
-                        <img src="../../assets/images/acuity/chart2.jpg" alt="Problems paying for health care chart" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                        <img src="../../assets/images/acuity/chart2.jpg" alt="Problems paying for health care chart" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
                   <div class="case-carousel-slide">
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
                       <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:4/3;">
-                        <img src="../../assets/images/acuity/chart3.jpg" alt="Uninsured adults skipping health care chart" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                        <img src="../../assets/images/acuity/chart3.jpg" alt="Uninsured adults skipping health care chart" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
                       </div>
                       <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:4/3;">
-                        <img src="../../assets/images/acuity/chart4.jpg" alt="Market snapshot chart" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                        <img src="../../assets/images/acuity/chart4.jpg" alt="Market snapshot chart" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
                       </div>
                     </div>
                   </div>
@@ -334,7 +307,7 @@
               </p>
             </div>
             <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/8.5;">
-              <img src="../../assets/images/acuity/whiteboard2.jpg" alt="Research whiteboard" style="width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;" / loading="lazy">
+              <img src="../../assets/images/acuity/whiteboard2.jpg" alt="Research whiteboard" style="width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block;" loading="lazy">
             </div>
           </section>
 
@@ -386,10 +359,10 @@
             </div>
             <div class="case-section-media-row" style="grid-template-columns:3fr 2fr;">
               <div class="case-image-block" style="overflow:hidden;aspect-ratio:3/2;">
-                <img src="../../assets/images/acuity/ai.png" alt="AI tools used: Sora, MidJourney, Figma Make, ChatGPT" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/acuity/ai.png" alt="AI tools used: Sora, MidJourney, Figma Make, ChatGPT" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="overflow:hidden;aspect-ratio:1/1;">
-                <img src="../../assets/images/acuity/rings.png" alt="MidJourney ring design explorations" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/acuity/rings.png" alt="MidJourney ring design explorations" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -441,7 +414,7 @@
               </p>
             </div>
             <div style="margin-top:var(--space-4);">
-              <img src="../../assets/images/acuity/impact.jpg" alt="ACUITY — team working during hackathon" style="width:100%;display:block;border-radius:0.75rem;" / loading="lazy">
+              <img src="../../assets/images/acuity/impact.jpg" alt="ACUITY — team working during hackathon" style="width:100%;display:block;border-radius:0.75rem;" loading="lazy">
             </div>
           </section>
 
@@ -476,10 +449,10 @@
             </div>
             <div class="case-section-media-row">
               <div class="case-image-block" style="overflow:hidden;">
-                <img src="../../assets/images/acuity/reflection.jpg" alt="Reflection" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/acuity/reflection.jpg" alt="Reflection" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
               <div class="case-image-block" style="overflow:hidden;">
-                <img src="../../assets/images/acuity/reflection2.jpg" alt="Hackathon group photo" style="width:100%;height:100%;object-fit:cover;display:block;" / loading="lazy">
+                <img src="../../assets/images/acuity/reflection2.jpg" alt="Hackathon group photo" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -498,7 +471,7 @@
 
   <footer class="container page-footer"></footer>
 
-  <script src="../../js/main.js?v=cta-pill1"></script>
+  <script src="../../js/main.js?v=scroll-mem1"></script>
   <script>
     window.__caseStudyFlyProjectionStrength = 1;
     window.__caseStudyFlyProjectionEase = 2.8;

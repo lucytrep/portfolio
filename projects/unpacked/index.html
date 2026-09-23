@@ -5,54 +5,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Unpacked · Lucytrep</title>
-  <link id="favicon-32" rel="icon" href="/assets/favicons/darkpurple-32.png" type="image/png" sizes="32x32" />
-  <link id="favicon-16" rel="icon" href="/assets/favicons/darkpurple-16.png" type="image/png" sizes="16x16" />
-  <link id="apple-touch-icon" rel="apple-touch-icon" href="/assets/favicons/darkpurple-180.png" sizes="180x180" />
-  <link rel="stylesheet" href="../../css/common.css?v=cta-pill1" />
-  <link rel="stylesheet" href="../../css/work.css" />
-  <link rel="stylesheet" href="../../css/case-study.css?v=cta-pill1" />
-  <style>
-    .cs-launch-zone { background: #fff; padding: 0.5rem; }
-    .cs-launch-inner { width: 100%; }
-    .cs-launch-slot { position: relative; width: 100%; }
-    .cs-launch-placeholder { width: 100%; aspect-ratio: 16 / 9; background: transparent; }
-    #cs-fly-wrap { position: absolute; inset: 0; border-radius: 0.75rem; overflow: hidden; background: transparent; box-shadow: 0 0 0 1px #d7d7d7; }
-    #cs-fly-wrap.is-flying { position: fixed; inset: auto; top: 0; left: 0; z-index: 50; pointer-events: none; will-change: transform, width, height; transform-origin: 0 0; }
-    #cs-fly-wrap.is-landed { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0.75rem; background: transparent; box-shadow: 0 0 0 1px #d7d7d7; animation: flyLand 200ms ease forwards; }
-    #cs-fly-wrap video, #cs-fly-wrap iframe { width: 100%; height: 100%; display: block; border: none; object-fit: cover; }
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      box-shadow: inset 0 0 0 1px #d7d7d7;
-    }
-    #page-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      z-index: 100;
-      background: transparent !important;
-      border-bottom-color: transparent !important;
-    }
-    #cs-hero-target { background: transparent; }
-    #cs-hero-target:has(#cs-fly-wrap.is-landed) { box-shadow: 0 0 0 1px #d7d7d7; }
-    @keyframes flyLand { from { opacity: 1; } to { opacity: 1; } }
-    .case-hero--init .case-hero-kicker,
-    .case-hero--init .case-hero-title,
-    .case-hero--init .case-meta-grid { opacity: 0; transform: translateY(10px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .case-hero--init.case-hero--revealed .case-hero-kicker { opacity: 1; transform: translateY(0); }
-    .case-hero--init.case-hero--revealed .case-hero-title { opacity: 1; transform: translateY(0); transition-delay: 0.07s; }
-    .case-hero--init.case-hero--revealed .case-meta-grid { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
-    @media (prefers-reduced-motion: reduce) {
-      .case-hero--init .case-hero-kicker,
-      .case-hero--init .case-hero-title,
-      .case-hero--init .case-meta-grid { opacity: 1; transform: none; transition: none; }
-    }
-  </style>
+  <link rel="icon" href="/assets/favicons/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/favicons/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="../../css/common.css?v=nav-pad2" />
+  <link rel="stylesheet" href="../../css/work.css?v=polish1" />
+  <link rel="stylesheet" href="../../css/case-study.css?v=cs-firstrow4" />
   <script>try{if(sessionStorage.getItem('work_unlocked')==='1'){var s=document.createElement('style');s.textContent='#work-lock-screen{display:none!important}#work-content{display:block!important}';document.head.appendChild(s);}}catch(e){}</script>
 </head>
 <body>
@@ -73,11 +32,10 @@
   <header class="container page-header" id="page-header">
     <div class="grid-12 header-grid">
       <div class="span-6 site-brand">
-        <a href="../../" class="site-logo-mark" aria-label="Home"></a>
-        <div class="site-brand-text">
-          <a href="../../" class="site-name">LUCYTREP LABS</a>
-          <span class="site-tagline">Product Designer</span>
-        </div>
+        <a href="../../" class="site-brand-lockup" aria-label="Home — Product Designer">
+          <span class="site-logo-mark" aria-hidden="true"></span>
+          <span class="site-role-pill">Product Designer</span>
+        </a>
       </div>
       <button type="button" class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
         <span class="hamburger-bar"></span>
@@ -327,7 +285,7 @@
   </div>
 
   <script src="../../js/work-lock.js"></script>
-  <script src="../../js/main.js?v=cta-pill1"></script>
+  <script src="../../js/main.js?v=scroll-mem1"></script>
   <script>
     window.__caseStudyFlyProjectionStrength = 1;
     window.__caseStudyFlyProjectionEase = 2.8;

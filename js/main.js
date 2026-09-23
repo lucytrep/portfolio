@@ -1,10 +1,10 @@
 (function () {
   document.body.classList.add('has-custom-cursor');
 
-  // Favicon rotation: one Lt logomark colorway picked per browser session
-  // (sessionStorage), so it stays consistent across every page during a visit
-  // and reshuffles the next time the site is opened in a new tab/window.
-  // The cursor pill picks up the same colorway's accent color below.
+  // Cursor accent rotation: one colorway is picked per browser session,
+  // stays consistent across every page during a visit, and reshuffles the
+  // next time the site is opened in a new tab/window. The favicon and nav
+  // mark remain the dedicated static assets defined in HTML and CSS.
   (function () {
     // `text` is a hand-picked contrast color per accent (not computed at runtime)
     // so CTA labels stay readable against whichever colorway a session lands on.
@@ -31,59 +31,34 @@
       variant = VARIANTS[0];
     }
 
-    var base = '/assets/favicons/' + variant.id;
-    var icon32 = document.getElementById('favicon-32');
-    var icon16 = document.getElementById('favicon-16');
-    var appleTouch = document.getElementById('apple-touch-icon');
-    if (icon32) icon32.href = base + '-32.png';
-    if (icon16) icon16.href = base + '-16.png';
-    if (appleTouch) appleTouch.href = base + '-180.png';
-
     document.documentElement.style.setProperty('--cursor-accent', variant.accent);
     document.documentElement.style.setProperty('--cursor-accent-contrast', variant.text);
-    document.documentElement.style.setProperty('--site-icon', "url('" + base + "-180.png')");
   })();
 
   var isCaseStudyPage = !!document.querySelector('.case-study');
-  var forceTopKey = 'force-top-case-study';
-  var shouldForceTop = false;
 
-  // Entering a project from the case studies index should always open at the top
-  // exactly once. Other revisits can use normal browser/session memory.
+  // Remember scroll per page for this tab, and restore it whenever the user
+  // comes back — browser Back, Work nav, or opening the same case study again.
   (function () {
     if (!window.sessionStorage) return;
-    var fromCaseStudiesIndex =
-      /\/case-studies\/?$/.test(window.location.pathname) &&
-      !!document.querySelector('.section-projects');
 
-    if (!fromCaseStudiesIndex) return;
+    function pageKey() {
+      var path = window.location.pathname.replace(/\/index\.html$/, '/');
+      if (path.length > 1 && path.charAt(path.length - 1) === '/') {
+        path = path.slice(0, -1);
+      }
+      return 'scroll:' + path;
+    }
 
-    var projectLinks = document.querySelectorAll('.section-projects a.project-link[href]');
-    projectLinks.forEach(function (link) {
-      link.addEventListener('click', function () {
-        try {
-          var url = new URL(link.getAttribute('href'), window.location.href);
-          window.sessionStorage.setItem(forceTopKey, url.pathname);
-        } catch (e) {}
-      });
-    });
-  })();
+    var key = pageKey();
 
-  // Remember per-page scroll position and restore it on return.
-  (function () {
-    if (!window.sessionStorage) return;
-    var key = 'scroll:' + window.location.pathname;
-    var navEntry =
-      typeof performance !== 'undefined' &&
-      performance.getEntriesByType &&
-      performance.getEntriesByType('navigation') &&
-      performance.getEntriesByType('navigation')[0];
-    var navType = navEntry && navEntry.type ? navEntry.type : 'navigate';
-    var shouldRestoreSavedScroll = navType === 'reload' || navType === 'back_forward';
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
 
     function saveScroll() {
       try {
-        window.sessionStorage.setItem(key, String(window.scrollY || 0));
+        window.sessionStorage.setItem(key, String(Math.max(0, window.scrollY || 0)));
       } catch (e) {}
     }
 
@@ -97,73 +72,58 @@
       });
     }
 
-    // Restore only when there is no hash target and the page wasn't intentionally
-    // opened from the case studies index with a "start at top" request.
-    var hasFlyingHero = !!document.getElementById('cs-fly-wrap');
-    var forceTopPath = window.sessionStorage.getItem(forceTopKey);
-    shouldForceTop = forceTopPath === window.location.pathname;
-    if (shouldForceTop) {
-      try {
-        window.sessionStorage.setItem(key, '0');
-      } catch (e) {}
+    function readSavedY() {
+      var saved = window.sessionStorage.getItem(key);
+      if (saved === null) {
+        saved = window.sessionStorage.getItem(key + '/');
+      }
+      if (saved === null) return null;
+      var y = parseInt(saved, 10);
+      return isNaN(y) ? null : Math.max(0, y);
     }
 
-    if (
-      shouldRestoreSavedScroll &&
-      !window.location.hash &&
-      !shouldForceTop &&
-      (!isCaseStudyPage || hasFlyingHero)
-    ) {
-      var saved = window.sessionStorage.getItem(key);
-      if (saved !== null) {
-        var y = parseInt(saved, 10);
-        if (!isNaN(y) && y > 0) {
-          var userInteracted = false;
+    var userInteracted = false;
+    function markInteracted() {
+      userInteracted = true;
+    }
+    window.addEventListener('wheel', markInteracted, { passive: true, once: true });
+    window.addEventListener('touchstart', markInteracted, { passive: true, once: true });
+    window.addEventListener('keydown', markInteracted, { once: true });
+    window.addEventListener('mousedown', markInteracted, { once: true });
 
-          function markInteracted() {
-            userInteracted = true;
-          }
+    function restoreScroll() {
+      if (userInteracted || window.location.hash) return;
+      var y = readSavedY();
+      if (y === null || y === 0) return;
+      if (Math.abs((window.scrollY || 0) - y) < 2) return;
+      window.scrollTo(0, y);
+    }
 
-          window.addEventListener('wheel', markInteracted, { passive: true, once: true });
-          window.addEventListener('touchstart', markInteracted, { passive: true, once: true });
-          window.addEventListener('keydown', markInteracted, { once: true });
-          window.addEventListener('mousedown', markInteracted, { once: true });
-
-          window.requestAnimationFrame(function () {
-            window.requestAnimationFrame(function () {
-              if (!userInteracted) {
-                window.scrollTo(0, y);
-              }
-            });
-          });
-        }
-      }
+    if (!window.location.hash) {
+      restoreScroll();
+      window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(restoreScroll);
+      });
+      window.addEventListener('load', restoreScroll);
+      window.addEventListener('pageshow', function (event) {
+        if (event.persisted) return;
+        restoreScroll();
+      });
+      [120, 400, 900, 1800].forEach(function (ms) {
+        window.setTimeout(restoreScroll, ms);
+      });
     }
 
     window.addEventListener('scroll', scheduleSaveScroll, { passive: true });
     window.addEventListener('pagehide', saveScroll);
     window.addEventListener('beforeunload', saveScroll);
-  })();
-
-  // Case studies opened from the case studies index should start at the top once.
-  // Otherwise, preserve normal browser memory for reloads / tab restores.
-  (function () {
-    if (!isCaseStudyPage) return;
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'auto';
-    }
-    if (!window.sessionStorage) return;
-    if (window.location.hash) return;
-    if (!shouldForceTop) return;
-
-    window.addEventListener('pageshow', function () {
-      window.requestAnimationFrame(function () {
-        window.scrollTo(0, 0);
-        try {
-          window.sessionStorage.removeItem(forceTopKey);
-        } catch (e) {}
-      });
-    }, { once: true });
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'hidden') saveScroll();
+    });
+    document.addEventListener('click', function (event) {
+      var link = event.target && event.target.closest && event.target.closest('a[href]');
+      if (link) saveScroll();
+    }, true);
   })();
 
   // Case study media: keep above-the-fold media eager, but lazy-load and pause
@@ -338,7 +298,7 @@
   // correct at any page depth. The pill grows/shrinks with scroll direction.
   (function () {
     var mainNav = document.getElementById('main-nav');
-    var siteLink = header && header.querySelector('.site-name');
+    var siteLink = header && (header.querySelector('.site-brand-lockup') || header.querySelector('.site-logo-mark') || header.querySelector('.site-name'));
     if (!header || !mainNav) return;
 
     var homeBadge = document.createElement('a');
@@ -401,6 +361,36 @@
     }
     window.addEventListener('scroll', updateHeader, { passive: true });
     updateHeader();
+  })();
+
+  // Home and about: a quiet arrow at the bottom of the first screen.
+  // It leaves once the page has moved, and comes back at the top.
+  (function () {
+    var cue = document.querySelector('[data-scroll-cue]');
+    if (!cue) return;
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function updateCue() {
+      var gone = (window.scrollY || 0) > 36;
+      cue.classList.toggle('is-dismissed', gone);
+      cue.setAttribute('aria-hidden', gone ? 'true' : 'false');
+      if (gone) cue.setAttribute('tabindex', '-1');
+      else cue.removeAttribute('tabindex');
+    }
+
+    window.addEventListener('scroll', updateCue, { passive: true });
+    window.addEventListener('pageshow', updateCue);
+    updateCue();
+
+    cue.addEventListener('click', function (event) {
+      var href = cue.getAttribute('href') || '';
+      if (href.charAt(0) !== '#') return;
+      var target = document.getElementById(href.slice(1));
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    });
   })();
 
   function footerBarHTML() {
@@ -483,8 +473,9 @@
 
   function connectFooterHTML(isConnectPage) {
     var titleAttrs = isConnectPage ? ' class="footer-connect-title" aria-hidden="true"' : ' class="footer-connect-title"';
-    var leftBody = isConnectPage
-      ? connectMetaHTML()
+    var leftBody = isConnectPage ? connectMetaHTML() : '';
+    var rightBody = isConnectPage
+      ? connectFormHTML()
       : (
           '<div class="footer-connect-actions">' +
             connectMetaHTML() +
@@ -494,11 +485,11 @@
 
     return (
       '<div class="footer-connect">' +
-        '<div>' +
+        '<div class="footer-connect-copy">' +
           '<h2' + titleAttrs + '>Let\'s<br>collaborate.</h2>' +
           leftBody +
         '</div>' +
-        (isConnectPage ? connectFormHTML() : '') +
+        rightBody +
       '</div>' +
       footerBarHTML()
     );
@@ -590,7 +581,8 @@
     }
   });
 
-  // Locked chat teaser: same launcher mark as the chatbot branch, inert for now
+  // Locked chat teaser: same launcher mark as the chatbot branch, inert for now.
+  // Hidden on compact chrome (≤62.5rem) so it does not cover page titles.
   var chatLock = document.createElement('div');
   chatLock.className = 'chat-lock';
   chatLock.setAttribute('role', 'img');
@@ -601,7 +593,17 @@
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>' +
       '<span class="chat-lock__badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>' +
     '</span>';
-  document.body.appendChild(chatLock);
+  var compactChrome = window.matchMedia('(max-width: 62.5rem)');
+  function syncChatLock() {
+    if (compactChrome.matches) {
+      if (chatLock.parentNode) chatLock.parentNode.removeChild(chatLock);
+    } else if (!chatLock.parentNode) {
+      document.body.appendChild(chatLock);
+    }
+  }
+  syncChatLock();
+  if (compactChrome.addEventListener) compactChrome.addEventListener('change', syncChatLock);
+  else if (compactChrome.addListener) compactChrome.addListener(syncChatLock);
 
   // Cursor pill: expand on project hover
   (function () {
@@ -773,7 +775,7 @@
 
     var targetSelector = isCaseStudyPage
       ? '.project-card, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item'
-      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item, .about-album-header, .about-play-header, .play-card';
+      : '.project-card, .case-section, .about-row, .about-image-wide, .about-image-pair, .about-journey-header, .about-journey-item, .about-play-header, .play-group';
 
     var targets = document.querySelectorAll(targetSelector);
     if (!targets.length) return;
@@ -884,11 +886,14 @@
   // Lightbox: click any content image or video to enlarge; arrow-navigate between all media
   (function () {
     // Collect images and videos in main content; skip home-page project-link thumbnails and hero videos
-    var mediaEls = Array.from(
-      document.querySelectorAll('main img, article img, main video, article video')
-    ).filter(function (el) {
-      return !el.closest('.project-link') && !el.closest('.case-hero-image') && !el.closest('.about-hero-imageSwap') && !el.closest('.about-hero-figure') && !el.closest('.about-play') && !el.closest('.about-album') && !el.closest('.clients-section');
-    });
+    var isArchive = document.body.classList.contains('archive-page');
+    var mediaEls = isArchive
+      ? Array.from(document.querySelectorAll('main .gallery-item-media'))
+      : Array.from(
+          document.querySelectorAll('main img, article img, main video, article video')
+        ).filter(function (el) {
+          return !el.closest('.project-link') && !el.closest('.case-hero-image') && !el.closest('.about-hero-imageSwap') && !el.closest('.about-hero-figure') && !el.closest('.about-play') && !el.closest('.about-places') && !el.closest('.about-album') && !el.closest('.clients-section');
+        });
     if (!mediaEls.length) return;
 
     var current = 0;
@@ -934,9 +939,28 @@
     overlay.appendChild(nextBtn);
     document.body.appendChild(overlay);
 
+    function resolveMedia(item) {
+      if (!item.classList.contains('gallery-item-media')) return item;
+
+      var activeSlide = item.querySelector('.journey-slide--active');
+      if (activeSlide) {
+        if (activeSlide.matches('img, video')) return activeSlide;
+
+        var activeMedia = activeSlide.querySelectorAll(
+          'video, img:not(.campaign-slide-backdrop):not(.nacc-slideshow-backdrop):not([aria-hidden="true"])'
+        );
+        if (activeMedia.length) return activeMedia[activeMedia.length - 1];
+      }
+
+      var visibleMedia = item.querySelectorAll(
+        'video, img:not(.campaign-slide-backdrop):not(.nacc-slideshow-backdrop):not([aria-hidden="true"])'
+      );
+      return visibleMedia.length ? visibleMedia[visibleMedia.length - 1] : item;
+    }
+
     function show(index) {
       current = ((index % mediaEls.length) + mediaEls.length) % mediaEls.length;
-      var el = mediaEls[current];
+      var el = resolveMedia(mediaEls[current]);
       var isVideo = el.tagName === 'VIDEO';
 
       lbImg.style.display = isVideo ? 'none' : '';
@@ -944,6 +968,7 @@
 
       if (isVideo) {
         var src = el.getAttribute('src') || el.currentSrc || '';
+        lbVideo.classList.toggle('lightbox-video--wpbl', el.getAttribute('data-lightbox-crop') === 'wpbl');
         lbVideo.src = src;
         lbVideo.load();
         lbVideo.play().catch(function () {});
@@ -973,8 +998,8 @@
       lbVideo.removeAttribute('src');
     }
 
-    // Mark elements and attach click listeners.
-    // Videos with pointer-events:none pass clicks to the parent, so attach there instead.
+    // Mark elements and attach click listeners. On the archive, each media card
+    // is one lightbox item; active slideshow media is resolved at click time.
     mediaEls.forEach(function (el, i) {
       var cs = window.getComputedStyle(el);
       var clickTarget = (cs.pointerEvents === 'none' && el.parentElement) ? el.parentElement : el;
@@ -1013,6 +1038,7 @@
 
       var current = 0;
       var timer = null;
+      var interval = parseInt(container.getAttribute('data-slideshow-interval'), 10) || 2500;
 
       function advance() {
         slides[current].classList.remove('journey-slide--active');
@@ -1022,7 +1048,7 @@
 
       function start() {
         if (timer) return;
-        timer = setInterval(advance, 2500);
+        timer = setInterval(advance, interval);
       }
 
       function stop() {
@@ -1087,6 +1113,10 @@
       hero.classList.add('case-hero--revealed');
       if (launchZone) launchZone.classList.add('is-complete');
     }
+
+    // Land the hero media in place on every case study — no scroll fly-in.
+    finishImmediately();
+    return;
 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       finishImmediately();

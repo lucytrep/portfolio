@@ -22,52 +22,73 @@
 
 /* ── Editorial hero (shared across all case studies) ── */
 .cs-ed {
-  background: #fff;
+  /* First tile is the main fold, but short enough that smaller laptops
+     still see a clear slice of the next row. */
+  --cs-ed-gutter: 0.5rem;
+  --cs-fold-peek: clamp(8rem, 18svh, 12rem);
+  --cs-first-row: calc(100svh - var(--cs-ed-gutter) * 2 - var(--cs-fold-peek));
+  background: var(--color-background);
 }
 
 .cs-ed-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
-  padding: 0 0 0.5rem;
+  gap: var(--cs-ed-gutter);
+  padding: var(--cs-ed-gutter);
 }
 
 .cs-ed-img {
   position: relative;
-  background: #fff;
-  border-radius: 0.75rem;
+  background: var(--color-background);
+  border-radius: var(--radius-media);
   overflow: hidden;
   /* Force GPU compositing so Safari correctly clips iframes inside overflow:hidden */
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 }
 
-.cs-ed-grid > .cs-ed-img:first-child {
-  border-top-left-radius: 0;
+.cs-ed-img img,
+.cs-ed-img video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Vimeo (and other) embeds must cover the tile like object-fit: cover,
+   never letterbox with white bars in a wide first-row frame. */
+.cs-ed-img:has(iframe) {
+  background: #111;
+  container-type: size;
+}
+
+.cs-ed-img iframe {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: max(100cqw, calc(100cqh * 16 / 9), 100vw, calc(100vh * 16 / 9)) !important;
+  height: max(100cqh, calc(100cqw * 9 / 16), 56.25vw, 100vh) !important;
+  transform: translate(-50%, -50%) !important;
+  border: none !important;
+  max-width: none !important;
+  pointer-events: none;
+}
+
+.cs-ed-grid > .cs-ed-img:first-child:not(:has(iframe)) {
   background: transparent;
 }
 
-.cs-ed-grid > .cs-ed-img--full:first-child {
-  border-top-right-radius: 0;
-  min-height: 100svh;
-  aspect-ratio: auto;
-}
-
+.cs-ed-grid > .cs-ed-img--full:first-child,
 .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full),
 .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
-  min-height: 100svh;
+  height: var(--cs-first-row);
+  min-height: var(--cs-first-row);
+  max-height: var(--cs-first-row);
   aspect-ratio: auto;
 }
 
 .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
-  border-top-right-radius: 0;
   background: transparent;
-}
-
-.cs-ed-grid > .cs-ed-img:first-child > *,
-.cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) > * {
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
 }
 
 .cs-ed-img--full {
@@ -85,11 +106,109 @@
 }
 
 .cs-launch-zone {
-  transition:
-    height 480ms cubic-bezier(0.4, 0, 0.2, 1),
-    padding 480ms cubic-bezier(0.4, 0, 0.2, 1),
-    margin 480ms cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: height;
+  display: none;
+}
+
+.cs-launch-inner {
+  width: 100%;
+}
+
+.cs-launch-slot {
+  position: relative;
+  width: 100%;
+}
+
+.cs-launch-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-media);
+  background: transparent;
+}
+
+#cs-fly-wrap {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-media);
+  overflow: hidden;
+  background: var(--color-background);
+  box-shadow: 0 0 0 1px var(--color-hairline);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+#cs-fly-wrap.is-flying {
+  position: fixed;
+  inset: auto;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  pointer-events: none;
+  will-change: transform, width, height;
+  transform-origin: 0 0;
+}
+
+#cs-fly-wrap.is-landed {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-media);
+  border: none;
+  background: none;
+  box-shadow: 0 0 0 1px var(--color-hairline);
+}
+
+#cs-fly-wrap video,
+#cs-fly-wrap iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border: none;
+  object-fit: cover;
+}
+
+#cs-hero-target {
+  background: transparent;
+  border: none;
+}
+
+#cs-hero-target:has(#cs-fly-wrap.is-landed) {
+  box-shadow: 0 0 0 1px var(--color-hairline);
+}
+
+.case-hero--init .case-hero-kicker,
+.case-hero--init .case-hero-title,
+.case-hero--init .case-meta-grid {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.case-hero--init.case-hero--revealed .case-hero-kicker {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.case-hero--init.case-hero--revealed .case-hero-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.08s;
+}
+
+.case-hero--init.case-hero--revealed .case-meta-grid {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-hero--init .case-hero-kicker,
+  .case-hero--init .case-hero-title,
+  .case-hero--init .case-meta-grid {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .cs-launch-zone.is-complete {
@@ -234,10 +353,10 @@
 
 .case-hero-title {
   margin: 0;
-  font-size: clamp(1.75rem, 5vw, 3.25rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
+  font-size: clamp(2.15rem, 5.2vw, 3.65rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
 }
 
 .case-hero > * + * {
@@ -258,16 +377,19 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   display: flex;
-  border-radius: 1.5rem;
+  border-radius: var(--radius-media);
   overflow: hidden;
   border: none;
-  background: #fff;
+  background: var(--color-background);
 }
 
-#cs-fly-wrap {
-  box-shadow: 0 0 0 0.25px #b0b0b0;
-  transform: translateZ(0);
-  backface-visibility: hidden;
+.case-hero-image video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  flex-shrink: 0;
 }
 
 .case-hero-progress {
@@ -301,15 +423,6 @@
   margin-top: var(--space-4);
 }
 
-.case-hero-image video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  flex-shrink: 0;
-}
-
 .case-meta-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
@@ -329,7 +442,7 @@
   font-size: var(--font-size-xs);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--type-label-tracking);
   color: var(--color-muted);
 }
 
@@ -373,8 +486,8 @@
 .case-section-title {
   margin: 0 0 var(--space-2) 0;
   font-size: clamp(1.375rem, 3.5vw, 2.25rem);
-  font-weight: 600;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: -0.035em;
   line-height: 1.15;
 }
 
@@ -442,7 +555,7 @@
   align-items: center;
   gap: 0.375rem;
   padding: 0.5rem 1.125rem;
-  border-radius: 980px;
+  border-radius: var(--radius-pill);
   border: 0.0625rem solid var(--color-text);
   font-family: var(--font-primary);
   font-size: var(--font-size-sm);
@@ -515,7 +628,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 0.8rem;
+  border-radius: var(--radius-media);
   border: none;
   background: var(--color-bg-subtle);
   overflow: hidden;
@@ -579,35 +692,12 @@
   width: 100%;
   height: auto;
   display: block;
-  border-radius: 0.8rem;
+  border-radius: var(--radius-media);
 }
 
 @media (max-width: 37.5rem) {
   .case-image-natural-grid-row--3col {
     grid-template-columns: 1fr;
-  }
-
-  .cs-ed-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .cs-ed-grid > .cs-ed-img:first-child {
-    border-top-right-radius: 0;
-    min-height: 70svh;
-  }
-
-  .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
-    min-height: 0;
-    aspect-ratio: 4 / 3;
-  }
-
-  .cs-ed-img--full {
-    grid-column: 1;
-    aspect-ratio: 16 / 9;
-  }
-
-  .cs-ed-img--tall {
-    aspect-ratio: 4 / 3;
   }
 
   .case-section-body p {
@@ -618,7 +708,7 @@
 .case-media-placeholder {
   width: 100%;
   aspect-ratio: 4 / 3;
-  border-radius: 0.8rem;
+  border-radius: var(--radius-media);
   border: none;
   background: var(--color-bg-subtle);
   display: flex;
@@ -646,8 +736,40 @@
 }
 
 @media (max-width: 62.5rem) {
+  /* Opening collage stays two-up with matching inner and outer gutters. */
+  .cs-ed-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--cs-ed-gutter);
+    padding: var(--cs-ed-gutter);
+  }
+
+  .cs-ed-grid > .cs-ed-img {
+    min-height: 0;
+    border-radius: var(--radius-media);
+  }
+
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--full,
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--tall {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--half {
+    grid-column: auto;
+    aspect-ratio: auto;
+    min-height: 42svh;
+  }
+
+  /* Parent radius clips the tile; kill inline radii on the media */
+  .cs-ed-grid > .cs-ed-img > *,
+  .cs-ed-grid > .cs-ed-img img,
+  .cs-ed-grid > .cs-ed-img video,
+  .cs-ed-grid > .cs-ed-img iframe {
+    border-radius: 0 !important;
+  }
+
   .case-study {
-    padding-top: var(--space-5);
+    padding-top: 1.25rem;
     padding-bottom: var(--space-5);
     overflow-x: clip;
   }
@@ -656,14 +778,10 @@
     display: block;
   }
 
-  .case-toc {
+  .case-toc,
+  .case-sidebar,
+  .case-back {
     display: none;
-  }
-
-  .case-sidebar {
-    position: static;
-    padding-right: 0;
-    margin-bottom: var(--space-4);
   }
 
   .case-main {
@@ -729,7 +847,7 @@
 
 @media (max-width: 23.4375rem) {
   .case-study {
-    padding-top: var(--space-4);
+    padding-top: 1.25rem;
     padding-bottom: var(--space-4);
   }
 
@@ -906,6 +1024,21 @@
   .research-carousel .case-image-natural img {
     height: auto;
     object-fit: contain;
+  }
+
+  /* The participants poster is ~1:2.7; don't let it render at full
+     natural height when the research carousel stacks on a phone. */
+  .research-carousel .case-image-natural-grid-row--1-4half .case-image-natural:first-child {
+    aspect-ratio: 3 / 4;
+    max-height: 28rem;
+    overflow: hidden;
+  }
+
+  .research-carousel .case-image-natural-grid-row--1-4half .case-image-natural:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
   }
 
   .case-image-natural-grid-row--1-4half,
