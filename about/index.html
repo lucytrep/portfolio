@@ -42,8 +42,8 @@
       <div class="about-hero-copy">
         <div class="about-hero-copy-main">
           <h1 class="about-hero-title">Curious by nature.<br>Different by design.</h1>
-          <p class="about-hero-lede">Graphic and digital designer turned product thinker, currently completing my Master's in Communication Design at Parsons. My focus is digital product design, UI/UX, and AI-driven solutions that bridge user needs with business objectives.</p>
-          <p class="about-hero-lede">I'm dyslexic, and it's given me a mind built for patterns and visuals. Reading and writing were never my strong suit growing up, but aesthetics, design, and a good challenge lit me up, and that's still what drives how I work today. I'd rather take the unfamiliar path than the safe one, which is why I've built products, taught myself new tools, and gone looking for the harder problem more than once. I'm a connector at heart, endlessly curious about what makes people tick, and that curiosity is what shapes every product I touch.</p>
+          <p class="about-hero-lede">Graphic and digital designer turned product thinker, with a Master's in Communication Design from Parsons. My focus is digital product design, UI/UX, and AI-driven solutions that bridge user needs with business objectives.</p>
+          <p class="about-hero-lede">Growing up dyslexic has given me a mind built for patterns and visuals. While reading and writing were never my strong suit, aesthetics, design, and a good challenge lit me up. This still drives how I work today. I'd rather take the unfamiliar path than the safe one. This is why I've built products, taught myself new tools, and I'm not afraid of looking at the harder problems. A connector at heart, I'm endlessly curious about what makes people tick. That curiosity is what shapes every product I touch.</p>
           <a href="../contact/" class="about-hero-link">Let's connect</a>
         </div>
       </div>
@@ -138,7 +138,7 @@
               <div class="about-place-copy">
                 <h2 class="about-place-city">New York</h2>
                 <p class="about-place-location">United States</p>
-                <p class="about-place-text">Moved here, and I'm staying. Parsons School of Design, Digital Product Design, with a focus on accessibility and systems thinking. Being dyslexic shaped how I see, and it still shapes the way I design.</p>
+                <p class="about-place-text">Moved here, and I'm staying. I completed my Master's in Digital Product Design at Parsons School of Design, with a focus on accessibility and systems thinking. Being dyslexic shaped how I see, and it still shapes the way I design.</p>
               </div>
               <figure class="about-place-media">
                 <img src="../assets/images/about/ny/skyline.jpg?v=times2" alt="Yellow taxi on a Times Square street, New York" width="1534" height="2048" loading="lazy" />
@@ -169,7 +169,7 @@
                 <img src="../assets/images/about/toronto/city-hall.jpg?v=rink1" alt="Toronto City Hall and the Nathan Phillips Square rink at night" loading="lazy" draggable="false" />
               </div>
             </figure>
-            <figure class="about-album-item" data-city="newyork" data-title="New York" data-meta="United States" data-description="Moved here, and I'm staying. Parsons School of Design, Digital Product Design, with a focus on accessibility and systems thinking. Being dyslexic shaped how I see, and it still shapes the way I design.">
+            <figure class="about-album-item" data-city="newyork" data-title="New York" data-meta="United States" data-description="Moved here, and I'm staying. I completed my Master's in Digital Product Design at Parsons School of Design, with a focus on accessibility and systems thinking. Being dyslexic shaped how I see, and it still shapes the way I design.">
               <div class="about-album-media">
                 <img src="../assets/images/about/ny/skyline.jpg?v=times2" alt="Yellow taxi on a Times Square street, New York" loading="lazy" draggable="false" />
               </div>
@@ -298,11 +298,61 @@
       if (root.querySelectorAll('.about-hero-image').length < 2) return;
 
       var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-      if (finePointer) return;
+      var swapEvery = 7000;
+      var timer = null;
+      var hovered = false;
+      var inView = true;
 
-      frame.addEventListener('click', function () {
+      function swap() {
         figure.classList.toggle('is-swapped');
-      });
+      }
+
+      function canRun() {
+        return !reduceMotion && inView && !hovered;
+      }
+
+      function start() {
+        if (timer || !canRun()) return;
+        timer = window.setInterval(swap, swapEvery);
+      }
+
+      function stop() {
+        if (!timer) return;
+        window.clearInterval(timer);
+        timer = null;
+      }
+
+      if (!finePointer) {
+        frame.addEventListener('click', function () {
+          swap();
+          stop();
+          start();
+        });
+      } else {
+        frame.addEventListener('mouseenter', function () {
+          hovered = true;
+          stop();
+        });
+        frame.addEventListener('mouseleave', function () {
+          hovered = false;
+          start();
+        });
+      }
+
+      if (reduceMotion) return;
+
+      if (window.IntersectionObserver) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            inView = entry.isIntersecting;
+            if (inView) start();
+            else stop();
+          });
+        }, { threshold: 0.35 });
+        observer.observe(frame);
+      } else {
+        start();
+      }
     })();
 
     (function initPlaces() {
