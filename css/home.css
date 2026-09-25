@@ -21,12 +21,10 @@
 .hero-headline {
   margin: 0;
   font-family: inherit;
-  font-size: var(--display-size);
-  font-weight: var(--display-weight);
-  line-height: var(--display-leading);
-  letter-spacing: var(--display-tracking);
-  text-transform: uppercase;
-  text-wrap: unset;
+  font-size: clamp(2.05rem, 4.4vw, 3.45rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   color: var(--color-text);
 }
 
@@ -237,7 +235,7 @@
   }
 
   .section-hero .hero-headline {
-    font-size: var(--display-size-compact);
+    font-size: clamp(1.85rem, 7.4vw, 3.15rem);
   }
 
   .section-hero .hero-lede {
@@ -325,7 +323,7 @@
   }
 
   .hero-headline {
-    font-size: var(--display-size-compact);
+    font-size: clamp(1.85rem, 7.4vw, 3.15rem);
   }
 
   .section-projects {
