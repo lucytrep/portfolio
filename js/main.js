@@ -56,7 +56,12 @@
       history.scrollRestoration = 'manual';
     }
 
+    function pageIsLocked() {
+      return document.body.classList.contains('is-work-locked');
+    }
+
     function saveScroll() {
+      if (pageIsLocked()) return;
       try {
         window.sessionStorage.setItem(key, String(Math.max(0, window.scrollY || 0)));
       } catch (e) {}
@@ -86,13 +91,31 @@
     function markInteracted() {
       userInteracted = true;
     }
-    window.addEventListener('wheel', markInteracted, { passive: true, once: true });
-    window.addEventListener('touchstart', markInteracted, { passive: true, once: true });
-    window.addEventListener('keydown', markInteracted, { once: true });
-    window.addEventListener('mousedown', markInteracted, { once: true });
+    // Typing or tapping the password gate is not scrolling the page.
+    // Counting it used to cancel the restore, so the archive stayed at the top.
+    function isLockGesture(event) {
+      var t = event && event.target;
+      return !!(t && t.closest && t.closest('#work-lock-screen'));
+    }
+    function onWheel(event) {
+      if (isLockGesture(event) || pageIsLocked()) return;
+      markInteracted();
+    }
+    function onPointer(event) {
+      if (isLockGesture(event)) return;
+      markInteracted();
+    }
+    function onKey(event) {
+      if (isLockGesture(event)) return;
+      markInteracted();
+    }
+    window.addEventListener('wheel', onWheel, { passive: true });
+    window.addEventListener('touchstart', onPointer, { passive: true });
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('mousedown', onPointer);
 
     function restoreScroll() {
-      if (userInteracted || window.location.hash) return;
+      if (userInteracted || window.location.hash || pageIsLocked()) return;
       var y = readSavedY();
       if (y === null || y === 0) return;
       if (Math.abs((window.scrollY || 0) - y) < 2) return;
@@ -113,6 +136,13 @@
         window.setTimeout(restoreScroll, ms);
       });
     }
+
+    window.addEventListener('work-unlocked', function () {
+      window.requestAnimationFrame(function () {
+        restoreScroll();
+        window.setTimeout(restoreScroll, 60);
+      });
+    });
 
     window.addEventListener('scroll', scheduleSaveScroll, { passive: true });
     window.addEventListener('pagehide', saveScroll);
@@ -393,6 +423,60 @@
     });
   })();
 
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(function () {
+        return copyTextFallback(text);
+      });
+    }
+    return copyTextFallback(text);
+  }
+
+  function copyTextFallback(text) {
+    return new Promise(function (resolve) {
+      var area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.top = '0';
+      area.style.left = '0';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.focus();
+      area.select();
+      try { document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(area);
+      resolve();
+    });
+  }
+
+  function bindFooterEmailCopy(footer) {
+    var links = footer.querySelectorAll('a[href^="mailto:"]');
+    Array.prototype.forEach.call(links, function (link) {
+      link.addEventListener('click', function () {
+        var email = (link.getAttribute('href') || '').replace(/^mailto:/i, '').split('?')[0];
+        if (!email) return;
+        copyText(email).then(function () {
+          var icon = link.getAttribute('aria-label') === 'Email';
+          if (icon) {
+            link.classList.add('is-copied');
+            window.clearTimeout(link._copyTimer);
+            link._copyTimer = window.setTimeout(function () {
+              link.classList.remove('is-copied');
+            }, 1600);
+            return;
+          }
+          if (!link.dataset.emailLabel) link.dataset.emailLabel = link.textContent;
+          link.textContent = 'Copied';
+          window.clearTimeout(link._copyTimer);
+          link._copyTimer = window.setTimeout(function () {
+            link.textContent = link.dataset.emailLabel;
+          }, 1600);
+        });
+      });
+    });
+  }
+
   function footerBarHTML() {
     return (
       '<div class="footer-bar">' +
@@ -511,6 +595,7 @@
     footer.id = 'connect';
     footer.classList.toggle('is-connect-footer', isConnectPage);
     footer.innerHTML = connectFooterHTML(isConnectPage);
+    bindFooterEmailCopy(footer);
 
     var form = document.getElementById('connect-form');
     var btn = document.getElementById('connect-submit');

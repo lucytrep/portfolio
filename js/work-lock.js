@@ -9,10 +9,51 @@
   var message = document.getElementById('work-lock-message');
   var eyeBtn = document.getElementById('work-lock-eye');
 
-  function unlock() {
+  function clearLockPin() {
+    if (!lockScreen) return;
+    lockScreen.style.top = '';
+    lockScreen.style.height = '';
+    lockScreen.style.bottom = '';
+    lockScreen.style.paddingBottom = '';
+  }
+
+  // Keep the password form in the visible area above the keyboard.
+  // iOS scrolls the visual viewport when the field is focused, but the
+  // lock overlay is position:fixed to the layout viewport, so the form
+  // jumps and cannot be scrolled back down.
+  function pinLockToVisibleArea() {
+    if (!lockScreen || lockScreen.classList.contains('is-hidden')) return;
+    if (!document.body.classList.contains('is-work-locked')) return;
+    var vv = window.visualViewport;
+    if (!vv) return;
+
+    var keyboard = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+    lockScreen.style.top = vv.offsetTop + 'px';
+    lockScreen.style.height = vv.height + 'px';
+    lockScreen.style.bottom = 'auto';
+
+    var tabOverlap = '';
+    if (keyboard > 80) {
+      var tab = document.querySelector('.mobile-tabbar');
+      if (tab && getComputedStyle(tab).display !== 'none') {
+        tabOverlap = tab.offsetHeight + 'px';
+      }
+    }
+    lockScreen.style.paddingBottom = tabOverlap;
+  }
+
+  function schedulePin() {
+    pinLockToVisibleArea();
+    window.requestAnimationFrame(pinLockToVisibleArea);
+    window.setTimeout(pinLockToVisibleArea, 50);
+    window.setTimeout(pinLockToVisibleArea, 300);
+  }
+
+  function unlock(fromUser) {
     try {
       sessionStorage.setItem(STORAGE_KEY, '1');
     } catch (e) {}
+    clearLockPin();
     if (lockScreen) lockScreen.classList.add('is-hidden');
     if (workContent) {
       workContent.classList.remove('work-lock-hidden');
@@ -20,6 +61,10 @@
       workContent.removeAttribute('inert');
     }
     document.body.classList.remove('is-work-locked');
+    if (fromUser) {
+      window.scrollTo(0, 0);
+      window.dispatchEvent(new CustomEvent('work-unlocked'));
+    }
   }
 
   function showError(text) {
@@ -132,10 +177,27 @@
     return Promise.resolve(sha256Fallback(str));
   }
 
+  if (window.visualViewport && lockScreen) {
+    window.visualViewport.addEventListener('resize', pinLockToVisibleArea);
+    window.visualViewport.addEventListener('scroll', pinLockToVisibleArea);
+  }
+  window.addEventListener('scroll', function () {
+    if (!document.body.classList.contains('is-work-locked')) return;
+    if (window.scrollY) window.scrollTo(0, 0);
+    pinLockToVisibleArea();
+  }, { passive: true });
+  window.addEventListener('orientationchange', function () {
+    if (!document.body.classList.contains('is-work-locked')) return;
+    window.scrollTo(0, 0);
+    schedulePin();
+  });
+
   if (sessionStorage.getItem(STORAGE_KEY) === '1') {
-    unlock();
+    unlock(false);
     return;
   }
+
+  pinLockToVisibleArea();
 
   // Eye toggle
   if (eyeBtn && input) {
@@ -150,6 +212,15 @@
     });
   }
 
+  if (input) {
+    input.addEventListener('focus', schedulePin);
+    input.addEventListener('blur', function () {
+      if (!document.body.classList.contains('is-work-locked')) return;
+      window.scrollTo(0, 0);
+      schedulePin();
+    });
+  }
+
   if (form && input) {
     var pending = false;
 
@@ -161,7 +232,7 @@
         .then(function (hash) {
           pending = false;
           if (hash === PASSWORD_HASH) {
-            unlock();
+            unlock(true);
           } else {
             showError('Incorrect password. Try again.');
             input.value = '';

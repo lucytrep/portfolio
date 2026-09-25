@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="/assets/favicons/favicon.png?v=mark1" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/common.css?v=scroll-cue1" />
+  <link rel="stylesheet" href="css/common.css?v=email-copy1" />
   <style>
     body {
       background: #fff;
@@ -135,7 +135,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      max-width: 36rem;
+      max-width: min(92vw, 52rem);
     }
 
     .home-quote-copy::before {
@@ -153,13 +153,23 @@
     }
 
     .home-quote {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       margin: 0;
-      font-size: var(--display-size);
+      max-width: 100%;
+      font-size: clamp(2.15rem, 5.1vw, 4.85rem);
       font-weight: var(--display-weight);
       line-height: var(--display-leading);
       letter-spacing: var(--display-tracking);
       text-transform: uppercase;
+      text-align: center;
       color: var(--color-text);
+    }
+
+    .home-quote span {
+      display: block;
+      white-space: nowrap;
     }
 
     .home-quote-lede {
@@ -358,7 +368,7 @@
       .home-quote-photo--mobile-bl { left: 14%; top: 88%; }
 
       .home-quote {
-        font-size: var(--display-size-compact);
+        font-size: clamp(1.85rem, 7.4vw, 3.15rem);
       }
 
       .clients-track {
@@ -511,8 +521,8 @@
     </div>
     <div class="home-quote-copy">
       <p class="section-eyebrow">About</p>
-      <h2 class="home-quote">Complex<br>problems.<br>Clear work.</h2>
-      <p class="home-quote-lede">Product designer turning complex problems into clear, intuitive, and visually distinctive experiences.</p>
+      <h2 class="home-quote"><span>Never designing</span><span>for the default.</span></h2>
+      <p class="home-quote-lede">Dyslexic and born to think differently. A decade of design, from Nike to products I build end to end.</p>
       <a href="case-studies/" class="home-quote-link">View my work</a>
     </div>
   </section>
@@ -878,6 +888,6 @@
   </script>
 
   <footer class="container page-footer"></footer>
-  <script src="js/main.js?v=scroll-cue1"></script>
+  <script src="js/main.js?v=email-copy1"></script>
 </body>
 </html>

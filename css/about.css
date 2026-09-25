@@ -35,24 +35,23 @@
 /* ─── Hero ───────────────────────────────────────────────── */
 
 .about-hero {
-  --hero-photo-h: min(42rem, calc(100svh - 9.75rem));
+  --hero-photo-h: min(36rem, calc(100svh - 8rem));
   --hero-photo-w: min(100%, calc(var(--hero-photo-h) * 0.84));
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: var(--grid-gap);
-  align-items: stretch;
-  padding-top: 0.35rem;
+  align-items: center;
+  padding-top: 1.25rem;
   padding-bottom: var(--space-5);
-  min-height: calc(100dvh - 5.75rem);
 }
 
 .about-hero-copy {
-  grid-column: 1 / span 6;
+  grid-column: 1 / span 7;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   min-width: 0;
-  padding: 0.35rem 0 2.15rem;
+  padding: 0;
   container-type: inline-size;
 }
 
@@ -67,18 +66,17 @@
   max-width: none;
   width: 100%;
   min-width: 0;
-  font-size: clamp(1.7rem, 8.4cqi, 3.45rem);
-  font-weight: var(--display-weight);
-  line-height: var(--display-leading);
-  letter-spacing: var(--display-tracking);
-  text-transform: uppercase;
+  font-size: clamp(2rem, 5.6cqi, 2.85rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
   text-wrap: balance;
   overflow-wrap: break-word;
 }
 
 .about-hero-lede {
-  margin: 1.35rem 0 0;
-  max-width: 38rem;
+  margin: 1.05rem 0 0;
+  max-width: 36rem;
   font-size: var(--about-body-size);
   line-height: var(--about-body-leading);
   color: var(--color-prose);
@@ -90,7 +88,7 @@
 }
 
 .about-hero-figure {
-  grid-column: 7 / -1;
+  grid-column: 8 / -1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -101,10 +99,11 @@
 .about-hero-frame {
   position: relative;
   display: block;
-  width: var(--hero-photo-w);
-  height: var(--hero-photo-h);
-  min-height: 22rem;
-  margin: 0 0 0 auto;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 0.86 / 1;
+  margin: 0;
   padding: 0;
   border: 0;
   background: #f3f1ee;

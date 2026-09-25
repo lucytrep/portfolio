@@ -56,10 +56,20 @@ body.archive-page #work-content {
   min-height: 0;
 }
 
-/* Locked archive: gallery stays visible under frosted glass */
+/* Locked archive: gallery stays visible under frosted glass.
+   position:fixed stops the browser from scrolling the page when the
+   password field is focused (iOS leaves that scroll stuck, so the
+   archive will not move after unlock). */
 body.archive-page.is-work-locked {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
   height: 100svh;
   overflow: hidden;
+  overscroll-behavior: none;
 }
 
 body.archive-page.is-work-locked .page-footer {
@@ -112,7 +122,9 @@ body.archive-page.is-work-locked .work-lock-screen {
   border: none;
   border-radius: 0;
   box-shadow: none;
-  overflow: visible;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (prefers-reduced-transparency: reduce) {
