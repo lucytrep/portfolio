@@ -195,7 +195,6 @@
       var obs = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            if (entry.target.hasAttribute('data-hover-paused')) return;
             var p = entry.target.play();
             if (p && p.catch) p.catch(function () {});
           } else {
@@ -210,24 +209,6 @@
         if (p && p.catch) p.catch(function () {});
       });
     }
-
-    // Work grid: hold the current frame while the pointer is over a project.
-    if (window.matchMedia && window.matchMedia('(hover: none)').matches) return;
-    document.querySelectorAll('.section-projects .project-card').forEach(function (card) {
-      var video = card.querySelector('video');
-      if (!video) return;
-      card.addEventListener('mouseenter', function () {
-        video.setAttribute('data-hover-paused', '');
-        video.pause();
-      });
-      card.addEventListener('mouseleave', function () {
-        video.removeAttribute('data-hover-paused');
-        var rect = video.getBoundingClientRect();
-        if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
-        var p = video.play();
-        if (p && p.catch) p.catch(function () {});
-      });
-    });
   })();
 
   // Vimeo background embeds: iOS Safari won't autoplay via URL params alone.
