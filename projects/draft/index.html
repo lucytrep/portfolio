@@ -122,10 +122,250 @@
       display: block;
     }
 
+    .draft-problem-grid,
+    .draft-grid-3,
+    .draft-grid-4 {
+      display: grid;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      align-items: start;
+    }
+    .draft-problem-grid { grid-template-columns: repeat(3, 1fr); }
+    .draft-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .draft-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .draft-grid-3 + .draft-grid-3,
+    .draft-grid-4 + .draft-grid-4 { margin-top: var(--space-2); }
+
+    .draft-frame {
+      border-radius: 0.8rem;
+      overflow: hidden;
+      background: #0a0809;
+    }
+    .draft-frame img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .draft-board {
+      margin-top: var(--space-2);
+      border-radius: 0.8rem;
+      overflow: hidden;
+      background: #0a0809;
+    }
+    .draft-grid-3 + .draft-board { margin-top: var(--space-4); }
+    .draft-board img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+    }
+
+    .draft-opp-grid {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 0.4rem;
+      margin-top: var(--space-4);
+    }
+    .draft-opp-grid .draft-frame {
+      aspect-ratio: 4 / 5;
+    }
+    .draft-opp-grid .draft-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .draft-opp-swatch {
+      aspect-ratio: 4 / 5;
+      border-radius: 0.8rem;
+      overflow: hidden;
+      background: #C8E000;
+      padding: 0.7rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .draft-opp-swatch span:first-child {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Rounded', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+    .draft-opp-swatch span:last-child {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Rounded', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: rgba(0, 0, 0, 0.6);
+      margin-top: 0.15rem;
+    }
+    .draft-opp-swatch--amber {
+      background: #C65A1B;
+    }
+    .draft-opp-swatch--amber span:first-child,
+    .draft-opp-swatch--amber span:last-child {
+      color: #fff;
+    }
+
+    .draft-dictation-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .draft-dictation-row .draft-frame {
+      aspect-ratio: 9 / 19.5;
+      min-width: 0;
+    }
+    .draft-dictation-row .draft-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .draft-welcome {
+      max-width: 22rem;
+      margin: var(--space-4) auto 0;
+    }
+    .draft-welcome .draft-frame {
+      aspect-ratio: 9 / 16;
+    }
+    .draft-welcome .draft-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .draft-phone-grid {
+      display: grid;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+    }
+    .draft-phone-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .draft-phone-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .draft-phone-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .draft-phone-grid--5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .draft-phone-grid--narrow {
+      max-width: 44rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .draft-phone-grid .draft-frame {
+      aspect-ratio: 9 / 16;
+      min-width: 0;
+    }
+    .draft-phone-grid .draft-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .draft-frame-note {
+      display: block;
+      margin-top: -0.4rem;
+      font-size: 0.75rem;
+      line-height: 1.35;
+      color: var(--color-text-secondary);
+    }
+    .draft-state-cluster {
+      display: flex;
+      justify-content: center;
+      gap: 0.85rem;
+      margin: var(--space-3) auto 0;
+      max-width: calc(12rem * 3 + 0.85rem * 2);
+    }
+    .draft-state-cluster .draft-split-cell {
+      flex: 0 0 12rem;
+      width: 12rem;
+      max-width: 12rem;
+      gap: 0.35rem;
+    }
+    .draft-state-cluster .draft-split-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+    }
+    .draft-state-cluster .draft-frame-note {
+      font-size: 0.68rem;
+    }
+    .draft-state-cluster .draft-frame {
+      aspect-ratio: 9 / 16;
+      width: 100%;
+    }
+    .draft-state-cluster .draft-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .draft-mvp-label {
+      display: block;
+      margin: var(--space-4) 0 0.4rem;
+      font-size: var(--font-size-xs);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+    }
+    .draft-mvp-strip {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.4rem;
+    }
+    .draft-mvp-strip .draft-frame {
+      aspect-ratio: 9 / 19.5;
+      min-width: 0;
+    }
+    .draft-mvp-strip .draft-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .draft-mvp-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: var(--space-4);
+    }
+    .draft-mvp-row .draft-mvp-label {
+      margin: 0 0 0.4rem;
+    }
+    .draft-mvp-row .draft-mvp-strip {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .case-section-body > :is(.draft-grid-3, .draft-grid-4, .draft-dictation-row, .draft-phone-grid, .draft-welcome) + p {
+      margin-top: var(--space-4);
+    }
+
     @media (max-width: 52rem) {
       .draft-compare-grid { grid-template-columns: 1fr; }
       .draft-split-grid { grid-template-columns: 1fr; }
       .draft-showcase-grid { grid-template-columns: 1fr 1fr; }
+      .draft-problem-grid,
+      .draft-grid-3,
+      .draft-grid-4,
+      .draft-opp-grid { grid-template-columns: repeat(2, 1fr); }
+      .draft-mvp-strip { grid-template-columns: repeat(3, 1fr); }
+      .draft-mvp-row { grid-template-columns: 1fr; }
+      .draft-dictation-row { grid-template-columns: 1fr; }
+      .draft-phone-grid--3,
+      .draft-phone-grid--4,
+      .draft-phone-grid--5 { grid-template-columns: repeat(2, 1fr); }
+      .draft-state-cluster {
+        justify-content: flex-start;
+        overflow-x: auto;
+        max-width: 100%;
+      }
+      .draft-state-cluster .draft-split-cell {
+        flex: 0 0 12rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -157,7 +397,25 @@
     </div>
   </header>
 
-
+  <div class="cs-ed">
+    <div class="cs-ed-grid">
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../draft/assets/intro/Phone.jpg" alt="Three Draft screens: a color palette, a growth dashboard, and a moodboard" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../draft/assets/intro/Video.jpg" alt="Think it. Say it. Draft it." style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
+        <img src="../../draft/assets/intro/Slides.jpg" alt="Think it. Say it. Draft it. — Say, Create, and Save" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../draft/assets/intro/Angled.jpg" alt="Draft library on two iPhones" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+      <div class="cs-ed-img cs-ed-img--half">
+        <img src="../../draft/assets/intro/Hand.jpg" alt="Hand holding an iPhone with Draft listening" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      </div>
+    </div>
+  </div>
 
   <main class="container case-study">
     <div class="case-layout">
@@ -179,7 +437,7 @@
 
       <article class="case-main">
         <header id="case-intro" class="case-hero">
-          <p class="case-hero-kicker">DRAFT • iOS • PARSONS CAPSTONE • 2025</p>
+          <p class="case-hero-kicker">DRAFT • iOS • PARSONS CAPSTONE • 2026</p>
           <h1 class="case-hero-title">Built for the moment before the work starts.</h1>
           <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;background:#0a0809;">
             <video preload="auto" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
@@ -196,15 +454,15 @@
             </div>
             <div class="case-meta-item case-meta-item--shipped">
               <dt>Date</dt>
-              <dd>Spring 2025</dd>
+              <dd>Spring 2026</dd>
             </div>
             <div class="case-meta-item">
               <dt>Context</dt>
-              <dd>MPS Communication Design, Digital Product Design — The New School</dd>
+              <dd>MPS Communication Design, Digital Product Design, The New School</dd>
             </div>
             <div class="case-meta-item">
               <dt>Tools</dt>
-              <dd>Swift, Xcode, React Native, Figma, Claude API, Pexels API, Unsplash, After Effects, ChatGPT</dd>
+              <dd>Swift, Xcode, Apple Speech, React Native, Figma, Claude API, Pexels API, Unsplash, After Effects, ChatGPT</dd>
             </div>
           </dl>
         </header>
@@ -227,7 +485,7 @@
               </p>
             </div>
             <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/10;">
-              <img src="../../draft/assets/showcase-setup.jpg" alt="Draft — showcase table setup" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+              <img src="../../draft/assets/showcase-setup.jpg" alt="Draft showcase table setup" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
             </div>
           </section>
 
@@ -237,7 +495,7 @@
             <h2 class="case-section-title">The Tools That Exist Are Not Built for This Moment</h2>
             <div class="case-section-body">
               <p>
-                I have always thought in images before I think in words. When a creative direction comes to me, I need to get it out and see it immediately, wherever I am.
+                I'm dyslexic, and I have always thought in images before words. Growing up, voice tools were how I learned: computers that read to me, and Dragon Dictation all through high school. When a creative direction comes to me, I need to get it out and see it immediately, wherever I am.
               </p>
               <p>
                 The tools that exist right now are not built for that. Replit and Lovable are too technical and too restrictive. You have to write out exactly what you want and you end up stuck iterating inside them. Draft is intentionally a first pass. It is not meant to be continued inside the app. None of the existing tools are built that way.
@@ -246,7 +504,7 @@
                 There was also a more practical problem. When you are working with developers across time zones and need to communicate a creative direction quickly, there is no fast way to send something visual. A voice memo is just more words. A Pinterest screenshot needs explaining. I needed to speak a direction and hand someone something they could actually look at.
               </p>
             </div>
-            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:repeat(4,1fr);gap:var(--space-2);">
+            <div class="draft-problem-grid">
               <div>
                 <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#111;">
                   <img src="../../draft/assets/cs-replit.png" alt="Replit mobile app" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
@@ -261,15 +519,9 @@
               </div>
               <div>
                 <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#0a0809;">
-                  <img src="../../draft/assets/cs-voice.png" alt="Draft — voice listening screen" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                  <img src="../../draft/assets/cs-voice.png" alt="Draft voice listening screen" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
                 </div>
-                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Draft — Voice</p>
-              </div>
-              <div>
-                <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:9/16;background:#0a0809;">
-                  <img src="../../draft/assets/cs-artifact-moodboard.png" alt="Draft — moodboard artifact" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
-                </div>
-                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Draft — Artifact</p>
+                <p style="margin-top:0.5rem;font-size:0.78rem;color:var(--color-muted,#888);text-align:center;">Draft Voice</p>
               </div>
             </div>
           </section>
@@ -318,13 +570,56 @@
                 The bar I kept coming back to: whatever Draft produces should be something a designer would screenshot and drop into a Slack message. Not hand off to an engineer. Not present in a meeting. Just send, so a conversation can start.
               </p>
             </div>
-            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
-              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;background:#C8E000;padding:1.25rem;display:flex;flex-direction:column;justify-content:flex-start;">
-                <span style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Rounded',sans-serif;font-size:1.15rem;font-weight:700;color:#000;letter-spacing:-0.01em;line-height:1.2;">Court Yellow</span>
-                <span style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Rounded',sans-serif;font-size:0.95rem;font-weight:400;color:rgba(0,0,0,0.6);margin-top:0.2rem;">#C8E000</span>
+            <div class="draft-opp-grid">
+              <div class="draft-opp-swatch">
+                <span>Court Yellow</span>
+                <span>#C8E000</span>
               </div>
-              <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;">
-                <img src="../../draft/assets/library/open-court-4.jpg" alt="Draft image collection output" style="width:100%;height:100%;object-fit:cover;display:block;" loading="lazy">
+              <div class="draft-opp-swatch draft-opp-swatch--amber">
+                <span>Burnt Amber</span>
+                <span>#C65A1B</span>
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/library/open-court-4.jpg" alt="Draft image collection output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/ui%201.jpg" alt="Draft UI output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_orange_car_001%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/UI_conversion_growth_rate_05.png" alt="Draft UI component output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_woman_002%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/ui%203.jpg" alt="Draft UI output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_orange_fit_008%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/UI_conversion_growth_rate_06.png" alt="Draft UI component output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_smiley_pool_005%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_raspberries_012%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_neon_rays_013%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_skyward_017%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/image_pixelated_014%201.png" alt="Draft image output" loading="lazy">
+              </div>
+              <div class="draft-frame">
+                <img src="../../draft/assets/Opp/4743240876c98b759b9791be9816c321%201.png" alt="Draft image output" loading="lazy">
               </div>
             </div>
           </section>
@@ -332,16 +627,31 @@
           <!-- DESIGN EXPLORATION -->
           <section id="design-exploration" class="case-section">
             <p class="case-section-label">Design Exploration</p>
-            <h2 class="case-section-title">Switching to Swift Was a Design Decision</h2>
+            <h2 class="case-section-title">Finding the Right Output, Then the Right Build</h2>
             <div class="case-section-body">
               <p>
-                The first build was in React Native. It worked, but it felt wrong. Everything moved like a web app wrapped in a phone shell, interactions were sticky, and nothing about it communicated the warmth or fluidity the app needed. It looked like a utility. Draft needed to feel more like a sketchbook.
+                Draft didn't start as a moodboard tool. My first MVP took a text or voice description of a UI component and generated live, copy-ready code. I built several versions, but code output for a web app never gave me the seamless feeling or interaction I wanted.
               </p>
+              <div class="draft-mvp-row">
+                <div>
+                  <span class="draft-mvp-label">V1</span>
+                  <div class="draft-mvp-strip">
+                    <div class="draft-frame"><img src="../../draft/assets/MVP/v1/MVP.png" alt="First MVP screen 1" loading="lazy"></div>
+                    <div class="draft-frame"><img src="../../draft/assets/MVP/v1/MVP-3.png" alt="First MVP screen 2" loading="lazy"></div>
+                    <div class="draft-frame"><img src="../../draft/assets/MVP/v1/MVP-5.png" alt="First MVP screen 3" loading="lazy"></div>
+                  </div>
+                </div>
+                <div>
+                  <span class="draft-mvp-label">V2</span>
+                  <div class="draft-mvp-strip">
+                    <div class="draft-frame"><img src="../../draft/assets/MVP/v2/App.png" alt="Second MVP screen 1" loading="lazy"></div>
+                    <div class="draft-frame"><img src="../../draft/assets/MVP/v2/App-5.png" alt="Second MVP screen 2" loading="lazy"></div>
+                    <div class="draft-frame"><img src="../../draft/assets/MVP/v2/App-9.png" alt="Second MVP screen 3" loading="lazy"></div>
+                  </div>
+                </div>
+              </div>
               <p>
                 Switching to Swift was a design decision as much as a technical one. Native iOS rendering changed how the whole app felt to hold and actually use. The difference between the two builds is visible immediately when you put them next to each other.
-              </p>
-              <p>
-                The home feed presented its own problem. The APIs could generate content but could not consistently produce imagery that held together aesthetically. So I curated some of it with locally sourced images, renamed to match keyword triggers, so the first thing a user sees feels considered and intentional. Live API content takes over for everything generated after that.
               </p>
             </div>
             <div class="draft-split-grid">
@@ -354,7 +664,7 @@
               <div class="draft-split-cell">
                 <span class="draft-split-label">Swift</span>
                 <div class="draft-split-frame" style="background:#0a0809;">
-                  <img src="../../draft/assets/cs-swift.png" alt="Swift build" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                  <img src="../../draft/assets/cs-swift-palette.png" alt="Swift build: Canyon Shadow color palette" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
                 </div>
               </div>
             </div>
@@ -366,33 +676,183 @@
             <h2 class="case-section-title">Build, Look at It, Ask If It Feels Right</h2>
             <div class="case-section-body">
               <p>
-                I did not run formal user testing sessions. What I did instead was build, look at it, and ask whether it felt like the product I had set out to make.
+                My testing was hands on: build, look at it, and ask whether it felt like the product I set out to make. The real test came at the capstone showcase, where people understood Draft as dictation right away with no explanation. It also opened up conversations about building in Swift, how limiting voice software can be, and how far dictation has come since the early 2000s.
               </p>
+              <p>
+                Every request becomes three directions. The app shows your original request at the top, so you can compare each direction against what you actually asked for.
+              </p>
+              <div class="draft-phone-grid draft-phone-grid--4">
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Early, April</span>
+                  <span class="draft-frame-note">Voice</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/03-voice-capture-error-apr.jpg" alt="React Native build: voice capture failed to initialize" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Exploration</span>
+                  <span class="draft-frame-note">Request</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/10-directions-with-request-may.jpg" alt="Direction showing the original spoken request" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Exploration</span>
+                  <span class="draft-frame-note">Palette</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/11-directions-palette-may.jpg" alt="Palette direction" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Exploration</span>
+                  <span class="draft-frame-note">Editorial</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/12-directions-editorial-concept-may.jpg" alt="Editorial moodboard direction" loading="lazy">
+                  </div>
+                </div>
+              </div>
+              <p>
+                The dictation screen went through the most rounds. It started as a flat pink screen with a single mic button. In May I explored a series of animated orbs to make listening feel alive. The final version is simple: tap once, speak, and pause when you're finished.
+              </p>
+              <div class="draft-phone-grid draft-phone-grid--5">
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Early, April</span>
+                  <span class="draft-frame-note">Early pink dictation screen</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/02-early-dictation-pink-apr.jpg" alt="Early pink dictation screen" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Exploration</span>
+                  <span class="draft-frame-note">Green orb exploration</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/21-dictation-orb-green.jpg" alt="Green orb exploration" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Exploration</span>
+                  <span class="draft-frame-note">Heart orb exploration</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/22-dictation-orb-heart.jpg" alt="Heart orb exploration" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Exploration</span>
+                  <span class="draft-frame-note">Blue orb exploration</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/23-dictation-orb-blue.jpg" alt="Blue orb exploration" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Final</span>
+                  <span class="draft-frame-note">Final listening screen</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/24-dictation-listening-final.jpg" alt="Final listening screen" loading="lazy">
+                  </div>
+                </div>
+              </div>
+              <p>
+                One detail mattered most: your words appear on screen as you speak, so you always know Draft heard you before it generates anything.
+              </p>
+              <div class="draft-phone-grid draft-phone-grid--2 draft-phone-grid--narrow">
+                <div class="draft-split-cell">
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/19-dictation-live-transcript-yellow.jpg" alt="Live transcript: create me a yellow color palette" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/20-dictation-live-transcript-purple.jpg" alt="Live transcript: generate a purple color palette" loading="lazy">
+                  </div>
+                </div>
+              </div>
               <p>
                 The React Native to Swift rebuild was the biggest iteration of the project. It was not a small call to make mid-timeline, but the version I had did not feel right and I could not ship something that looked wrong.
               </p>
               <p>
-                The home feed went through several rounds of curation. Early API generations were inconsistent and broke the aesthetic of the experience, so I built a hybrid system where curated local assets anchor the feed and live API content handles everything generated. That balance took time to get right.
+                The library went through four versions, from a simple file list to a masonry grid that lets the work speak for itself.
               </p>
+              <div class="draft-phone-grid draft-phone-grid--4">
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">V1, April</span>
+                  <span class="draft-frame-note">Library version 1</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/06-library-v1-apr.jpg" alt="Library version 1" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">V2</span>
+                  <span class="draft-frame-note">Library version 2 with collections</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/07-library-v2-collections-may.jpg" alt="Library version 2 with collections" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">V3</span>
+                  <span class="draft-frame-note">Library version 3 with stacked cards</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/08-library-v3-stacked-cards-may.jpg" alt="Library version 3 with stacked cards" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Final</span>
+                  <span class="draft-frame-note">Library final grid</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/09-library-final-grid-may.jpg" alt="Final library grid" loading="lazy">
+                  </div>
+                </div>
+              </div>
               <p>
                 The three-direction model stayed fixed throughout. Every time I questioned whether to change it, keeping it felt more right than adjusting it.
               </p>
-            </div>
-            <div style="margin-top:var(--space-4);display:grid;grid-template-columns:repeat(5,1fr);gap:var(--space-2);">
-              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
-                <img src="../../draft/assets/cs-voice.png" alt="Draft — listening" style="width:100%;height:auto;display:block;" loading="lazy">
+              <p>
+                Artifacts got richer too, from a single stacked moodboard to editorial and experimental layouts.
+              </p>
+              <div class="draft-phone-grid draft-phone-grid--3">
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">April</span>
+                  <span class="draft-frame-note">Early moodboard artifact, April</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/01-early-artifact-moodboard-apr.jpg" alt="Early moodboard artifact, April" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">May, editorial</span>
+                  <span class="draft-frame-note">Editorial moodboard artifact</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/14-artifact-moodboard-editorial.jpg" alt="Editorial moodboard artifact" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">May, experimental</span>
+                  <span class="draft-frame-note">Experimental moodboard artifact</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/15-artifact-moodboard-experimental.jpg" alt="Experimental moodboard artifact" loading="lazy">
+                  </div>
+                </div>
               </div>
-              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
-                <img src="../../draft/assets/cs-press-hold.png" alt="Draft — press and hold to dictate" style="width:100%;height:auto;display:block;" loading="lazy">
-              </div>
-              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
-                <img src="../../draft/assets/cs-desert-dreams.png" alt="Draft — Desert Dreams moodboard" style="width:100%;height:auto;display:block;" loading="lazy">
-              </div>
-              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
-                <img src="../../draft/assets/cs-press-hold-2.png" alt="Draft — press and hold" style="width:100%;height:auto;display:block;" loading="lazy">
-              </div>
-              <div style="border-radius:0.8rem;overflow:hidden;background:#0a0809;">
-                <img src="../../draft/assets/cs-generating.png" alt="Draft — generating" style="width:100%;height:auto;display:block;" loading="lazy">
+              <div class="draft-state-cluster">
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Iteration</span>
+                  <span class="draft-frame-note">Color palette</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/13-artifact-color-palette.jpg" alt="Color palette artifact" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Iteration</span>
+                  <span class="draft-frame-note">Image gathering</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/16-artifact-image-gathering.jpg" alt="Image gathering artifact" loading="lazy">
+                  </div>
+                </div>
+                <div class="draft-split-cell">
+                  <span class="draft-split-label">Iteration</span>
+                  <span class="draft-frame-note">Moodboard</span>
+                  <div class="draft-frame">
+                    <img src="../../draft/assets/process/17-artifact-moodboard-brooklyn.jpg" alt="Brooklyn moodboard artifact" loading="lazy">
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -408,6 +868,47 @@
               <p>
                 The app opens to a home feed of generated artifacts. You tap the microphone, speak a direction, and three creative outputs appear across four types: color palettes, UI layouts, image collections, moodboards. Everything in the feed is saveable. The session is disposable. Draft is not where you finish things. It is where you start.
               </p>
+              <p>
+                The first thing you see sets the tone: think it, say it, draft it.
+              </p>
+            </div>
+            <div class="draft-welcome">
+              <div class="draft-frame">
+                <img src="../../draft/assets/process/25-welcome-screen.jpg" alt="Draft welcome screen" loading="lazy">
+              </div>
+            </div>
+            <div class="draft-phone-grid draft-phone-grid--2">
+              <div class="draft-split-cell">
+                <span class="draft-split-label">Saved board</span>
+                <div class="draft-frame">
+                  <img src="../../draft/assets/process/28-saved-board-street-motion.jpg" alt="Street and Motion board with photos and color swatches" loading="lazy">
+                </div>
+              </div>
+              <div class="draft-split-cell">
+                <span class="draft-split-label">Item detail</span>
+                <div class="draft-frame">
+                  <img src="../../draft/assets/process/27-item-detail-ai-description.jpg" alt="Item detail with an AI-written title and description" loading="lazy">
+                </div>
+              </div>
+            </div>
+            <div class="case-section-body" style="margin-top:var(--space-4);">
+              <p>
+                Saving is where a first draft becomes something you can use. Every item gets a short AI description, and you can sort anything into boards in a couple of taps.
+              </p>
+            </div>
+            <div class="draft-phone-grid draft-phone-grid--2">
+              <div class="draft-split-cell">
+                <span class="draft-split-label">Save to collection</span>
+                <div class="draft-frame">
+                  <img src="../../draft/assets/process/29-save-to-collection-sheet.jpg" alt="Save to collection sheet" loading="lazy">
+                </div>
+              </div>
+              <div class="draft-split-cell">
+                <span class="draft-split-label">Move to board</span>
+                <div class="draft-frame">
+                  <img src="../../draft/assets/process/30-move-to-board-multiselect.jpg" alt="Selecting items and moving them to a board" loading="lazy">
+                </div>
+              </div>
             </div>
             <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;background:#0a0809;">
               <video preload="metadata" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" data-timebar></video>
@@ -437,14 +938,14 @@
               </p>
             </div>
             <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:3/2;">
-              <img src="../../draft/assets/showcase-demo-1.jpg" alt="Draft — demoing at showcase" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+              <img src="../../draft/assets/showcase-demo-1.jpg" alt="Draft demoing at showcase" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
             </div>
             <div style="margin-top:var(--space-2);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);">
               <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;">
-                <img src="../../draft/assets/cs-tweet-cropped.png" alt="Tweet from @taydotfun — voice to moodboard" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
+                <img src="../../draft/assets/cs-tweet-cropped.png" alt="Tweet from @taydotfun voice to moodboard" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;" loading="lazy">
               </div>
               <div style="border-radius:0.8rem;overflow:hidden;aspect-ratio:1/1;">
-                <img src="../../draft/assets/showcase-demo-2.jpg" alt="Draft — demoing the app" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
+                <img src="../../draft/assets/showcase-demo-2.jpg" alt="Draft demoing the app" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" loading="lazy">
               </div>
             </div>
           </section>
@@ -462,6 +963,12 @@
               </p>
               <p>
                 If I could go back, I would make the Swift decision earlier. The rebuild was the right call and I would make it again, but doing it sooner would have bought more time to develop the artifact system further.
+              </p>
+              <p>
+                The biggest lesson from the showcase was how much the final production steps matter. Draft only ran on my own device, so everyone had to take turns on one phone. Every API call ran through my personal key, and keys expired.
+              </p>
+              <p>
+                That's what I want to solve next: distribution and API management that work the way a real product would, so anyone can try Draft on their own phone. I'd love to understand how teams handle this at scale.
               </p>
             </div>
           </section>
@@ -482,7 +989,7 @@
               </p>
             </div>
             <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;">
-              <img src="../../draft/assets/showcase-setup.jpg" alt="Draft — showcase table setup with iPad and NFC cards" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
+              <img src="../../draft/assets/showcase-setup.jpg" alt="Draft showcase table setup with iPad and NFC cards" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;" loading="lazy">
             </div>
           </section>
 
