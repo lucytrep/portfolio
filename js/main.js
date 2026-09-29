@@ -982,6 +982,41 @@
     if (!mediaEls.length) return;
 
     var current = 0;
+    var lightboxEntry = false;
+    var suppressHash = false;
+
+    function hashId() {
+      var raw = (window.location.hash || '').replace(/^#/, '');
+      if (!raw) return '';
+      try { return decodeURIComponent(raw); } catch (e) { return raw; }
+    }
+
+    function archiveCard(el) {
+      return el && el.closest ? el.closest('[data-archive-id]') : null;
+    }
+
+    function currentArchiveId() {
+      var card = archiveCard(mediaEls[current]);
+      return card ? (card.getAttribute('data-archive-id') || '') : '';
+    }
+
+    function indexForArchiveId(id) {
+      if (!id) return -1;
+      for (var n = 0; n < mediaEls.length; n++) {
+        var card = archiveCard(mediaEls[n]);
+        if (card && card.getAttribute('data-archive-id') === id) return n;
+      }
+      return -1;
+    }
+
+    function writeArchiveUrl(push) {
+      if (!isArchive) return;
+      var id = currentArchiveId();
+      var base = window.location.pathname + window.location.search;
+      var url = id ? base + '#' + encodeURIComponent(id) : base;
+      history[push ? 'pushState' : 'replaceState']({ archiveLightbox: true, archiveId: id }, '', url);
+      if (push) lightboxEntry = true;
+    }
 
     // Build overlay DOM
     var overlay = document.createElement('div');
@@ -1065,22 +1100,55 @@
       var single = mediaEls.length <= 1;
       prevBtn.style.visibility = single ? 'hidden' : '';
       nextBtn.style.visibility = single ? 'hidden' : '';
+
+      if (!suppressHash && isArchive && lightboxEntry && overlay.classList.contains('is-open')) {
+        writeArchiveUrl(false);
+      }
     }
 
-    function open(index) {
+    function open(index, opts) {
+      opts = opts || {};
       show(index);
       var sbw = window.innerWidth - document.documentElement.clientWidth;
       document.body.style.overflow = 'hidden';
       if (sbw) document.body.style.paddingRight = sbw + 'px';
       overlay.classList.add('is-open');
+      if (!isArchive) return;
+      if (opts.history === 'none') {
+        lightboxEntry = true;
+        return;
+      }
+      writeArchiveUrl(true);
     }
 
-    function close() {
+    function close(opts) {
+      opts = opts || {};
+      var wasOpen = overlay.classList.contains('is-open');
       overlay.classList.remove('is-open');
       document.body.style.overflow = '';
       document.body.style.paddingRight = '';
       lbVideo.pause();
       lbVideo.removeAttribute('src');
+      if (!isArchive || !wasOpen) return;
+      if (opts.history === 'none') {
+        lightboxEntry = false;
+        return;
+      }
+      if (lightboxEntry) {
+        lightboxEntry = false;
+        history.back();
+      }
+    }
+
+    function openHashedItem() {
+      if (!isArchive || document.body.classList.contains('is-work-locked')) return;
+      var index = indexForArchiveId(hashId());
+      if (index < 0) return;
+      if (overlay.classList.contains('is-open') && current === index) return;
+      if (window.scrollY) window.scrollTo(0, 0);
+      var base = window.location.pathname + window.location.search;
+      history.replaceState({ archiveLightbox: false }, '', base);
+      open(index);
     }
 
     // Mark elements and attach click listeners. On the archive, each media card
@@ -1110,6 +1178,25 @@
       if (e.key === 'ArrowLeft') show(current - 1);
       if (e.key === 'ArrowRight') show(current + 1);
     });
+
+    if (isArchive) {
+      window.addEventListener('popstate', function () {
+        var state = history.state || {};
+        var index = indexForArchiveId(state.archiveId || hashId());
+        if (state.archiveLightbox && index >= 0) {
+          suppressHash = true;
+          if (overlay.classList.contains('is-open')) show(index);
+          else open(index, { history: 'none' });
+          suppressHash = false;
+          lightboxEntry = true;
+          return;
+        }
+        if (overlay.classList.contains('is-open')) close({ history: 'none' });
+      });
+
+      openHashedItem();
+      window.addEventListener('work-unlocked', openHashedItem);
+    }
   })();
 
   // Journey section slideshows — start rotating when scrolled into view

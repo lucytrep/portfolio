@@ -341,6 +341,33 @@ p,
   line-height: var(--line-height-base);
 }
 
+/* Inline links in body copy. Add class="text-link" anywhere this treatment is needed. */
+.text-link {
+  color: var(--color-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--color-hairline);
+  text-decoration-skip-ink: auto;
+  transition: text-decoration-color 180ms ease;
+}
+
+.text-link:hover {
+  text-decoration-color: var(--color-text);
+}
+
+.text-link:focus-visible {
+  outline: 1px solid var(--color-text);
+  outline-offset: 0.18rem;
+  border-radius: 0.12rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-link {
+    transition: none;
+  }
+}
+
 .container {
   width: var(--container-width);
   max-width: 100%;
