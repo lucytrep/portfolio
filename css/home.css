@@ -293,10 +293,6 @@
   main.section-projects .project-card-image video {
     transform: scale(1.03);
   }
-
-  #project-coming-soon {
-    display: none;
-  }
 }
 
 /* Stacked card meta up to 1300px (tablet + phone): title, then description,

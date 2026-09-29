@@ -784,7 +784,6 @@
 
     bindPillHover(document.querySelectorAll('.section-projects a.project-link'), CASE_STUDY_LABEL);
     bindPillHover(document.querySelectorAll('.chat-lock'), COMING_SOON_LABEL, true);
-    bindPillHover(document.querySelectorAll('#project-coming-soon .project-link'), COMING_SOON_LABEL, true);
     document.querySelectorAll('.page-footer .footer-socials a').forEach(function (el) {
       var name = (el.getAttribute('aria-label') || '').trim();
       if (!name) return;
@@ -810,7 +809,7 @@
     function isProjectCaseStudyTarget(el) {
       if (!el) return false;
       return !!el.closest(
-        '.section-projects a.project-link, .chat-lock, #project-coming-soon .project-link, .page-footer .footer-socials a'
+        '.section-projects a.project-link, .chat-lock, .page-footer .footer-socials a'
       );
     }
 
