@@ -3046,6 +3046,56 @@
       .next-section { width: min(90vw, 1640px) !important; max-width: none !important; margin-left: auto !important; margin-right: auto !important;
                       padding-left: 0 !important; padding-right: 0 !important; box-sizing: border-box; }
     }
+
+    /* ── Desktop header v3: vertically centered, scales with width AND height ── */
+    @media (min-width: 1024px) {
+      .hero-wrapper { min-height: 100svh !important; display: flex !important; flex-direction: column; }
+      .hero {
+        flex: 1 1 auto;
+        grid-template-rows: 1fr auto auto auto auto 1fr !important;
+        padding-top: clamp(88px, 11vh, 130px) !important; padding-bottom: clamp(24px, 5vh, 64px) !important;
+        align-content: stretch;
+      }
+      .hero .eyebrow { grid-row: 2 !important; }
+      .hero .hero-headline { grid-row: 3 !important; font-size: clamp(68px, min(9.5vw, 14.5vh), 168px) !important; margin-bottom: clamp(28px, 4vh, 56px) !important; }
+      .hero-keywords { grid-row: 4 !important; margin-top: 0 !important; }
+      .hero-cta { grid-row: 5 !important; margin-top: clamp(20px, 3vh, 32px) !important; }
+      .hero .phone-hero {
+        grid-row: 1 / -1 !important; align-self: center !important; margin-top: 0 !important;
+        width: clamp(280px, min(30vw, 58vh), 580px) !important;
+      }
+    }
+    @media (min-width: 1024px) and (max-width: 1279px) {
+      .hero .phone-hero { width: clamp(260px, min(28vw, 54vh), 360px) !important; }
+      .dir-card { width: 50% !important; }
+      .dir-card--left { left: -22% !important; }
+      .dir-card--right { right: -22% !important; }
+    }
+
+    @media (min-width: 1280px) {
+      .hero .phone-hero { width: clamp(300px, min(26vw, 58vh), 540px) !important; }
+      .dir-card { width: 54% !important; }
+      .dir-card--left { left: -26% !important; }
+      .dir-card--right { right: -26% !important; }
+    }
+
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .hero .phone-hero { width: clamp(280px, min(46vw, 40vh), 440px) !important; }
+      .hero-headline { font-size: clamp(64px, min(10.5vw, 11vh), 104px) !important; }
+    }
+
+    /* ── Hero background: resolution-independent gradient (tablet + desktop) ── */
+    @media (min-width: 768px) {
+      .hero-wrapper::before {
+        inset: 0 !important; transform: none !important; opacity: 1 !important;
+        background-image:
+          radial-gradient(ellipse 70% 55% at 18% 8%, rgba(140, 52, 62, 0.55), transparent 70%),
+          radial-gradient(ellipse 60% 50% at 85% 62%, rgba(120, 160, 128, 0.28), transparent 70%),
+          linear-gradient(to bottom, #25121a 0%, #3b2127 24%, #5a5e58 50%, #52705c 66%, #26201f 86%, #0a0809 100%) !important;
+        background-size: 100% 100% !important; background-position: center !important;
+      }
+      .hero-wrapper::after { bottom: 0 !important; height: 18% !important; }
+    }
   </style>
 </head>
 <body>
