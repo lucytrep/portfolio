@@ -66,6 +66,20 @@
         aspect-ratio: 4 / 5;
       }
     }
+    /* The Vimeo player pillarboxes anything wider than 16:9, so the iframe stays
+       16:9 and runs past the 3500x1746 row. clip-path trims it to the rounded
+       tile where overflow clipping of iframes is unreliable (iOS Safari). */
+    @media (max-width: 37.5rem) {
+      #acuity-intro .cs-ed-grid > .cs-ed-img--full:first-child {
+        overflow: hidden;
+        -webkit-clip-path: inset(0 round var(--radius-media));
+        clip-path: inset(0 round var(--radius-media));
+      }
+      #acuity-intro .cs-ed-grid > .cs-ed-img--full:first-child iframe {
+        width: var(--cs-ed-row) !important;
+        height: calc(var(--cs-ed-row) * 9 / 16) !important;
+      }
+    }
     @media (prefers-reduced-motion: reduce) {
       .case-hero--init .case-hero-kicker,
       .case-hero--init .case-hero-title,
@@ -95,7 +109,7 @@
     </div>
   </header>
 
-  <div class="cs-ed">
+  <div class="cs-ed" id="acuity-intro">
     <div class="cs-ed-grid">
       <div class="cs-ed-img cs-ed-img--full">
         <iframe src="https://player.vimeo.com/video/1171057107?background=1&autoplay=1&muted=1&loop=1&autopause=0" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Acuity"></iframe>
