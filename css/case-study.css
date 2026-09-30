@@ -1134,3 +1134,49 @@
     height: max(100%, calc(100cqw * 9 / 16)) !important;
   }
 }
+
+/* Phones: every opening collage uses Draft's intro sizes. Heights come from
+   the viewport width, not aspect-ratio plus container units, so an embedded
+   lead video can't grow past its row. */
+@media (max-width: 37.5rem) {
+  .cs-ed {
+    --cs-ed-row: calc(100vw - var(--cs-ed-gutter) * 2);
+    --cs-ed-half: calc((var(--cs-ed-row) - var(--cs-ed-gutter)) / 2);
+  }
+
+  /* Draft: first pair 3872x3000, slide row 3500x1746, closing pair square */
+  .cs-ed-grid > * {
+    --cs-ed-w: var(--cs-ed-half);
+    --cs-ed-h: var(--cs-ed-half);
+  }
+
+  .cs-ed-grid > .cs-ed-img,
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--half,
+  .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full),
+  .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
+    grid-column: auto;
+    height: var(--cs-ed-h);
+    min-height: 0;
+    max-height: var(--cs-ed-h);
+    aspect-ratio: auto;
+    container-type: normal;
+    overflow: hidden;
+  }
+
+  .cs-ed-grid > .cs-ed-img--half:not(.cs-ed-img--full ~ *),
+  .cs-ed-grid > .cs-ed-img--full:first-child ~ .cs-ed-img--half:not(.cs-ed-img--full ~ .cs-ed-img--full ~ *) {
+    --cs-ed-h: calc(var(--cs-ed-half) * 3000 / 3872);
+  }
+
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--full,
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--full:first-child {
+    --cs-ed-w: var(--cs-ed-row);
+    --cs-ed-h: calc(var(--cs-ed-row) * 1746 / 3500);
+    grid-column: 1 / -1;
+  }
+
+  .cs-ed-grid > .cs-ed-img iframe {
+    width: max(var(--cs-ed-w), calc(var(--cs-ed-h) * 16 / 9)) !important;
+    height: max(var(--cs-ed-h), calc(var(--cs-ed-w) * 9 / 16)) !important;
+  }
+}
