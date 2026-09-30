@@ -752,14 +752,12 @@ p,
   margin: 0;
   max-width: 12ch;
   font-size: var(--display-size); /* fallback if container queries unsupported */
-  font-size: clamp(3.05rem, 13.5cqi, 6.35rem); /* sized to its own column so it can't overflow into the next one */
+  font-size: clamp(3.05rem, 12cqi, 6.35rem); /* "COLLABORATE." is ~7.2em wide; 12cqi keeps it on one line in its column */
   font-weight: var(--display-weight);
   letter-spacing: var(--display-tracking);
   line-height: var(--display-leading);
   text-transform: uppercase;
   color: var(--color-text);
-  overflow-wrap: break-word;
-  word-break: break-word;
 }
 
 .footer-connect-meta {
@@ -1200,7 +1198,7 @@ p,
   .footer-connect-title {
     max-width: 100%;
     font-size: var(--display-size-compact); /* fallback if container queries unsupported */
-    font-size: clamp(2.4rem, 13.5cqi, 4.6rem); /* lower floor keeps small phones from overflowing */
+    font-size: clamp(2rem, 12cqi, 4.6rem); /* lower floor keeps small phones from overflowing */
   }
 
   .footer-bar {

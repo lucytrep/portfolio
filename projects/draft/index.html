@@ -309,6 +309,9 @@
     .draft-group-label + .draft-phone-grid {
       margin-top: 0.75rem;
     }
+    .draft-group-label--center {
+      text-align: center;
+    }
     .draft-phone-grid--trials {
       grid-template-columns: repeat(6, minmax(0, 1fr));
     }
@@ -411,6 +414,28 @@
       margin-top: var(--space-4);
     }
 
+    #designing-for-voice .case-section-grid-3,
+    .draft-stat-row { margin-top: 0; }
+    .draft-voice-video {
+      max-width: 320px;
+      margin: 0 auto var(--space-4);
+    }
+    .draft-voice-video video {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-inline: auto;
+    }
+    .draft-voice-video .draft-frame-note {
+      margin-top: 0.75rem;
+      text-align: center;
+    }
+    .draft-stat-row .case-section-grid-3-item strong {
+      font-size: clamp(1.375rem, 3.5vw, 2.25rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+    }
+
     /* Phone.jpg and Hand.jpg are 3872x3000; matching the box keeps cover from cropping either export */
     #draft-intro .cs-ed-grid > .cs-ed-img--half:nth-child(-n+2) {
       height: auto;
@@ -422,7 +447,7 @@
       height: auto;
       min-height: 0;
       max-height: none;
-      aspect-ratio: 1024 / 510;
+      aspect-ratio: 3500 / 1746;
     }
     #draft-intro .cs-ed-grid > .cs-ed-img--half:nth-child(-n+2) > img {
       height: 100% !important;
@@ -441,7 +466,7 @@
       }
       #draft-intro .cs-ed-grid > .cs-ed-img.cs-ed-img--full {
         grid-column: 1 / -1;
-        aspect-ratio: 1024 / 510;
+        aspect-ratio: 3500 / 1746;
       }
       #draft-intro .cs-ed-grid > .cs-ed-img > img {
         height: 100% !important;
@@ -507,6 +532,7 @@
     }
 
     @media (max-width: 37.5rem) {
+      .draft-voice-video { max-width: 260px; }
       .draft-opp-swatch { padding: 0.45rem; }
       .draft-opp-swatch span:first-child { font-size: 0.72rem; }
       .draft-opp-swatch span:last-child { font-size: 0.6rem; }
@@ -568,7 +594,7 @@
         <img src="../../draft/assets/intro/Hand.jpg?v=swap1" alt="Hand holding an iPhone with Draft listening" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
       <div class="cs-ed-img cs-ed-img--full cs-ed-img--tall">
-        <img src="../../draft/assets/intro/Slides.jpg?v=slides2" alt="Say, Create, and Save" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <img src="../../draft/assets/intro/Slides.jpg?v=slides3" alt="Say, Create, and Save" style="width:100%;height:100%;object-fit:cover;display:block;" />
       </div>
       <div class="cs-ed-img cs-ed-img--half">
         <img src="../../draft/assets/intro/Angled.jpg" alt="Draft library on two iPhones" style="width:100%;height:100%;object-fit:cover;display:block;" />
@@ -590,6 +616,7 @@
           <a href="#strategy">Defining the Opportunity</a>
           <a href="#design-exploration">Design Exploration</a>
           <a href="#testing">Test &amp; Iterate</a>
+          <a href="#designing-for-voice">Designing for Voice</a>
           <a href="#final-solution">Final Product</a>
           <a href="#results">Impact</a>
           <a href="#reflection">Reflection</a>
@@ -600,9 +627,10 @@
       <article class="case-main">
         <header id="case-intro" class="case-hero">
           <p class="case-hero-kicker">DRAFT • iOS • PARSONS CAPSTONE • 2026</p>
-          <h1 class="case-hero-title">Built for the moment before the work starts.</h1>
+          <h1 class="case-hero-title">Draft: speak an idea, see three directions.</h1>
+          <p class="case-hero-subtitle">Built for the moment before the work starts.</p>
           <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;background:#0a0809;">
-            <video preload="auto" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
+            <video preload="metadata" poster="../../draft/assets/entry-logo.jpg" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;"></video>
           </div>
 
           <dl class="case-meta-grid">
@@ -612,7 +640,7 @@
             </div>
             <div class="case-meta-item">
               <dt>Timeline</dt>
-              <dd>5–8 weeks</dd>
+              <dd>One semester</dd>
             </div>
             <div class="case-meta-item case-meta-item--shipped">
               <dt>Date</dt>
@@ -624,7 +652,7 @@
             </div>
             <div class="case-meta-item">
               <dt>Tools</dt>
-              <dd>Swift, Xcode, Apple Speech, React Native, Figma, Claude API, Pexels API, Unsplash, After Effects, ChatGPT</dd>
+              <dd>Swift, Xcode, Apple Speech, Claude API, Pexels API, Figma, After Effects</dd>
             </div>
           </dl>
         </header>
@@ -694,7 +722,7 @@
             <h2 class="case-section-title">Every Tool in This Category Makes the Same Assumption</h2>
             <div class="case-section-body">
               <p>
-                I audited the major AI creative tools, Replit, Lovable, and a few others, and looked at two things: how they take input and what they give back.
+                I audited the major AI creative tools, Replit, Lovable, and other AI builders, and looked at two things: how they take input and what they give back.
               </p>
               <p>
                 The pattern was the same across all of them. Input is text, usually detailed and technical. Output is code. The whole thing assumes you already know what you want precisely enough to write it down, and that what you want at the end is something buildable.
@@ -841,75 +869,66 @@
                 My testing was hands on: build, look at it, and ask whether it felt like the product I set out to make. The real test came at the capstone showcase, where people understood Draft as dictation right away with no explanation. It also opened up conversations about building in Swift, how limiting voice software can be, and how far dictation has come since the early 2000s.
               </p>
               <p>
-                The dictation screen went through the most rounds. It started as a flat pink screen with a single mic button. In May I explored a series of animated orbs to make listening feel alive. The final version is simple: tap once, speak, and pause when you're finished.
+                The dictation screen went through the most rounds. It started as a flat pink screen with a single mic button. Then I explored a series of animated orbs to make listening feel alive. The final version is simple: tap once, speak, and pause when you're finished.
               </p>
+              <p class="draft-split-label draft-group-label draft-group-label--center">Start of semester</p>
               <div class="draft-phone-grid draft-phone-grid--dictation draft-phone-grid--dictation-5">
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/02-early-dictation-pink-apr.jpg" alt="Early dictation screen with a single mic button" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/21-dictation-orb-green.jpg" alt="Early dictation exploration" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/22-dictation-orb-heart.jpg" alt="Early dictation exploration" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/23-dictation-orb-blue.jpg" alt="Early dictation exploration" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/24-dictation-listening-final.jpg" alt="Early listening screen" loading="lazy">
                   </div>
                 </div>
               </div>
+              <p class="draft-split-label draft-group-label draft-group-label--center">Mid semester</p>
               <div class="draft-phone-grid draft-phone-grid--dictation">
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/Frame-11342.png" alt="Early dictation screen: press down to dictate" loading="lazy">
+                    <img src="../../draft/assets/dictation/new/Frame-11342.png" alt="Dictation screen: press down to dictate" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/1.png" alt="Early dictation screen: press and hold to dictate" loading="lazy">
+                    <img src="../../draft/assets/dictation/new/1.png" alt="Dictation screen: press and hold to dictate" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/Frame-11344.png" alt="Early dictation screen: press and hold to dictate" loading="lazy">
+                    <img src="../../draft/assets/dictation/new/Frame-11344.png" alt="Dictation screen: press and hold to dictate" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/6.png" alt="Early dictation screen while listening" loading="lazy">
+                    <img src="../../draft/assets/dictation/new/6.png" alt="Dictation screen while listening" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/dication.png" alt="Early welcome screen: think it, say it, draft it, with a start button" loading="lazy">
+                    <img src="../../draft/assets/dictation/new/dication.png" alt="Welcome screen: think it, say it, draft it, with a start button" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
-                  <span class="draft-split-label">Early</span>
                   <div class="draft-frame">
-                    <img src="../../draft/assets/process/25-welcome-screen.jpg" alt="Early welcome screen: think it, say it, draft it" loading="lazy">
+                    <img src="../../draft/assets/process/25-welcome-screen.jpg" alt="Welcome screen: think it, say it, draft it" loading="lazy">
                   </div>
                 </div>
               </div>
@@ -1000,6 +1019,31 @@
             </div>
           </section>
 
+          <!-- DESIGNING FOR VOICE -->
+          <section id="designing-for-voice" class="case-section">
+            <p class="case-section-label">Designing for Voice</p>
+            <h2 class="case-section-title">Making listening feel alive.</h2>
+            <div class="case-section-body">
+              <figure class="draft-voice-video">
+                <video src="../../draft/assets/draft-voice-flow.mp4?v=voice2" poster="../../draft/assets/draft-voice-flow-poster.jpg?v=voice2" autoplay muted loop playsinline preload="metadata"></video>
+              </figure>
+              <div class="case-section-grid-3">
+                <div class="case-section-grid-3-item">
+                  <strong>Show that it's listening</strong>
+                  The orb moves with your voice so you never wonder if the mic is on. It started as a flat pink screen and went through round after round of orbs before it felt alive.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Show what it heard</strong>
+                  Your words appear on screen as you speak. That one detail builds more trust than anything else in the app. You catch mistakes before Draft generates anything.
+                </div>
+                <div class="case-section-grid-3-item">
+                  <strong>Keep it to one tap</strong>
+                  Early versions made you press and hold to talk, which turned speaking into a task. Now you tap once, speak, and pause when you're done.
+                </div>
+              </div>
+            </div>
+          </section>
+
           <!-- FINAL PRODUCT -->
           <section id="final-solution" class="case-section">
             <p class="case-section-label">Final Product</p>
@@ -1016,7 +1060,7 @@
               </p>
             </div>
             <div style="margin-top:var(--space-4);border-radius:0.8rem;overflow:hidden;aspect-ratio:16/9;background:#0a0809;">
-              <video preload="metadata" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" data-timebar></video>
+              <video preload="metadata" poster="../../draft/assets/entry-logo.jpg" src="../../draft/assets/LucyTrepanier_VideoDemo.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none;" data-timebar></video>
             </div>
             <div class="draft-phone-grid draft-phone-grid--4 draft-phone-grid--final">
               <div class="draft-split-cell">
@@ -1100,6 +1144,9 @@
               </p>
               <p>
                 That's what I want to solve next: distribution and API management that work the way a real product would, so anyone can try Draft on their own phone. I'd love to understand how teams handle this at scale.
+              </p>
+              <p>
+                Next, I want Draft to talk back. Right now it only listens. I'd love to explore voice output, like hearing the three directions read back while you're walking, so the whole loop can happen without looking at a screen.
               </p>
             </div>
           </section>
