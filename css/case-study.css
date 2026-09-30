@@ -66,8 +66,9 @@
   position: absolute !important;
   top: 50% !important;
   left: 50% !important;
-  width: max(100cqw, calc(100cqh * 16 / 9), 100vw, calc(100vh * 16 / 9)) !important;
-  height: max(100cqh, calc(100cqw * 9 / 16), 56.25vw, 100vh) !important;
+  /* Size from the tile only. Viewport units make a phone embed wider than the page. */
+  width: max(100%, calc(100cqh * 16 / 9)) !important;
+  height: max(100%, calc(100cqw * 9 / 16)) !important;
   transform: translate(-50%, -50%) !important;
   border: none !important;
   max-width: none !important;
@@ -754,6 +755,21 @@
     aspect-ratio: 16 / 9;
   }
 
+  /* The lead video is the first full-width tile. A locked first-row height
+     plus an aspect ratio shrinks it to a narrow box, and the embed then
+     spills past the page. Keep it full width and the same ratio as the slide. */
+  .cs-ed-grid > .cs-ed-img--full:first-child,
+  .cs-ed-grid > .cs-ed-img:first-child:has(iframe) {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 16 / 9;
+    justify-self: stretch;
+    overflow: clip;
+  }
+
   .cs-ed-grid > .cs-ed-img.cs-ed-img--half {
     grid-column: auto;
     aspect-ratio: auto;
@@ -1071,5 +1087,50 @@
 
   .cs-mosaic-tall {
     aspect-ratio: 3 / 4 !important;
+  }
+
+}
+
+/* Opening collage on phones and small tablets: two-up square tiles, with every
+   full-width row (slides or lead video) at the 3500x1746 slide ratio so a
+   lead video is exactly as tall as the slide row. Draft's intro is the model. */
+@media (max-width: 52rem) {
+  .cs-ed-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cs-ed-grid > .cs-ed-img,
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--half,
+  .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full),
+  .cs-ed-grid > .cs-ed-img:first-child:not(.cs-ed-img--full) + .cs-ed-img:not(.cs-ed-img--full) {
+    grid-column: auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 1 / 1;
+  }
+
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--full,
+  .cs-ed-grid > .cs-ed-img.cs-ed-img--full:first-child {
+    grid-column: 1 / -1;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    aspect-ratio: 3500 / 1746;
+    justify-self: stretch;
+    overflow: clip;
+  }
+
+  .cs-ed-grid > .cs-ed-img > img,
+  .cs-ed-grid > .cs-ed-img > video {
+    width: 100%;
+    height: 100% !important;
+    object-fit: cover;
+  }
+
+  .cs-ed-grid > .cs-ed-img iframe {
+    width: max(100%, calc(100cqh * 16 / 9)) !important;
+    height: max(100%, calc(100cqw * 9 / 16)) !important;
   }
 }
