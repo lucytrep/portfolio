@@ -121,6 +121,10 @@
       margin-left: auto;
       margin-right: auto;
     }
+    .draft-split-grid--compare .draft-split-label {
+      display: block;
+      text-align: center;
+    }
 
     /* Showcase photos */
     .draft-showcase-grid {
@@ -299,8 +303,8 @@
       justify-content: center;
       gap: var(--space-2);
     }
-    .draft-phone-grid--dictation-5 {
-      grid-template-columns: repeat(5, minmax(0, 8.5rem));
+    .draft-phone-grid--dictation-4 {
+      grid-template-columns: repeat(4, minmax(0, 8.5rem));
     }
     .draft-phone-grid--dictation + .draft-phone-grid--dictation {
       margin-top: var(--space-3);
@@ -326,7 +330,7 @@
       text-align: center;
     }
     .draft-phone-grid--trials {
-      grid-template-columns: repeat(6, minmax(0, 1fr));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
     }
     .draft-phone-grid--trials .draft-frame-note {
       margin-top: 0;
@@ -410,17 +414,18 @@
       object-position: center;
     }
     .draft-mvp-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.75rem;
       margin-top: var(--space-4);
       margin-bottom: var(--space-5);
     }
     .draft-mvp-row .draft-mvp-label {
       margin: 0 0 0.4rem;
+      text-align: center;
     }
     .draft-mvp-row .draft-mvp-strip {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .case-section-body > :is(.draft-grid-3, .draft-grid-4, .draft-dictation-row, .draft-phone-grid, .draft-welcome) + p {
@@ -549,7 +554,7 @@
       .draft-opp-swatch { padding: 0.45rem; }
       .draft-opp-swatch span:first-child { font-size: 0.72rem; }
       .draft-opp-swatch span:last-child { font-size: 0.6rem; }
-      .draft-mvp-row { grid-template-columns: 1fr; }
+      .draft-mvp-row .draft-mvp-strip { max-width: 100%; }
       .draft-split-grid--compare {
         grid-template-columns: repeat(2, minmax(0, 9rem));
       }
@@ -836,19 +841,11 @@
                 Draft didn't start as a moodboard tool. My first MVP took a text or voice description of a UI component and generated live, copy-ready code. I built several versions, but code output for a web app never gave me the seamless feeling or interaction I wanted.
               </p>
               <div class="draft-mvp-row">
-                <div>
-                  <div class="draft-mvp-strip">
-                    <div class="draft-frame"><img src="../../draft/assets/MVP/v1.5/MVP.png?v=mvp3" alt="First MVP screen 1" loading="lazy"></div>
-                    <div class="draft-frame"><img src="../../draft/assets/MVP/v1.5/MVP-1.png?v=mvp3" alt="First MVP screen 2" loading="lazy"></div>
-                    <div class="draft-frame"><img src="../../draft/assets/MVP/v1.5/MVP-2.png?v=mvp3" alt="First MVP screen 3" loading="lazy"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="draft-mvp-strip">
-                    <div class="draft-frame"><img src="../../draft/assets/MVP/v2.5/MVP.png?v=mvp3" alt="Second MVP screen 1" loading="lazy"></div>
-                    <div class="draft-frame"><img src="../../draft/assets/MVP/v2.5/MVP-1.png?v=mvp3" alt="Second MVP screen 2" loading="lazy"></div>
-                    <div class="draft-frame"><img src="../../draft/assets/MVP/v2.5/MVP-2.png?v=mvp3" alt="Second MVP screen 3" loading="lazy"></div>
-                  </div>
+                <p class="draft-mvp-label">Early explorations</p>
+                <div class="draft-mvp-strip">
+                  <div class="draft-frame"><img src="../../draft/assets/MVP/v1.5/MVP.png?v=mvp3" alt="Early MVP: describe your idea and generate code" loading="lazy"></div>
+                  <div class="draft-frame"><img src="../../draft/assets/MVP/v1.5/MVP-1.png?v=mvp3" alt="Early MVP: tap the mic to start speaking" loading="lazy"></div>
+                  <div class="draft-frame"><img src="../../draft/assets/MVP/v1.5/MVP-2.png?v=mvp3" alt="Early MVP: generated code beside a preview" loading="lazy"></div>
                 </div>
               </div>
               <p>
@@ -857,16 +854,16 @@
             </div>
             <div class="draft-split-grid draft-split-grid--compare">
               <div class="draft-split-cell">
-                <span class="draft-split-label">React Native</span>
                 <div class="draft-split-frame" style="background:transparent;aspect-ratio:464 / 864;border-radius:0;overflow:visible;">
                   <img src="../../draft/assets/cs-react-native-mockup.png" alt="React Native build: pastel mood board" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;" loading="lazy">
                 </div>
+                <span class="draft-split-label">React Native</span>
               </div>
               <div class="draft-split-cell">
-                <span class="draft-split-label">Swift</span>
                 <div class="draft-split-frame" style="background:transparent;aspect-ratio:464 / 864;border-radius:0;overflow:visible;">
                   <img src="../../draft/assets/cs-swift-mockup.png" alt="Swift build: Canyon Shadow color palette" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;" loading="lazy">
                 </div>
+                <span class="draft-split-label">Swift</span>
               </div>
             </div>
           </section>
@@ -883,7 +880,7 @@
                 The dictation screen went through the most rounds. It started as a flat pink screen with a single mic button. Then I explored a series of animated orbs to make listening feel alive. The final version is simple: tap once, speak, and pause when you're finished.
               </p>
               <p class="draft-split-label draft-group-label draft-group-label--center">Start of semester</p>
-              <div class="draft-phone-grid draft-phone-grid--dictation draft-phone-grid--dictation-5">
+              <div class="draft-phone-grid draft-phone-grid--dictation draft-phone-grid--dictation-4">
                 <div class="draft-split-cell">
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/02-early-dictation-pink-apr.jpg" alt="Early dictation screen with a single mic button" loading="lazy">
@@ -892,11 +889,6 @@
                 <div class="draft-split-cell">
                   <div class="draft-frame">
                     <img src="../../draft/assets/process/21-dictation-orb-green.jpg" alt="Early dictation exploration" loading="lazy">
-                  </div>
-                </div>
-                <div class="draft-split-cell">
-                  <div class="draft-frame">
-                    <img src="../../draft/assets/process/22-dictation-orb-heart.jpg" alt="Early dictation exploration" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
@@ -911,20 +903,10 @@
                 </div>
               </div>
               <p class="draft-split-label draft-group-label draft-group-label--center">Mid semester</p>
-              <div class="draft-phone-grid draft-phone-grid--dictation">
+              <div class="draft-phone-grid draft-phone-grid--dictation draft-phone-grid--dictation-4">
                 <div class="draft-split-cell">
                   <div class="draft-frame">
                     <img src="../../draft/assets/dictation/new/Frame-11342.png" alt="Dictation screen: press down to dictate" loading="lazy">
-                  </div>
-                </div>
-                <div class="draft-split-cell">
-                  <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/1.png" alt="Dictation screen: press and hold to dictate" loading="lazy">
-                  </div>
-                </div>
-                <div class="draft-split-cell">
-                  <div class="draft-frame">
-                    <img src="../../draft/assets/dictation/new/Frame-11344.png" alt="Dictation screen: press and hold to dictate" loading="lazy">
                   </div>
                 </div>
                 <div class="draft-split-cell">
@@ -988,14 +970,7 @@
               <p>
                 Artifacts got richer too, from a single stacked moodboard to image-led layouts.
               </p>
-              <p class="draft-split-label draft-group-label">First round</p>
               <div class="draft-phone-grid draft-phone-grid--trials">
-                <div class="draft-split-cell">
-                  <span class="draft-frame-note">Early moodboard</span>
-                  <div class="draft-frame">
-                    <img src="../../draft/assets/process/01-early-artifact-moodboard-apr.jpg" alt="Early moodboard" loading="lazy">
-                  </div>
-                </div>
                 <div class="draft-split-cell">
                   <span class="draft-frame-note">Color palette</span>
                   <div class="draft-frame">
