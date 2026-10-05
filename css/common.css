@@ -754,9 +754,8 @@ p,
   font-size: var(--display-size); /* fallback if container queries unsupported */
   font-size: clamp(3.05rem, 12cqi, 6.35rem); /* "COLLABORATE." is ~7.2em wide; 12cqi keeps it on one line in its column */
   font-weight: var(--display-weight);
-  letter-spacing: var(--display-tracking);
+  letter-spacing: -0.03em;
   line-height: var(--display-leading);
-  text-transform: uppercase;
   color: var(--color-text);
 }
 
@@ -780,7 +779,6 @@ p,
   color: var(--color-text);
   font-size: var(--type-label-size);
   font-weight: 500;
-  text-transform: uppercase;
   letter-spacing: var(--type-label-tracking);
 }
 
@@ -896,7 +894,6 @@ p,
   display: block;
   font-weight: 700;
   font-size: var(--font-size-sm);
-  text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--color-text);
   margin-top: var(--space-0_25);
