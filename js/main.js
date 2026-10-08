@@ -39,6 +39,7 @@
 
   // Remember scroll per page for this tab, and restore it whenever the user
   // comes back — browser Back, Work nav, or opening the same case study again.
+  // Back and in-site returns ease down to that spot; refresh jumps there.
   (function () {
     if (!window.sessionStorage) return;
 
@@ -60,10 +61,29 @@
       return document.body.classList.contains('is-work-locked');
     }
 
+    // While a return-glide is running, ignore scroll writes so the remembered
+    // spot stays intact.
+    var restoreMotion = {
+      active: false,
+      raf: 0,
+      target: 0,
+      from: 0,
+      to: 0,
+      start: 0,
+      born: 0,
+      duration: 0
+    };
+
     function saveScroll() {
-      if (pageIsLocked()) return;
+      if (pageIsLocked() || restoreMotion.active) return;
       try {
-        window.sessionStorage.setItem(key, String(Math.max(0, window.scrollY || 0)));
+        var y = Math.max(0, window.scrollY || 0);
+        var prev = readSavedY();
+        // Coming back starts at the top. Don't let that, or a half-loaded
+        // page, overwrite the spot the user actually left.
+        if (!userInteracted && prev !== null && y + 48 < prev) return;
+        if (prev !== null && prev > y + 2 && y >= maxScrollY() - 2) return;
+        window.sessionStorage.setItem(key, String(y));
       } catch (e) {}
     }
 
@@ -88,9 +108,53 @@
     }
 
     var userInteracted = false;
-    function markInteracted() {
-      userInteracted = true;
+    var reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function maxScrollY() {
+      var doc = document.documentElement;
+      var body = document.body;
+      var height = Math.max(doc.scrollHeight || 0, body ? body.scrollHeight : 0);
+      return Math.max(0, height - (window.innerHeight || doc.clientHeight || 0));
     }
+
+    function navigationType() {
+      try {
+        var entries = performance.getEntriesByType('navigation');
+        if (entries && entries[0] && entries[0].type) return entries[0].type;
+      } catch (e) {}
+      if (performance.navigation) {
+        if (performance.navigation.type === 2) return 'back_forward';
+        if (performance.navigation.type === 1) return 'reload';
+      }
+      return 'navigate';
+    }
+
+    // Ease-out quart: the page leaves immediately and settles into place.
+    // Same character as LinkedIn's glide back to the result you had open.
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    function glideDuration(distance) {
+      return Math.round(Math.max(520, Math.min(880, 440 + distance * 0.14)));
+    }
+
+    function stopGlide() {
+      restoreMotion.active = false;
+      if (restoreMotion.raf) {
+        window.cancelAnimationFrame(restoreMotion.raf);
+        restoreMotion.raf = 0;
+      }
+    }
+
+    function markInteracted() {
+      if (userInteracted) return;
+      userInteracted = true;
+      var wasGliding = restoreMotion.active;
+      stopGlide();
+      if (wasGliding) saveScroll();
+    }
+
     // Typing or tapping the password gate is not scrolling the page.
     // Counting it used to cancel the restore, so the archive stayed at the top.
     function isLockGesture(event) {
@@ -114,12 +178,102 @@
     window.addEventListener('keydown', onKey);
     window.addEventListener('mousedown', onPointer);
 
+    function glideFrame(now) {
+      if (!restoreMotion.active || userInteracted || pageIsLocked()) {
+        stopGlide();
+        return;
+      }
+
+      var reachable = Math.min(restoreMotion.target, maxScrollY());
+      if (reachable > restoreMotion.to + 16) {
+        restoreMotion.from = window.scrollY || 0;
+        restoreMotion.to = reachable;
+        restoreMotion.start = now;
+        restoreMotion.duration = glideDuration(Math.abs(restoreMotion.to - restoreMotion.from));
+      }
+
+      if (!restoreMotion.start) restoreMotion.start = now;
+      var t = restoreMotion.duration > 0
+        ? Math.min(1, (now - restoreMotion.start) / restoreMotion.duration)
+        : 1;
+      var y = restoreMotion.from + (restoreMotion.to - restoreMotion.from) * easeOutQuart(t);
+      if (Math.abs(y - (window.scrollY || 0)) >= 0.5) window.scrollTo(0, y);
+
+      var arrived = Math.abs((window.scrollY || 0) - restoreMotion.target) < 2;
+      var waitingOnLayout = restoreMotion.target - maxScrollY() > 16;
+      var giveUp = now - restoreMotion.born > 2400;
+      if (!arrived && !giveUp && (t < 1 || waitingOnLayout)) {
+        restoreMotion.raf = window.requestAnimationFrame(glideFrame);
+        return;
+      }
+
+      window.scrollTo(0, Math.min(restoreMotion.target, maxScrollY()));
+      stopGlide();
+    }
+
+    function glideTo(target) {
+      if (reduceMotionQuery.matches) {
+        stopGlide();
+        window.scrollTo(0, Math.min(target, maxScrollY()));
+        return;
+      }
+
+      if (restoreMotion.active) {
+        restoreMotion.target = target;
+        return;
+      }
+
+      restoreMotion.active = true;
+      restoreMotion.target = target;
+      restoreMotion.born = performance.now();
+      restoreMotion.from = window.scrollY || 0;
+      restoreMotion.to = Math.min(target, maxScrollY());
+      restoreMotion.start = 0;
+      restoreMotion.duration = glideDuration(Math.abs(restoreMotion.to - restoreMotion.from));
+
+      // Let the top of the page paint, then ease down, so Back reads as a
+      // small gesture instead of a jump that finishes before the first frame.
+      var delay = (window.scrollY || 0) < 2 ? 80 : 0;
+      window.setTimeout(function () {
+        if (!restoreMotion.active || userInteracted || pageIsLocked()) return;
+        restoreMotion.from = window.scrollY || 0;
+        restoreMotion.to = Math.min(restoreMotion.target, maxScrollY());
+        restoreMotion.duration = glideDuration(Math.abs(restoreMotion.to - restoreMotion.from));
+        if (Math.abs(restoreMotion.from - restoreMotion.target) < 2) {
+          stopGlide();
+          return;
+        }
+        restoreMotion.raf = window.requestAnimationFrame(glideFrame);
+      }, delay);
+    }
+
     function restoreScroll() {
-      if (userInteracted || window.location.hash || pageIsLocked()) return;
+      if (userInteracted || window.location.hash || pageIsLocked()) {
+        if (userInteracted) stopGlide();
+        return;
+      }
       var y = readSavedY();
       if (y === null || y === 0) return;
       if (Math.abs((window.scrollY || 0) - y) < 2) return;
-      window.scrollTo(0, y);
+      // Refresh should stay put. Back, and returning through the nav, ease in.
+      if (navigationType() === 'reload') {
+        window.scrollTo(0, Math.min(y, maxScrollY()));
+        return;
+      }
+      glideTo(y);
+    }
+
+    // Back-forward cache shows the page already scrolled. Step up a short
+    // runway and ease back down so the return still has a small settle.
+    function settleFromCache() {
+      if (userInteracted || window.location.hash || pageIsLocked()) return;
+      var y = readSavedY();
+      if (y === null || y < 48) return;
+      var runway = Math.min(420, Math.max(180, Math.round(window.innerHeight * 0.42)));
+      var start = Math.max(0, y - runway);
+      if (y - start < 24) return;
+      window.scrollTo(0, start);
+      glideTo(y);
     }
 
     if (!window.location.hash) {
@@ -129,8 +283,13 @@
       });
       window.addEventListener('load', restoreScroll);
       window.addEventListener('pageshow', function (event) {
-        if (event.persisted) return;
-        restoreScroll();
+        if (!event.persisted) {
+          restoreScroll();
+          return;
+        }
+        // Scrolling before they left isn't a new gesture. Let the return ease play.
+        userInteracted = false;
+        settleFromCache();
       });
       [120, 400, 900, 1800].forEach(function (ms) {
         window.setTimeout(restoreScroll, ms);
