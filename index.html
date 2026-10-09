@@ -300,14 +300,30 @@
       }
     }
 
-    @media (max-width: 48rem) {
+    /* Phone: the wordmark loop sits in the middle of the first screen.
+       The desktop reel stays full-bleed above this width. */
+    @media (max-width: 50rem) {
       .hero-video-section {
         height: 100vh;
         height: 100svh;
       }
 
       .hero-video {
-        object-position: center top;
+        object-fit: contain;
+        object-position: center center;
+        /* The file is mostly white around the wordmark, so scale it up in place. */
+        transform: scale(1.45);
+      }
+
+      .hero-video-section::after {
+        content: none;
+      }
+    }
+
+    @media (max-width: 48rem) {
+      .hero-video-section {
+        height: 100vh;
+        height: 100svh;
       }
 
       .home-quote-section {
@@ -409,7 +425,7 @@
   <section class="hero-video-section">
     <!-- Source elements let iOS Safari see the src at parse time, enabling autoplay without JS -->
     <video class="hero-video" id="hero-video" autoplay muted loop playsinline preload="auto">
-      <source src="assets/PhoneHero.mp4" media="(max-width: 800px)" type="video/mp4" />
+      <source src="assets/lucytrep.mp4" media="(max-width: 800px)" type="video/mp4" />
       <source src="assets/HeroVideo.mp4" type="video/mp4" />
     </video>
   </section>
@@ -581,11 +597,11 @@
     var heroQuery = window.matchMedia('(max-width: 800px)');
 
     function heroFile() {
-      return heroQuery.matches ? 'assets/PhoneHero.mp4' : 'assets/HeroVideo.mp4';
+      return heroQuery.matches ? 'assets/lucytrep.mp4' : 'assets/HeroVideo.mp4';
     }
 
     // Source media is chosen once, at load. Pick again so a phone-width window
-    // gets the portrait reel even if the page was opened wider and then resized.
+    // gets the wordmark loop even if the page was opened wider and then resized.
     function useHeroSource() {
       var next = heroFile();
       var current = video.currentSrc || video.getAttribute('src') || '';
@@ -615,10 +631,11 @@
     // Tap/click on the video itself triggers play (mobile fallback + desktop Safari)
     video.addEventListener('click', tryPlay);
 
-    // Skip the first second of intro so the loop starts mid-motion
+    // Skip the first second of the desktop reel so the loop starts mid-motion.
+    // The phone wordmark is only 1.5s, so it plays from the start.
     var skipped = false;
     function skipIntro() {
-      if (skipped) return;
+      if (skipped || heroQuery.matches) return;
       skipped = true;
       video.currentTime = 1;
     }
