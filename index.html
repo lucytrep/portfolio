@@ -289,7 +289,7 @@
 
       .home-quote-photo {
         opacity: 1;
-        transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+        transform: translate(-50%, -50%) rotate(var(--rot-m, var(--rot, 0deg)));
         will-change: auto;
       }
     }
@@ -318,6 +318,10 @@
       .hero-video-section::after {
         content: none;
       }
+    }
+
+    .home-quote-photo--case {
+      display: none;
     }
 
     @media (max-width: 48rem) {
@@ -369,18 +373,27 @@
         height: auto;
       }
 
-      .home-quote-photo--mobile {
-        display: block;
-        width: clamp(4rem, 19vw, 5rem);
-        opacity: 1 !important;
-        transform: translate(-50%, -50%) rotate(var(--rot, 0deg)) !important;
+      .home-quote-photo:not(.home-quote-photo--case) {
+        display: none;
       }
 
-      .home-quote-photo--mobile-tl { left: 14%; top: 11%; }
-      .home-quote-photo--mobile-tc { left: 50%; top: 6%; width: clamp(5rem, 24vw, 6rem); }
-      .home-quote-photo--mobile-tr { left: 86%; top: 12%; }
-      .home-quote-photo--mobile-br { left: 86%; top: 89%; }
-      .home-quote-photo--mobile-bl { left: 14%; top: 88%; }
+      /* Eight public case-study headers, small and scattered around the copy. */
+      .home-quote-photo--case {
+        display: block;
+        width: clamp(3.25rem, 17vw, 4.15rem);
+        box-shadow:
+          0 0 0 1px rgba(0, 0, 0, 0.06),
+          0 10px 22px rgba(0, 0, 0, 0.12);
+      }
+
+      .home-quote-photo--c1 { left: 16%; top: 17%; width: clamp(4.4rem, 23vw, 5.5rem); --rot-m: -8deg; }
+      .home-quote-photo--c2 { left: 48%; top: 16.5%; width: clamp(4.6rem, 25vw, 5.9rem); --rot-m: 3deg; }
+      .home-quote-photo--c3 { left: 84%; top: 18%; width: clamp(3.6rem, 18vw, 4.5rem); --rot-m: 8deg; }
+      .home-quote-photo--c4 { left: 27%; top: 85%; width: clamp(6.2rem, 38vw, 8rem); --rot-m: -4deg; }
+      .home-quote-photo--c5 { left: 9%; top: 33%; width: clamp(2.9rem, 14.5vw, 3.6rem); --rot-m: -3deg; }
+      .home-quote-photo--c6 { left: 13%; top: 66%; width: clamp(3.15rem, 15vw, 3.8rem); --rot-m: 7deg; }
+      .home-quote-photo--c7 { left: 87%; top: 70%; width: clamp(3rem, 14vw, 3.6rem); --rot-m: -9deg; }
+      .home-quote-photo--c8 { left: 74%; top: 86%; width: clamp(5.2rem, 30vw, 6.5rem); --rot-m: 4deg; }
 
       .home-quote {
         font-size: clamp(1.85rem, 7.4vw, 3.15rem);
@@ -443,25 +456,25 @@
   <section class="home-quote-section" id="home-intro" data-quote-field>
     <div class="home-quote-field" aria-hidden="true">
       <!-- Scattered around the outside edges so the headline stays framed in the open middle. -->
-      <figure class="home-quote-photo home-quote-photo--lg home-quote-photo--mobile home-quote-photo--mobile-tl" style="--x:82.80%;--y:50.20%;--w:6.5rem;--rot:-7deg" data-x="82.80" data-y="50.20" data-rot="-7" data-depth="0.55" data-delay="0.19">
+      <figure class="home-quote-photo home-quote-photo--lg" style="--x:82.80%;--y:50.20%;--w:6.5rem;--rot:-7deg" data-x="82.80" data-y="50.20" data-rot="-7" data-depth="0.55" data-delay="0.19">
         <img src="assets/images/about/home-page/axsphere-cover.webp" alt="Axsphere product design cover" width="1800" height="1364" loading="lazy" decoding="async" />
       </figure>
-      <figure class="home-quote-photo home-quote-photo--sm home-quote-photo--mobile home-quote-photo--mobile-tr" style="--x:84.20%;--y:22.80%;--w:4.2rem;--rot:8deg" data-x="84.20" data-y="22.80" data-rot="8" data-depth="0.35" data-delay="0.21">
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:84.20%;--y:22.80%;--w:4.2rem;--rot:8deg" data-x="84.20" data-y="22.80" data-rot="8" data-depth="0.35" data-delay="0.21">
         <img src="assets/images/about/home-page/green-controller.webp" alt="Lime green wearable controller concept" width="1800" height="1394" loading="lazy" decoding="async" />
       </figure>
       <figure class="home-quote-photo home-quote-photo--md" style="--x:73.20%;--y:36.80%;--w:5.5rem;--rot:-5deg" data-x="73.20" data-y="36.80" data-rot="-5" data-depth="0.75" data-delay="0.25">
         <img src="assets/images/about/home-page/figma-laptop-orange.webp" alt="Figma design work displayed on a laptop against orange" width="1800" height="1394" loading="lazy" decoding="async" />
       </figure>
-      <figure class="home-quote-photo home-quote-photo--sm home-quote-photo--mobile home-quote-photo--mobile-br" style="--x:96.40%;--y:74.20%;--w:3.6rem;--rot:6deg" data-x="96.40" data-y="74.20" data-rot="6" data-depth="0.5" data-delay="0.23">
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:96.40%;--y:74.20%;--w:3.6rem;--rot:6deg" data-x="96.40" data-y="74.20" data-rot="6" data-depth="0.5" data-delay="0.23">
         <img src="assets/images/about/home-page/meta-cover.webp" alt="Meta in-app feature project cover" width="1800" height="1364" loading="lazy" decoding="async" />
       </figure>
-      <figure class="home-quote-photo home-quote-photo--sm home-quote-photo--mobile home-quote-photo--mobile-bl" style="--x:87.20%;--y:66.40%;--w:3.9rem;--rot:-8deg" data-x="87.20" data-y="66.40" data-rot="-8" data-depth="0.28" data-delay="0.27">
+      <figure class="home-quote-photo home-quote-photo--sm" style="--x:87.20%;--y:66.40%;--w:3.9rem;--rot:-8deg" data-x="87.20" data-y="66.40" data-rot="-8" data-depth="0.28" data-delay="0.27">
         <img src="assets/images/about/home-page/axsphere-merch.webp" alt="Colorful Axsphere merchandise collection" width="1800" height="1596" loading="lazy" decoding="async" />
       </figure>
       <figure class="home-quote-photo home-quote-photo--md" style="--x:27.40%;--y:9.20%;--w:4.4rem;--rot:-7deg" data-x="27.40" data-y="9.20" data-rot="-7" data-depth="0.85" data-delay="0.28">
         <img src="assets/images/about/home-page/controller-colorways.webp" alt="Wearable controller color explorations" width="1735" height="1800" loading="lazy" decoding="async" />
       </figure>
-      <figure class="home-quote-photo home-quote-photo--md home-quote-photo--mobile home-quote-photo--mobile-tc" style="--x:78.40%;--y:8.20%;--w:6.4rem;--rot:3deg" data-x="78.40" data-y="8.20" data-rot="3" data-depth="0.52" data-delay="0.16">
+      <figure class="home-quote-photo home-quote-photo--md" style="--x:78.40%;--y:8.20%;--w:6.4rem;--rot:3deg" data-x="78.40" data-y="8.20" data-rot="3" data-depth="0.52" data-delay="0.16">
         <img src="assets/images/about/home-page/fragments-collage.webp" alt="Fragments visual collage of notes, photography, and design references" width="1800" height="936" loading="lazy" decoding="async" />
       </figure>
       <figure class="home-quote-photo home-quote-photo--md" style="--x:74.80%;--y:82.20%;--w:4.8rem;--rot:5deg" data-x="74.80" data-y="82.20" data-rot="5" data-depth="0.42" data-delay="0.24">
@@ -532,6 +545,31 @@
       </figure>
       <figure class="home-quote-photo home-quote-photo--sm" style="--x:6.20%;--y:42.60%;--w:3.6rem;--rot:-5deg" data-x="6.20" data-y="42.60" data-rot="-5" data-depth="0.35" data-delay="0.03">
         <img src="draft/assets/entry-logo.jpg" alt="Draft capstone project entry" width="1920" height="1080" loading="lazy" decoding="async" />
+      </figure>
+      <!-- Phone only: one little card per public case study, using that project's header. -->
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c1" data-x="16" data-y="17" data-rot="-8" data-depth="0.45" data-delay="0.04">
+        <img src="assets/images/axsphere/entry-logo.jpg" alt="Axsphere case study header" width="1920" height="1080" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c2" data-x="48" data-y="16.5" data-rot="3" data-depth="0.55" data-delay="0.1">
+        <img src="assets/images/figma-design-challenge/entry-logo.jpg" alt="Figma Canvas Health case study header" width="1920" height="1080" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c3" data-x="84" data-y="18" data-rot="8" data-depth="0.4" data-delay="0.16">
+        <img src="assets/images/about/home-page/case-headers/meta.jpg?v=2" alt="Meta in-app case study header" width="640" height="480" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c4" data-x="27" data-y="85" data-rot="-4" data-depth="0.5" data-delay="0.22">
+        <img src="assets/images/about/home-page/case-headers/forage.jpg?v=2" alt="FigBuild case study header" width="1000" height="243" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c5" data-x="9" data-y="33" data-rot="-3" data-depth="0.35" data-delay="0.08">
+        <img src="assets/images/about/home-page/case-headers/acuity.jpg?v=2" alt="Acuity case study header" width="520" height="480" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c6" data-x="13" data-y="66" data-rot="7" data-depth="0.42" data-delay="0.18">
+        <img src="assets/images/about/home-page/figma-laptop-lilac.webp" alt="Figma design work on a lilac laptop" width="1800" height="1394" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c7" data-x="87" data-y="70" data-rot="-9" data-depth="0.48" data-delay="0.14">
+        <img src="assets/images/about/home-page/case-headers/draft.jpg?v=2" alt="Draft case study header" width="560" height="640" loading="lazy" decoding="async" />
+      </figure>
+      <figure class="home-quote-photo home-quote-photo--case home-quote-photo--c8" data-x="74" data-y="86" data-rot="4" data-depth="0.52" data-delay="0.26">
+        <img src="assets/images/about/home-page/axsphere-slides.webp" alt="Axsphere presentation slides" width="1800" height="898" loading="lazy" decoding="async" />
       </figure>
     </div>
     <div class="home-quote-copy">
@@ -647,23 +685,12 @@
       var section = document.querySelector('[data-quote-field]');
       if (!section) return;
 
-      var photos = Array.prototype.slice.call(section.querySelectorAll('.home-quote-photo')).filter(function (el) {
-        return window.getComputedStyle(el).display !== 'none';
-      });
-      if (!photos.length) return;
-
+      var photos = [];
+      var mobileQuery = window.matchMedia('(max-width: 48rem)');
       var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
       var copy = section.querySelector('.home-quote-copy');
 
-      function restTransform(el) {
-        var rot = el.getAttribute('data-rot') || '0';
-        el.style.opacity = '1';
-        el.style.transform = 'translate(-50%, -50%) rotate(' + rot + 'deg)';
-        el.style.zIndex = '';
-        el.style.setProperty('--lift', '0');
-      }
-
-      photos.forEach(function (el) {
+      function bindPhoto(el) {
         var x = parseFloat(el.getAttribute('data-x'));
         var y = parseFloat(el.getAttribute('data-y'));
         var rot = parseFloat(el.getAttribute('data-rot')) || 0;
@@ -694,7 +721,25 @@
           freq: 0.18 + ((x + y) % 17) / 58,
           amp: 0.5
         };
-      });
+      }
+
+      function collectPhotos() {
+        photos = Array.prototype.slice.call(section.querySelectorAll('.home-quote-photo')).filter(function (el) {
+          return window.getComputedStyle(el).display !== 'none';
+        });
+        photos.forEach(bindPhoto);
+      }
+
+      collectPhotos();
+      if (!photos.length) return;
+
+      function restTransform(el) {
+        var rot = el.getAttribute('data-rot') || '0';
+        el.style.opacity = '1';
+        el.style.transform = 'translate(-50%, -50%) rotate(' + rot + 'deg)';
+        el.style.zIndex = '';
+        el.style.setProperty('--lift', '0');
+      }
 
       var STIFF = 0.14;
       var DAMP = 0.76;
@@ -898,6 +943,14 @@
 
       if (motionQuery.addEventListener) motionQuery.addEventListener('change', onMotionChange);
       else if (motionQuery.addListener) motionQuery.addListener(onMotionChange);
+
+      function onBreakpoint() {
+        collectPhotos();
+        if (motionQuery.matches) applyReducedMotion();
+        else if (visible) startLoop();
+      }
+
+      if (mobileQuery.addEventListener) mobileQuery.addEventListener('change', onBreakpoint);
 
       if (motionQuery.matches) applyReducedMotion();
     })();
