@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Lucille Trepanier - Product Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    @page { size: letter; margin: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 8.5in;
+      height: 11in;
+      background: #fff;
+      color: #161616;
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-weight: 400;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    a { color: inherit; text-underline-offset: 2px; }
+    .page {
+      padding: 0.48in 0.55in 0.42in;
+      height: 11in;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      padding-bottom: 10px;
+      border-bottom: 0.7px solid #161616;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+    .role {
+      margin-top: 7px;
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .lede {
+      margin-top: 8px;
+      font-size: 10.2px;
+      line-height: 1.35;
+    }
+    .contact {
+      text-align: right;
+      font-size: 8.6px;
+      line-height: 1.45;
+      padding-top: 14px;
+    }
+    .contact a { text-decoration: underline; }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 13px 0 8px;
+      font-size: 8.4px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .section-head span { flex: 0 0 auto; }
+    .section-head i {
+      display: block;
+      flex: 1;
+      height: 0.6px;
+      background: #959595;
+    }
+    .job { margin-bottom: 9px; }
+    .job-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .org {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+    .dates {
+      font-size: 9.2px;
+      color: #919191;
+      white-space: nowrap;
+      font-weight: 400;
+    }
+    .title {
+      font-size: 10.2px;
+      font-weight: 600;
+      margin: 1px 0 2px;
+    }
+    ul {
+      list-style: disc;
+      padding-left: 16px;
+    }
+    li {
+      font-size: 9.15px;
+      line-height: 1.38;
+      margin: 0.5px 0;
+    }
+    .split {
+      display: grid;
+      grid-template-columns: 1.72fr 0.82fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .edu-item .org {
+      font-size: 10.5px;
+      padding-right: 6px;
+    }
+    .edu-item { margin-bottom: 9px; }
+    .degree {
+      font-size: 9.6px;
+      font-weight: 500;
+      margin: 1px 0 2px;
+    }
+    .award {
+      font-size: 9.15px;
+      line-height: 1.42;
+    }
+    .lead-item { margin-bottom: 7px; }
+    .lead-item .org-line {
+      font-size: 9.15px;
+      line-height: 1.3;
+    }
+    .lead-item .dates {
+      display: block;
+      margin-top: 0;
+      font-size: 8.8px;
+    }
+    .skills {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+    .skills h3 {
+      font-size: 10.2px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+    .skills p {
+      font-size: 9.15px;
+      line-height: 1.38;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Lucille Trepanier</h1>
+        <div class="role">Product Designer</div>
+        <p class="lede">I turn dense, multi-step workflows into products people trust, and I ship the frontend.</p>
+      </div>
+      <div class="contact">
+        <a href="https://lucytrep.com/">lucytrep.com</a><br />
+        <a href="mailto:lucytrep.labs@gmail.com">lucytrep.labs@gmail.com</a><br />
+        <a href="https://www.linkedin.com/in/lucytrep">linkedin.com/in/lucytrep</a><br />
+        New York, NY
+      </div>
+    </header>
+
+    <div class="section-head"><span>EXPERIENCE</span><i></i></div>
+
+    <article class="job">
+      <div class="job-top">
+        <div class="org">Lucytrep Labs (New York, NY)</div>
+        <div class="dates">Jun 2026 - Present</div>
+      </div>
+      <div class="title">Product &amp; Visual Designer</div>
+      <ul>
+        <li>Built Athlena's design system from 0 to 1 in Figma, then built the responsive site, Node.js APIs, and AI ticketing chatbot</li>
+        <li>Designed <a href="https://lucytrep.com/projects/draft/">Draft</a> from wireframes and prototypes to a polished iOS UI that turns spoken prompts into palettes, layouts, and moodboards</li>
+        <li>Design product and campaign work for Nike, FIFA, Unilever, and CIBC through agency partners</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-top">
+        <div class="org">Acuity, 24-hour hackathon (New York, NY)</div>
+        <div class="dates">Feb 2026</div>
+      </div>
+      <div class="title">Product Designer, TNS AI Startup Design Hackathon</div>
+      <ul>
+        <li>Designed <a href="https://lucytrep.com/projects/acuity/">Acuity</a>, turning complex data into one clear decision and one next action</li>
+        <li>Prototyped the system in Figma Make, Claude, Midjourney, and Sora to move from flow to UI in 24 hours</li>
+        <li>Kept humans in control of AI by limiting the system to prompting action, not deciding for them</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-top">
+        <div class="org">Victory Creative Group (Toronto, ON)</div>
+        <div class="dates">Aug 2023 - Jul 2025</div>
+      </div>
+      <div class="title">Digital &amp; Graphic Designer</div>
+      <ul>
+        <li>Designed data-driven infographics for Nike and Dove, turning real numbers into clear visual stories</li>
+        <li>Partnered with one engineer to design a complex, multi-step Fanatics Fest purchase flow for 125,000 attendees</li>
+        <li>Designed Nike ecommerce user flows from concept to production, handing polished UI to engineering</li>
+        <li>Grew into lead designer on Mamba League LA and WNBA Live, aligning Nike, Google, and American Express</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-top">
+        <div class="org">Toronto Metropolitan University (Toronto, ON)</div>
+        <div class="dates">Sep 2022 - Sep 2023</div>
+      </div>
+      <div class="title">Design Researcher</div>
+      <ul>
+        <li>Led a year-long study on AI and other integrated technologies in graphic communications and was first author of a peer-reviewed paper (<a href="https://jpmtr.org/jpmtr_13(2024)1_web_2320.pdf">Journal of Print and Media Technology Research, 2024</a>)</li>
+        <li>Presented the research at the Iarigai conference in Germany</li>
+        <li>Mentored two autistic students in information architecture through Autism CanTech!</li>
+      </ul>
+    </article>
+
+    <article class="job">
+      <div class="job-top">
+        <div class="org">Future of Sport Lab / Victoria Park Analytics (Toronto, ON)</div>
+        <div class="dates">Mar 2021 - Sep 2022</div>
+      </div>
+      <div class="title">Product Strategist &amp; Design Researcher</div>
+      <ul>
+        <li>One of the few non-MBA contributors to Victoria Park Analytics, on work recognized by TSN and Billie Jean King's Trailblazer Venture Studio</li>
+        <li>Turned athlete media analysis into Gen Z engagement recommendations</li>
+      </ul>
+    </article>
+
+    <div class="split">
+      <div>
+        <div class="section-head"><span>EDUCATION</span><i></i></div>
+        <article class="edu-item">
+          <div class="job-top">
+            <div class="org">Parsons School of Design, The New School (New York, NY)</div>
+            <div class="dates">Aug 2025 - May 2026</div>
+          </div>
+          <div class="degree">MPS Communication Design, Key Focus: Digital Product Design</div>
+          <ul>
+            <li>STEM-designated graduate</li>
+            <li>Capstone Draft, a voice-to-design iOS app</li>
+          </ul>
+        </article>
+        <article class="edu-item">
+          <div class="job-top">
+            <div class="org">Toronto Metropolitan University (Toronto, ON)</div>
+            <div class="dates">Aug 2019 - Jun 2023</div>
+          </div>
+          <div class="degree">B.Tech (Honours), Graphic Communications Management</div>
+          <ul>
+            <li>Graduated with Distinction (GPA 4.11/4.33) and Dean's List each year. Minors in Communication Design and Marketing</li>
+            <li>Undergraduate thesis on leveraging AI in the workplace and overcoming resistance to adoption in digital GCM corporations</li>
+          </ul>
+        </article>
+        <article class="edu-item">
+          <div class="job-top">
+            <div class="org">CareerFoundry (Online)</div>
+            <div class="dates">May 2021</div>
+          </div>
+          <div class="degree">Intro to UX Design Certificate</div>
+        </article>
+        <article class="edu-item">
+          <div class="job-top">
+            <div class="org">Parsons Paris, The New School (Paris, France)</div>
+            <div class="dates">Jun 2018 - Jul 2018</div>
+          </div>
+          <div class="degree">Graphic Design summer abroad program (4.0 GPA)</div>
+        </article>
+      </div>
+      <div>
+        <div class="section-head"><span>AWARDS</span><i></i></div>
+        <p class="award">Departmental Honour Award, Parsons, 2026</p>
+        <p class="award">Communication Design Microgrant, Parsons, 2026</p>
+        <p class="award">Merit Scholarship, Parsons</p>
+        <p class="award">Entrance Scholarship, TMU, renewed all four years</p>
+
+        <div class="section-head"><span>LEADERSHIP</span><i></i></div>
+        <div class="lead-item">
+          <div class="org">Guest Lecturer</div>
+          <div class="org-line">Design and Layout, The Creative School, TMU</div>
+          <div class="dates">May 2024</div>
+        </div>
+        <div class="lead-item">
+          <div class="org">Invited Speaker</div>
+          <div class="org-line">AI in Design, GCM Colloquium, TMU</div>
+          <div class="dates">Mar 2024</div>
+        </div>
+        <div class="lead-item">
+          <div class="org">VP of Design</div>
+          <div class="org-line">TMU UX Team</div>
+          <div class="dates">Sep 2021 - Aug 2023</div>
+        </div>
+        <div class="lead-item" id="first-year">
+          <div class="org">First-Year Representative</div>
+          <div class="org-line">GCM School Council, TMU</div>
+          <div class="dates">Sep 2019 - Apr 2020</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head"><span>SKILLS</span><i></i></div>
+    <div class="skills">
+      <div>
+        <h3>Design</h3>
+        <p>
+          Product &amp; interaction design<br />
+          Prototyping &amp; wireframing<br />
+          Design handoff, Data visualization<br />
+          Design systems<br />
+          Information architecture<br />
+          User research &amp; testing<br />
+          Accessibility (WCAG)<br />
+          Workflow mapping
+        </p>
+      </div>
+      <div>
+        <h3>Tools</h3>
+        <p>
+          Figma (components, variables, advanced prototyping), Figma Make, Framer<br />
+          Adobe Creative Suite<br />
+          Cursor, Claude Code<br />
+          Codex, GitHub<br />
+          Vercel, Xcode
+        </p>
+      </div>
+      <div>
+        <h3>Engineering &amp; AI</h3>
+        <p>
+          HTML, CSS, JavaScript<br />
+          React Native, Swift<br />
+          Node.js<br />
+          LLM &amp; API integration<br />
+          AI-assisted development
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
